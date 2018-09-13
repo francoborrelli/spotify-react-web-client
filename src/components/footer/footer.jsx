@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import SongPlayer from '../songsPlayer/songsPlayer';
+
 const style =  {
     position: "fixed",
     width: "100%",
@@ -11,6 +13,6 @@ const style =  {
     zIndex: 2,
   }
 
-const footer = props => <div className="footer" style={style}></div>
+const footer = props => <div className="footer" style={style}><SongPlayer/></div>
 
 export default footer;
