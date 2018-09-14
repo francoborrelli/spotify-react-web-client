@@ -6,9 +6,9 @@ import Search from '../trackSearch/trackSearch';
 
 const style = {
     position: "fixed",
-    minWidth: 1200,
     zIndex: 1000,
     display: "flex",
+    width: "62%",
     justifyContent: "space-between",
     background: "rgb(24, 24, 24)"
 }

@@ -19,7 +19,6 @@ const newPlaylist  = {
 const leftSection = props => (
 <div className="left-section">
     <SiderMenu></SiderMenu>
-
     <div style={buttomSection}>
         <div style={newPlaylist}>
             <i className="fa fa-plus-circle" style={{paddingRight: 5}}></i>
