@@ -3,12 +3,8 @@ import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
-const style = {
-    width: "100%"
-}
-
 const mainSection = props => (
-<div className="main-section" style={style}>
+<div className="main-section">
     <Header/>
     <div className="main-section-container">
     </div>
