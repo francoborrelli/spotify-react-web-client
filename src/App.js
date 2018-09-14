@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import LeftSection from './components/leftSection/leftSection';
-import MainSection from './components/mainSection/mainSection';
+import LeftSection from './containers/leftSection/leftSection';
+import MainSection from './containers/mainSection/mainSection';
 
 class App extends Component {
   render() {

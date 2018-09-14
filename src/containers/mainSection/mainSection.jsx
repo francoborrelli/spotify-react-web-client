@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Header from '../header/header';
-import Footer from '../footer/footer';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 
 const mainSection = props => (
 <div className="main-section">

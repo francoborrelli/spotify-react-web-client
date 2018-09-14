@@ -12,13 +12,6 @@ body {
     position: relative;
     left: 200px;
     padding: 0 10px; }
-  .app .left-section {
-    position: fixed;
-    top: 0px;
-    bottom: 10px;
-    width: 190px;
-    overflow-y: scroll;
-    z-index: 100; }
   .app .main-section-container {
     position: relative;
     top: 50px;

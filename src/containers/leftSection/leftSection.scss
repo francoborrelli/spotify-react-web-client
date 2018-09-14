@@ -1,0 +1,34 @@
+.left-section {
+    position: fixed;
+    top: 0px;
+    bottom: 10px;
+    width: 190px;
+    overflow-y: scroll;
+    z-index: 100;
+    background-color:#0e0e10;
+
+    .buttom-section{
+        text-align: center;
+        width: 190px;
+        position: fixed;
+        bottom: 75px;
+
+    .new-playlist{
+        height: 40px;
+        padding-top: 20px;
+        color: rgb(179, 179, 179);
+        background-color: #0e0e10;
+        border-top: 1px solid rgb(44, 44, 44);
+        font-family: 'Proxima Thin', Georgia, sans-serif;
+
+        &:hover{
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .fa {
+            padding-right: 5px;
+        }
+    }
+  }
+}
