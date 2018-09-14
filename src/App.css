@@ -13,10 +13,11 @@ body {
 
 .left-section {
   position: fixed;
-  top: 10px;
+  top: 0px;
   bottom: 10px;
-  width: 180px;
-  overflow-y: auto;
+  width: 190px;
+  overflow-y: scroll;
+  z-index: 100;
 }
 
 .main-section {

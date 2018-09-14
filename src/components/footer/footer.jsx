@@ -10,7 +10,7 @@ const style =  {
     left: 0,
     background: "rgb(40, 40, 40)",
     height: 80,
-    zIndex: 2,
+    zIndex: 2000,
   }
 
 const footer = props => <div className="footer" style={style}><SongPlayer/></div>

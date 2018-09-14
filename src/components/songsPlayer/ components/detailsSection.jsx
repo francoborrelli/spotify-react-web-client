@@ -3,6 +3,7 @@ import React from "react";
 const songDetails = {
     position: "absolute",
     left: 20,
+    top: 14,
     lineHeight: "5px",
   }
 

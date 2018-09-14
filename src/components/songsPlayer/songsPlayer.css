@@ -1,0 +1,22 @@
+.song-control {
+    justify-content: center;
+    display: flex;
+    margin-top: 20px
+}
+
+.control-btn {
+    justify-content: center;
+    display: flex;
+}
+
+.control-btn.play-btn{
+    position: relative;
+    top: -10px;
+    font-size: 35px;
+    margin: 0 10px;
+  }
+
+.control-btn.play-btn:hover{
+    font-size: 40px;
+    margin:-2px 10px;
+}

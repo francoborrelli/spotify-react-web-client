@@ -1,0 +1,50 @@
+.side-menu-container {
+    padding: 20px;
+    color: rgb(179, 179, 179);
+    margin: 0;
+  }
+  
+  .library-header {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-family: 'Proxima Thin', Georgia, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 30px 0 5px 0;
+    letter-spacing: 1px;
+  }
+  
+  .menu-item {
+    list-style-type: none;
+    line-height: 28px;
+    font-size: 14px;
+    width: 140px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .menu-item:hover, .new-playlist:hover {
+    color: #fff;
+  }
+  
+  .radio {
+    margin-bottom: 20px;
+  }
+  
+  .side-menu-container .active {
+      margin-left: -3px;
+  }
+  
+  .side-menu-container .active:before {
+      content: "";
+      border-left: 4px solid #1db954;
+      position: relative;
+      left: -18px;
+  }
+
+  .user-playlist-container {
+    padding-bottom: 300px;
+    color: rgb(179, 179, 179);
+    margin: 0;
+  }

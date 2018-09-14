@@ -1,5 +1,7 @@
 import React from "react";
 
+import './songsPlayer.css'
+
 import DetailSection from "./ components/detailsSection";
 import SongsControl from "./ components/songsControl";
 
