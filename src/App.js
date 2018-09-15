@@ -8,6 +8,7 @@ import './App.css';
 
 import LeftSection from './containers/leftSection/leftSection';
 import MainSection from './containers/mainSection/mainSection';
+import Footer from './components/footer/footer';
 
 var client_id = '877a83359117400a962e4bf9c0480c39';
 var redirect_uri = 'http://localhost:3001/callback';

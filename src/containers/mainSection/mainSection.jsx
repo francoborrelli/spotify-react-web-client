@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
+import Browse from '../../components/browse/browse';
 
 import defaultProfile from './images/profile.png';
+import './mainSection.css';
 
 class MainSection extends Component {
   render = () => {
@@ -18,7 +20,9 @@ class MainSection extends Component {
     return (
       <div className="main-section">
         <Header username={name || id} img={img} />
-        <div className="main-section-container" />
+        <div className="main-section-container">
+          <Browse />
+        </div>
         <Footer />
       </div>
     );
