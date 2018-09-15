@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { setToken } from './actions/tokenAction';
+import { fetchUser } from './actions/userActions';
 
 import './App.css';
 
@@ -9,9 +10,9 @@ import LeftSection from './containers/leftSection/leftSection';
 import MainSection from './containers/mainSection/mainSection';
 
 var client_id = '877a83359117400a962e4bf9c0480c39'; // Your client id
-var client_secret = '512111dde2614c6b840c4486137a0fd1'; // Your secret
 var redirect_uri = 'http://localhost:3001/callback'; // Your redirect uri
-var scope = 'user-read-private user-read-email';
+var scope =
+  'user-read-private user-read-email playlist-read-private user-read-playback-state';
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends Component {
       this.requestToken();
     } else {
       this.props.setToken(hashParams.access_token);
+      this.props.fetchUser(hashParams.access_token);
     }
   }
 
@@ -62,7 +64,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setToken: token => dispatch(setToken(token))
+  setToken: token => dispatch(setToken(token)),
+  fetchUser: token => dispatch(fetchUser(token))
 });
 
 export default connect(

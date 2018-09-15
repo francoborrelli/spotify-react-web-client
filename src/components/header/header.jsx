@@ -15,10 +15,7 @@ const style = {
 const header = props => (
   <div className="header" style={style}>
     <Search />
-    <UserDetails
-      username="franco borrelli"
-      img="https://pbs.twimg.com/profile_images/829792458988982274/Jmc0f4Fb_400x400.jpg"
-    />
+    <UserDetails username={props.username} img={props.img} />
   </div>
 );
 
