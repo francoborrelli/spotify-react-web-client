@@ -5,11 +5,15 @@ import { connect } from 'react-redux';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 
+import defaultProfile from './images/profile.png';
+
 class MainSection extends Component {
   render = () => {
     let name = this.props.user.display_name;
     let id = this.props.user.id;
-    let img = this.props.user.images ? this.props.user.images[0].url : '';
+    let img = this.props.user.images
+      ? this.props.user.images[0].url
+      : defaultProfile;
 
     return (
       <div className="main-section">
