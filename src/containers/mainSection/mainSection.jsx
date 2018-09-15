@@ -6,6 +6,8 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Browse from '../../components/browse/browser';
 
+import Playlist from '../../components/playlist/playlist';
+
 import defaultProfile from './images/profile.png';
 import './mainSection.css';
 
@@ -21,7 +23,7 @@ class MainSection extends Component {
       <div className="main-section">
         <Header username={name || id} img={img} />
         <div className="main-section-container">
-          <Browse />
+          <Playlist />
         </div>
         <Footer />
       </div>
