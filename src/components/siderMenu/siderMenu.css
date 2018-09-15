@@ -5,7 +5,7 @@
   .side-menu-container .active {
     margin-left: -3px; }
     .side-menu-container .active:before {
-      content: "";
+      content: '';
       border-left: 4px solid #1db954;
       position: relative;
       left: -18px; }
