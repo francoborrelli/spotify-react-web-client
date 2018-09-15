@@ -8,11 +8,19 @@ import {
   fetchFeatured
 } from '../../store/actions/browseActions';
 
+import Album from './album';
+import Genre from './genre';
+import Playlist from './playlist';
+
 class Categories extends Component {
   componentDidUpdate(prevProps) {
     const token = this.props.token;
 
-    if (token !== '' && prevProps.active !== this.props.active) {
+    if (
+      token !== '' &&
+      (prevProps.categories.length === 0 ||
+        this.props.active !== prevProps.active)
+    ) {
       switch (this.props.active) {
         case 'New Releases':
           this.props.fetchNewReleases(token);
@@ -28,16 +36,23 @@ class Categories extends Component {
   }
 
   renderCategories = () => {
-    let genre = this.props.active === 'Genres & Moods';
+    let element;
+    switch (this.props.active) {
+      case 'New Releases':
+        return this.props.categories.map(item => (
+          <Album item={item} key={item.name} />
+        ));
+      case 'Featured':
+        return this.props.categories.map(item => (
+          <Playlist item={item} key={item.name} />
+        ));
+      default:
+        return this.props.categories.map(item => (
+          <Genre item={item} key={item.name} />
+        ));
+    }
 
-    return this.props.categories.map((item, i) => (
-      <li className="category-item" key={i}>
-        <div className={'category-image' + (genre ? '' : ' playlist')}>
-          <img src={item.icons ? item.icons[0].url : item.images[0].url} />
-          {genre ? <p className="category-name">{item.name}</p> : ''}
-        </div>
-      </li>
-    ));
+    return;
   };
 
   render = () => (

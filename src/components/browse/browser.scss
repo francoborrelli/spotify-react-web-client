@@ -27,15 +27,15 @@
       .category-name {
         border-bottom: 1px solid white;
       }
-      .playlist {
-        opacity: 0.3;
-      }
     }
 
     .category-image {
       position: relative;
       & img {
         width: 100%;
+      }
+      &.playlist:hover {
+        opacity: 0.3;
       }
     }
 
@@ -46,5 +46,22 @@
       transform: translate(-50%, 100%);
       font-size: 15px;
     }
+  }
+
+  .album-title,
+  .album-artist {
+    margin: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    &:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+  }
+
+  .album-artist {
+    color: grey;
   }
 }
