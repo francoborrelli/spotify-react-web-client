@@ -30,7 +30,7 @@ const sectionThree = [
 
 class SiderMenu extends Component {
   state = {
-    active: null
+    active: 'Browse'
   };
 
   setActive(title) {
