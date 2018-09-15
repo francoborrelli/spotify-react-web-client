@@ -1,31 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { fetchPlaylistsMenu } from '../../actions/playlistActions';
 
 import './siderMenu.css';
 
 import MenuItem from './components/menuItem';
 
-const sectionOne = [{ title: 'Browse' }, { title: 'Radio' }];
+const sectionOne = [{ name: 'Browse' }, { name: 'Radio' }];
 
 const sectionTwo = [
-  { title: 'Your Daily Mix' },
-  { title: 'Recently Played' },
-  { title: 'Songs' },
-  { title: 'Albums' },
-  { title: 'Artists' },
-  { title: 'Stations' },
-  { title: 'Local Files' },
-  { title: 'Videos' },
-  { title: 'Postcasts' }
-];
-
-const sectionThree = [
-  { title: 'Lollapalooza 2019' },
-  { title: 'Roots' },
-  { title: 'New Vibes' },
-  { title: 'On the Air II' },
-  { title: 'On the Air' },
-  { title: 'Mix Vol 7' },
-  { title: 'Mix Vol 6' }
+  { name: 'Your Daily Mix' },
+  { name: 'Recently Played' },
+  { name: 'Songs' },
+  { name: 'Albums' },
+  { name: 'Artists' },
+  { name: 'Stations' },
+  { name: 'Local Files' },
+  { name: 'Videos' },
+  { name: 'Postcasts' }
 ];
 
 class SiderMenu extends Component {
@@ -33,21 +27,29 @@ class SiderMenu extends Component {
     active: 'Browse'
   };
 
-  setActive(title) {
-    this.setState({ active: title });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.token !== '') {
+      this.props.fetchPlaylistsMenu(nextProps.token);
+    }
+  }
+
+  setActive(name) {
+    this.setState({ active: name });
   }
 
   generateItems = items =>
     items.map(item => (
       <MenuItem
-        key={item.title}
-        title={item.title}
-        active={this.state.active === item.title}
-        onClick={() => this.setActive(item.title)}
+        key={item.name}
+        title={item.name}
+        active={this.state.active === item.name}
+        onClick={() => this.setActive(item.name)}
       />
     ));
 
   render = () => {
+    const playlists = this.props.playlists ? this.props.playlists.items : [];
+
     return (
       <ul className="side-menu-container">
         {this.generateItems(sectionOne)}
@@ -55,11 +57,31 @@ class SiderMenu extends Component {
         {this.generateItems(sectionTwo)}
         <div className="user-playlist-container">
           <h3 className="library-header">Playlists</h3>
-          {this.generateItems(sectionThree)}
+          {this.generateItems(playlists)}
         </div>
       </ul>
     );
   };
 }
 
-export default SiderMenu;
+const mapStateToProps = state => {
+  return {
+    token: state.tokenReducer.token ? state.tokenReducer.token : '',
+    playlists: state.playlistReducer.playlistMenu
+      ? state.playlistReducer.playlistMenu
+      : null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      fetchPlaylistsMenu
+    },
+    dispatch
+  );
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SiderMenu);
