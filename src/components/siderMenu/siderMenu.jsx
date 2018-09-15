@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './siderMenu.css';
 
 import MenuItem from './components/menuItem';
 
-const sectionOne = [{ title: 'Browse' }, { title: 'Radio', active: true }];
+const sectionOne = [{ title: 'Browse' }, { title: 'Radio' }];
 
 const sectionTwo = [
   { title: 'Your Daily Mix' },
@@ -28,26 +28,38 @@ const sectionThree = [
   { title: 'Mix Vol 6' }
 ];
 
-const elementsSOne = sectionOne.map(item => (
-  <MenuItem key={item.title} title={item.title} active={item.active} />
-));
-const elementsSTwo = sectionTwo.map(item => (
-  <MenuItem key={item.title} title={item.title} active={item.active} />
-));
-const elementsSThree = sectionThree.map(item => (
-  <MenuItem key={item.title} title={item.title} active={item.active} />
-));
+class SiderMenu extends Component {
+  state = {
+    active: null
+  };
 
-const siderMenu = props => (
-  <ul className="side-menu-container">
-    {elementsSOne}
-    <h3 className="library-header">Your Library</h3>
-    {elementsSTwo}
-    <div className="user-playlist-container">
-      <h3 className="library-header">Playlists</h3>
-      {elementsSThree}
-    </div>
-  </ul>
-);
+  setActive(title) {
+    this.setState({ active: title });
+  }
 
-export default siderMenu;
+  generateItems = items =>
+    items.map(item => (
+      <MenuItem
+        key={item.title}
+        title={item.title}
+        active={this.state.active === item.title}
+        onClick={() => this.setActive(item.title)}
+      />
+    ));
+
+  render = () => {
+    return (
+      <ul className="side-menu-container">
+        {this.generateItems(sectionOne)}
+        <h3 className="library-header">Your Library</h3>
+        {this.generateItems(sectionTwo)}
+        <div className="user-playlist-container">
+          <h3 className="library-header">Playlists</h3>
+          {this.generateItems(sectionThree)}
+        </div>
+      </ul>
+    );
+  };
+}
+
+export default SiderMenu;
