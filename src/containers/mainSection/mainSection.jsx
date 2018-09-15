@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import Browse from '../../components/browse/browse';
+import Browse from '../../components/browse/browser';
 
 import defaultProfile from './images/profile.png';
 import './mainSection.css';

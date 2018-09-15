@@ -1,6 +1,13 @@
+.browse-title {
+  padding-top: 20px;
+  padding-bottom: 5px;
+  margin-left: 10px;
+  border-bottom: 1px solid #2d2c2c;
+}
 .browse-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   list-style-type: none;
   padding: 0;
 
@@ -18,7 +25,10 @@
 
     &:hover {
       .category-name {
-        border-bottom: 2px solid white;
+        border-bottom: 1px solid white;
+      }
+      .playlist {
+        opacity: 0.3;
       }
     }
 
