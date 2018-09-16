@@ -6,7 +6,7 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Browse from '../../components/browse/browser';
 
-import Playlist from '../../components/playlist/playlist';
+import Playlist from '../../components/songList/songList';
 
 import defaultProfile from './images/profile.png';
 import './mainSection.css';

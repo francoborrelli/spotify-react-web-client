@@ -5,27 +5,12 @@
   font-family: 'Proxima Bold', Georgia, sans-serif;
 }
 
-.main-pause-play-btn {
-  background: #1db954;
-  font-family: 'Proxima Nova', Georgia, sans-serif;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 10px;
-  width: 100px;
-  font-size: 14px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  outline: none;
-}
-
 .user-song-item {
   list-style-type: none;
   border-bottom: 1px solid #666;
   display: flex;
   line-height: 20px;
   font-size: 14px;
-  cursor: pointer;
 
   &:hover {
     background: rgb(51, 51, 51);
@@ -109,6 +94,7 @@
   text-overflow: ellipsis;
   padding: 0 8px;
   line-height: 20px;
+  cursor: pointer;
 }
 
 .song-length,
@@ -124,6 +110,9 @@
 .song-album,
 .song-album-header {
   width: 210px;
+  @media (max-width: 850px) {
+    display: none;
+  }
 }
 
 .song-artist,
@@ -150,7 +139,7 @@
     text-transform: uppercase;
     font-size: 12px;
     color: #ccc;
-    padding: 0 8px;
+    padding: 0 15px;
   }
 }
 
@@ -172,6 +161,16 @@
   }
   &:hover {
     color: #fff;
+  }
+}
+
+.song-length-header,
+.song-added-header,
+.song-added,
+.song-length {
+  color: #aaa;
+  @media (max-width: 1100px) {
+    display: none;
   }
 }
 

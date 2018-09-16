@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './mainHeader.css';
+import './browseHeader.css';
 
 const browseHeader = props => (
   <div className="browse-headers">

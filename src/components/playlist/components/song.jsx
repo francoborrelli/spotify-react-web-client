@@ -10,8 +10,8 @@ const msToMinutesAndSeconds = ms => {
 const song = props => {
   const buttonClass =
     props.track === props.songId && !props.songPaused
-      ? 'fa-pause-circle-o'
-      : 'fa-play-circle-o';
+      ? 'fa-play-circle-o'
+      : 'fa-pause-circle-o';
 
   return (
     <li key={20} className="user-song-item">
@@ -19,19 +19,19 @@ const song = props => {
         <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
       </div>
       <div className="song-title">
-        <p>Shape of You</p>
+        <p>{props.item.track.name}</p>
       </div>
       <div className="song-artist">
-        <p>Ed Sheeran</p>
+        <p>{props.item.track.artists.map(a => a.name).join(' , ')}</p>
       </div>
       <div className="song-album">
-        <p>%</p>
+        <p>{props.item.track.album.name}</p>
       </div>
       <div className="song-added">
-        <p>{moment().format('YYYY-MM-DD')}</p>
+        <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>
       </div>
       <div className="song-length">
-        <p>{msToMinutesAndSeconds(6000)}</p>
+        <p>{msToMinutesAndSeconds(props.item.track.duration_ms)}</p>
       </div>
     </li>
   );
