@@ -14,7 +14,7 @@ const song = props => {
       : 'fa-pause-circle-o';
 
   return (
-    <li key={20} className="user-song-item">
+    <li className="user-song-item">
       <div className="play-song">
         <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
       </div>

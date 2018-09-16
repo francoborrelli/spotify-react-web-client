@@ -12,9 +12,9 @@ class SongsList extends Component {
     fetch: false
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const token = this.props.token;
-    console.log(this.props.songs);
+
     if (token !== '' && !this.state.fetch) {
       this.props.fetchSongs(token);
       this.setState({ fetch: true });
@@ -24,7 +24,7 @@ class SongsList extends Component {
   render = () => (
     <div className="player-container">
       <Header title="Songs" />
-      <Playlist songs={this.props.songs || []} />
+      <Playlist songs={this.props.songs} />
     </div>
   );
 }

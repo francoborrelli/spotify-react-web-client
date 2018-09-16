@@ -5,10 +5,6 @@ import './playlist.css';
 import Song from './components/song';
 
 class Playlist extends Component {
-  renderSongs() {
-    this.props.songs.map(item => <Song item={item} />);
-  }
-
   render() {
     return (
       <div>
@@ -30,7 +26,7 @@ class Playlist extends Component {
           </div>
         </div>
         {this.props.songs.map(item => (
-          <Song item={item} />
+          <Song item={item} key={item.track.id} />
         ))}
       </div>
     );
