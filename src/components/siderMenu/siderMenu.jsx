@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { fetchPlaylistsMenu } from '../../store/actions/playlistActions';
+import { setView } from '../../store/actions/uiActions';
 
 import './siderMenu.css';
 
 import MenuItem from './components/menuItem';
 
-const sectionOne = [{ name: 'Browse' }, { name: 'Radio' }];
+const sectionOne = [{ name: 'Browse', view: 'browse' }, { name: 'Radio' }];
 
 const sectionTwo = [
   { name: 'Your Daily Mix' },
   { name: 'Recently Played' },
-  { name: 'Songs' },
+  { name: 'Songs', view: 'songs' },
   { name: 'Albums' },
   { name: 'Artists' },
   { name: 'Stations' },
@@ -33,8 +34,9 @@ class SiderMenu extends Component {
     }
   }
 
-  setActive(name) {
-    this.setState({ active: name });
+  setActive(item) {
+    this.setState({ active: item.name });
+    this.props.setView(item.view || 'browse');
   }
 
   generateItems = items =>
@@ -43,7 +45,7 @@ class SiderMenu extends Component {
         key={item.name}
         title={item.name}
         active={this.state.active === item.name}
-        onClick={() => this.setActive(item.name)}
+        onClick={() => this.setActive(item)}
       />
     ));
 
@@ -76,7 +78,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      fetchPlaylistsMenu
+      fetchPlaylistsMenu,
+      setView
     },
     dispatch
   );

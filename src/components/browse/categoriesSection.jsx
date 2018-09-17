@@ -13,6 +13,13 @@ import Genre from './genre';
 import Playlist from './playlist';
 
 class Categories extends Component {
+  componentDidMount() {
+    const token = this.props.token;
+    if (token) {
+      this.props.fetchGenres(token);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const token = this.props.token;
 

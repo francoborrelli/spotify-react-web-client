@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import Browse from '../../components/browse/browser';
 
-import Playlist from '../../components/songList/songList';
+import Browse from '../../components/browse/browser';
+import Songs from '../../components/songList/songList';
 
 import defaultProfile from './images/profile.png';
 import './mainSection.css';
@@ -23,7 +23,7 @@ class MainSection extends Component {
       <div className="main-section">
         <Header username={name || id} img={img} />
         <div className="main-section-container">
-          <Playlist />
+          {this.props.view === 'browse' ? <Browse /> : <Songs />}
         </div>
         <Footer />
       </div>
@@ -33,7 +33,8 @@ class MainSection extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    view: state.uiReducer.view
   };
 };
 

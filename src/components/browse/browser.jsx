@@ -13,7 +13,7 @@ const options = [
 
 class Browse extends Component {
   state = {
-    active: 'New Releases'
+    active: 'Genres & Moods'
   };
 
   setActive = option => {
