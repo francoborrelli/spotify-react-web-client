@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 
 import './songsTable.css';
 
-import Song from './components/song';
+import Song from './components/items/song';
+import EmptySection from './components/emptySection/empty';
 
 class Playlist extends Component {
   render() {
-    return (
+    return this.props.songs.length === 0 ? (
+      <EmptySection />
+    ) : (
       <div>
         <div className="song-header-container">
           <div className="song-title-header">
