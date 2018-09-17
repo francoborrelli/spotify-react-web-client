@@ -48,6 +48,14 @@
     }
   }
 
+  .album-artists {
+    margin: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+
   .album-title,
   .album-artist {
     margin: 0px;

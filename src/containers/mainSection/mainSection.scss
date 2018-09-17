@@ -1,10 +1,20 @@
 .main-section-container {
-  max-width: 1500px;
+  width: 1300px;
+
+  @media (max-width: 1800px) {
+    width: 1200px;
+  }
+
   @media (max-width: 1500px) {
-    max-width: 1000px;
+    width: 1000px;
+  }
+
+  @media (max-width: 1300px) {
+    width: 850px;
     padding-left: 13px;
   }
+
   @media (max-width: 1100px) {
-    max-width: 600px;
+    width: 550px;
   }
 }

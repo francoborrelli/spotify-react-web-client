@@ -62,25 +62,6 @@
   }
 }
 
-.song-title,
-.song-title-header {
-  width: 300px;
-}
-
-.song-album,
-.song-album-header {
-  width: 250px;
-}
-
-.song-artist,
-.song-artist-header {
-  width: 200px;
-}
-
-.song-added {
-  width: 80px;
-}
-
 .song-title-header {
   margin-left: 60px;
 }
@@ -109,7 +90,6 @@
 
 .song-album,
 .song-album-header {
-  width: 210px;
   @media (max-width: 850px) {
     display: none;
   }
@@ -179,4 +159,38 @@
   border-bottom: 1px solid #666;
   padding-bottom: 6px;
   margin-top: 20px;
+}
+
+.song-title,
+.song-title-header {
+  width: 25%;
+  @media (max-width: 850px) {
+    width: 50%;
+  }
+}
+
+.song-album,
+.song-album-header {
+  width: 25%;
+}
+
+.song-artist,
+.song-artist-header {
+  .artist {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  width: 20%;
+  @media (max-width: 1100px) {
+    width: 35%;
+  }
+  @media (max-width: 850px) {
+    width: 50%;
+  }
+}
+
+.song-added,
+.song-added-header {
+  width: 10%;
 }
