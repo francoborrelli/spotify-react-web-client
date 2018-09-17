@@ -1,7 +1,7 @@
 import React from 'react';
 
-const playlist = ({ item, key }) => (
-  <li className="category-item" key={key}>
+const playlist = ({ item, key, onClick }) => (
+  <li className="category-item" key={key} onClick={onClick}>
     <div className="category-image playlist">
       <img
         alt="playlist cover"

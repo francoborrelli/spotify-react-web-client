@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 
+import withUiActions from '../../../../hoc/uiChange';
+
 const msToMinutesAndSeconds = ms => {
   const minutes = Math.floor(ms / 60000);
   const seconds = ((ms % 60000) / 1000).toFixed(0);
@@ -13,6 +15,8 @@ const song = props => {
       ? 'fa-play-circle-o'
       : 'fa-pause-circle-o';
 
+  const artists = props.item.track ? props.item.track.artists.length : 0;
+
   return (
     <li className="user-song-item">
       <div className="play-song">
@@ -22,7 +26,21 @@ const song = props => {
         <p>{props.item.track.name}</p>
       </div>
       <div className="song-artist">
-        <p>{props.item.track.artists.map(a => a.name).join(' , ')}</p>
+        <p>
+          {props.item.track.artists
+            ? props.item.track.artists.map((a, i) => (
+                <span>
+                  <span
+                    className="artist"
+                    onClick={() => props.onArtistClick(a.id)}
+                  >
+                    {a.name}
+                  </span>
+                  {artists !== i + 1 ? <span> , </span> : null}
+                </span>
+              ))
+            : ''}
+        </p>
       </div>
       <div className="song-album">
         <p>{props.item.track.album.name}</p>
@@ -37,4 +55,4 @@ const song = props => {
   );
 };
 
-export default song;
+export default withUiActions(song);
