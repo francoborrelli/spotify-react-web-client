@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import './browser.css';
 
-import Header from '../header/browseHeader';
-import Categories from './categoriesSection';
+import Header from './components/header/browseHeader';
+import Categories from './components/categories/categoriesSection';
 
 const options = [
   { name: 'Genres & Moods' },

@@ -1,0 +1,43 @@
+.header-title {
+  font-size: 48px;
+  margin: 25px 0px;
+  &.playlist {
+    margin: 0px;
+  }
+}
+
+.playlist-image {
+  width: 230px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.103),
+    0 6px 15px 0 rgba(0, 0, 0, 0.075);
+}
+
+.playlist-title-container {
+  display: flex;
+  padding-top: 15px;
+}
+
+.playlist-info-container {
+  padding-left: 20px;
+  position: relative;
+  top: 20px;
+}
+
+.created-by {
+  font-family: 'Proxima Thin', Georgia, sans-serif;
+  font-size: 13px;
+  color: #aaa;
+  padding: 8px 0;
+}
+
+.lighter-text {
+  font-family: 'Proxima Nova', Georgia, sans-serif;
+  color: #fff;
+}
+
+.playlist-text {
+  font-family: 'Proxima Thin', Georgia, sans-serif;
+  letter-spacing: 1px;
+  font-size: 12px;
+  margin: 20px 0px 0px 0px;
+}

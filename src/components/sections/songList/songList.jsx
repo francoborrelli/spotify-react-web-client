@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchSongs } from '../../store/actions/libraryActions';
+import { fetchSongs } from '../../../store/actions/libraryActions';
 
-import Playlist from '../playlist/playlist';
-import Header from '../header/songsHeader';
+import Playlist from '../../songsTable/songsTable';
+import Header from '../../header/songsHeader';
 
 class SongsList extends Component {
   state = {
     fetch: false
   };
+  componentDidMount() {
+    this.fetchSongs();
+  }
 
   componentDidUpdate() {
+    this.fetchSongs();
+  }
+
+  fetchSongs() {
     const token = this.props.token;
 
     if (token !== '' && !this.state.fetch) {

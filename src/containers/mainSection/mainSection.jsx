@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 
-import Browse from '../../components/browse/browser';
-import Songs from '../../components/songList/songList';
-import Playlist from '../../components/playlist/a';
+import Browse from '../../components/sections/browse/browser';
+import Songs from '../../components/sections/songList/songList';
+import Playlist from '../../components/sections/playlist/playlist';
 
 import defaultProfile from './images/profile.png';
 import './mainSection.css';

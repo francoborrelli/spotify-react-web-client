@@ -6,11 +6,11 @@ import {
   fetchGenres,
   fetchNewReleases,
   fetchFeatured
-} from '../../store/actions/browseActions';
+} from '../../../../../store/actions/browseActions';
 
-import Album from './album';
-import Genre from './genre';
-import Playlist from './playlist';
+import Album from '../items/album';
+import Genre from '../items/genre';
+import Playlist from '../items/playlist';
 
 class Categories extends Component {
   componentDidMount() {

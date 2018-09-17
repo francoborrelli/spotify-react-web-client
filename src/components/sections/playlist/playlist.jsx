@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Header from '../header/playlistHeader';
-import S from './playlist';
+import Header from './components/header/playlistHeader';
+import Table from '../../songsTable/songsTable';
 
 class Playlist extends Component {
   render = () => {
     return (
       <div className="player-container">
         <Header playlist={this.props.playlist || {}} />
-        <S
+        <Table
           songs={this.props.playlist ? this.props.playlist.tracks.items : []}
         />
       </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './playlist.css';
+import './songsTable.css';
 
 import Song from './components/song';
 

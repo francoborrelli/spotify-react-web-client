@@ -9,9 +9,9 @@ import './App.css';
 import LeftSection from './containers/leftSection/leftSection';
 import MainSection from './containers/mainSection/mainSection';
 
-var client_id = '877a83359117400a962e4bf9c0480c39';
-var redirect_uri = 'http://localhost:3001/callback';
-var scope = 'user-read-private user-read-email playlist-read-private';
+const client_id = process.env.REACT_APP_CLIENT_ID;
+const redirect_uri = process.env.REACT_APP_REDIRECT_ID;
+const scope = 'user-read-private user-read-email playlist-read-private';
 
 class App extends Component {
   componentDidMount() {

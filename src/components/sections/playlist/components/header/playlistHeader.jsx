@@ -1,7 +1,7 @@
 import React from 'react';
 
-import './songsHeader.css';
-import defaultCover from '../../containers/mainSection/images/playlist.png';
+import './playlistHeader.css';
+import defaultCover from '../../../../../containers/mainSection/images/playlist.png';
 
 const playlistHeader = ({ playlist }) => {
   const img =
