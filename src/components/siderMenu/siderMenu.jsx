@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchPlaylistsMenu } from '../../store/actions/playlistActions';
+import {
+  fetchPlaylistsMenu,
+  fetchPlaylist
+} from '../../store/actions/playlistActions';
 import { setView } from '../../store/actions/uiActions';
 
 import './siderMenu.css';
@@ -34,24 +37,29 @@ class SiderMenu extends Component {
     }
   }
 
-  setActive(item) {
+  setActive(item, playlist) {
     this.setState({ active: item.name });
-    this.props.setView(item.view || 'browse');
+    if (playlist) {
+      this.props.setView('playlist');
+      this.props.fetchPlaylist(this.props.token, item.id);
+    } else {
+      this.props.setView(item.view || 'browse');
+    }
   }
 
-  generateItems = items =>
-    items.map(item => (
+  generateItems(items, playlist = false) {
+    return items.map(item => (
       <MenuItem
         key={item.name}
         title={item.name}
         active={this.state.active === item.name}
-        onClick={() => this.setActive(item)}
+        onClick={() => this.setActive(item, playlist)}
       />
     ));
+  }
 
   render = () => {
     const playlists = this.props.playlists ? this.props.playlists.items : [];
-
     return (
       <ul className="side-menu-container">
         {this.generateItems(sectionOne)}
@@ -59,7 +67,7 @@ class SiderMenu extends Component {
         {this.generateItems(sectionTwo)}
         <div className="user-playlist-container">
           <h3 className="library-header">Playlists</h3>
-          {this.generateItems(playlists)}
+          {this.generateItems(playlists, true)}
         </div>
       </ul>
     );
@@ -69,8 +77,8 @@ class SiderMenu extends Component {
 const mapStateToProps = state => {
   return {
     token: state.tokenReducer.token ? state.tokenReducer.token : '',
-    playlists: state.playlistReducer.playlistMenu
-      ? state.playlistReducer.playlistMenu
+    playlists: state.playlistReducer.playlists
+      ? state.playlistReducer.playlists
       : null
   };
 };
@@ -79,6 +87,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       fetchPlaylistsMenu,
+      fetchPlaylist,
       setView
     },
     dispatch

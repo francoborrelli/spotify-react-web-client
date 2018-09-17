@@ -2,23 +2,23 @@ export const playlistReducer = (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_SONGS_PENDING':
       return {
-        fetchSongsPending: true,
-        ...state
+        ...state,
+        fetchSongsPending: true
       };
 
     case 'FETCH_SONGS_SUCCESS':
       return {
+        ...state,
         songs: action.songs.items,
         fetchSongsError: false,
-        fetchSongsPending: false,
-        ...state
+        fetchSongsPending: false
       };
 
     case 'FETCH_SONGS_ERROR':
       return {
+        ...state,
         fetchSongsError: true,
-        fetchSongsPending: false,
-        ...state
+        fetchSongsPending: false
       };
 
     default:

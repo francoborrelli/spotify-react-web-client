@@ -1,6 +1,9 @@
 .header-title {
   font-size: 48px;
   margin: 25px 0px;
+  &.playlist {
+    margin: 0px;
+  }
 }
 
 .main-pause-play-btn {
