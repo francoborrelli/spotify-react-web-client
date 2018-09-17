@@ -27,6 +27,7 @@ class MainSection extends Component {
         <div className="main-section-container">
           {this.props.view === 'browse' ? <Browse /> : null}
           {this.props.view === 'playlist' ? <Playlist /> : null}
+          {this.props.view === 'recently' ? <Songs recently /> : null}
           {this.props.view === 'songs' ? <Songs /> : null}
         </div>
         <Footer />

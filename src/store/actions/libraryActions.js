@@ -40,3 +40,25 @@ export const fetchSongs = accessToken => {
     }
   };
 };
+
+export const fetchRecentSongs = accessToken => {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+  return async dispatch => {
+    dispatch(fetchSongsPending());
+
+    function onSuccess(songs) {
+      dispatch(fetchSongsSuccess(songs));
+      return songs;
+    }
+    function onError(error) {
+      dispatch(fetchSongsError());
+      return error;
+    }
+    try {
+      const response = await axios.get('/me/player/recently-played');
+      return onSuccess(response.data);
+    } catch (error) {
+      return onError(error);
+    }
+  };
+};

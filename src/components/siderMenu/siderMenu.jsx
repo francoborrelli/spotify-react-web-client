@@ -16,7 +16,7 @@ const sectionOne = [{ name: 'Browse', view: 'browse' }, { name: 'Radio' }];
 
 const sectionTwo = [
   { name: 'Your Daily Mix' },
-  { name: 'Recently Played' },
+  { name: 'Recently Played', view: 'recently' },
   { name: 'Songs', view: 'songs' },
   { name: 'Albums' },
   { name: 'Artists' },
