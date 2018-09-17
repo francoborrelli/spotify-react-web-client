@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import withUiActions from '../../../../../hoc/uiChange';
+
 import {
   fetchGenres,
   fetchNewReleases,
@@ -43,23 +45,28 @@ class Categories extends Component {
   }
 
   renderCategories = () => {
-    let element;
     switch (this.props.active) {
       case 'New Releases':
         return this.props.categories.map(item => (
-          <Album item={item} key={item.name} />
+          <Album
+            item={item}
+            key={item.name}
+            onArtistClick={this.props.onArtistClick}
+          />
         ));
       case 'Featured':
         return this.props.categories.map(item => (
-          <Playlist item={item} key={item.name} />
+          <Playlist
+            item={item}
+            key={item.name}
+            onClick={() => this.props.onPlaylistClick(item.id)}
+          />
         ));
       default:
         return this.props.categories.map(item => (
           <Genre item={item} key={item.name} />
         ));
     }
-
-    return;
   };
 
   render = () => (
@@ -69,7 +76,6 @@ class Categories extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.tokenReducer.token ? state.tokenReducer.token : '',
     categories: state.browseReducer.categories
       ? state.browseReducer.categories
       : []
@@ -89,4 +95,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Categories);
+)(withUiActions(Categories));
