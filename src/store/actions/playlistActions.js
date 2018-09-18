@@ -60,8 +60,7 @@ export const fetchPlaylistError = () => {
   };
 };
 
-export const fetchPlaylist = (accessToken, id) => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+export const fetchPlaylist = id => {
   return async dispatch => {
     dispatch(fetchPlaylistPending());
 
@@ -74,7 +73,7 @@ export const fetchPlaylist = (accessToken, id) => {
       return error;
     }
     try {
-      const response = await axios.get('/playlists/' + id);
+      const response = await axios.get(`/playlists/${id}`);
       return onSuccess(response.data);
     } catch (error) {
       return onError(error);

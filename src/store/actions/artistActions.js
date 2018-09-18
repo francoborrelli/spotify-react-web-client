@@ -19,9 +19,8 @@ export const fetchArtistError = () => {
   };
 };
 
-export const fetchArtist = (accessToken, id) => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-  return async dispatch => {
+export const fetchArtist = id => {
+  return async (dispatch, getState) => {
     dispatch(fetchArtistPending());
 
     function onSuccess(artist) {
@@ -33,8 +32,12 @@ export const fetchArtist = (accessToken, id) => {
       return error;
     }
     try {
-      const response = await axios.get(`/artists/${id}`);
-      return onSuccess(response.data);
+      const country = getState().userReducer.user.country;
+      const artist = await axios.get(`/artists/${id}`);
+      const popular = await axios.get(
+        `/artists/${id}/top-tracks?country=${country}`
+      );
+      return onSuccess({ ...artist.data, popularTracks: popular.data.tracks });
     } catch (error) {
       return onError(error);
     }

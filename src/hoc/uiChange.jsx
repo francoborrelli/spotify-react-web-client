@@ -9,20 +9,15 @@ import { fetchArtist } from '../store/actions/artistActions';
 export default function(ComposedComponent, reducers) {
   class UiChanger extends Component {
     onPlaylistClick = id => {
-      const token = this.props.token;
-      if (token) {
-        this.props.fetchPlaylist(token, id);
-        this.props.setView('playlist');
-      }
+      this.props.fetchPlaylist(id);
+      this.props.setView('playlist');
     };
+
     onArtistClick = id => {
-      const token = this.props.token;
-      if (token) {
-        console.log(this);
-        this.props.fetchArtist(token, id);
-        this.props.setView('artist');
-      }
+      this.props.fetchArtist(id);
+      this.props.setView('artist');
     };
+
     render = () => (
       <ComposedComponent
         {...this.props}
@@ -31,12 +26,6 @@ export default function(ComposedComponent, reducers) {
       />
     );
   }
-
-  const mapStateToProps = state => {
-    return {
-      token: state.tokenReducer.token ? state.tokenReducer.token : ''
-    };
-  };
 
   const mapDispatchToProps = dispatch => {
     return bindActionCreators(
@@ -50,7 +39,7 @@ export default function(ComposedComponent, reducers) {
   };
 
   return connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(UiChanger);
 }

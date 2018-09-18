@@ -14,7 +14,6 @@ export const fetchCategoriesError = () => {
 };
 
 const fetchCategories = (accessToken, path) => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
   return async dispatch => {
     function onSuccess(categories) {
       dispatch(fetchCategoriesSuccess(categories));
@@ -25,7 +24,7 @@ const fetchCategories = (accessToken, path) => {
       return error;
     }
     try {
-      const response = await axios.get('/browse/' + path);
+      const response = await axios.get(`/browse/${path}`);
       return onSuccess(
         response.data.categories ||
           response.data.playlists ||
