@@ -1,11 +1,21 @@
 .left-section {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   position: fixed;
   top: 0px;
   bottom: 10px;
-  width: 190px;
-  overflow-y: scroll;
-  z-index: 100;
+  width: 205px;
   background-color: #0e0e10;
+
+  .side-menu-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -17px;
+    overflow-y: scroll;
+  }
 
   .buttom-section {
     text-align: center;
