@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './songsTable.css';
+import './playlistTable.css';
 
 import Song from './components/items/song';
 import EmptySection from './components/emptySection/empty';

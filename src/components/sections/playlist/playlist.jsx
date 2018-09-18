@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Header from './components/header/playlistHeader';
-import Table from '../../songsTable/songsTable';
+import Table from '../../playlistTable/playlistTable';
 
 class Playlist extends Component {
   render = () => {
