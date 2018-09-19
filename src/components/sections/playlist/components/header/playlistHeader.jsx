@@ -52,6 +52,12 @@ const playlistHeader = ({ playlist, album = false }) => {
         <button className="main-pause-play-btn">
           {true ? 'PLAY' : 'PAUSE'}
         </button>
+        {!album && (
+          <div className="followers">
+            <div>FOLLOWERS</div>
+            {playlist.followers ? playlist.followers.total : 0}
+          </div>
+        )}
       </div>
     </div>
   );
