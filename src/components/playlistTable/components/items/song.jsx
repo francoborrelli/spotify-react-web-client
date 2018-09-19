@@ -43,7 +43,12 @@ const song = props => {
         </p>
       </div>
       <div className="song-album">
-        <p>{props.item.track.album.name}</p>
+        <p
+          className="album"
+          onClick={() => props.onAlbumClick(props.item.track.album.id)}
+        >
+          {props.item.track.album.name}
+        </p>
       </div>
       <div className="song-added">
         <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>

@@ -2,8 +2,8 @@ export const playlistReducer = (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_PLAYLIST_MENU_PENDING':
       return {
-        fetchPlaylistsPending: true,
-        ...state
+        ...state,
+        fetchPlaylistsPending: true
       };
 
     case 'FETCH_PLAYLIST_MENU_SUCCESS':
@@ -36,9 +36,9 @@ export const playlistReducer = (state = {}, action) => {
 
     case 'FETCH_PLAYLIST_ERROR':
       return {
+        ...state,
         fetchPlaylistError: true,
-        fetchPlaylistPending: false,
-        ...state
+        fetchPlaylistPending: false
       };
 
     default:

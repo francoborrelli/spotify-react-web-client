@@ -16,9 +16,9 @@ export const playlistReducer = (state = {}, action) => {
 
     case 'FETCH_ARTIST_ERROR':
       return {
+        ...state,
         fetchArtistError: true,
-        fetchArtistPending: false,
-        ...state
+        fetchArtistPending: false
       };
 
     default:

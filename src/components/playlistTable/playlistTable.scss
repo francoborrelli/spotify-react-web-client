@@ -172,6 +172,9 @@
 .song-album,
 .song-album-header {
   width: 25%;
+  .album:hover {
+    text-decoration: underline;
+  }
 }
 
 .song-artist,

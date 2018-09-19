@@ -9,6 +9,7 @@ import Browse from '../../components/sections/browse/browser';
 import Songs from '../../components/sections/songList/songList';
 import Playlist from '../../components/sections/playlist/playlist';
 import Artist from '../../components/sections/artist/artist';
+import Album from '../../components/sections/album/album';
 
 import defaultProfile from './images/profile.png';
 import './mainSection.css';
@@ -31,6 +32,7 @@ class MainSection extends Component {
           {this.props.view === 'recently' ? <Songs recently /> : null}
           {this.props.view === 'songs' ? <Songs /> : null}
           {this.props.view === 'artist' ? <Artist /> : null}
+          {this.props.view === 'album' ? <Album /> : null}
         </div>
         <Footer />
       </div>

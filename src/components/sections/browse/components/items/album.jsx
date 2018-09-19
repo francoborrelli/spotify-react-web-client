@@ -1,10 +1,10 @@
 import React from 'react';
 
-const album = ({ item, key, onArtistClick }) => {
+const album = ({ item, key, onArtistClick, onClick }) => {
   const artists = item.artists ? item.artists.length : 0;
 
   return (
-    <li className="category-item" key={key}>
+    <li className="category-item" onClick={() => onClick(item.id)}>
       <div className="category-image playlist">
         <img
           alt="album cover"
@@ -15,7 +15,7 @@ const album = ({ item, key, onArtistClick }) => {
       <p className="album-artists">
         {item.artists
           ? item.artists.map((a, i) => (
-              <span>
+              <span key={i}>
                 <span
                   className="album-artist"
                   onClick={() => onArtistClick(a.id)}

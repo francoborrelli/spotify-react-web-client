@@ -44,7 +44,8 @@ class Categories extends Component {
         return this.props.categories.map(item => (
           <Album
             item={item}
-            key={item.name}
+            key={item.id}
+            onClick={() => this.props.onAlbumClick(item.id)}
             onArtistClick={this.props.onArtistClick}
           />
         ));
@@ -52,7 +53,7 @@ class Categories extends Component {
         return this.props.categories.map(item => (
           <Playlist
             item={item}
-            key={item.name}
+            key={item.id}
             onClick={() => this.props.onPlaylistClick(item.id)}
           />
         ));

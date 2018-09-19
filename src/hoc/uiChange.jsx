@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { setView } from '../store/actions/uiActions';
 import { fetchPlaylist } from '../store/actions/playlistActions';
 import { fetchArtist } from '../store/actions/artistActions';
+import { fetchAlbum } from '../store/actions/albumActions';
 
 export default function(ComposedComponent) {
   class UiChanger extends Component {
@@ -18,11 +19,17 @@ export default function(ComposedComponent) {
       this.props.setView('artist');
     };
 
+    onAlbumClick = id => {
+      this.props.fetchAlbum(id);
+      this.props.setView('album');
+    };
+
     render = () => (
       <ComposedComponent
         {...this.props}
         onPlaylistClick={this.onPlaylistClick}
         onArtistClick={this.onArtistClick}
+        onAlbumClick={this.onAlbumClick}
       />
     );
   }
@@ -32,6 +39,7 @@ export default function(ComposedComponent) {
       {
         fetchPlaylist,
         fetchArtist,
+        fetchAlbum,
         setView
       },
       dispatch

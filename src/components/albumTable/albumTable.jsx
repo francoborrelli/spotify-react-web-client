@@ -1,31 +1,28 @@
 import React, { Component } from 'react';
 
+import Song from './components/song';
+
 class Album extends Component {
   render() {
-    return this.props.title ? (
+    return (
       <div>
         <div className="song-header-container">
           <div className="song-title-header">
+            <p>#</p>
+          </div>
+          <div className="song-title-header">
             <p>Title</p>
           </div>
-          <div className="song-artist-header">
-            <p>Artist</p>
-          </div>
-          <div className="song-album-header">
-            <p>Album</p>
-          </div>
-          <div className="song-added-header">
-            <i className="fa fa-calendar-plus-o" aria-hidden="true" />
-          </div>
+          <div className="explicit" />
           <div className="song-length-header">
             <i className="fa fa-clock-o" aria-hidden="true" />
           </div>
         </div>
-        {this.props.songs.map(item => (
-          <Song item={item} key={item.track.id} />
+        {this.props.tracks.map((t, i) => (
+          <Song item={t} key={i} index={i} />
         ))}
       </div>
-    ) : null;
+    );
   }
 }
 
