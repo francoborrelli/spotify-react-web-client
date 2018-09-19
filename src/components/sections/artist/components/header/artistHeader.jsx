@@ -12,11 +12,18 @@ const artistHeader = ({ artist }) => (
       />
       <div className="current-artist-info">
         <h3>{artist.name}</h3>
-        <div>
-          <button className="main-pause-play-btn artist-button">
-            {'PLAY'}
-          </button>
-          <button className="follow-btn">{'Follow'}</button>
+        <div className="btns-section">
+          <div>
+            <button className="main-pause-play-btn artist-button">
+              {'PLAY'}
+            </button>
+          </div>
+          <div>
+            <button className="follow-btn">{'Follow'}</button>
+          </div>
+          <div>
+            <button className="menu-btn">···</button>
+          </div>
         </div>
       </div>
     </div>

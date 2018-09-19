@@ -1,0 +1,79 @@
+.explicit {
+  border: 1px solid #6666665c;
+  color: #6666665c;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 9px;
+  width: 28px;
+  margin-top: 12px;
+  line-height: 12px;
+}
+
+.popular-container {
+  padding-top: 20px;
+  .title {
+    font-size: 20px;
+  }
+  .songs {
+    padding-top: 10px;
+    img {
+      height: 42px;
+    }
+  }
+  p {
+    line-height: 14px;
+  }
+
+  .user-song-item {
+    border-bottom: 1px solid #6666665c;
+    height: 41px;
+  }
+  .more-btn {
+    padding-left: 10px;
+    background: black;
+    opacity: 0.7;
+    font-family: 'Proxima Nova', Georgia, sans-serif;
+    color: #fff;
+    border: 1px solid white;
+    padding: 10px;
+    letter-spacing: 1px;
+    margin: 20px 2px 20px 2px;
+    border-radius: 20px;
+    width: 160px;
+    &:hover {
+      margin: 20px 0px 18px 0px;
+      width: 162px;
+    }
+  }
+
+  .r-song {
+    width: 20px;
+    text-align: center;
+    padding: 10px;
+    line-height: 14px;
+    span {
+      vertical-align: -webkit-baseline-middle;
+    }
+    .fa {
+      display: none;
+      font-size: 26px;
+      top: 7.5px;
+      color: #ccc;
+      cursor: pointer;
+      -webkit-text-stroke: 2px #333333;
+      left: 5px;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+    &:hover {
+      i {
+        display: inline;
+      }
+      span {
+        display: none;
+      }
+    }
+  }
+}

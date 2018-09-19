@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Header from './components/header/artistHeader';
+import Popular from './components/popular/popular';
 
 class Artist extends Component {
-  render = () => <Header artist={this.props.artist} />;
+  render = () => (
+    <div>
+      <Header artist={this.props.artist} />
+      <Popular
+        tracks={
+          this.props.artist.popularTracks ? this.props.artist.popularTracks : []
+        }
+      />
+    </div>
+  );
 }
 
 const mapStateToProps = state => {

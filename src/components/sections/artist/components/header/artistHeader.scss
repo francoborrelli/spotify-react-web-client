@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     padding-left: 20px;
-    top: 140px;
+    top: 175px;
     h3 {
       font-size: 70px;
       margin-bottom: 0px;
@@ -25,11 +25,27 @@
       font-family: 'Proxima Thin', Georgia, sans-serif;
       font-size: 13px;
     }
+
+    .btns-section {
+      display: inline-flex;
+      div {
+        width: 110px;
+      }
+    }
+
     .main-pause-play-btn,
     .follow-btn {
       margin: 10px 0px;
+      font-size: 14px;
+
+      &:hover {
+        margin: 9px 0px;
+        height: 38px;
+        width: 103px;
+      }
     }
 
+    .menu-btn,
     .follow-btn {
       padding-left: 10px;
       background: black;
@@ -37,11 +53,25 @@
       font-family: 'Proxima Nova', Georgia, sans-serif;
       color: #fff;
       border: 1px solid white;
-      border-radius: 20px;
       padding: 10px;
-      width: 100px;
-      font-size: 14px;
       letter-spacing: 1px;
+    }
+
+    .menu-btn {
+      border-radius: 25px;
+      width: 38px;
+      margin-top: 10px;
+      font-size: 15px;
+      &:hover {
+        height: 39px;
+        width: 39px;
+        margin-top: 9px;
+      }
+    }
+
+    .follow-btn {
+      border-radius: 20px;
+      width: 100px;
     }
   }
   .artist-button {
