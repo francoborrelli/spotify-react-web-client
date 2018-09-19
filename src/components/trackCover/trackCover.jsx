@@ -1,11 +1,19 @@
 import React from 'react';
 
+import withPlayer from '../../hoc/player';
+
 const trackCover = props => {
-  return (
+  return props.playing ? (
     <div className="cover">
-      <img alt="cover" src={props.src} style={{ width: '100%' }} />
+      <img
+        alt="cover"
+        src={
+          props.currentSong.album ? props.currentSong.album.images[1].url : ''
+        }
+        style={{ width: '100%' }}
+      />
     </div>
-  );
+  ) : null;
 };
 
-export default trackCover;
+export default withPlayer(trackCover);

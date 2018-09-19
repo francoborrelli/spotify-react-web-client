@@ -1,15 +1,41 @@
-import React from "react";
+import React, { Component } from 'react';
 
-import './songsPlayer.css'
+import './songsPlayer.css';
 
-import DetailSection from "./ components/detailsSection";
-import SongsControl from "./ components/songsControl";
+import DetailSection from './ components/detailsSection';
+import SongsControl from './ components/songsControl';
+import withPlayer from '../../hoc/player';
 
-const songsPlayer = props => (
-  <div className="player-container">
-    <DetailSection songName="canción" artistName="franco"></DetailSection>
-    <SongsControl></SongsControl>
-  </div>
-);
+class SongsPlayer extends Component {
+  state = {
+    fetch: false
+  };
 
-export default songsPlayer;
+  componentDidUpdate() {
+    if (!this.state.fetch) {
+      this.props.fetchCurrentSong();
+      this.setState({ fetch: true });
+    }
+  }
+
+  render = () => (
+    <div className="player-container">
+      {this.props.playing ? (
+        <DetailSection
+          songName={this.props.currentSong.name}
+          artistName={
+            this.props.currentSong.artists
+              ? this.props.currentSong.artists[0].name
+              : ''
+          }
+        />
+      ) : null}
+      <SongsControl
+        nextSong={this.props.nextSong}
+        previousSong={this.props.previousSong}
+      />
+    </div>
+  );
+}
+
+export default withPlayer(SongsPlayer);

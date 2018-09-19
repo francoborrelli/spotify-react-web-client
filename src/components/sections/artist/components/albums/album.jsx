@@ -1,10 +1,12 @@
 import React from 'react';
 import moment from 'moment';
 
+import withUiActions from '../../../../../hoc/uiChange';
+
 import './albums.css';
 import AlbumTable from '../../../../albumTable/albumTable';
 
-const albums = ({ album }) => (
+const album = ({ album, onAlbumClick }) => (
   <div>
     <div className="album-container">
       <div>
@@ -14,11 +16,13 @@ const albums = ({ album }) => (
         <span className="album-year">
           {moment(album.release_date).format('YYYY')}
         </span>
-        <h1>{album.name}</h1>
+        <h1 className="album-title" onClick={() => onAlbumClick(album.id)}>
+          {album.name}
+        </h1>
       </div>
     </div>
     <AlbumTable tracks={[]} />
   </div>
 );
 
-export default albums;
+export default withUiActions(album);

@@ -11,7 +11,8 @@ import MainSection from './containers/mainSection/mainSection';
 
 const client_id = process.env.REACT_APP_CLIENT_ID;
 const redirect_uri = process.env.REACT_APP_REDIRECT_ID;
-const scope = 'user-read-private user-read-email playlist-read-private';
+const scope =
+  'user-read-private user-read-email playlist-read-private user-modify-playback-state';
 
 class App extends Component {
   componentDidMount() {

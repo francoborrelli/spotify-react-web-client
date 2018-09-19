@@ -8,6 +8,7 @@ import libraryReducer from './libraryReducer';
 import uiReducer from './uiReducer';
 import artistReducer from './artistReducer';
 import albumReducer from './albumReducer';
+import playerReducer from './playerReducer';
 
 export default combineReducers({
   tokenReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
   libraryReducer,
   uiReducer,
   artistReducer,
-  albumReducer
+  albumReducer,
+  playerReducer
 });
