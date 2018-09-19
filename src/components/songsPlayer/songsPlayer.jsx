@@ -22,7 +22,7 @@ class SongsPlayer extends Component {
     <div className="player-container">
       {this.props.playing ? (
         <DetailSection
-          songName={this.props.currentSong.name}
+          songName={this.props.currentSong.name || ''}
           artists={this.props.currentSong.artists || []}
         />
       ) : null}

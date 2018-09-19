@@ -1,3 +1,51 @@
+@keyframes slideshow {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -200%;
+  }
+}
+
+.player-container {
+  .details-section {
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    left: 20px;
+    top: 7px;
+    height: 56px;
+    width: 250px;
+    line-height: 14px;
+    cursor: default;
+    text-overflow: ellipsis;
+  }
+
+  .song-name {
+    font-family: 'Proxima Nova', Georgia, sans-serif;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 10px;
+
+    &.overflow {
+      -webkit-transition: 5.3s;
+      -moz-transition: 5.3s;
+      transition: 5.3s;
+
+      -webkit-transition-timing-function: linear;
+      -moz-transition-timing-function: linear;
+      transition-timing-function: linear;
+
+      &:hover {
+        margin-left: -250px;
+        text-overflow: initial;
+      }
+    }
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
 .song-control {
   justify-content: center;
   display: flex;
@@ -23,7 +71,7 @@
 }
 
 .artist-name {
-  span {
+  .artist {
     &:hover {
       text-decoration: underline;
       color: #fff;
