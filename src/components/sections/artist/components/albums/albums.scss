@@ -1,0 +1,25 @@
+.albums-title {
+  border-bottom: 1px solid #6666665c;
+  padding-bottom: 10px;
+}
+
+.album-container {
+  padding-bottom: 20px;
+  display: flex;
+  padding-top: 15px;
+  img {
+    display: inline;
+    height: 150px;
+  }
+  .album-info {
+    padding-left: 10px;
+    position: relative;
+    .album-year {
+      color: #cccccc;
+      font-size: 13px;
+    }
+    h1 {
+      margin-top: 10px;
+    }
+  }
+}

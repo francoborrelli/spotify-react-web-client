@@ -13,8 +13,7 @@ export const fetchUserError = () => {
   };
 };
 
-export const fetchUser = accessToken => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+export const fetchUser = () => {
   return async dispatch => {
     function onSuccess(user) {
       dispatch(fetchUserSuccess(user));

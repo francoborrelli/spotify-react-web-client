@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {
-  fetchPlaylistsMenu,
-  fetchPlaylist
-} from '../../store/actions/playlistActions';
-import { setView } from '../../store/actions/uiActions';
+import { fetchPlaylistsMenu } from '../../store/actions/playlistActions';
 
 import './siderMenu.css';
 
+import withUiActions from '../../hoc/uiChange';
 import MenuItem from './components/menuItem';
 
 const sectionOne = [{ name: 'Browse', view: 'browse' }, { name: 'Radio' }];
@@ -37,15 +34,14 @@ class SiderMenu extends Component {
     }
   }
 
-  setActive(item, playlist) {
+  setActive = (item, playlist) => {
     this.setState({ active: item.name });
     if (playlist) {
-      this.props.setView('playlist');
-      this.props.fetchPlaylist(this.props.token, item.id);
+      this.props.onPlaylistClick(item.id);
     } else {
       this.props.setView(item.view || 'browse');
     }
-  }
+  };
 
   generateItems(items, playlist = false) {
     return items.map(item => (
@@ -76,24 +72,15 @@ class SiderMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.tokenReducer.token ? state.tokenReducer.token : '',
-    playlists: state.playlistReducer.playlists
-      ? state.playlistReducer.playlists
-      : null
+    token: state.tokenReducer.token || null,
+    playlists: state.playlistReducer.playlists || null
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      fetchPlaylistsMenu,
-      fetchPlaylist,
-      setView
-    },
-    dispatch
-  );
+  return bindActionCreators({ fetchPlaylistsMenu }, dispatch);
 };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SiderMenu);
+)(withUiActions(SiderMenu));

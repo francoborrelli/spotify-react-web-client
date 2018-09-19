@@ -13,7 +13,7 @@ export const fetchCategoriesError = () => {
   };
 };
 
-const fetchCategories = (accessToken, path) => {
+const fetchCategories = path => {
   return async dispatch => {
     function onSuccess(categories) {
       dispatch(fetchCategoriesSuccess(categories));
@@ -36,20 +36,20 @@ const fetchCategories = (accessToken, path) => {
   };
 };
 
-export const fetchGenres = accessToken => {
+export const fetchGenres = () => {
   return async dispatch => {
-    dispatch(fetchCategories(accessToken, 'categories'));
+    dispatch(fetchCategories('categories'));
   };
 };
 
-export const fetchNewReleases = accessToken => {
+export const fetchNewReleases = () => {
   return async dispatch => {
-    dispatch(fetchCategories(accessToken, 'new-releases'));
+    dispatch(fetchCategories('new-releases'));
   };
 };
 
-export const fetchFeatured = accessToken => {
+export const fetchFeatured = () => {
   return async dispatch => {
-    dispatch(fetchCategories(accessToken, 'featured-playlists'));
+    dispatch(fetchCategories('featured-playlists'));
   };
 };

@@ -1,11 +1,13 @@
 import React from 'react';
-import moment from 'moment';
 
 const song = props => {
   const buttonClass =
     props.track === props.songId && !props.songPaused
       ? 'fa-play-circle-o'
       : 'fa-pause-circle-o';
+
+  const popularity = Math.round(props.item.popularity / 12.5);
+  let str = '|';
 
   return (
     <li className="user-song-item">
@@ -19,11 +21,13 @@ const song = props => {
       <div className="song-title">
         <p>{props.item.name}</p>
       </div>
-      {props.item.explicit ? (
-        <div className="song-explicit">
-          <div className="explicit">explicit</div>
-        </div>
-      ) : null}
+      <div className="song-explicit">
+        {props.item.explicit ? <div className="explicit">EXPLICIT</div> : null}
+      </div>
+      <div className="song-popularity">
+        <span>{str.repeat(popularity)}</span>
+        <span className="darker">{str.repeat(8 - popularity)}</span>
+      </div>
     </li>
   );
 };

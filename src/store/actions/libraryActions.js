@@ -19,8 +19,7 @@ export const fetchSongsError = () => {
   };
 };
 
-export const fetchSongs = accessToken => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+export const fetchSongs = () => {
   return async dispatch => {
     dispatch(fetchSongsPending());
 
@@ -41,8 +40,7 @@ export const fetchSongs = accessToken => {
   };
 };
 
-export const fetchRecentSongs = accessToken => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+export const fetchRecentSongs = () => {
   return async dispatch => {
     dispatch(fetchSongsPending());
 

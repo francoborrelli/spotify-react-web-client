@@ -1,21 +1,15 @@
-.explicit {
-  border: 1px solid #6666665c;
-  color: #6666665c;
-  border-radius: 4px;
-  padding: 2px 7px;
-  font-size: 9px;
-  width: 28px;
-  margin-top: 12px;
-  line-height: 12px;
+button {
+  outline: none;
 }
 
 .popular-container {
   padding-top: 20px;
+  padding-left: 10px;
+  max-width: 600px;
   .title {
     font-size: 20px;
   }
   .songs {
-    padding-top: 10px;
     img {
       height: 42px;
     }
@@ -27,11 +21,50 @@
   .user-song-item {
     border-bottom: 1px solid #6666665c;
     height: 41px;
+    &:first-of-type {
+      border-top: 1px solid #6666665c;
+    }
+    &:hover {
+      .explicit {
+        color: #ccc;
+      }
+    }
+    .explicit {
+      border: 1px solid #6666665c;
+      color: #6666665c;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 9px;
+      width: 35px;
+      margin-top: 12px;
+      line-height: 12px;
+    }
+    .r-song {
+      width: 40px;
+    }
+    .song-title {
+      width: 50%;
+    }
+
+    .song-explicit {
+      width: 100px;
+    }
+
+    .song-popularity {
+      width: 10%;
+      text-align: end;
+      margin-top: 11px;
+    }
+
+    .darker {
+      color: #666;
+    }
   }
+
   .more-btn {
     padding-left: 10px;
-    background: black;
-    opacity: 0.7;
+    text-transform: uppercase;
+    background: transparent;
     font-family: 'Proxima Nova', Georgia, sans-serif;
     color: #fff;
     border: 1px solid white;
@@ -39,10 +72,9 @@
     letter-spacing: 1px;
     margin: 20px 2px 20px 2px;
     border-radius: 20px;
-    width: 160px;
+    width: 170px;
     &:hover {
-      margin: 20px 0px 18px 0px;
-      width: 162px;
+      width: 172px;
     }
   }
 
@@ -56,8 +88,8 @@
     }
     .fa {
       display: none;
-      font-size: 26px;
-      top: 7.5px;
+      font-size: 30px;
+      top: 7px;
       color: #ccc;
       cursor: pointer;
       -webkit-text-stroke: 2px #333333;
@@ -68,6 +100,7 @@
       }
     }
     &:hover {
+      padding-top: 5px;
       i {
         display: inline;
       }

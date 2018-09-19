@@ -19,8 +19,7 @@ export const fetchPlaylistMenuError = () => {
   };
 };
 
-export const fetchPlaylistsMenu = accessToken => {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+export const fetchPlaylistsMenu = () => {
   return async dispatch => {
     dispatch(fetchPlaylistMenuPending());
 
@@ -61,7 +60,7 @@ export const fetchPlaylistError = () => {
 };
 
 export const fetchPlaylist = id => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(fetchPlaylistPending());
 
     function onSuccess(playlist) {

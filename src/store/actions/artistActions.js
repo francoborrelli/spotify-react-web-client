@@ -37,7 +37,13 @@ export const fetchArtist = id => {
       const popular = await axios.get(
         `/artists/${id}/top-tracks?country=${country}`
       );
-      return onSuccess({ ...artist.data, popularTracks: popular.data.tracks });
+      const albums = await axios.get(`/artists/${id}/albums`);
+      return onSuccess({
+        ...artist.data,
+        popularTracks: popular.data.tracks,
+        albums: albums.data.items.filter(i => i.album_type === 'album'),
+        singles: albums.data.items.filter(i => i.album_type === 'single')
+      });
     } catch (error) {
       return onError(error);
     }

@@ -21,7 +21,7 @@ class App extends Component {
       this.requestToken();
     } else {
       this.props.setToken(hashParams.access_token);
-      this.props.fetchUser(hashParams.access_token);
+      this.props.fetchUser();
       window.location.hash = '';
     }
   }

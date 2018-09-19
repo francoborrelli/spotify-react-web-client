@@ -17,7 +17,7 @@ class PopularTracks extends Component {
   renderItems() {
     const tracks = this.props.tracks;
     const items = this.state.showAll ? tracks : tracks.slice(0, 5);
-    return items.map((i, key) => <Song item={i} index={key} key={key} />);
+    return items.map((i, key) => <Song item={i} index={key + 1} key={key} />);
   }
 
   toddleHandler = () => {
@@ -27,7 +27,7 @@ class PopularTracks extends Component {
   render() {
     return (
       <div className="popular-container">
-        <span className="title">Popular</span>
+        <p>Popular</p>
         <div className="songs">{this.renderItems()}</div>
         <button className="more-btn" onClick={this.toddleHandler}>
           {this.state.showAll ? 'Show only 5 songs' : 'Show 5 more'}

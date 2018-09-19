@@ -6,7 +6,7 @@ import { setView } from '../store/actions/uiActions';
 import { fetchPlaylist } from '../store/actions/playlistActions';
 import { fetchArtist } from '../store/actions/artistActions';
 
-export default function(ComposedComponent, reducers) {
+export default function(ComposedComponent) {
   class UiChanger extends Component {
     onPlaylistClick = id => {
       this.props.fetchPlaylist(id);

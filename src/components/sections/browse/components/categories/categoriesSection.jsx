@@ -16,29 +16,23 @@ import Playlist from '../items/playlist';
 
 class Categories extends Component {
   componentDidMount() {
-    const token = this.props.token;
-    if (token) {
-      this.props.fetchGenres(token);
-    }
+    this.props.fetchGenres();
   }
 
   componentDidUpdate(prevProps) {
-    const token = this.props.token;
-
     if (
-      token !== '' &&
-      (prevProps.categories.length === 0 ||
-        this.props.active !== prevProps.active)
+      prevProps.categories.length === 0 ||
+      this.props.active !== prevProps.active
     ) {
       switch (this.props.active) {
         case 'New Releases':
-          this.props.fetchNewReleases(token);
+          this.props.fetchNewReleases();
           break;
         case 'Featured':
-          this.props.fetchFeatured(token);
+          this.props.fetchFeatured();
           break;
         case 'Genres & Moods':
-          this.props.fetchGenres(token);
+          this.props.fetchGenres();
           break;
       }
     }
