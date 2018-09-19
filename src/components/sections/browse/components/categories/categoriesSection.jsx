@@ -59,7 +59,7 @@ class Categories extends Component {
         ));
       default:
         return this.props.categories.map(item => (
-          <Genre item={item} key={item.name} />
+          <Genre item={item} key={item.id} />
         ));
     }
   };

@@ -22,10 +22,9 @@ const detailsSection = props => {
       </p>
       <div className="artist-name" style={artistName}>
         {props.artists.map((artist, i) => (
-          <span>
+          <span key={i}>
             <span
               className="artist"
-              key={i}
               onClick={() => props.onArtistClick(artist.id)}
             >
               {artist.name}
