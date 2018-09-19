@@ -37,7 +37,7 @@ export const nextSong = () => {
   return async dispatch => {
     await axios
       .post('/me/player/next')
-      .then(setTimeout(() => dispatch(fetchCurrentSong(), 1500)));
+      .then(() => dispatch(fetchCurrentSong()));
     dispatch(fetchCurrentSong());
   };
 };

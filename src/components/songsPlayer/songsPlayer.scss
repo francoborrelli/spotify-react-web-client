@@ -21,3 +21,12 @@
   font-size: 40px;
   margin: -2px 10px;
 }
+
+.artist-name {
+  span {
+    &:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+  }
+}
