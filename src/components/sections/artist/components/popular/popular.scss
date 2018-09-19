@@ -2,7 +2,16 @@ button {
   outline: none;
 }
 
+.album-container {
+  display: block !important;
+}
+
 .popular-container {
+  max-width: 600px;
+}
+
+.popular-container,
+.album-container {
   padding-top: 20px;
   padding-left: 10px;
   max-width: 600px;

@@ -54,6 +54,7 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
+    color: #ccc;
   }
 
   .album-title,
@@ -67,9 +68,5 @@
       text-decoration: underline;
       color: #fff;
     }
-  }
-
-  .album-artist {
-    color: grey;
   }
 }

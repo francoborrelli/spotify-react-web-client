@@ -19,9 +19,16 @@ const song = props => {
 
   return (
     <li className="user-song-item">
-      <div className="play-song">
-        <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
-      </div>
+      {props.isAlbum ? (
+        <div className="r-song">
+          <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
+          <span>{props.index}</span>
+        </div>
+      ) : (
+        <div className="play-song">
+          <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
+        </div>
+      )}
       <div className="song-title">
         <p>{props.item.track.name}</p>
       </div>
@@ -42,17 +49,28 @@ const song = props => {
             : ''}
         </p>
       </div>
-      <div className="song-album">
-        <p
-          className="album"
-          onClick={() => props.onAlbumClick(props.item.track.album.id)}
-        >
-          {props.item.track.album.name}
-        </p>
-      </div>
-      <div className="song-added">
-        <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>
-      </div>
+      {!props.isAlbum && (
+        <div className="song-album">
+          <p
+            className="album"
+            onClick={() => props.onAlbumClick(props.item.track.album.id)}
+          >
+            {props.item.track.album.name}
+          </p>
+        </div>
+      )}
+      {!props.isAlbum && (
+        <div className="song-added">
+          <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>
+        </div>
+      )}
+      {props.isAlbum && (
+        <div className="song-explicit">
+          {props.item.track.explicit ? (
+            <p className="explicit">EXPLICIT</p>
+          ) : null}
+        </div>
+      )}
       <div className="song-length">
         <p>{msToMinutesAndSeconds(props.item.track.duration_ms)}</p>
       </div>
