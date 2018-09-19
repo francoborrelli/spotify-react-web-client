@@ -25,10 +25,14 @@ const playlistHeader = ({ playlist, album = false }) => {
       <div className="playlist-info-container">
         <p className="playlist-text">{album ? 'ALBUM' : 'PLAYLIST'}</p>
         <h3 className="header-title playlist">{playlist.name}</h3>
+        {!album &&
+          playlist.description && (
+            <p className="description">{playlist.description}</p>
+          )}
         {!album && (
           <p className="created-by">
-            <span className="lighter-text">{owner}</span>
-            {''} - {songs} songs
+            {'Created by: '}
+            <span className="lighter-text">{owner}</span> - {songs} songs
           </p>
         )}
         {album && (

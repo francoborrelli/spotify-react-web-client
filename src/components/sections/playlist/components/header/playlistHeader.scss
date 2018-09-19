@@ -20,22 +20,31 @@
 .playlist-info-container {
   padding-left: 20px;
   position: relative;
-  top: 20px;
-}
+  top: 5px;
 
-.created-by {
-  font-family: 'Proxima Thin', Georgia, sans-serif;
-  font-size: 13px;
-  color: #aaa;
-  padding: 8px 0;
-  .artist {
-    padding-bottom: 10px;
+  .description {
+    font-family: 'Proxima Thin', Georgia, sans-serif;
+    margin: 0px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #aaa;
   }
-}
 
-.lighter-text {
-  font-family: 'Proxima Nova', Georgia, sans-serif;
-  color: #fff;
+  .created-by {
+    margin-top: 10px;
+    font-family: 'Proxima Thin', Georgia, sans-serif;
+    font-size: 13px;
+    color: #aaa;
+    padding: 8px 0;
+    .artist {
+      padding-bottom: 10px;
+    }
+  }
+
+  .lighter-text {
+    font-family: 'Proxima Nova', Georgia, sans-serif;
+    color: #fff;
+  }
 }
 
 .playlist-text {
