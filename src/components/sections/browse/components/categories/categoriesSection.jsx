@@ -7,7 +7,8 @@ import withUiActions from '../../../../../hoc/uiChange';
 import {
   fetchGenres,
   fetchNewReleases,
-  fetchFeatured
+  fetchFeatured,
+  fetchPlaylistForCategory
 } from '../../../../../store/actions/browseActions';
 
 import Album from '../items/album';
@@ -49,17 +50,24 @@ class Categories extends Component {
             onArtistClick={this.props.onArtistClick}
           />
         ));
-      case 'Featured':
+      case 'Genres & Moods':
+        return this.props.categories.map(item => (
+          <Genre
+            item={item}
+            onClick={() => {
+              this.props.fetchPlaylistForCategory(item.id);
+              this.props.setActive(item.name);
+            }}
+            key={item.id}
+          />
+        ));
+      default:
         return this.props.categories.map(item => (
           <Playlist
             item={item}
             key={item.id}
             onClick={() => this.props.onPlaylistClick(item.id)}
           />
-        ));
-      default:
-        return this.props.categories.map(item => (
-          <Genre item={item} key={item.id} />
         ));
     }
   };
@@ -82,7 +90,8 @@ const mapDispatchToProps = dispatch => {
     {
       fetchGenres,
       fetchNewReleases,
-      fetchFeatured
+      fetchFeatured,
+      fetchPlaylistForCategory
     },
     dispatch
   );

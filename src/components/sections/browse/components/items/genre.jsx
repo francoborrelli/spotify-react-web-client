@@ -1,7 +1,7 @@
 import React from 'react';
 
-const genre = ({ item }) => (
-  <li className="category-item">
+const genre = ({ item, onClick }) => (
+  <li className="category-item" onClick={onClick}>
     <div className="category-image">
       <img
         alt="genre cover"

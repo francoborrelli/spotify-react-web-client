@@ -30,7 +30,7 @@ class Browse extends Component {
       <h3 className="browse-title">
         {this.state.active ? this.state.active : 'Genres & Moods'}
       </h3>
-      <Categories active={this.state.active} />
+      <Categories active={this.state.active} setActive={this.setActive} />
     </div>
   );
 }

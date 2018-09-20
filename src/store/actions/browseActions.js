@@ -24,7 +24,7 @@ const fetchCategories = path => {
       return error;
     }
     try {
-      const response = await axios.get(`/browse/${path}`);
+      const response = await axios.get(`/browse/${path}?limit=28`);
       return onSuccess(
         response.data.categories ||
           response.data.playlists ||
@@ -51,5 +51,11 @@ export const fetchNewReleases = () => {
 export const fetchFeatured = () => {
   return async dispatch => {
     dispatch(fetchCategories('featured-playlists'));
+  };
+};
+
+export const fetchPlaylistForCategory = id => {
+  return async dispatch => {
+    dispatch(fetchCategories(`categories/${id}/playlists`));
   };
 };
