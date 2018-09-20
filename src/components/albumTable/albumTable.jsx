@@ -7,6 +7,41 @@ import './albumTable.css';
 import Song from '../../components/playlistTable/components/items/song';
 
 class Album extends Component {
+  groupByCD() {
+    return this.props.tracks.reduce((memo, x) => {
+      if (!memo[x['disc_number']]) {
+        memo[x['disc_number']] = [];
+      }
+      memo[x['disc_number']].push(x);
+      return memo;
+    }, []);
+  }
+
+  renderTracks() {
+    const lastTrack = this.props.tracks[this.props.tracks.length - 1];
+    const count = lastTrack ? lastTrack.disc_number : 1;
+
+    if (count > 1) {
+      const cds = this.groupByCD();
+      return cds.map((cd, i) => (
+        <div>
+          <div className="cd-header">
+            <i className="fa fa-dot-circle-o" />
+            {` ${i}`}
+          </div>
+          {this.renderSimple(cd)}
+        </div>
+      ));
+    }
+
+    return this.renderSimple(this.props.tracks);
+  }
+
+  renderSimple = cd =>
+    cd.map((t, i) => (
+      <Song item={{ track: t }} key={i} index={i + 1} isAlbum={true} />
+    ));
+
   render() {
     return (
       <div className="album-container">
@@ -25,9 +60,7 @@ class Album extends Component {
             <i className="fa fa-clock-o" aria-hidden="true" />
           </div>
         </div>
-        {this.props.tracks.map((t, i) => (
-          <Song item={{ track: t }} key={i} index={i} isAlbum={true} />
-        ))}
+        {this.renderTracks()}
       </div>
     );
   }

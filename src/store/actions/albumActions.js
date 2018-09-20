@@ -25,7 +25,7 @@ export const fetchAlbum = id => {
     }
     try {
       const album = await axios.get(`/albums/${id}`);
-      const tracks = await axios.get(`/albums/${id}/tracks`);
+      const tracks = await axios.get(`/albums/${id}/tracks?limit=50`);
       return onSuccess({ ...album.data, tracks: tracks.data.items });
     } catch (error) {
       return onError(error);
