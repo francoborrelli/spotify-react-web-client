@@ -28,6 +28,13 @@
   .created-by {
     font-family: 'Proxima Thin', Georgia, sans-serif;
     font-size: 13px;
+    .artist-link {
+      color: #fff;
+      cursor: default;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .followers {

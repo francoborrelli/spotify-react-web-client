@@ -1,11 +1,12 @@
 import React from 'react';
 
 import moment from 'moment';
+import withUiActions from '../../../../../hoc/uiChange';
 
 import './playlistHeader.css';
 import defaultCover from '../../../../../containers/mainSection/images/playlist.png';
 
-const playlistHeader = ({ playlist, album = false }) => {
+const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
   const img =
     playlist.images && playlist.images.length !== 0
       ? playlist.images[0].url
@@ -39,7 +40,20 @@ const playlistHeader = ({ playlist, album = false }) => {
           <div>
             <div className="created-by">
               <div className="artist">
-                By: {playlist.artists ? playlist.artists[0].name : ''}
+                By:{' '}
+                {playlist.artists
+                  ? playlist.artists.map((a, i) => (
+                      <span key={i}>
+                        <span
+                          onClick={() => onArtistClick(a.id)}
+                          className="artist-link"
+                        >
+                          {a.name}
+                        </span>
+                        {playlist.artists.length - 1 === i ? '' : ' ,'}
+                      </span>
+                    ))
+                  : ''}
               </div>
               <span className="lighter-text">
                 {' '}
@@ -63,4 +77,4 @@ const playlistHeader = ({ playlist, album = false }) => {
   );
 };
 
-export default playlistHeader;
+export default withUiActions(playlistHeader);
