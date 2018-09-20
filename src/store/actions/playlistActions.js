@@ -72,8 +72,12 @@ export const fetchPlaylist = id => {
       return error;
     }
     try {
-      const response = await axios.get(`/playlists/${id}`);
-      return onSuccess(response.data);
+      const userId = getState().userReducer.user.id;
+      const playlist = await axios.get(`/playlists/${id}`);
+      const follows = await axios.get(
+        `/playlists/${id}/followers/contains?ids=${userId}`
+      );
+      return onSuccess({ ...playlist.data, follows: follows.data[0] });
     } catch (error) {
       return onError(error);
     }
