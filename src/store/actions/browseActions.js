@@ -14,7 +14,7 @@ export const fetchCategoriesError = () => {
 };
 
 const fetchCategories = path => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     function onSuccess(categories) {
       dispatch(fetchCategoriesSuccess(categories));
       return categories;
@@ -24,7 +24,10 @@ const fetchCategories = path => {
       return error;
     }
     try {
-      const response = await axios.get(`/browse/${path}?limit=28`);
+      const country = getState().userReducer.user.country;
+      const response = await axios.get(
+        `/browse/${path}country=${country}&limit=28`
+      );
       return onSuccess(
         response.data.categories ||
           response.data.playlists ||
@@ -38,24 +41,30 @@ const fetchCategories = path => {
 
 export const fetchGenres = () => {
   return async dispatch => {
-    dispatch(fetchCategories('categories'));
+    dispatch(fetchCategories('categories?offset=1&'));
   };
 };
 
 export const fetchNewReleases = () => {
   return async dispatch => {
-    dispatch(fetchCategories('new-releases'));
+    dispatch(fetchCategories('new-releases?'));
   };
 };
 
 export const fetchFeatured = () => {
   return async dispatch => {
-    dispatch(fetchCategories('featured-playlists'));
+    dispatch(fetchCategories('featured-playlists?'));
+  };
+};
+
+export const fetchCharts = () => {
+  return async dispatch => {
+    dispatch(fetchCategories(`categories/toplists/playlists?&`));
   };
 };
 
 export const fetchPlaylistForCategory = id => {
   return async dispatch => {
-    dispatch(fetchCategories(`categories/${id}/playlists`));
+    dispatch(fetchCategories(`categories/${id}/playlists?`));
   };
 };

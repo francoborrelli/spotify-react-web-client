@@ -1,6 +1,11 @@
 import React from 'react';
 
-const playlist = ({ item, key, onClick }) => (
+const style = {
+  marginTop: 0,
+  textAlign: 'center'
+};
+
+const playlist = ({ item, key, onClick, chart = false }) => (
   <li className="category-item" key={key} onClick={onClick}>
     <div className="category-image playlist">
       <img
@@ -8,6 +13,11 @@ const playlist = ({ item, key, onClick }) => (
         src={item.icons ? item.icons[0].url : item.images[0].url}
       />
     </div>
+    {chart && (
+      <div>
+        <p style={style}>{item.name}</p>
+      </div>
+    )}
   </li>
 );
 

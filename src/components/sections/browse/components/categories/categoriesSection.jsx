@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -8,6 +8,7 @@ import {
   fetchGenres,
   fetchNewReleases,
   fetchFeatured,
+  fetchCharts,
   fetchPlaylistForCategory
 } from '../../../../../store/actions/browseActions';
 
@@ -35,14 +36,18 @@ class Categories extends Component {
         case 'Genres & Moods':
           this.props.fetchGenres();
           break;
+        case 'Charts':
+          this.props.fetchCharts();
+          break;
       }
     }
   }
 
   renderCategories = () => {
+    let categories = this.props.categories;
     switch (this.props.active) {
       case 'New Releases':
-        return this.props.categories.map(item => (
+        return categories.map(item => (
           <Album
             item={item}
             key={item.id}
@@ -51,7 +56,7 @@ class Categories extends Component {
           />
         ));
       case 'Genres & Moods':
-        return this.props.categories.map(item => (
+        return categories.map(item => (
           <Genre
             item={item}
             onClick={() => {
@@ -61,8 +66,33 @@ class Categories extends Component {
             key={item.id}
           />
         ));
+      case 'Charts':
+        const charts = categories.filter(c => c.name.includes('50'));
+        categories = categories.filter(c => !c.name.includes('50'));
+        return (
+          <Fragment>
+            {charts.map(item => (
+              <Playlist
+                chart
+                item={item}
+                key={item.id}
+                onClick={() => this.props.onPlaylistClick(item.id)}
+              />
+            ))}
+            <div className="toplists">
+              <h3 className="browse-title"> Top Lists</h3>
+            </div>
+            {categories.map(item => (
+              <Playlist
+                item={item}
+                key={item.id}
+                onClick={() => this.props.onPlaylistClick(item.id)}
+              />
+            ))}
+          </Fragment>
+        );
       default:
-        return this.props.categories.map(item => (
+        return categories.map(item => (
           <Playlist
             item={item}
             key={item.id}
@@ -91,6 +121,7 @@ const mapDispatchToProps = dispatch => {
       fetchGenres,
       fetchNewReleases,
       fetchFeatured,
+      fetchCharts,
       fetchPlaylistForCategory
     },
     dispatch

@@ -7,6 +7,7 @@ import Categories from './components/categories/categoriesSection';
 
 const options = [
   { name: 'Genres & Moods' },
+  { name: 'Charts' },
   { name: 'New Releases' },
   { name: 'Featured' }
 ];
