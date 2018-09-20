@@ -41,7 +41,7 @@
       &:hover {
         margin: 9px 0px;
         height: 38px;
-        width: 153px;
+        width: 103px;
       }
     }
 
@@ -73,6 +73,9 @@
     .follow-btn {
       border-radius: 20px;
       width: 150px;
+      &:hover {
+        width: 153px;
+      }
       &.following {
         color: #00ff5b;
         &:after {
