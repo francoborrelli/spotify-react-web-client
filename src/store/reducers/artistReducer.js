@@ -21,6 +21,18 @@ export const playlistReducer = (state = {}, action) => {
         fetchArtistPending: false
       };
 
+    case 'FOLLOW_ARTIST':
+      return {
+        ...state,
+        currentArtist: { ...state.currentArtist, follows: true }
+      };
+
+    case 'UNFOLLOW_ARTIST':
+      return {
+        ...state,
+        currentArtist: { ...state.currentArtist, follows: false }
+      };
+
     default:
       return state;
   }

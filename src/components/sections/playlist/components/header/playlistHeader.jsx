@@ -50,7 +50,7 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
                         >
                           {a.name}
                         </span>
-                        {playlist.artists.length - 1 === i ? '' : ' ,'}
+                        {playlist.artists.length - 1 === i ? '' : ', '}
                       </span>
                     ))
                   : ''}

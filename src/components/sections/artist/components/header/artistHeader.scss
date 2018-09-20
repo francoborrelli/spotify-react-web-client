@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     padding-left: 20px;
-    top: 175px;
+    top: 185px;
     h3 {
       font-size: 70px;
       margin-bottom: 0px;
@@ -36,12 +36,12 @@
     .main-pause-play-btn,
     .follow-btn {
       margin: 10px 0px;
-      font-size: 14px;
+      font-size: 13px;
 
       &:hover {
         margin: 9px 0px;
         height: 38px;
-        width: 103px;
+        width: 153px;
       }
     }
 
@@ -62,6 +62,7 @@
       width: 38px;
       margin-top: 10px;
       font-size: 15px;
+      margin-left: 50px;
       &:hover {
         height: 39px;
         width: 39px;
@@ -71,7 +72,16 @@
 
     .follow-btn {
       border-radius: 20px;
-      width: 100px;
+      width: 150px;
+      &.following {
+        color: #00ff5b;
+        &:after {
+          content: 'FOLLOWING';
+        }
+        &:hover:after {
+          content: 'UNFOLLOW';
+        }
+      }
     }
   }
   .artist-button {
