@@ -29,6 +29,9 @@ class SongsPlayer extends Component {
       <SongsControl
         nextSong={this.props.nextSong}
         previousSong={this.props.previousSong}
+        pauseSong={this.props.pauseSong}
+        playSong={this.props.playSong}
+        playing={this.props.playing}
       />
     </div>
   );

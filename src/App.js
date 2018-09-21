@@ -5,6 +5,7 @@ import './App.css';
 
 import { setToken } from './store/actions/sessionActions';
 import { fetchUser } from './store/actions/userActions';
+import { fetchPlayerStatus } from './store/actions/playerActions';
 
 import LeftSection from './containers/leftSection/leftSection';
 import MainSection from './containers/mainSection/mainSection';
@@ -17,7 +18,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {};
 class App extends Component {
   state = {
     playerLoaded: false,
-    playerSelected: false,
     playerState: null
   };
 
@@ -29,6 +29,7 @@ class App extends Component {
       this.setState({ token: token });
       this.props.setToken(token);
       this.props.fetchUser();
+      this.props.fetchPlayerStatus();
     }
   }
 
@@ -42,7 +43,6 @@ class App extends Component {
       onPlayerLoading: () => this.setState({ playerLoaded: true }),
       onPlayerWaitingForDevice: data =>
         this.setState({ playerSelected: false, userDeviceId: data.device_id }),
-      onPlayerDeviceSelected: () => this.setState({ playerSelected: true }),
       onPlayerStateChange: playerState => console.log(playerState),
       onPlayerError: playerError => console.error(playerError)
     };
@@ -66,7 +66,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   setToken: token => dispatch(setToken(token)),
-  fetchUser: token => dispatch(fetchUser(token))
+  fetchUser: () => dispatch(fetchUser()),
+  fetchPlayerStatus: () => dispatch(fetchPlayerStatus())
 });
 
 export default connect(

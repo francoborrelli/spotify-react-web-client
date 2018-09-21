@@ -1,5 +1,20 @@
 import axios from '../../axios';
 
+export const fetchPlayerStatus = () => {
+  return async dispatch => {
+    const status = await axios.get('/me/player');
+    dispatch(fetchStatusSuccess(status.data));
+    return status.data;
+  };
+};
+
+export const fetchStatusSuccess = status => {
+  return {
+    type: 'FETCH_STATUS_SUCCESS',
+    status
+  };
+};
+
 export const fetchCurrentSongSuccess = song => {
   return {
     type: 'FETCH_SONG_SUCCESS',
@@ -42,8 +57,15 @@ export const previousSong = () => {
   };
 };
 
+export const playSong = () => {
+  axios.put('/me/player/play');
+  return {
+    type: 'PLAY_STATE'
+  };
+};
+
 export const pauseSong = () => {
-  axios.post('/me/player/pause');
+  axios.put('/me/player/pause');
   return {
     type: 'PAUSE_STATE'
   };

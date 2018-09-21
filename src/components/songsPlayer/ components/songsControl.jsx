@@ -11,8 +11,9 @@ const songsControl = props => (
     />
     <Button
       className="play-btn"
+      onClick={props.playing ? props.pauseSong : props.playSong}
       icon={
-        'play-btn' + props.playing ? 'fa-pause-circle-o' : 'fa-play-circle-o'
+        'play-btn ' + (props.playing ? 'fa-pause-circle-o' : 'fa-play-circle-o')
       }
       playBtn
     />

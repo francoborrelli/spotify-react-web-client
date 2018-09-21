@@ -15,7 +15,7 @@ let webPlaybackSdkProps = {
   onPlayerError: playerError => console.error(playerError)
 };
 
-export default class WebPlayback extends Component {
+class WebPlayback extends Component {
   deviceSelectedInterval = null;
   statePollingInterval = null;
   webPlaybackInstance = null;
@@ -36,7 +36,6 @@ export default class WebPlayback extends Component {
       this.clearStatePolling();
       this.props.onPlayerWaitingForDevice({ device_id: device_id });
       await this.waitForDeviceToBeSelected();
-      this.props.onPlayerDeviceSelected();
     }
   }
 
@@ -153,3 +152,5 @@ export default class WebPlayback extends Component {
     return <Fragment>{this.props.children}</Fragment>;
   }
 }
+
+export default WebPlayback;

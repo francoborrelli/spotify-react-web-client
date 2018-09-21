@@ -1,5 +1,10 @@
 export const playerReducer = (state = {}, action) => {
   switch (action.type) {
+    case 'FETCH_STATUS_SUCCESS':
+      return {
+        ...state,
+        status: action.status
+      };
     case 'FETCH_SONG_SUCCESS':
       return {
         ...state,
@@ -15,7 +20,12 @@ export const playerReducer = (state = {}, action) => {
     case 'PAUSE_STATE':
       return {
         ...state,
-        playing: false
+        status: { ...state.status, is_playing: false }
+      };
+    case 'PLAY_STATE':
+      return {
+        ...state,
+        status: { ...state.status, is_playing: true }
       };
 
     default:
