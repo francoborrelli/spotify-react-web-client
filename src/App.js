@@ -1,57 +1,58 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setToken } from './store/actions/tokenAction';
-import { fetchUser } from './store/actions/userActions';
-
 import './App.css';
+
+import { setToken } from './store/actions/sessionActions';
+import { fetchUser } from './store/actions/userActions';
 
 import LeftSection from './containers/leftSection/leftSection';
 import MainSection from './containers/mainSection/mainSection';
 
-const client_id = process.env.REACT_APP_CLIENT_ID;
-const redirect_uri = process.env.REACT_APP_REDIRECT_ID;
-const scope =
-  'user-read-private user-read-email playlist-read-private user-read-recently-played user-modify-playback-state user-read-playback-state user-follow-modify';
+import Login from './spotify/login';
+import WebPlaybackReact from './spotify/webPlayback';
+
+window.onSpotifyWebPlaybackSDKReady = () => {};
 
 class App extends Component {
+  state = {
+    playerLoaded: false,
+    playerSelected: false,
+    playerState: null
+  };
+
   componentDidMount() {
-    let hashParams = this.getHashParams();
-
-    if (!hashParams.access_token) {
-      this.requestToken();
+    const token = Login.getToken();
+    if (!token) {
+      Login.logInWithSpotify();
     } else {
-      this.props.setToken(hashParams.access_token);
+      this.setState({ token: token });
+      this.props.setToken(token);
       this.props.fetchUser();
-      window.location.hash = '';
     }
-  }
-  requestToken() {
-    window.location.href =
-      'https://accounts.spotify.com/authorize?client_id=' +
-      client_id +
-      '&scope=' +
-      scope +
-      '&response_type=token&redirect_uri=' +
-      redirect_uri;
-  }
-
-  getHashParams() {
-    let hashParams = {};
-    let e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while ((e = r.exec(q))) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
   }
 
   render() {
+    let webPlaybackSdkProps = {
+      playerName: 'Spotify React Player',
+      playerInitialVolume: 1.0,
+      playerRefreshRateMs: 100,
+      playerAutoConnect: true,
+      onPlayerRequestAccessToken: () => this.state.token,
+      onPlayerLoading: () => this.setState({ playerLoaded: true }),
+      onPlayerWaitingForDevice: data =>
+        this.setState({ playerSelected: false, userDeviceId: data.device_id }),
+      onPlayerDeviceSelected: () => this.setState({ playerSelected: true }),
+      onPlayerStateChange: playerState => console.log(playerState),
+      onPlayerError: playerError => console.error(playerError)
+    };
+
     return (
       <div className="app">
-        <LeftSection />
-        <MainSection />
+        <WebPlaybackReact {...webPlaybackSdkProps}>
+          <LeftSection />
+          <MainSection />
+        </WebPlaybackReact>
       </div>
     );
   }
@@ -59,7 +60,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.tokenReducer.token
+    token: state.sessionReducer.token
   };
 };
 

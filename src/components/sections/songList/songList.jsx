@@ -44,7 +44,7 @@ class SongsList extends Component {
 }
 const mapStateToProps = state => {
   return {
-    token: state.tokenReducer.token ? state.tokenReducer.token : '',
+    token: state.sessionReducer.token ? state.sessionReducer.token : '',
     songs: state.libraryReducer.songs ? state.libraryReducer.songs : []
   };
 };

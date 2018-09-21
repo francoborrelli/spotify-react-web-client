@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import tokenReducer from './tokenReducer';
+import sessionReducer from './sessionReducer';
 import userReducer from './userReducer';
 import playlistReducer from './playlistReducer';
 import browseReducer from './browseReducer';
@@ -11,7 +11,7 @@ import albumReducer from './albumReducer';
 import playerReducer from './playerReducer';
 
 export default combineReducers({
-  tokenReducer,
+  sessionReducer,
   userReducer,
   playlistReducer,
   browseReducer,

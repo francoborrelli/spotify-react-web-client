@@ -72,7 +72,7 @@ class SiderMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.tokenReducer.token || null,
+    token: state.sessionReducer.token || null,
     playlists: state.playlistReducer.playlists || null
   };
 };
