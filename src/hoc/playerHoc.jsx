@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  fetchPlayerStatus,
-  fetchCurrentSong,
   nextSong,
   previousSong,
   pauseSong,
@@ -16,7 +14,6 @@ export default function(ComposedComponent) {
     render = () => (
       <ComposedComponent
         {...this.props}
-        fetchCurrentSong={this.props.fetchCurrentSong}
         nextSong={this.props.nextSong}
         previousSong={this.props.previousSong}
         pauseSong={this.props.pauseSong}
@@ -27,9 +24,11 @@ export default function(ComposedComponent) {
 
   const mapStateToProps = state => {
     return {
-      currentSong: state.playerReducer.currentSong || {},
+      currentSong: state.playerReducer.status
+        ? state.playerReducer.status.track_window.current_track
+        : {},
       playing: state.playerReducer.status
-        ? state.playerReducer.status.is_playing
+        ? !state.playerReducer.status.paused
         : false
     };
   };
@@ -37,8 +36,6 @@ export default function(ComposedComponent) {
   const mapDispatchToProps = dispatch => {
     return bindActionCreators(
       {
-        fetchPlayerStatus,
-        fetchCurrentSong,
         nextSong,
         previousSong,
         pauseSong,

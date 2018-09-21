@@ -1,4 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { setStatus } from '../store/actions/playerActions';
+import { setDeviceId, setActiveDevice } from '../store/actions/sessionActions';
 
 let webPlaybackSdkProps = {
   playerName: 'Spotify React Player',
@@ -7,11 +12,6 @@ let webPlaybackSdkProps = {
   playerAutoConnect: true,
   onPlayerRequestAccessToken: () => this.state.token,
   onPlayerLoading: () => this.setState({ playerLoaded: true }),
-  onPlayerWaitingForDevice: data =>
-    this.setState({ playerSelected: false, userDeviceId: data.device_id }),
-  onPlayerDeviceSelected: () => this.setState({ playerSelected: true }),
-  onPlayerStateChange: playerState =>
-    this.setState({ playerState: playerState }),
   onPlayerError: playerError => console.error(playerError)
 };
 
@@ -27,14 +27,13 @@ class WebPlayback extends Component {
 
   async handleState(state) {
     if (state) {
-      this.props.onPlayerStateChange(state);
+      this.props.setStatus(state);
     } else {
       let {
         _options: { id: device_id }
       } = this.webPlaybackInstance;
 
       this.clearStatePolling();
-      this.props.onPlayerWaitingForDevice({ device_id: device_id });
       await this.waitForDeviceToBeSelected();
     }
   }
@@ -113,7 +112,8 @@ class WebPlayback extends Component {
     });
 
     this.webPlaybackInstance.on('ready', data => {
-      this.props.onPlayerWaitingForDevice(data);
+      this.props.setDeviceId(data.device_id);
+      this.props.setActiveDevice(data.device_id);
     });
 
     if (this.props.playerAutoConnect) {
@@ -145,7 +145,6 @@ class WebPlayback extends Component {
 
     // Wait for device to be selected
     await this.waitForDeviceToBeSelected();
-    this.props.onPlayerDeviceSelected();
   }
 
   render() {
@@ -153,4 +152,14 @@ class WebPlayback extends Component {
   }
 }
 
-export default WebPlayback;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    { setDeviceId, setActiveDevice, setStatus },
+    dispatch
+  );
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(WebPlayback);

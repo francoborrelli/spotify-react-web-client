@@ -7,17 +7,6 @@ import SongsControl from './ components/songsControl';
 import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
-  state = {
-    fetch: false
-  };
-
-  componentDidUpdate() {
-    if (!this.state.fetch) {
-      this.props.fetchCurrentSong();
-      this.setState({ fetch: true });
-    }
-  }
-
   render = () => (
     <div className="player-container">
       {this.props.playing ? (
