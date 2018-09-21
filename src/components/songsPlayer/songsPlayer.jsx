@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 import './songsPlayer.css';
 
-import DetailSection from './ components/detailsSection';
-import SongsControl from './ components/songsControl';
+import DetailSection from './components/detailsSection';
+import SongsControl from './components/songsControl';
+import Sider from './components/sider';
 import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
@@ -21,6 +22,11 @@ class SongsPlayer extends Component {
         pauseSong={this.props.pauseSong}
         playSong={this.props.playSong}
         playing={this.props.playing}
+      />
+      <Sider
+        currentSong={this.props.currentSong}
+        playing={this.props.playing}
+        trackPosition={this.props.trackPosition}
       />
     </div>
   );

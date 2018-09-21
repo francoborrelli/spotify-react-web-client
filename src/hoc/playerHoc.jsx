@@ -27,6 +27,9 @@ export default function(ComposedComponent) {
       currentSong: state.playerReducer.status
         ? state.playerReducer.status.track_window.current_track
         : {},
+      trackPosition: state.playerReducer.status
+        ? state.playerReducer.status.position
+        : 0,
       playing: state.playerReducer.status
         ? !state.playerReducer.status.paused
         : false

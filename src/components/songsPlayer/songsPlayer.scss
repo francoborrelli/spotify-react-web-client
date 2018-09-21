@@ -6,6 +6,31 @@
     left: -200%;
   }
 }
+.song-sider-container {
+  display: flex;
+  width: 40%;
+  margin: 0 auto;
+  align-items: center;
+  margin-top: -7px;
+  span {
+    font-size: 10px;
+    color: #aaa;
+    &:first-of-type {
+      padding-right: 4px;
+    }
+    &:last-of-type {
+      padding-left: 4px;
+    }
+  }
+  .song-sider {
+    margin: 0 auto;
+    width: 90%;
+    height: 4px;
+    background-color: #aaa;
+    transition: width 0.1s;
+    border-radius: 4px;
+  }
+}
 
 .player-container {
   .details-section {

@@ -35,7 +35,7 @@ class App extends Component {
     let webPlaybackSdkProps = {
       playerName: 'Spotify React Player',
       playerInitialVolume: 1.0,
-      playerRefreshRateMs: 10000,
+      playerRefreshRateMs: 1000,
       playerAutoConnect: true,
       onPlayerRequestAccessToken: () => this.state.token,
       onPlayerLoading: () => {},
