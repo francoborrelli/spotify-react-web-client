@@ -16,19 +16,13 @@ export const fetchCurrentSongError = () => {
 
 export const fetchCurrentSong = () => {
   return async dispatch => {
-    function onSuccess(song) {
-      dispatch(fetchCurrentSongSuccess(song));
-      return song;
-    }
-    function onError(error) {
-      dispatch(fetchCurrentSongError());
-      return error;
-    }
     try {
       const song = await axios.get('/me/player/currently-playing');
-      return onSuccess(song.data.item);
+      dispatch(fetchCurrentSongSuccess(song.data.item));
+      return song.data.item;
     } catch (error) {
-      return onError(error);
+      dispatch(fetchCurrentSongError());
+      return error;
     }
   };
 };

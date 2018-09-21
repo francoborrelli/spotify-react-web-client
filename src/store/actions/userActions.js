@@ -15,19 +15,13 @@ export const fetchUserError = () => {
 
 export const fetchUser = () => {
   return async dispatch => {
-    function onSuccess(user) {
-      dispatch(fetchUserSuccess(user));
-      return user;
-    }
-    function onError(error) {
-      dispatch(fetchUserError());
-      return error;
-    }
     try {
       const response = await axios.get('/me');
-      return onSuccess(response.data);
+      dispatch(fetchUserSuccess(response.data));
+      return response.data;
     } catch (error) {
-      return onError(error);
+      dispatch(fetchUserError());
+      return error;
     }
   };
 };

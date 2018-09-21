@@ -15,26 +15,20 @@ export const fetchCategoriesError = () => {
 
 const fetchCategories = path => {
   return async (dispatch, getState) => {
-    function onSuccess(categories) {
-      dispatch(fetchCategoriesSuccess(categories));
-      return categories;
-    }
-    function onError(error) {
-      dispatch(fetchCategoriesError());
-      return error;
-    }
     try {
       const country = getState().userReducer.user.country || 'US';
       const response = await axios.get(
         `/browse/${path}country=${country}&limit=28`
       );
-      return onSuccess(
+      fetchCategoriesSuccess(
         response.data.categories ||
           response.data.playlists ||
           response.data.albums
       );
+      return response.data;
     } catch (error) {
-      return onError(error);
+      dispatch(fetchCategoriesError());
+      return error;
     }
   };
 };
