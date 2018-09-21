@@ -24,7 +24,7 @@ const fetchCategories = path => {
       return error;
     }
     try {
-      const country = getState().userReducer.user.country;
+      const country = getState().userReducer.user.country || 'US';
       const response = await axios.get(
         `/browse/${path}country=${country}&limit=28`
       );

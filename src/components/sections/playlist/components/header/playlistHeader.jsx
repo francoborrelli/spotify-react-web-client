@@ -63,9 +63,22 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
             </div>
           </div>
         )}
-        <button className="main-pause-play-btn">
-          {true ? 'PLAY' : 'PAUSE'}
-        </button>
+        <div className="btns-section">
+          <div>
+            <button className="main-pause-play-btn artist-button">
+              {'PLAY'}
+            </button>
+          </div>
+          <div>
+            {!playlist.mine &&
+              playlist.follows && <button className="follow-btn following" />}
+            {!playlist.mine &&
+              !playlist.follows && (
+                <button className="follow-btn">FOLLOW</button>
+              )}
+          </div>
+        </div>
+
         {!album && (
           <div className="followers">
             <div>FOLLOWERS</div>

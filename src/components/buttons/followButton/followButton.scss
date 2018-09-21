@@ -1,0 +1,59 @@
+.menu-btn,
+.follow-btn {
+  padding-left: 10px;
+  background: black;
+  opacity: 0.7;
+  font-family: 'Proxima Nova', Georgia, sans-serif;
+  color: #fff;
+  border: 1px solid white;
+  padding: 10px;
+  letter-spacing: 1px;
+}
+
+.menu-btn {
+  border-radius: 25px;
+  width: 38px;
+  margin-top: 10px;
+  font-size: 15px;
+  margin-left: 50px;
+  &:hover {
+    height: 39px;
+    width: 39px;
+    margin-top: 9px;
+  }
+}
+.btns-section {
+  display: inline-flex;
+  div {
+    width: 110px;
+  }
+}
+
+.main-pause-play-btn,
+.follow-btn {
+  margin: 10px 0px;
+  font-size: 13px;
+
+  &:hover {
+    margin: 9px 0px;
+    height: 38px;
+    width: 103px;
+  }
+}
+
+.follow-btn {
+  border-radius: 20px;
+  width: 150px;
+  &:hover {
+    width: 153px;
+  }
+  &.following {
+    color: #00ff5b;
+    &:after {
+      content: 'FOLLOWING';
+    }
+    &:hover:after {
+      content: 'UNFOLLOW';
+    }
+  }
+}

@@ -41,6 +41,18 @@ export const playlistReducer = (state = {}, action) => {
         fetchPlaylistPending: false
       };
 
+    case 'FOLLOW_PLAYLIST':
+      return {
+        ...state,
+        playlist: { ...state.playlist, follows: true }
+      };
+
+    case 'UNFOLLOW_PLAYLIST':
+      return {
+        ...state,
+        playlist: { ...state.playlist, follows: true }
+      };
+
     default:
       return state;
   }

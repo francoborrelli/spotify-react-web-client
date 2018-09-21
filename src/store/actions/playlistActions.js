@@ -59,6 +59,20 @@ export const fetchPlaylistError = () => {
   };
 };
 
+export const followPlaylist = id => {
+  axios.put(`/playlists/${id}/followers`);
+  return {
+    type: 'FOLLOW_PLAYLIST'
+  };
+};
+
+export const unfollowPlaylist = id => {
+  axios.delete(`/playlists/${id}/followers`);
+  return {
+    type: 'UNFOLLOW_PLAYLIST'
+  };
+};
+
 export const fetchPlaylist = id => {
   return async (dispatch, getState) => {
     dispatch(fetchPlaylistPending());
@@ -77,7 +91,11 @@ export const fetchPlaylist = id => {
       const follows = await axios.get(
         `/playlists/${id}/followers/contains?ids=${userId}`
       );
-      return onSuccess({ ...playlist.data, follows: follows.data[0] });
+      return onSuccess({
+        ...playlist.data,
+        follows: follows.data[0],
+        mine: userId === playlist.data.owner.id
+      });
     } catch (error) {
       return onError(error);
     }
