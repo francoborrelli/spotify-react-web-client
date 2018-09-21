@@ -20,12 +20,12 @@ const fetchCategories = path => {
       const response = await axios.get(
         `/browse/${path}country=${country}&limit=28`
       );
-      fetchCategoriesSuccess(
+      const result =
         response.data.categories ||
-          response.data.playlists ||
-          response.data.albums
-      );
-      return response.data;
+        response.data.playlists ||
+        response.data.albums;
+      dispatch(fetchCategoriesSuccess(result));
+      return result;
     } catch (error) {
       dispatch(fetchCategoriesError());
       return error;
