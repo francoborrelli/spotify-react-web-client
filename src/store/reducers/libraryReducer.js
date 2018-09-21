@@ -9,7 +9,7 @@ export const playlistReducer = (state = {}, action) => {
     case 'FETCH_SONGS_SUCCESS':
       return {
         ...state,
-        songs: action.songs.items,
+        songs: action.songs,
         fetchSongsError: false,
         fetchSongsPending: false
       };

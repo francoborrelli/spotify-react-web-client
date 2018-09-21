@@ -33,13 +33,25 @@ export const fetchSongs = () => {
   };
 };
 
+const filterRepeatedSongs = (keyFn, array) => {
+  var ids = [];
+  return array.filter(x => {
+    var key = keyFn(x),
+      isNew = !ids.includes(key);
+    if (isNew) ids.push(key);
+    return isNew;
+  });
+};
+
 export const fetchRecentSongs = () => {
   return async dispatch => {
     dispatch(fetchSongsPending());
     try {
       const response = await axios.get('/me/player/recently-played');
-      dispatch(fetchSongsSuccess(response.data));
-      return response.data;
+      console.log(response.data.items);
+      const songs = filterRepeatedSongs(x => x.track.id, response.data.items);
+      dispatch(fetchSongsSuccess(songs));
+      return songs;
     } catch (error) {
       dispatch(fetchSongsError());
       return error;
