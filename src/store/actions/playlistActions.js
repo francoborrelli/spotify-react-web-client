@@ -22,20 +22,14 @@ export const fetchPlaylistMenuError = () => {
 export const fetchPlaylistsMenu = () => {
   return async dispatch => {
     dispatch(fetchPlaylistMenuPending());
-
-    function onSuccess(playlists) {
-      dispatch(fetchPlaylistMenuSuccess(playlists));
-      return playlists;
-    }
-    function onError(error) {
-      dispatch(fetchPlaylistMenuError());
-      return error;
-    }
     try {
       const response = await axios.get('/me/playlists');
-      return onSuccess(response.data);
+      dispatch(fetchPlaylistMenuSuccess(response.data));
+      return response.data;
     } catch (error) {
-      return onError(error);
+      dispatch(fetchPlaylistMenuError());
+
+      return error;
     }
   };
 };
@@ -59,17 +53,31 @@ export const fetchPlaylistError = () => {
   };
 };
 
-export const followPlaylist = id => {
-  axios.put(`/playlists/${id}/followers`);
-  return {
-    type: 'FOLLOW_PLAYLIST'
+export const dispacher = a => {
+  return a;
+};
+
+export const followPlaylist = () => {
+  return async (dispatch, getState) => {
+    const id = getState().playlistReducer.playlist.id;
+    axios.put(`/playlists/${id}/followers`);
+    dispatch(
+      dispacher({
+        type: 'FOLLOW_PLAYLIST'
+      })
+    );
   };
 };
 
-export const unfollowPlaylist = id => {
-  axios.delete(`/playlists/${id}/followers`);
-  return {
-    type: 'UNFOLLOW_PLAYLIST'
+export const unfollowPlaylist = () => {
+  return async (dispatch, getState) => {
+    const id = getState().playlistReducer.playlist.id;
+    axios.delete(`/playlists/${id}/followers`);
+    dispatch(
+      dispacher({
+        type: 'UNFOLLOW_PLAYLIST'
+      })
+    );
   };
 };
 
@@ -80,10 +88,6 @@ export const fetchPlaylist = id => {
     function onSuccess(playlist) {
       dispatch(fetchPlaylistSuccess(playlist));
       return playlist;
-    }
-    function onError(error) {
-      dispatch(fetchPlaylistError());
-      return error;
     }
     try {
       const userId = getState().userReducer.user.id;
@@ -97,7 +101,8 @@ export const fetchPlaylist = id => {
         mine: userId === playlist.data.owner.id
       });
     } catch (error) {
-      return onError(error);
+      dispatch(fetchPlaylistError());
+      return error;
     }
   };
 };

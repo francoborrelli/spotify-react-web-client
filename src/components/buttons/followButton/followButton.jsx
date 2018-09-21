@@ -1,16 +1,14 @@
-import react from 'react';
+import React from 'react';
 
-import './followButton';
-import withUserActions from '../../../hoc/userHoc';
+import './followButton.css';
 
-const followBtn = ({ following, mode = 'artist' }) => {
-  let onFollow, onUnfollow;
-  if (mode === 'artist') {
-  }
-
-  <button className={'follow-btn ' + (following ? 'following' : '')}>
+const btn = ({ following, onClick }) => (
+  <button
+    onClick={onClick}
+    className={'follow-btn ' + (following ? 'following' : '')}
+  >
     {following ? '' : 'FOLLOW'}
-  </button>;
-};
+  </button>
+);
 
-export default withUserActions(followBtn);
+export default btn;

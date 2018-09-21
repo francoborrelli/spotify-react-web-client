@@ -1,9 +1,10 @@
 import React from 'react';
 
 import './artistHeader.css';
-import withUserActions from '../../../../../hoc/userHoc';
 
-const artistHeader = ({ artist, followArtist, unfollowArtist }) => (
+import FollowBtn from '../../../../buttons/followButton/followArtist';
+
+const artistHeader = ({ artist }) => (
   <div>
     <div className="current-artist-header-container">
       <img
@@ -20,20 +21,7 @@ const artistHeader = ({ artist, followArtist, unfollowArtist }) => (
             </button>
           </div>
           <div>
-            {artist.follows && (
-              <button
-                onClick={() => unfollowArtist(artist.id)}
-                className="follow-btn following"
-              />
-            )}
-            {!artist.follows && (
-              <button
-                onClick={() => followArtist(artist.id)}
-                className="follow-btn"
-              >
-                FOLLOW
-              </button>
-            )}
+            <FollowBtn following={artist.follows} />
           </div>
           <div>
             <button className="menu-btn">···</button>
@@ -44,4 +32,4 @@ const artistHeader = ({ artist, followArtist, unfollowArtist }) => (
   </div>
 );
 
-export default withUserActions(artistHeader);
+export default artistHeader;

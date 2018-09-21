@@ -19,32 +19,37 @@ export const fetchArtistError = () => {
   };
 };
 
-export const followArtist = id => {
-  axios.put(`/me/following?type=artist&ids=${id}`);
-  return {
-    type: 'FOLLOW_ARTIST'
+export const dispacher = a => {
+  return a;
+};
+
+export const followArtist = () => {
+  return async (dispatch, getState) => {
+    const id = getState().artistReducer.currentArtist.id;
+    axios.put(`/me/following?type=artist&ids=${id}`);
+    dispatch(
+      dispacher({
+        type: 'FOLLOW_ARTIST'
+      })
+    );
   };
 };
 
-export const unfollowArtist = id => {
-  axios.delete(`/me/following?type=artist&ids=${id}`);
-  return {
-    type: 'UNFOLLOW_ARTIST'
+export const unfollowArtist = () => {
+  return async (dispatch, getState) => {
+    const id = getState().artistReducer.currentArtist.id;
+    axios.delete(`/me/following?type=artist&ids=${id}`);
+    dispatch(
+      dispacher({
+        type: 'UNFOLLOW_ARTIST'
+      })
+    );
   };
 };
 
 export const fetchArtist = id => {
   return async (dispatch, getState) => {
     dispatch(fetchArtistPending());
-
-    function onSuccess(artist) {
-      dispatch(fetchArtistSuccess(artist));
-      return artist;
-    }
-    function onError(error) {
-      dispatch(fetchArtistError());
-      return error;
-    }
     try {
       const country = getState().userReducer.user.country;
       const follow = await axios.get(
@@ -55,15 +60,17 @@ export const fetchArtist = id => {
         `/artists/${id}/top-tracks?country=${country}`
       );
       const albums = await axios.get(`/artists/${id}/albums`);
-      return onSuccess({
+      const result = {
         ...artist.data,
         popularTracks: popular.data.tracks,
         follows: follow.data[0],
         albums: albums.data.items.filter(i => i.album_type === 'album'),
         singles: albums.data.items.filter(i => i.album_type === 'single')
-      });
+      };
+      dispatch(fetchArtistSuccess(result));
     } catch (error) {
-      return onError(error);
+      dispatch(fetchArtistError());
+      return error;
     }
   };
 };

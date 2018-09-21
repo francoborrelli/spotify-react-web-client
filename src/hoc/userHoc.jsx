@@ -9,14 +9,14 @@ import {
 } from '../store/actions/playlistActions';
 
 export default function(ComposedComponent) {
-  class Player extends Component {
+  class UserActions extends Component {
     render = () => (
       <ComposedComponent
-        {...this.props}
         followArtist={this.props.followArtist}
         unfollowArtist={this.props.unfollowArtist}
         followPlaylist={this.props.followPlaylist}
         unfollowPlaylist={this.props.unfollowPlaylist}
+        {...this.props}
       />
     );
   }
@@ -35,5 +35,5 @@ export default function(ComposedComponent) {
   return connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Player);
+  )(UserActions);
 }

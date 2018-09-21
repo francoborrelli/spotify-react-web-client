@@ -1,10 +1,11 @@
 import React from 'react';
-
 import moment from 'moment';
-import withUiActions from '../../../../../hoc/uiChange';
 
 import './playlistHeader.css';
 import defaultCover from '../../../../../containers/mainSection/images/playlist.png';
+
+import FollowBtn from '../../../../buttons/followButton/followPlaylist';
+import withUiActions from '../../../../../hoc/uiChange';
 
 const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
   const img =
@@ -70,12 +71,7 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
             </button>
           </div>
           <div>
-            {!playlist.mine &&
-              playlist.follows && <button className="follow-btn following" />}
-            {!playlist.mine &&
-              !playlist.follows && (
-                <button className="follow-btn">FOLLOW</button>
-              )}
+            {!playlist.mine && <FollowBtn following={playlist.follows} />}
           </div>
         </div>
 

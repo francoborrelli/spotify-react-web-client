@@ -42,15 +42,28 @@ export const playlistReducer = (state = {}, action) => {
       };
 
     case 'FOLLOW_PLAYLIST':
+      let array = state.playlists.items;
+      array.unshift({ id: state.playlist.id, name: state.playlist.name });
       return {
         ...state,
-        playlist: { ...state.playlist, follows: true }
+        playlist: { ...state.playlist, follows: true },
+        playlists: {
+          ...state.playlists,
+          total: state.playlists.total + 1,
+          items: array
+        }
       };
 
     case 'UNFOLLOW_PLAYLIST':
+      array = state.playlists.items.filter(i => i.id !== state.playlist.id);
       return {
         ...state,
-        playlist: { ...state.playlist, follows: true }
+        playlist: { ...state.playlist, follows: false },
+        playlists: {
+          ...state.playlists,
+          total: state.playlists.total - 1,
+          items: array
+        }
       };
 
     default:
