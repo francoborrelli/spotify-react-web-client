@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import '../sections/artist/components/popular/popular.css';
-
+import '../../sections/artist/components/popular/popular.css';
 import './albumTable.css';
 
-import Song from '../../components/playlistTable/components/items/song';
+import Song from '../items/song';
 
 class Album extends Component {
   groupByCD() {

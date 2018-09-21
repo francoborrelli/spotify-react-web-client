@@ -7,7 +7,7 @@ import {
   fetchRecentSongs
 } from '../../../store/actions/libraryActions';
 
-import Playlist from '../../playlistTable/playlistTable';
+import Playlist from '../../songsTable/playlistTable/playlistTable';
 import Header from '../../header/songsHeader';
 
 class SongsList extends Component {

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './empty.css';
-
 const emptySection = props => (
   <div className="empty-section">
     <h3>This playlist is currently empty</h3>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './playlistTable.css';
 
-import Song from './components/items/song';
+import Song from '../items/song';
 import EmptySection from './components/emptySection/empty';
 
 class Playlist extends Component {

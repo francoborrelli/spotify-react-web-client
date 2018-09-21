@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import withUiActions from '../../../../hoc/uiHoc';
+import withUiActions from '../../../hoc/uiHoc';
 
 const msToMinutesAndSeconds = ms => {
   const minutes = Math.floor(ms / 60000);

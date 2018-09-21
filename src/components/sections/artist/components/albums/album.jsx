@@ -4,7 +4,7 @@ import moment from 'moment';
 import withUiActions from '../../../../../hoc/uiHoc';
 
 import './albums.css';
-import AlbumTable from '../../../../albumTable/albumTable';
+import AlbumTable from '../../../../songsTable/albumTable/albumTable';
 
 const album = ({ album, onAlbumClick }) => (
   <div>
