@@ -6,7 +6,7 @@ import { fetchPlaylistsMenu } from '../../store/actions/playlistActions';
 
 import './siderMenu.css';
 
-import withUiActions from '../../hoc/uiChange';
+import withUiActions from '../../hoc/uiHoc';
 import MenuItem from './components/menuItem';
 
 const sectionOne = [{ name: 'Browse', view: 'browse' }, { name: 'Radio' }];

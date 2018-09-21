@@ -10,7 +10,7 @@ import {
 } from '../store/actions/playerActions';
 
 export default function(ComposedComponent) {
-  class Player extends Component {
+  class PlayerHoc extends Component {
     render = () => (
       <ComposedComponent
         {...this.props}
@@ -44,5 +44,5 @@ export default function(ComposedComponent) {
   return connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Player);
+  )(PlayerHoc);
 }

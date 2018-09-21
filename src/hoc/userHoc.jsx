@@ -9,7 +9,7 @@ import {
 } from '../store/actions/playlistActions';
 
 export default function(ComposedComponent) {
-  class UserActions extends Component {
+  class UserHoc extends Component {
     render = () => (
       <ComposedComponent
         followArtist={this.props.followArtist}
@@ -35,5 +35,5 @@ export default function(ComposedComponent) {
   return connect(
     mapStateToProps,
     mapDispatchToProps
-  )(UserActions);
+  )(UserHoc);
 }

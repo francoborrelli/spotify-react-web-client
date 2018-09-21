@@ -5,7 +5,7 @@ import './playlistHeader.css';
 import defaultCover from '../../../../../containers/mainSection/images/playlist.png';
 
 import FollowBtn from '../../../../buttons/followButton/followPlaylist';
-import withUiActions from '../../../../../hoc/uiChange';
+import withUiActions from '../../../../../hoc/uiHoc';
 
 const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
   const img =

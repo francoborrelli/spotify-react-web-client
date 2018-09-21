@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import withUiActions from '../../../../../hoc/uiChange';
+import withUiActions from '../../../../../hoc/uiHoc';
 
 import './albums.css';
 import AlbumTable from '../../../../albumTable/albumTable';

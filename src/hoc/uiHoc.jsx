@@ -8,7 +8,7 @@ import { fetchArtist } from '../store/actions/artistActions';
 import { fetchAlbum } from '../store/actions/albumActions';
 
 export default function(ComposedComponent) {
-  class UiChanger extends Component {
+  class UiHoc extends Component {
     onPlaylistClick = id => {
       this.props.fetchPlaylist(id);
       this.props.setView('playlist');
@@ -49,5 +49,5 @@ export default function(ComposedComponent) {
   return connect(
     null,
     mapDispatchToProps
-  )(UiChanger);
+  )(UiHoc);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import withPlayer from '../../hoc/player';
+import withPlayer from '../../hoc/playerHoc';
 
 const trackCover = props => {
   return props.playing ? (

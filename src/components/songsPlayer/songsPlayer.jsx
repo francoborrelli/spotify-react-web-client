@@ -4,7 +4,7 @@ import './songsPlayer.css';
 
 import DetailSection from './ components/detailsSection';
 import SongsControl from './ components/songsControl';
-import withPlayer from '../../hoc/player';
+import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
   state = {

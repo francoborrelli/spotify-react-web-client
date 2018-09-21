@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import withUiActions from '../../../../../hoc/uiChange';
+import withUiActions from '../../../../../hoc/uiHoc';
 
 import {
   fetchGenres,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import withUiActions from '../../../hoc/uiChange';
+import withUiActions from '../../../hoc/uiHoc';
 
 const artistName = {
   fontFamily: "'Proxima Thin', Georgia, sans-serif",
