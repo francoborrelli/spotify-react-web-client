@@ -33,11 +33,11 @@ class Categories extends Component {
         case 'Featured':
           this.props.fetchFeatured();
           break;
-        case 'Genres & Moods':
-          this.props.fetchGenres();
-          break;
         case 'Charts':
           this.props.fetchCharts();
+          break;
+        default:
+          this.props.fetchGenres();
           break;
       }
     }

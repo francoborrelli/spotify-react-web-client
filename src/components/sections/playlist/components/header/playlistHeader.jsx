@@ -22,7 +22,7 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
   return (
     <div className="playlist-title-container">
       <div className="playlist-image-container">
-        <img className="playlist-image" src={img} />
+        <img alt="playlist-cover" className="playlist-image" src={img} />
       </div>
       <div className="playlist-info-container">
         <p className="playlist-text">{album ? 'ALBUM' : 'PLAYLIST'}</p>
@@ -71,7 +71,8 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
             </button>
           </div>
           <div>
-            {!playlist.mine && <FollowBtn following={playlist.follows} />}
+            {!album &&
+              !playlist.mine && <FollowBtn following={playlist.follows} />}
           </div>
         </div>
 

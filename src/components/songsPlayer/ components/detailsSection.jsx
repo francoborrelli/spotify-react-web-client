@@ -10,7 +10,6 @@ const artistName = {
 
 const detailsSection = props => {
   const artists = props.artists.length;
-  const song = props.songName.length || 0;
   return (
     <div className="details-section">
       <p

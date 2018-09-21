@@ -12,7 +12,7 @@ const song = props => {
   return (
     <li className="user-song-item">
       <div className="play-img">
-        <img src={props.item.album.images[2].url} />
+        <img alt="song-cover" src={props.item.album.images[2].url} />
       </div>
       <div className="r-song">
         <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />

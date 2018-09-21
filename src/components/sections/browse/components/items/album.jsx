@@ -1,6 +1,6 @@
 import React from 'react';
 
-const album = ({ item, key, onArtistClick, onClick }) => {
+const album = ({ item, onArtistClick, onClick }) => {
   const artists = item.artists ? item.artists.length : 0;
 
   return (

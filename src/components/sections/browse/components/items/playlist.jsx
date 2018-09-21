@@ -5,8 +5,8 @@ const style = {
   textAlign: 'center'
 };
 
-const playlist = ({ item, key, onClick, chart = false }) => (
-  <li className="category-item" key={key} onClick={onClick}>
+const playlist = ({ item, onClick, chart = false }) => (
+  <li className="category-item" onClick={onClick}>
     <div className="category-image playlist">
       <img
         alt="playlist cover"

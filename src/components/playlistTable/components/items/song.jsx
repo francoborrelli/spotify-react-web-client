@@ -36,7 +36,7 @@ const song = props => {
         <p>
           {props.item.track.artists
             ? props.item.track.artists.map((a, i) => (
-                <span>
+                <span key={i}>
                   <span
                     className="artist"
                     onClick={() => props.onArtistClick(a.id)}
