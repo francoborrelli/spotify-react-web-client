@@ -21,9 +21,22 @@
     margin: 0 auto;
     width: 90%;
     height: 4px;
-    background-color: #aaa;
+    background-color: dimgray;
     transition: width 0.1s;
     border-radius: 4px; }
+    .song-sider-container .song-sider .position-sider {
+      background-color: #ccc; }
+    .song-sider-container .song-sider .handler-sider {
+      display: none; }
+    .song-sider-container .song-sider:hover .position-sider {
+      background-color: #11a52f !important; }
+    .song-sider-container .song-sider:hover .handler-sider {
+      display: block;
+      background: white;
+      height: 10px;
+      width: 10px;
+      border-radius: 5px;
+      margin-top: -7px; }
 
 .player-container .details-section {
   white-space: nowrap;

@@ -34,3 +34,11 @@ export const pauseSong = () => {
     type: 'PAUSE_STATE'
   };
 };
+
+export const seekSong = ms => {
+  console.log(ms);
+  axios.put(`/me/player/seek?position_ms=${ms}`);
+  return {
+    type: 'SEEK_SONG'
+  };
+};

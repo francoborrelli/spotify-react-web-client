@@ -1,51 +1,84 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Direction, Slider, FormattedTime } from 'react-player-controls';
 
-import { Slider, Direction, FormattedTime } from 'react-player-controls';
+const SliderBar = ({ value, style, className }) => (
+  <div
+    className={className}
+    style={Object.assign(
+      {},
+      {
+        position: 'absolute',
+        borderRadius: 4
+      },
+      {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        width: `${value * 100}%`
+      },
+      style
+    )}
+  />
+);
 
-const SliderBar = ({ direction, value, style }) => <div style={style} />;
-const SliderHandle = ({ direction, value, style }) => <div style={style} />;
+const SliderHandle = ({ value, style, className }) => (
+  <div
+    className={className}
+    style={Object.assign(
+      {},
+      {
+        position: 'absolute',
+        width: 10,
+        height: 10,
+        borderRadius: '100%',
+        transform: 'scale(1)',
+        transition: 'transform 0.2s',
+        '&:hover': {
+          transform: 'scale(1.3)'
+        }
+      },
+      {
+        top: 0,
+        left: `${value * 100}%`,
+        marginTop: -3,
+        marginLeft: -8
+      },
+      style
+    )}
+  />
+);
 
-class Sider extends Component {
-  shouldComponentUpdate() {
-    return this.props.playing;
-  }
+// A composite progress bar component
+const ProgressBar = ({
+  isEnabled,
+  direction = Direction.HORIZONTAL,
+  value,
+  ...props
+}) => (
+  <div className="song-sider-container">
+    <FormattedTime numSeconds={props.position} />
+    <Slider
+      isEnabled={isEnabled}
+      direction={direction}
+      className="song-sider"
+      style={{
+        cursor: 'pointer'
+      }}
+      {...props}
+    >
+      <SliderBar
+        className="position-sider"
+        direction={direction}
+        value={value}
+      />
+      <SliderHandle
+        className="handler-sider"
+        direction={direction}
+        value={value}
+      />
+    </Slider>
+    <FormattedTime numSeconds={props.duration || 0} />
+  </div>
+);
 
-  toSeconds = ms => ms / 1000;
-
-  render() {
-    const position = this.props.trackPosition || 0;
-    const duration = this.props.currentSong
-      ? this.props.currentSong.duration_ms
-      : 0;
-
-    return (
-      <div className="song-sider-container">
-        <FormattedTime numSeconds={this.toSeconds(position) || 0} />
-        <Slider
-          className="song-sider"
-          isEnabled={true}
-          direction={Direction.Horizontal}
-          onChange={newValue => {}}
-        >
-          <SliderBar
-            direction={Direction.Horizontal}
-            value={0.05}
-            style={{ background: true ? '#72d687' : '#878c88' }}
-          />
-          <SliderBar
-            direction={Direction.Horizontal}
-            style={{ background: 'rgba(0, 0, 0, 0.05)' }}
-          />
-          <SliderHandle
-            direction={Direction.Horizontal}
-            value={0.5}
-            style={{ background: true ? '#72d687' : '#878c88' }}
-          />
-        </Slider>
-        <FormattedTime numSeconds={this.toSeconds(duration) || 0} />
-      </div>
-    );
-  }
-}
-
-export default Sider;
+export default ProgressBar;

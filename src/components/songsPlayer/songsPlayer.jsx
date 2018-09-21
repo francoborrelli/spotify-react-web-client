@@ -8,28 +8,41 @@ import Sider from './components/sider';
 import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
-  render = () => (
-    <div className="player-container">
-      {this.props.playing ? (
-        <DetailSection
-          songName={this.props.currentSong.name || ''}
-          artists={this.props.currentSong.artists || []}
+  toSeconds = ms => ms / 1000;
+
+  render = () => {
+    const position = this.toSeconds(this.props.trackPosition) || 0;
+    const duration = this.props.currentSong
+      ? this.toSeconds(this.props.currentSong.duration_ms)
+      : 1;
+
+    return (
+      <div className="player-container">
+        {this.props.playing ? (
+          <DetailSection
+            songName={this.props.currentSong.name || ''}
+            artists={this.props.currentSong.artists || []}
+          />
+        ) : null}
+        <SongsControl
+          nextSong={this.props.nextSong}
+          previousSong={this.props.previousSong}
+          pauseSong={this.props.pauseSong}
+          playSong={this.props.playSong}
+          playing={this.props.playing}
         />
-      ) : null}
-      <SongsControl
-        nextSong={this.props.nextSong}
-        previousSong={this.props.previousSong}
-        pauseSong={this.props.pauseSong}
-        playSong={this.props.playSong}
-        playing={this.props.playing}
-      />
-      <Sider
-        currentSong={this.props.currentSong}
-        playing={this.props.playing}
-        trackPosition={this.props.trackPosition}
-      />
-    </div>
-  );
+        <Sider
+          isEnabled
+          value={position / duration}
+          position={position}
+          duration={duration}
+          onChange={value =>
+            this.props.seekSong(Math.round(value * duration * 1000))
+          }
+        />
+      </div>
+    );
+  };
 }
 
 export default withPlayer(SongsPlayer);

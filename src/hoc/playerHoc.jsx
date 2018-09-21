@@ -6,7 +6,8 @@ import {
   nextSong,
   previousSong,
   pauseSong,
-  playSong
+  playSong,
+  seekSong
 } from '../store/actions/playerActions';
 
 export default function(ComposedComponent) {
@@ -18,6 +19,7 @@ export default function(ComposedComponent) {
         previousSong={this.props.previousSong}
         pauseSong={this.props.pauseSong}
         playSong={this.props.playSong}
+        seekSong={this.props.seekSong}
       />
     );
   }
@@ -42,7 +44,8 @@ export default function(ComposedComponent) {
         nextSong,
         previousSong,
         pauseSong,
-        playSong
+        playSong,
+        seekSong
       },
       dispatch
     );

@@ -26,9 +26,29 @@
     margin: 0 auto;
     width: 90%;
     height: 4px;
-    background-color: #aaa;
+    background-color: rgb(105, 105, 105);
     transition: width 0.1s;
     border-radius: 4px;
+    .position-sider {
+      background-color: #ccc;
+    }
+    .handler-sider {
+      display: none;
+    }
+
+    &:hover {
+      .position-sider {
+        background-color: #11a52f !important;
+      }
+      .handler-sider {
+        display: block;
+        background: white;
+        height: 10px;
+        width: 10px;
+        border-radius: 5px;
+        margin-top: -7px;
+      }
+    }
   }
 }
 
