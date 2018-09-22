@@ -24,7 +24,7 @@ const detailsSection = props => {
           <span key={i}>
             <span
               className="artist"
-              onClick={() => props.onArtistClick(artist.id)}
+              onClick={() => props.onArtistClick(artist.uri.split(':')[2])}
             >
               {artist.name}
             </span>
