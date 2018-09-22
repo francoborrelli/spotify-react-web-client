@@ -3,7 +3,7 @@ import React from 'react';
 import './spinner.css';
 
 const Spinner = props => (
-  <div className={`spinner-container ${props.className}`}>
+  <div className={`spinner-container ${props.section ? 'section' : ''}`}>
     <div className="sk-circle">
       <div className="sk-circle1 sk-child" />
       <div className="sk-circle2 sk-child" />
@@ -21,6 +21,6 @@ const Spinner = props => (
   </div>
 );
 
-export default ({ loading, children }) => {
-  return loading ? <Spinner /> : children;
+export default ({ loading, children, section = false }) => {
+  return loading ? <Spinner section={section} /> : children;
 };

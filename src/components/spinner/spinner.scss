@@ -1,6 +1,15 @@
 .spinner-container {
   width: 100%;
   height: 100%;
+  &.section {
+    .sk-circle {
+      left: 47%;
+      bottom: 53%;
+      .sk-child:before {
+        background-color: #b6b7b6;
+      }
+    }
+  }
 }
 .sk-circle {
   width: 80px;
