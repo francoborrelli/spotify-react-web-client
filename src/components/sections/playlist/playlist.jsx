@@ -6,6 +6,7 @@ import Header from './components/header/playlistHeader';
 import Table from '../../songsTable/playlistTable/playlistTable';
 
 import { pauseSong, playSong } from '../../../store/actions/playerActions';
+import withStatus from '../../../hoc/statusHoc';
 
 class Playlist extends Component {
   render = () => {
@@ -34,17 +35,7 @@ const mapStateToProps = state => {
   return {
     playlist: state.playlistReducer.playlist
       ? state.playlistReducer.playlist
-      : null,
-    currentSong: state.playerReducer.status
-      ? state.playerReducer.status.track_window.current_track.linked_from.id ||
-        state.playerReducer.status.track_window.current_track.id
-      : null,
-    currentUri: state.playerReducer.status
-      ? state.playerReducer.status.context.uri
-      : null,
-    playing: state.playerReducer.status
-      ? !state.playerReducer.status.paused
-      : false
+      : null
   };
 };
 
@@ -61,4 +52,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Playlist);
+)(withStatus(Playlist));

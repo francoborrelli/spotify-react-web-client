@@ -43,7 +43,7 @@ export default function(ComposedComponent) {
         ? state.playerReducer.status.shuffle
         : false,
       repeatActive: state.playerReducer.status
-        ? state.playerReducer.status.repeat_mode === 1
+        ? state.playerReducer.status.repeat_mode !== 0
         : false
     };
   };

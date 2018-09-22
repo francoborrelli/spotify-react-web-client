@@ -49,7 +49,7 @@ export const fetchRecentSongs = () => {
     try {
       const response = await axios.get('/me/player/recently-played');
       const songs = filterRepeatedSongs(x => x.track.id, response.data.items);
-      dispatch(fetchSongsSuccess(songs));
+      dispatch(fetchSongsSuccess({ items: songs }));
       return songs;
     } catch (error) {
       dispatch(fetchSongsError());
