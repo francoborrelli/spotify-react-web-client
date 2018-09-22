@@ -11,6 +11,7 @@ class Artist extends Component {
       <Header artist={this.props.artist} />
       <Popular tracks={this.props.artist.popularTracks || []} />
       <Albums albums={this.props.artist.albums || []} />
+      <Albums albums={this.props.artist.singles || []} singles />
     </div>
   );
 }

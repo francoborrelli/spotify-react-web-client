@@ -2,28 +2,42 @@
   border-bottom: 1px solid #6666665c;
   padding-bottom: 10px;
 }
-
-.album-container {
-  padding-bottom: 20px;
+.albums-container {
   display: flex;
-  padding-top: 15px;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+.album {
+  padding: 0px 20px;
+  padding-bottom: 40px;
+  cursor: default;
+
   .album-header {
     display: block;
   }
   img {
     display: inline;
-    height: 150px;
+    height: 180px;
+    &:hover {
+      opacity: 0.7;
+    }
+    &:active {
+      opacity: 0.5;
+    }
   }
   .album-info {
-    padding-left: 10px;
     position: relative;
     .album-year {
       color: #cccccc;
       font-size: 13px;
     }
     .album-title {
-      cursor: pointer;
-      margin-top: 10px;
+      font-size: 14px;
+      text-overflow: hide;
+      overflow: hidden;
+      margin-top: 5px;
+      margin-bottom: 5px;
     }
   }
 }
