@@ -1,20 +1,21 @@
 import React from 'react';
+import withStatus from '../../../../../hoc/statusHoc';
 
 const song = props => {
-  const buttonClass =
-    props.track === props.songId && !props.songPaused
-      ? 'fa-play-circle-o'
-      : 'fa-pause-circle-o';
-
+  const active = props.currentSong === props.item.id && props.playing;
+  const buttonClass = !active ? 'fa-play-circle-o' : 'fa-pause-circle-o';
   const popularity = Math.round(props.item.popularity / 12.5);
   let str = '|';
 
   return (
-    <li className="user-song-item">
+    <li className={'user-song-item' + (active ? ' active' : '')}>
       <div className="play-img">
         <img alt="song-cover" src={props.item.album.images[2].url} />
       </div>
-      <div className="r-song">
+      <div
+        className="r-song"
+        onClick={!active ? props.playTracks : props.pauseSong}
+      >
         <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
         <span>{props.index}</span>
       </div>
@@ -32,4 +33,4 @@ const song = props => {
   );
 };
 
-export default song;
+export default withStatus(song);

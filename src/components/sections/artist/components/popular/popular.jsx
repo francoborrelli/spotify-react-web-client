@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from '../../../../../axios';
 
 import './popular.css';
 import Song from './song';
@@ -17,10 +18,22 @@ class PopularTracks extends Component {
     }
   }
 
+  playTracks = offset => {
+    const songs = this.props.tracks.map(i => i.uri);
+    axios.put('/me/player/play', { uris: songs, offset: { position: offset } });
+  };
+
   renderSongs() {
     const tracks = this.props.tracks;
     const items = this.state.showAll ? tracks : tracks.slice(0, 5);
-    return items.map((i, key) => <Song item={i} index={key + 1} key={key} />);
+    return items.map((i, key) => (
+      <Song
+        item={i}
+        index={key + 1}
+        key={key}
+        playTracks={() => this.playTracks(key)}
+      />
+    ));
   }
 
   renderArtists() {

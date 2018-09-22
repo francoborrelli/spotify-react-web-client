@@ -11,6 +11,13 @@
 .album {
   padding: 0px 20px;
   padding-bottom: 40px;
+  width: 200px;
+  h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 20px;
+  }
   cursor: default;
 
   .album-header {

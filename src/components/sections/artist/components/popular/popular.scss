@@ -68,6 +68,15 @@ button {
       .explicit {
         color: #ccc;
       }
+      .r-song {
+        padding-top: 5px;
+        .fa {
+          display: block;
+        }
+        span {
+          display: none;
+        }
+      }
     }
     .explicit {
       border: 1px solid #6666665c;
