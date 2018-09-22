@@ -4,6 +4,7 @@ import Button from './controlButton';
 
 const songsControl = props => (
   <div className="song-control">
+    <Button className="shuffle-song" icon="fa-random" />
     <Button
       className="back-song"
       icon="fa-step-backward reverse"
@@ -22,6 +23,7 @@ const songsControl = props => (
       icon="fa-step-forward forward"
       onClick={props.nextSong}
     />
+    <Button className="repeat-song" icon="fa-retweet" />
   </div>
 );
 
