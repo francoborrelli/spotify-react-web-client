@@ -9,7 +9,10 @@ class Artist extends Component {
   render = () => (
     <div>
       <Header artist={this.props.artist} />
-      <Popular tracks={this.props.artist.popularTracks || []} />
+      <Popular
+        tracks={this.props.artist.popularTracks || []}
+        artists={this.props.artist.relatedArtists || []}
+      />
       <Albums albums={this.props.artist.albums || []} />
       <Albums albums={this.props.artist.singles || []} singles />
     </div>

@@ -8,6 +8,37 @@ button {
 
 .popular-container {
   max-width: 600px;
+  width: 70%;
+}
+
+.popular-container,
+.related-artists {
+  display: inline-block;
+}
+
+.related-artists {
+  width: 30%;
+  max-width: 300px;
+  margin-left: 100px;
+  padding-top: 20px;
+  .artist-item {
+    &:hover {
+      background-color: #cccccc14;
+    }
+    display: flex;
+    cursor: pointer;
+    p {
+      line-height: 20px;
+    }
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
 }
 
 .popular-container,

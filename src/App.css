@@ -3,7 +3,8 @@ body {
   font-family: 'Proxima Nova', Georgia, sans-serif;
   color: white;
   margin: 0 auto;
-  padding: 0; }
+  padding: 0;
+  cursor: default; }
 
 .app {
   display: flex;

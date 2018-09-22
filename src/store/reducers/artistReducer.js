@@ -20,7 +20,16 @@ export const playlistReducer = (state = {}, action) => {
         fetchArtistError: true,
         fetchArtistPending: false
       };
-
+    case 'FETCH_ALBUMS_SUCCESS':
+      return {
+        ...state,
+        currentArtist: { ...state.currentArtist, ...action.albums }
+      };
+    case 'FETCH_POPULAR_SUCCESS':
+      return {
+        ...state,
+        currentArtist: { ...state.currentArtist, ...action.popular }
+      };
     case 'FOLLOW_ARTIST':
       return {
         ...state,
