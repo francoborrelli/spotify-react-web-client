@@ -136,7 +136,10 @@
     color: #fff;
     font-size: 14px;
     margin-bottom: 10px;
-
+    &:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
     &.overflow {
       -webkit-transition: 5.3s;
       -moz-transition: 5.3s;
@@ -149,6 +152,8 @@
       &:hover {
         margin-left: -180px;
         text-overflow: initial;
+        text-decoration: underline;
+        color: #fff;
       }
     }
     text-overflow: ellipsis;

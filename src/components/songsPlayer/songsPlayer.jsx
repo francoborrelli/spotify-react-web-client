@@ -22,6 +22,7 @@ class SongsPlayer extends Component {
         {this.props.currentSong.id ? (
           <DetailSection
             songName={this.props.currentSong.name || ''}
+            album={this.props.currentSong.album.uri.split(':')[2]}
             artists={this.props.currentSong.artists || []}
           />
         ) : null}

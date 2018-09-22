@@ -13,6 +13,7 @@ const detailsSection = props => {
   return (
     <div className="details-section">
       <p
+        onClick={() => props.onAlbumClick(props.album)}
         className={
           'song-name' + (props.songName.length > 30 ? ' overflow' : '')
         }
