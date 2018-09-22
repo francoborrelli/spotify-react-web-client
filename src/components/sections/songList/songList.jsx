@@ -8,8 +8,6 @@ import {
   fetchRecentSongs
 } from '../../../store/actions/libraryActions';
 
-import { pauseSong } from '../../../store/actions/playerActions';
-
 import Playlist from '../../songsTable/playlistTable/playlistTable';
 import Header from '../../header/songsHeader';
 
@@ -62,8 +60,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       fetchSongs,
-      fetchRecentSongs,
-      pauseSong
+      fetchRecentSongs
     },
     dispatch
   );

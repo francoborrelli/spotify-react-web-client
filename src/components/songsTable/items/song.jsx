@@ -22,9 +22,13 @@ const song = props => {
   return (
     <li className={'user-song-item' + (active ? ' active' : '')}>
       {props.isAlbum ? (
-        <div className="r-song">
+        <div className="r-song" onClick={event}>
           <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
-          <span>{props.index}</span>
+          {active ? (
+            <i className="fa fa-volume-up playing" />
+          ) : (
+            <span>{props.index}</span>
+          )}
         </div>
       ) : (
         <div className="play-song" onClick={event}>

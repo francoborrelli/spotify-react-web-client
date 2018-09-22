@@ -22,13 +22,16 @@ class Album extends Component {
 
     if (count > 1) {
       const cds = this.groupByCD();
+
+      const index = this.props.tracks.map(t => t.id);
+
       return cds.map((cd, i) => (
-        <div>
+        <div key={i}>
           <div className="cd-header">
             <i className="fa fa-dot-circle-o" />
             {` ${i}`}
           </div>
-          {this.renderSimple(cd)}
+          {this.renderSimple(cd, index)}
         </div>
       ));
     }
@@ -36,9 +39,20 @@ class Album extends Component {
     return this.renderSimple(this.props.tracks);
   }
 
-  renderSimple = cd =>
+  renderSimple = (cd, index = null) =>
     cd.map((t, i) => (
-      <Song item={{ track: t }} key={i} index={i + 1} isAlbum={true} />
+      <Song
+        item={{ track: t }}
+        key={i}
+        index={i + 1}
+        isAlbum={true}
+        offset={index ? index.indexOf(t.id) : i}
+        uri={this.props.uri}
+        current={this.props.currentSong}
+        playing={this.props.playing}
+        pauseSong={this.props.pauseSong}
+        playSong={this.props.playSong}
+      />
     ));
 
   render() {

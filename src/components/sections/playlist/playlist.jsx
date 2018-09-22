@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import Header from './components/header/playlistHeader';
 import Table from '../../songsTable/playlistTable/playlistTable';
 
-import { pauseSong, playSong } from '../../../store/actions/playerActions';
 import withStatus from '../../../hoc/statusHoc';
 
 class Playlist extends Component {
@@ -39,17 +37,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      pauseSong,
-      playSong
-    },
-    dispatch
-  );
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStatus(Playlist));
+export default connect(mapStateToProps)(withStatus(Playlist));

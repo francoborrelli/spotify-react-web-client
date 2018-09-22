@@ -57,7 +57,6 @@
     width: 40px;
     opacity: 0;
     text-align: center;
-
     .fa {
       font-size: 30px;
       position: relative;
@@ -69,6 +68,10 @@
 
       &:hover {
         color: #fff;
+      }
+
+      &:active {
+        color: #aaa;
       }
     }
   }

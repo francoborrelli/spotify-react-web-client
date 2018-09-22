@@ -48,4 +48,40 @@
       display: none;
     }
   }
+
+  .user-song-item {
+    .fa:active {
+      color: #aaa;
+    }
+    &:hover {
+      .r-song {
+        padding-top: 5px;
+        .fa:first-of-type {
+          display: inline;
+        }
+        span {
+          display: none;
+        }
+      }
+    }
+    &.active {
+      .r-song {
+        padding-top: 5px;
+        .fa:first-of-type {
+          display: none;
+        }
+        .fa:last-of-type {
+          display: inline;
+        }
+      }
+      &:hover {
+        .fa:first-of-type {
+          display: inline;
+        }
+        .fa:last-of-type {
+          display: none;
+        }
+      }
+    }
+  }
 }

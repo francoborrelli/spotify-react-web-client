@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Header from '../playlist/components/header/playlistHeader';
 import Table from '../../songsTable/albumTable/albumTable';
 
+import withStatus from '../../../hoc/statusHoc';
+
 class Album extends Component {
   render = () => {
     return (
@@ -11,6 +13,8 @@ class Album extends Component {
         <Header playlist={this.props.album} album={true} />
         <Table
           tracks={this.props.album.tracks ? this.props.album.tracks : []}
+          uri={this.props.album ? this.props.album.uri : ''}
+          {...this.props}
         />
       </div>
     );
@@ -22,4 +26,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Album);
+export default connect(mapStateToProps)(withStatus(Album));
