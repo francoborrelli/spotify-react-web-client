@@ -10,7 +10,14 @@ class Album extends Component {
   render = () => {
     return (
       <div className="player-container">
-        <Header playlist={this.props.album} album={true} />
+        <Header
+          playlist={this.props.album}
+          album={true}
+          currentUri={this.props.currentUri}
+          playing={this.props.playing}
+          pauseSong={this.props.pauseSong}
+          playSong={() => this.props.playSong(this.props.album.uri, 0)}
+        />
         <Table
           tracks={this.props.album.tracks ? this.props.album.tracks : []}
           uri={this.props.album ? this.props.album.uri : ''}
