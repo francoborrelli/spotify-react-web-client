@@ -7,7 +7,9 @@ import {
   previousSong,
   pauseSong,
   playSong,
-  seekSong
+  seekSong,
+  shuffle,
+  repeatContext
 } from '../store/actions/playerActions';
 
 export default function(ComposedComponent) {
@@ -20,6 +22,8 @@ export default function(ComposedComponent) {
         pauseSong={this.props.pauseSong}
         playSong={() => this.props.playSong()}
         seekSong={this.props.seekSong}
+        shuffleSong={this.props.shuffle}
+        repeatContext={this.props.repeatContext}
       />
     );
   }
@@ -34,6 +38,12 @@ export default function(ComposedComponent) {
         : 0,
       playing: state.playerReducer.status
         ? !state.playerReducer.status.paused
+        : false,
+      shuffleActive: state.playerReducer.status
+        ? state.playerReducer.status.shuffle
+        : false,
+      repeatActive: state.playerReducer.status
+        ? state.playerReducer.status.repeat_mode === 1
         : false
     };
   };
@@ -45,7 +55,9 @@ export default function(ComposedComponent) {
         previousSong,
         pauseSong,
         playSong,
-        seekSong
+        seekSong,
+        shuffle,
+        repeatContext
       },
       dispatch
     );

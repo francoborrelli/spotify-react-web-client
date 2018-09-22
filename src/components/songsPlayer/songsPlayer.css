@@ -68,6 +68,13 @@
       margin-left: -250px;
       text-overflow: initial; }
 
+.player-container .shuffle-song.active i,
+.player-container .repeat-song.active i {
+  color: #21cc44; }
+  .player-container .shuffle-song.active i:hover,
+  .player-container .repeat-song.active i:hover {
+    color: #10ff41; }
+
 .player-container .fa {
   padding: 0px 20px;
   -webkit-text-stroke: 1px #333333;
@@ -75,9 +82,7 @@
   .player-container .fa:hover {
     color: #fff; }
   .player-container .fa:active {
-    color: #aaa; }
-  .player-container .fa.shuffle-song.active, .player-container .fa.repeat-song.active {
-    color: #21cc44; }
+    color: #aaa !important; }
 
 .song-control {
   justify-content: center;

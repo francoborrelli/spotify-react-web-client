@@ -30,6 +30,10 @@ class SongsPlayer extends Component {
           pauseSong={this.props.pauseSong}
           playSong={this.props.playSong}
           playing={this.props.playing}
+          shuffleSong={this.props.shuffle}
+          repeatContext={this.props.repeatContext}
+          shuffleActive={this.props.shuffleActive}
+          repeatActive={this.props.repeatActive}
         />
         <Sider
           isEnabled

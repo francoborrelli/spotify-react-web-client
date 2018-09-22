@@ -6,6 +6,7 @@
     left: -200%;
   }
 }
+
 .song-sider-container {
   display: flex;
   width: 40%;
@@ -90,6 +91,18 @@
     overflow: hidden;
   }
 
+  .shuffle-song,
+  .repeat-song {
+    &.active {
+      i {
+        color: #21cc44;
+        &:hover {
+          color: #10ff41;
+        }
+      }
+    }
+  }
+
   .fa {
     padding: 0px 20px;
     -webkit-text-stroke: 1px #333333;
@@ -100,14 +113,7 @@
     }
 
     &:active {
-      color: #aaa;
-    }
-
-    &.shuffle-song,
-    &.repeat-song {
-      &.active {
-        color: #21cc44;
-      }
+      color: #aaa !important;
     }
   }
 }

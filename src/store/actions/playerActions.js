@@ -48,3 +48,17 @@ export const seekSong = ms => {
     type: 'SEEK_SONG'
   };
 };
+
+export const repeatContext = status => {
+  axios.put(`/me/player/repeat?state=${status}`);
+  return {
+    type: 'REPEAT'
+  };
+};
+
+export const shuffle = status => {
+  axios.put(`/me/player/shuffle?state=${status}`);
+  return {
+    type: 'Shuffle'
+  };
+};
