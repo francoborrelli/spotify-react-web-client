@@ -38,17 +38,65 @@
       border-radius: 5px;
       margin-top: -7px; }
 
-.player-container .details-section {
+.player-container .details-section,
+.player-container .volume-control-container {
   white-space: nowrap;
   overflow: hidden;
   position: absolute;
-  left: 20px;
-  top: 7px;
   height: 56px;
   width: 180px;
   line-height: 14px;
   cursor: default;
   text-overflow: ellipsis; }
+
+.player-container .details-section {
+  left: 20px;
+  top: 7px; }
+
+.player-container .volume-control-container {
+  right: 20px;
+  top: 37px;
+  display: flex; }
+  .player-container .volume-control-container .fa {
+    color: #ddd; }
+    .player-container .volume-control-container .fa:hover {
+      color: #fff; }
+    .player-container .volume-control-container .fa:active {
+      color: #aaa; }
+  .player-container .volume-control-container .fa-desktop {
+    margin-right: 30px;
+    font-size: 13px; }
+  .player-container .volume-control-container .volume-sider-container {
+    max-width: 100px;
+    width: 100%;
+    margin-top: -2px; }
+    .player-container .volume-control-container .volume-sider-container .fa {
+      padding-right: 7px;
+      width: 20px; }
+    .player-container .volume-control-container .volume-sider-container .volumen {
+      padding-right: 2px; }
+    .player-container .volume-control-container .volume-sider-container .volume-sider {
+      margin-bottom: 4px;
+      padding-left: 10px;
+      display: inline-block;
+      width: 80%;
+      height: 4px;
+      background-color: dimgray;
+      transition: width 0.1s;
+      border-radius: 4px; }
+      .player-container .volume-control-container .volume-sider-container .volume-sider .position-sider {
+        background-color: #ccc; }
+      .player-container .volume-control-container .volume-sider-container .volume-sider .handler-sider {
+        display: inline; }
+      .player-container .volume-control-container .volume-sider-container .volume-sider:hover .position-sider {
+        background-color: #21cc44 !important; }
+      .player-container .volume-control-container .volume-sider-container .volume-sider:hover .handler-sider {
+        display: block;
+        background: white;
+        height: 10px;
+        width: 10px;
+        border-radius: 5px;
+        margin-top: -7px; }
 
 .player-container .song-name {
   font-family: 'Proxima Nova', Georgia, sans-serif;

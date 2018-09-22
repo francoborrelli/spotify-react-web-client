@@ -33,7 +33,6 @@
 .follow-btn {
   margin: 10px 0px;
   font-size: 13px;
-
   &:hover {
     margin: 9px 0px;
     height: 38px;
@@ -46,6 +45,9 @@
   width: 150px;
   &:hover {
     width: 153px;
+  }
+  &:active {
+    width: 150px;
   }
   &.following {
     color: #00ff5b;

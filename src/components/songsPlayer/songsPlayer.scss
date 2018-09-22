@@ -54,17 +54,81 @@
 }
 
 .player-container {
-  .details-section {
+  .details-section,
+  .volume-control-container {
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
-    left: 20px;
-    top: 7px;
     height: 56px;
     width: 180px;
     line-height: 14px;
     cursor: default;
     text-overflow: ellipsis;
+  }
+
+  .details-section {
+    left: 20px;
+    top: 7px;
+  }
+
+  .volume-control-container {
+    right: 20px;
+    top: 37px;
+    display: flex;
+    .fa {
+      color: #ddd;
+      &:hover {
+        color: #fff;
+      }
+      &:active {
+        color: #aaa;
+      }
+    }
+    .fa-desktop {
+      margin-right: 30px;
+      font-size: 13px;
+    }
+    .volume-sider-container {
+      max-width: 100px;
+      width: 100%;
+      margin-top: -2px;
+      .fa {
+        padding-right: 7px;
+        width: 20px;
+      }
+      .volumen {
+        padding-right: 2px;
+      }
+      .volume-sider {
+        margin-bottom: 4px;
+        padding-left: 10px;
+        display: inline-block;
+        width: 80%;
+        height: 4px;
+        background-color: rgb(105, 105, 105);
+        transition: width 0.1s;
+        border-radius: 4px;
+        .position-sider {
+          background-color: #ccc;
+        }
+        .handler-sider {
+          display: inline;
+        }
+        &:hover {
+          .position-sider {
+            background-color: #21cc44 !important;
+          }
+          .handler-sider {
+            display: block;
+            background: white;
+            height: 10px;
+            width: 10px;
+            border-radius: 5px;
+            margin-top: -7px;
+          }
+        }
+      }
+    }
   }
 
   .song-name {

@@ -4,7 +4,8 @@ import './songsPlayer.css';
 
 import DetailSection from './components/detailsSection';
 import SongsControl from './components/songsControl';
-import Sider from './components/sider';
+import SongSider from './components/songSider';
+import VolumeControl from './components/volumeControl';
 import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
@@ -35,7 +36,7 @@ class SongsPlayer extends Component {
           shuffleActive={this.props.shuffleActive}
           repeatActive={this.props.repeatActive}
         />
-        <Sider
+        <SongSider
           isEnabled
           value={position / duration}
           position={position}
@@ -44,6 +45,7 @@ class SongsPlayer extends Component {
             this.props.seekSong(Math.round(value * duration * 1000))
           }
         />
+        <VolumeControl />
       </div>
     );
   };
