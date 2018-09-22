@@ -7,7 +7,15 @@ import defaultCover from '../../../../../containers/mainSection/images/playlist.
 import FollowBtn from '../../../../buttons/followButton/followPlaylist';
 import withUiActions from '../../../../../hoc/uiHoc';
 
-const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
+const playlistHeader = ({
+  playlist,
+  album = false,
+  onArtistClick,
+  playSong,
+  pauseSong,
+  playing,
+  currentUri
+}) => {
   const img =
     playlist.images && playlist.images.length !== 0
       ? playlist.images[0].url
@@ -18,6 +26,10 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
     : '';
 
   const songs = playlist.tracks ? playlist.tracks.total : '0';
+
+  const playingPlaylist = currentUri === playlist.uri && playing;
+
+  const event = playingPlaylist ? pauseSong : playSong;
 
   return (
     <div className="playlist-title-container">
@@ -66,8 +78,11 @@ const playlistHeader = ({ playlist, album = false, onArtistClick }) => {
         )}
         <div className="btns-section">
           <div>
-            <button className="main-pause-play-btn artist-button">
-              {'PLAY'}
+            <button
+              onClick={event}
+              className="main-pause-play-btn artist-button"
+            >
+              {playingPlaylist ? 'PAUSE' : 'PLAY'}
             </button>
           </div>
           <div>
