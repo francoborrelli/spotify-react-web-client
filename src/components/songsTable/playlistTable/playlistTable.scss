@@ -23,7 +23,11 @@
   &.active {
     color: #1db954;
     background: rgb(51, 51, 51);
-
+    .fa-pause-circle-o {
+      font-size: 30px !important;
+      top: 7.5px !important;
+      -webkit-text-stroke: 2px #333333 !important;
+    }
     .play-song {
       opacity: 1;
       .fa {

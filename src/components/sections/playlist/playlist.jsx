@@ -13,8 +13,8 @@ class Playlist extends Component {
       <div className="player-container">
         <Header
           playlist={this.props.playlist || {}}
-          uri={this.props.playlist ? this.props.playlist.uri : ''}
-          playSong={this.props.playSong}
+          playing={this.props.playing}
+          playSong={() => this.props.playSong(this.props.playlist.uri)}
         />
         <Table
           current={this.props.current}
@@ -34,7 +34,8 @@ const mapStateToProps = state => {
       ? state.playlistReducer.playlist
       : null,
     current: state.playerReducer.status
-      ? state.playerReducer.status.track_window.current_track.id
+      ? state.playerReducer.status.track_window.current_track.linked_from.id ||
+        state.playerReducer.status.track_window.current_track.id
       : {},
     playing: state.playerReducer.status
       ? !state.playerReducer.status.paused

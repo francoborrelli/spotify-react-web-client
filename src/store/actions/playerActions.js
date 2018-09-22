@@ -27,8 +27,9 @@ export const playSong = (context = false, offset = 0) => {
       context_uri: context,
       offset: { position: offset }
     });
+  } else {
+    axios.put('/me/player/play');
   }
-  axios.put('/me/player/play');
   return {
     type: 'PLAY_STATE'
   };
