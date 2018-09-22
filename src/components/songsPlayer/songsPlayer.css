@@ -75,13 +75,13 @@
   .player-container .repeat-song.active i:hover {
     color: #10ff41; }
 
-.player-container .fa {
+.player-container .song-control .fa {
   padding: 0px 20px;
   -webkit-text-stroke: 1px #333333;
   color: #ccc; }
-  .player-container .fa:hover {
+  .player-container .song-control .fa:hover {
     color: #fff; }
-  .player-container .fa:active {
+  .player-container .song-control .fa:active {
     color: #aaa !important; }
 
 .song-control {
