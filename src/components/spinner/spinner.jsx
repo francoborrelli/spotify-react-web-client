@@ -3,7 +3,7 @@ import React from 'react';
 import './spinner.css';
 
 const Spinner = props => (
-  <div className="spinner-container">
+  <div className={`spinner-container ${props.className}`}>
     <div className="sk-circle">
       <div className="sk-circle1 sk-child" />
       <div className="sk-circle2 sk-child" />
