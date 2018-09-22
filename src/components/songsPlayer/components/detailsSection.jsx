@@ -14,7 +14,7 @@ const detailsSection = props => {
     <div className="details-section">
       <p
         className={
-          'song-name' + (props.songName.length > 40 ? ' overflow' : '')
+          'song-name' + (props.songName.length > 30 ? ' overflow' : '')
         }
       >
         {props.songName}

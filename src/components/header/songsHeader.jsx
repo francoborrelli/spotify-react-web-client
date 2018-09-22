@@ -5,7 +5,12 @@ import './songsHeader.css';
 const simpleHeader = props => (
   <div>
     <h3 className="header-title">{props.title}</h3>
-    <button className="main-pause-play-btn">{true ? 'PLAY' : 'PAUSE'}</button>
+    <button
+      onClick={props.playing ? props.pauseSong : props.playSong}
+      className="main-pause-play-btn"
+    >
+      {props.playing ? 'PAUSE' : 'PLAY'}
+    </button>
   </div>
 );
 

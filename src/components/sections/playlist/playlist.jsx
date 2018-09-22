@@ -16,7 +16,7 @@ class Playlist extends Component {
           currentUri={this.props.currentUri}
           playing={this.props.playing}
           pauseSong={this.props.pauseSong}
-          playSong={() => this.props.playSong(this.props.currentUri, 0)}
+          playSong={() => this.props.playSong(this.props.playlist.uri, 0)}
         />
         <Table
           current={this.props.currentSong}

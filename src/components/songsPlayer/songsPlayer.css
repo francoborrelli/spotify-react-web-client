@@ -45,7 +45,7 @@
   left: 20px;
   top: 7px;
   height: 56px;
-  width: 250px;
+  width: 180px;
   line-height: 14px;
   cursor: default;
   text-overflow: ellipsis; }
@@ -65,7 +65,7 @@
     -moz-transition-timing-function: linear;
     transition-timing-function: linear; }
     .player-container .song-name.overflow:hover {
-      margin-left: -250px;
+      margin-left: -180px;
       text-overflow: initial; }
 
 .player-container .shuffle-song.active i,

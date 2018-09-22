@@ -11,7 +11,7 @@ const leftSection = props => (
     <SiderMenu />
     <div className="buttom-section">
       <NewPlaylist />
-      <TrackCover src="https://upload.wikimedia.org/wikipedia/en/1/1d/5_-_box_set_by_Ed_Sheeran.jpg" />
+      <TrackCover />
     </div>
   </div>
 );

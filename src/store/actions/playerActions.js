@@ -35,6 +35,13 @@ export const playSong = (context = false, offset = 0) => {
   };
 };
 
+export const playTracks = tracks => {
+  axios.put('/me/player/play');
+  return {
+    type: 'PLAY_STATE'
+  };
+};
+
 export const pauseSong = () => {
   axios.put('/me/player/pause');
   return {

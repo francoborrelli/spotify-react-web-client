@@ -18,7 +18,7 @@ class SongsPlayer extends Component {
 
     return (
       <div className="player-container">
-        {this.props.playing ? (
+        {this.props.currentSong.id ? (
           <DetailSection
             songName={this.props.currentSong.name || ''}
             artists={this.props.currentSong.artists || []}

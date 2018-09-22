@@ -61,7 +61,7 @@
     left: 20px;
     top: 7px;
     height: 56px;
-    width: 250px;
+    width: 180px;
     line-height: 14px;
     cursor: default;
     text-overflow: ellipsis;
@@ -83,7 +83,7 @@
       transition-timing-function: linear;
 
       &:hover {
-        margin-left: -250px;
+        margin-left: -180px;
         text-overflow: initial;
       }
     }
