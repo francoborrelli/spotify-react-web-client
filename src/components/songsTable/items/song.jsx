@@ -10,23 +10,26 @@ const msToMinutesAndSeconds = ms => {
 };
 
 const song = props => {
-  const buttonClass =
-    props.track === props.songId && !props.songPaused
-      ? 'fa-play-circle-o'
-      : 'fa-pause-circle-o';
+  const active = props.item.track.id === props.current && props.playing;
+  const buttonClass = active ? 'fa-pause-circle-o' : 'fa-play-circle-o';
 
   const artists = props.item.track ? props.item.track.artists.length : 0;
 
+  const event = active
+    ? props.pauseSong
+    : () => props.playSong(props.uri, props.offset);
+
   return (
-    <li className="user-song-item">
+    <li className={'user-song-item' + (active ? ' active' : '')}>
       {props.isAlbum ? (
         <div className="r-song">
           <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
           <span>{props.index}</span>
         </div>
       ) : (
-        <div className="play-song">
+        <div className="play-song" onClick={event}>
           <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
+          {active ? <i className="fa fa-volume-up" /> : null}
         </div>
       )}
       <div className="song-title">

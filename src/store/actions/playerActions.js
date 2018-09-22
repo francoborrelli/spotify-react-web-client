@@ -21,7 +21,13 @@ export const previousSong = () => {
   };
 };
 
-export const playSong = () => {
+export const playSong = (context = false, offset = 0) => {
+  if (context) {
+    axios.put('/me/player/play', {
+      context_uri: context,
+      offset: { position: offset }
+    });
+  }
   axios.put('/me/player/play');
   return {
     type: 'PLAY_STATE'
@@ -36,7 +42,6 @@ export const pauseSong = () => {
 };
 
 export const seekSong = ms => {
-  console.log(ms);
   axios.put(`/me/player/seek?position_ms=${ms}`);
   return {
     type: 'SEEK_SONG'

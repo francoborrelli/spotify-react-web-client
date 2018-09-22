@@ -23,6 +23,30 @@
   &.active {
     color: #1db954;
     background: rgb(51, 51, 51);
+
+    .play-song {
+      opacity: 1;
+      .fa {
+        color: #ccc;
+        -webkit-text-stroke: 1px #333333;
+        font-size: 25px;
+        top: 11.5px;
+      }
+      .fa:first-of-type {
+        display: none;
+      }
+    }
+
+    &:hover {
+      .play-song {
+        .fa:first-of-type {
+          display: initial;
+        }
+        .fa:last-of-type {
+          display: none;
+        }
+      }
+    }
   }
 
   .play-song {

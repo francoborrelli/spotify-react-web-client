@@ -18,7 +18,7 @@ export default function(ComposedComponent) {
         nextSong={this.props.nextSong}
         previousSong={this.props.previousSong}
         pauseSong={this.props.pauseSong}
-        playSong={this.props.playSong}
+        playSong={() => this.props.playSong()}
         seekSong={this.props.seekSong}
       />
     );
