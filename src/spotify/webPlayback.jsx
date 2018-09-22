@@ -145,6 +145,7 @@ class WebPlayback extends Component {
 
     // Wait for device to be selected
     await this.waitForDeviceToBeSelected();
+    this.props.onPlayerDeviceSelected();
   }
 
   render() {

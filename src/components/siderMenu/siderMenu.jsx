@@ -28,10 +28,8 @@ class SiderMenu extends Component {
     active: 'Browse'
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.token !== '') {
-      this.props.fetchPlaylistsMenu(nextProps.token);
-    }
+  componentDidMount() {
+    this.props.fetchPlaylistsMenu();
   }
 
   setActive = (item, playlist) => {
@@ -72,7 +70,6 @@ class SiderMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.sessionReducer.token || null,
     playlists: state.playlistReducer.playlists || null
   };
 };

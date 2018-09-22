@@ -6,6 +6,7 @@ import './App.css';
 import { setToken } from './store/actions/sessionActions';
 import { fetchUser } from './store/actions/userActions';
 
+import Spinner from './components/spinner/spinner';
 import LeftSection from './containers/leftSection/leftSection';
 import MainSection from './containers/mainSection/mainSection';
 
@@ -16,8 +17,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {};
 
 class App extends Component {
   state = {
-    playerLoaded: false,
-    playerState: null
+    playerLoaded: false
   };
 
   componentDidMount() {
@@ -40,15 +40,18 @@ class App extends Component {
       onPlayerRequestAccessToken: () => this.state.token,
       onPlayerLoading: () => {},
       onPlayerWaitingForDevice: () => {},
-      onPlayerStateChange: playerState => console.log(playerState),
-      onPlayerError: playerError => console.error(playerError)
+      onPlayerDeviceSelected: () => {
+        this.setState({ playerLoaded: true });
+      }
     };
 
     return (
       <div className="app">
         <WebPlaybackReact {...webPlaybackSdkProps}>
-          <LeftSection />
-          <MainSection />
+          <Spinner loading={!this.state.playerLoaded}>
+            <LeftSection />
+            <MainSection />
+          </Spinner>
         </WebPlaybackReact>
       </div>
     );
