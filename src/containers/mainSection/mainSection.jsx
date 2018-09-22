@@ -19,7 +19,7 @@ class MainSection extends Component {
     let name = this.props.user.display_name;
     let id = this.props.user.id;
 
-    let img = this.props.user.images
+    let img = this.props.user.images[0]
       ? this.props.user.images[0].url
       : defaultProfile;
 

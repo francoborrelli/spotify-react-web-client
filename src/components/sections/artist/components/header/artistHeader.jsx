@@ -1,10 +1,10 @@
 import React from 'react';
 
 import './artistHeader.css';
-
+import withPlayer from '../../../../../hoc/playerHoc';
 import FollowBtn from '../../../../buttons/followButton/followArtist';
 
-const artistHeader = ({ artist }) => (
+const artistHeader = ({ artist, playing, playSong, pauseSong, currentUri }) => (
   <div>
     <div className="current-artist-header-container">
       <img
@@ -16,9 +16,21 @@ const artistHeader = ({ artist }) => (
         <h3>{artist.name}</h3>
         <div className="btns-section">
           <div>
-            <button className="main-pause-play-btn artist-button">
-              {'PLAY'}
-            </button>
+            {playing && artist.uri === currentUri ? (
+              <button
+                className="main-pause-play-btn artist-button"
+                onClick={pauseSong}
+              >
+                {'PAUSE'}
+              </button>
+            ) : (
+              <button
+                className="main-pause-play-btn artist-button"
+                onClick={() => playSong(artist.uri, 0)}
+              >
+                {'PLAY'}
+              </button>
+            )}
           </div>
           <div>
             <FollowBtn following={artist.follows} />
@@ -32,4 +44,4 @@ const artistHeader = ({ artist }) => (
   </div>
 );
 
-export default artistHeader;
+export default withPlayer(artistHeader);
