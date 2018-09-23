@@ -33,8 +33,15 @@ const playlistHeader = ({
 
   return (
     <div className="playlist-title-container">
-      <div className="playlist-image-container">
+      <div
+        className={`playlist-image-container ${
+          !album && playlist.mine ? 'edit' : ''
+        }`}
+      >
         <img alt="playlist-cover" className="playlist-image" src={img} />
+        {!album && playlist.mine ? (
+          <i class="fa fa-pencil" aria-hidden="true" />
+        ) : null}
       </div>
       <div className="playlist-info-container">
         <p className="playlist-text">{album ? 'ALBUM' : 'PLAYLIST'}</p>

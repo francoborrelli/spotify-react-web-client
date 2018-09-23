@@ -5,11 +5,30 @@
     margin: 0px;
   }
 }
-
-.playlist-image {
-  width: 230px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.103),
-    0 6px 15px 0 rgba(0, 0, 0, 0.075);
+.playlist-image-container {
+  &.edit {
+    .fa {
+      display: none;
+    }
+    &:hover {
+      .playlist-image {
+        opacity: 0.6;
+      }
+      .fa {
+        position: absolute;
+        font-size: 58px;
+        z-index: 100;
+        left: 95px;
+        top: 90px;
+        display: block;
+      }
+    }
+  }
+  .playlist-image {
+    width: 230px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.103),
+      0 6px 15px 0 rgba(0, 0, 0, 0.075);
+  }
 }
 
 .playlist-title-container {
