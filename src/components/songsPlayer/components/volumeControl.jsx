@@ -16,16 +16,16 @@ class VolumeControl extends Component {
 
   onOff = () => {
     this.setState(prevState => {
-      this.setState({ volume: 0, previous: prevState.volume, clicked: true });
-      this.changeVolume(0);
+      return { volume: 0, previous: prevState.volume, clicked: true };
     });
+    this.changeVolume(0);
   };
 
   onOn = () => {
     this.setState(prevState => {
-      this.setState({ volume: prevState.previous, clicked: false });
-      this.changeVolume(this.state.volume);
+      return { volume: prevState.previous, clicked: false };
     });
+    this.changeVolume(this.state.previous);
   };
 
   onClick = () => {
@@ -47,6 +47,9 @@ class VolumeControl extends Component {
         value={this.state.volume}
         onClick={this.onClick}
         onChange={value => {
+          this.setState({ volume: value });
+        }}
+        onChangeEnd={value => {
           this.setState({ volume: value });
           this.changeVolume(value);
         }}

@@ -39,6 +39,9 @@
         width: 100%;
       }
       &.playlist:hover {
+        opacity: 0.7;
+      }
+      &.playlist:active {
         opacity: 0.3;
       }
     }

@@ -1,5 +1,6 @@
 const initialState = {
-  view: 'browse'
+  view: 'browse',
+  modal: false
 };
 
 export const uiReducer = (state = initialState, action) => {
@@ -9,7 +10,11 @@ export const uiReducer = (state = initialState, action) => {
         ...state,
         view: action.view
       };
-
+    case 'SET_MODAL':
+      return {
+        ...state,
+        modal: action.modal
+      };
     default:
       return state;
   }

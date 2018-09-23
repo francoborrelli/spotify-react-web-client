@@ -4,3 +4,10 @@ export const setView = view => {
     view
   };
 };
+
+export const setModal = modal => {
+  return {
+    type: 'SET_MODAL',
+    modal
+  };
+};

@@ -9,18 +9,13 @@ import './siderMenu.css';
 import withUiActions from '../../hoc/uiHoc';
 import MenuItem from './components/menuItem';
 
-const sectionOne = [{ name: 'Browse', view: 'browse' }, { name: 'Radio' }];
+const sectionOne = [{ name: 'Browse', view: 'browse' }];
 
 const sectionTwo = [
-  { name: 'Your Daily Mix' },
   { name: 'Recently Played', view: 'recently' },
   { name: 'Songs', view: 'songs' },
   { name: 'Albums' },
-  { name: 'Artists' },
-  { name: 'Stations' },
-  { name: 'Local Files' },
-  { name: 'Videos' },
-  { name: 'Postcasts' }
+  { name: 'Artists' }
 ];
 
 class SiderMenu extends Component {

@@ -8,11 +8,14 @@ export default {
       'user-read-private',
       'user-read-birthdate',
       'user-read-email',
-      'playlist-read-private',
       'user-read-recently-played',
-      'user-modify-playback-state',
       'user-read-playback-state',
-      'user-follow-modify'
+      'user-modify-playback-state',
+      'user-library-modify',
+      'user-follow-modify',
+      'playlist-read-private',
+      'playlist-modify-public',
+      'playlist-modify-private'
     ].join(' ');
 
     let scopes_encoded = scopes.replace(' ', '%20');
