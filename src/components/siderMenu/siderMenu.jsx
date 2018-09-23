@@ -9,13 +9,13 @@ import './siderMenu.css';
 import withUiActions from '../../hoc/uiHoc';
 import MenuItem from './components/menuItem';
 
-const sectionOne = [{ name: 'Browse', view: 'browse' }];
+const sectionOne = [{ name: 'Browse', view: 'browse', id: 1 }];
 
 const sectionTwo = [
-  { name: 'Recently Played', view: 'recently' },
-  { name: 'Songs', view: 'songs' },
-  { name: 'Albums' },
-  { name: 'Artists' }
+  { name: 'Recently Played', view: 'recently', id: 2 },
+  { name: 'Songs', view: 'songs', id: 3 },
+  { name: 'Albums', id: 4 },
+  { name: 'Artists', id: 5 }
 ];
 
 class SiderMenu extends Component {
@@ -28,7 +28,7 @@ class SiderMenu extends Component {
   }
 
   setActive = (item, playlist) => {
-    this.setState({ active: item.name });
+    this.setState({ active: item.id });
     if (playlist) {
       this.props.onPlaylistClick(item.id);
     } else {
@@ -39,9 +39,9 @@ class SiderMenu extends Component {
   generateItems(items, playlist = false) {
     return items.map(item => (
       <MenuItem
-        key={item.id || item.name}
+        key={item.id}
         title={item.name}
-        active={this.state.active === item.name}
+        active={this.state.active === item.id}
         onClick={() => this.setActive(item, playlist)}
       />
     ));
