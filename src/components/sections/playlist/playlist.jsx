@@ -11,10 +11,7 @@ class Playlist extends Component {
   render = () => {
     const id = this.props.playlist ? this.props.playlist.id : null;
     return (
-      <Spinner
-        section
-        loading={!(id === this.props.playlistId && !this.props.fetching)}
-      >
+      <Spinner section loading={this.props.fetching}>
         <div className="player-container">
           <Header
             playlist={this.props.playlist || {}}
@@ -41,7 +38,6 @@ const mapStateToProps = state => {
     playlist: state.playlistReducer.playlist
       ? state.playlistReducer.playlist
       : null,
-    playlistId: state.uiReducer.id,
     fetching: state.playlistReducer.fetchPlaylistPending
   };
 };

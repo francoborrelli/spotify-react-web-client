@@ -4,9 +4,14 @@ export const browseReducer = (state = {}, action) => {
       return {
         ...state,
         categories: action.categories.items,
-        fetchCategoriesError: false
+        fetchCategoriesError: false,
+        fetchCategoriesPending: false
       };
-
+    case 'FETCH_CATEGORIES_PENDING':
+      return {
+        ...state,
+        fetchCategoriesPending: true
+      };
     case 'FETCH_CATEGORIES_ERROR':
       return {
         ...state,

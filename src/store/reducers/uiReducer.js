@@ -7,8 +7,7 @@ export const uiReducer = (state = initialState, action) => {
     case 'SET_NEW_VIEW':
       return {
         ...state,
-        view: action.view,
-        id: action.id
+        view: action.view
       };
 
     default:

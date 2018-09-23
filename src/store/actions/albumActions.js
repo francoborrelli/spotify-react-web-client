@@ -13,8 +13,15 @@ export const fetchAlbumError = () => {
   };
 };
 
+export const fetchAlbumPending = () => {
+  return {
+    type: 'FETCH_ALBUM_PENDING'
+  };
+};
+
 export const fetchAlbum = id => {
   return async dispatch => {
+    dispatch(fetchAlbumPending());
     function onSuccess(album) {
       dispatch(fetchAlbumSuccess(album));
       return album;

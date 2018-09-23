@@ -11,17 +11,17 @@ export default function(ComposedComponent) {
   class UiHoc extends Component {
     onPlaylistClick = id => {
       this.props.fetchPlaylist(id);
-      this.props.setView('playlist', id);
+      this.props.setView('playlist');
     };
 
     onArtistClick = id => {
       this.props.fetchArtist(id);
-      this.props.setView('artist', id);
+      this.props.setView('artist');
     };
 
     onAlbumClick = id => {
       this.props.fetchAlbum(id);
-      this.props.setView('album', id);
+      this.props.setView('album');
     };
 
     render = () => (

@@ -4,7 +4,13 @@ export const albumReducer = (state = {}, action) => {
       return {
         ...state,
         currentAlbum: action.album,
-        fetchAlbumError: false
+        fetchAlbumError: false,
+        fetchAlbumPending: false
+      };
+    case 'FETCH_ALBUM_PENDING':
+      return {
+        ...state,
+        fetchAlbumPending: true
       };
 
     case 'FETCH_ALBUM_ERROR':

@@ -1,7 +1,6 @@
-export const setView = (view, id) => {
+export const setView = view => {
   return {
     type: 'SET_NEW_VIEW',
-    view,
-    id
+    view
   };
 };
