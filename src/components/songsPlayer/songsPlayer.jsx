@@ -9,6 +9,25 @@ import VolumeControl from './components/volumeControl';
 import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.pressSpace);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.pressSpace);
+  }
+
+  pressSpace = e => {
+    if (e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      if (this.props.playing) {
+        this.props.pauseSong();
+      } else {
+        this.props.playSong();
+      }
+    }
+  };
+
   toSeconds = ms => ms / 1000;
 
   render = () => {

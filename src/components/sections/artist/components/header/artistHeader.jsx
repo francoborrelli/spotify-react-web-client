@@ -4,7 +4,13 @@ import './artistHeader.css';
 import withPlayer from '../../../../../hoc/playerHoc';
 import FollowBtn from '../../../../buttons/followButton/followArtist';
 
-const artistHeader = ({ artist, playing, playSong, pauseSong, currentUri }) => (
+const artistHeader = ({
+  artist,
+  playing,
+  playSong,
+  pauseSong,
+  currentSong
+}) => (
   <div>
     <div className="current-artist-header-container">
       <img
@@ -16,7 +22,7 @@ const artistHeader = ({ artist, playing, playSong, pauseSong, currentUri }) => (
         <h3>{artist.name}</h3>
         <div className="btns-section">
           <div>
-            {playing && artist.uri === currentUri ? (
+            {playing && artist.uri === currentSong.artists[0].uri ? (
               <button
                 className="main-pause-play-btn artist-button"
                 onClick={pauseSong}

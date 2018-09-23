@@ -96,7 +96,7 @@ class Modal extends Component {
     if (changeTitle) {
       playlist.name = this.state.title;
     }
-    if (this.state.description) {
+    if (this.state.description && changeDescription) {
       playlist.description = this.state.description;
     }
 

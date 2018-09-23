@@ -14,6 +14,10 @@ import {
 
 export default function(ComposedComponent) {
   class PlayerHoc extends Component {
+    shouldComponentUpdate(nextProps) {
+      return nextProps.playing || (this.props.playing && !nextProps.playing);
+    }
+
     render = () => (
       <ComposedComponent
         {...this.props}
@@ -30,9 +34,6 @@ export default function(ComposedComponent) {
 
   const mapStateToProps = state => {
     return {
-      currentUri: state.playerReducer.status
-        ? state.playerReducer.status.context.uri
-        : null,
       currentSong: state.playerReducer.status
         ? state.playerReducer.status.track_window.current_track
         : {},
