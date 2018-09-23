@@ -12,7 +12,8 @@ body {
   .app .main-section {
     position: relative;
     left: 200px;
-    padding: 0 10px; }
+    padding: 0 10px;
+    margin-left: 20px; }
   .app .main-section-container {
     position: relative;
     top: 50px;
