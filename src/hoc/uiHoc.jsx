@@ -27,6 +27,10 @@ export default function(ComposedComponent) {
       this.props.setView('album');
     };
 
+    onSearch = () => {
+      this.props.setView('search');
+    };
+
     render = () => (
       <ComposedComponent
         {...this.props}
@@ -34,6 +38,7 @@ export default function(ComposedComponent) {
         onPlaylistClick={this.onPlaylistClick}
         onArtistClick={this.onArtistClick}
         onAlbumClick={this.onAlbumClick}
+        onSearch={this.onSearch}
       />
     );
   }

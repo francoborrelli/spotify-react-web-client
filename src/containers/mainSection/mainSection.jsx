@@ -10,6 +10,7 @@ import Songs from '../../components/sections/songList/songList';
 import Playlist from '../../components/sections/playlist/playlist';
 import Artist from '../../components/sections/artist/artist';
 import Album from '../../components/sections/album/album';
+import Search from '../../components/sections/search/search';
 import Modal from '../../components/playlistModal/modal';
 
 import defaultProfile from './images/profile.png';
@@ -35,6 +36,7 @@ class MainSection extends Component {
           {this.props.view === 'songs' ? <Songs /> : null}
           {this.props.view === 'artist' ? <Artist /> : null}
           {this.props.view === 'album' ? <Album /> : null}
+          {this.props.view === 'search' ? <Search /> : null}
         </div>
         <Footer />
       </div>

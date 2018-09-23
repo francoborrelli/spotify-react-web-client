@@ -1,0 +1,29 @@
+.search-container {
+  min-height: 500px;
+  height: 100%;
+  .table-container {
+    display: table;
+    width: 100%;
+    height: 100%;
+  }
+  .search-index {
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #ccc;
+    .fa {
+      font-size: 60px;
+      -webkit-text-stroke: 6px #181818;
+    }
+    .fa-flag-o {
+      -webkit-text-stroke: 3px #181818;
+    }
+    h2 {
+      color: white;
+    }
+    span {
+      font-size: 14px;
+    }
+  }
+}

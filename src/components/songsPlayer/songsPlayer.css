@@ -130,8 +130,10 @@
 
 .player-container .song-control .fa {
   padding: 0px 20px;
-  -webkit-text-stroke: 1px #333333;
+  -webkit-text-stroke: 1px #282828;
   color: #ccc; }
+  .player-container .song-control .fa.play-btn {
+    -webkit-text-stroke: 3px #282828; }
   .player-container .song-control .fa:hover {
     color: #fff; }
   .player-container .song-control .fa:active {

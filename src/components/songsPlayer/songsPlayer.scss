@@ -174,7 +174,12 @@
 
   .song-control .fa {
     padding: 0px 20px;
-    -webkit-text-stroke: 1px #333333;
+    -webkit-text-stroke: 1px #282828;
+
+    &.play-btn {
+      -webkit-text-stroke: 3px #282828;
+    }
+
     color: #ccc;
 
     &:hover {

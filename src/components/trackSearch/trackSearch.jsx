@@ -1,5 +1,7 @@
 import React from 'react';
 
+import withUiActions from '../../hoc/uiHoc';
+
 const container = {
   position: 'relative',
   top: '15px'
@@ -19,9 +21,14 @@ const input = {
 const search = props => (
   <div className="track-search-container" style={container}>
     <form>
-      <input type="text" placeholder="Search..." style={input} />
+      <input
+        type="text"
+        placeholder="Search..."
+        style={input}
+        onClick={props.onSearch}
+      />
     </form>
   </div>
 );
 
-export default search;
+export default withUiActions(search);
