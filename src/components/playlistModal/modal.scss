@@ -117,7 +117,7 @@
           text-align: left;
         }
         img {
-          width: 90%;
+          width: 100%;
         }
       }
       .text {
@@ -127,9 +127,10 @@
           resize: none;
           padding: 8px;
           width: 98%;
-          height: 150px;
+          height: 175px;
           border-radius: 5px;
           outline: none;
+          font-family: 'Proxima Thin', Georgia, sans-serif;
         }
       }
     }

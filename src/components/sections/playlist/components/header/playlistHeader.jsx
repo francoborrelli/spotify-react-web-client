@@ -14,6 +14,7 @@ const playlistHeader = ({
   playSong,
   pauseSong,
   playing,
+  showModal,
   currentUri
 }) => {
   const img =
@@ -33,22 +34,32 @@ const playlistHeader = ({
 
   return (
     <div className="playlist-title-container">
-      <div
-        className={`playlist-image-container ${
-          !album && playlist.mine ? 'edit' : ''
-        }`}
-      >
-        <img alt="playlist-cover" className="playlist-image" src={img} />
-        {!album && playlist.mine ? (
-          <i class="fa fa-pencil" aria-hidden="true" />
-        ) : null}
-      </div>
+      {!album && playlist.mine ? (
+        <div className="playlist-image-container edit" onClick={showModal}>
+          <img alt="playlist-cover" className="playlist-image" src={img} />
+          <i className="fa fa-pencil" aria-hidden="true" />
+        </div>
+      ) : (
+        <div className="playlist-image-container">
+          <img alt="playlist-cover" className="playlist-image" src={img} />
+        </div>
+      )}
       <div className="playlist-info-container">
         <p className="playlist-text">{album ? 'ALBUM' : 'PLAYLIST'}</p>
-        <h3 className="header-title playlist">{playlist.name}</h3>
+        <h3
+          className="header-title playlist"
+          onClick={!album && playlist.mine ? showModal : null}
+        >
+          {playlist.name}
+        </h3>
         {!album &&
           playlist.description && (
-            <p className="description">{playlist.description}</p>
+            <p
+              className="description"
+              onClick={!album && playlist.mine ? showModal : null}
+            >
+              {playlist.description}
+            </p>
           )}
         {!album && (
           <p className="created-by">

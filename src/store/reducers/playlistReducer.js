@@ -8,12 +8,11 @@ export const playlistReducer = (state = {}, action) => {
 
     case 'FETCH_PLAYLIST_MENU_SUCCESS':
       return {
+        ...state,
         playlists: action.playlists,
         fetchPlaylistsError: false,
-        fetchPlaylistsPending: false,
-        ...state
+        fetchPlaylistsPending: false
       };
-
     case 'FETCH_PLAYLIST_MENU_ERROR':
       return {
         ...state,
@@ -24,6 +23,11 @@ export const playlistReducer = (state = {}, action) => {
       return {
         ...state,
         fetchPlaylistPending: true
+      };
+    case 'UPDATE_PLAYLIST':
+      return {
+        ...state,
+        playlist: { ...state.playlist, ...action.playlist }
       };
 
     case 'FETCH_PLAYLIST_SUCCESS':

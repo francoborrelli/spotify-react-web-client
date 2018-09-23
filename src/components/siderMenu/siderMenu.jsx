@@ -39,7 +39,7 @@ class SiderMenu extends Component {
   generateItems(items, playlist = false) {
     return items.map(item => (
       <MenuItem
-        key={item.name}
+        key={item.id || item.name}
         title={item.name}
         active={this.state.active === item.name}
         onClick={() => this.setActive(item, playlist)}

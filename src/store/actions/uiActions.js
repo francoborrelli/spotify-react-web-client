@@ -5,9 +5,10 @@ export const setView = view => {
   };
 };
 
-export const setModal = modal => {
+export const setModal = (modal, mode = 'new') => {
   return {
     type: 'SET_MODAL',
-    modal
+    modal,
+    mode
   };
 };

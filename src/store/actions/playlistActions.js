@@ -53,6 +53,13 @@ export const fetchPlaylistError = () => {
   };
 };
 
+export const updatePlaylist = playlist => {
+  return {
+    type: 'UPDATE_PLAYLIST',
+    playlist
+  };
+};
+
 export const dispacher = a => {
   return a;
 };

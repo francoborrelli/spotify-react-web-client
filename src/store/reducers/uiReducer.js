@@ -13,7 +13,8 @@ export const uiReducer = (state = initialState, action) => {
     case 'SET_MODAL':
       return {
         ...state,
-        modal: action.modal
+        modal: action.modal,
+        mode: action.mode
       };
     default:
       return state;

@@ -1,26 +1,52 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import axios from '../../axios';
 import { setModal } from '../../store/actions/uiActions';
+import {
+  fetchPlaylistsMenu,
+  updatePlaylist
+} from '../../store/actions/playlistActions';
 
 import './modal.css';
 import song from '../../containers/mainSection/images/song.png';
 
-class Modal extends PureComponent {
+class Modal extends Component {
   state = {};
 
   componentWillMount() {
     this.initialize();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props && this.props.show) {
+      this.initialize();
+    }
+  }
+
   initialize = () => {
-    this.setState({
-      title: 'New Playlist',
-      description: '',
-      error: false
-    });
+    if (this.props.edit) {
+      this.setState({
+        header: 'Edit Playlist Details',
+        title: this.props.playlist.name || '',
+        description: this.props.playlist.description || '',
+        image: this.props.playlist.images
+          ? this.props.playlist.images[0].url
+          : song,
+        btn: 'Save',
+        error: false
+      });
+    } else {
+      this.setState({
+        header: 'Create Playlist',
+        title: 'New Playlist',
+        description: '',
+        image: song,
+        btn: 'Create',
+        error: false
+      });
+    }
   };
 
   handleChange = (input, event) => {
@@ -43,24 +69,56 @@ class Modal extends PureComponent {
     this.props.setModal(false);
   };
 
-  onSubmit = () => {
+  onSubmitNew = () => {
     if (this.validate()) {
       axios
         .post(`/users/${this.props.id}/playlists`, {
           name: this.state.title,
           description: this.state.description
         })
-        .then(() => this.props.setModal(false));
+        .then(() => {
+          this.props.setModal(false);
+          this.props.fetchPlaylistsMenu();
+        });
+    }
+  };
+
+  onSubmitPlaylist = () => {
+    const changeTitle = this.props.playlist.name !== this.state.title;
+    const changeDescription =
+      this.props.playlist.description !== this.state.description;
+
+    if (!changeTitle && !changeDescription) {
+      return;
+    }
+
+    let playlist = {};
+    if (changeTitle) {
+      playlist.name = this.state.title;
+    }
+    if (this.state.description) {
+      playlist.description = this.state.description;
+    }
+
+    if (this.validate()) {
+      axios.put(`/playlists/${this.props.playlist.id}`, playlist).then(() => {
+        this.props.setModal(false);
+        this.props.updatePlaylist(playlist);
+        if (changeTitle) {
+          this.props.fetchPlaylistsMenu();
+        }
+      });
     }
   };
 
   render() {
+    const edit = this.props.edit;
     return (
       <div>
         <div className={`playlist-Modal ${this.props.show ? 'active' : ''}`}>
           <div className="modal-content">
             <div className="modal-title">
-              <h4>Create Playlist</h4>
+              <h4>{this.state.header}</h4>
             </div>
             <div className="modal-body">
               <div className="title-input">
@@ -76,7 +134,7 @@ class Modal extends PureComponent {
                 }/100`}</div>
                 <div className="description">
                   <div className="image">
-                    <span>Image</span> <img alt="song" src={song} />
+                    <span>Image</span> <img alt="song" src={this.state.image} />
                   </div>
                   <div className="text">
                     <span>Description</span>
@@ -84,6 +142,7 @@ class Modal extends PureComponent {
                       this.state.description.length
                     }/300`}</div>
                     <textarea
+                      value={this.state.description}
                       onChange={event =>
                         this.handleChange('description', event)
                       }
@@ -104,8 +163,11 @@ class Modal extends PureComponent {
                   <button className="cancel-btn" onClick={this.onCancel}>
                     Cancel
                   </button>
-                  <button className="save-btn" onClick={this.onSubmit}>
-                    Create
+                  <button
+                    className="save-btn"
+                    onClick={edit ? this.onSubmitPlaylist : this.onSubmitNew}
+                  >
+                    {this.state.btn}
                   </button>
                 </div>
               </div>
@@ -123,7 +185,10 @@ class Modal extends PureComponent {
 
 const mapStateToProps = state => {
   return {
+    fetching: state.playlistReducer.fetchPlaylistPending,
+    playlist: state.playlistReducer.playlist || {},
     show: state.uiReducer.modal,
+    edit: state.uiReducer.mode !== 'new',
     id: state.userReducer.user.id
   };
 };
@@ -131,7 +196,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setModal
+      setModal,
+      fetchPlaylistsMenu,
+      updatePlaylist
     },
     dispatch
   );
