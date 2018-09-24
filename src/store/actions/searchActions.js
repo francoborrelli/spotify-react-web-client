@@ -36,7 +36,7 @@ export const fetchSearchData = query => {
     const country = getState().userReducer.user.country;
     try {
       const response = await axios.get(
-        `/search?q=${query}&type=artist,album,playlist,track&market=${country}&limit=4`
+        `/search?q=${query}&type=artist,album,playlist,track&market=${country}&limit=6`
       );
       dispatch(fetchDataSuccess(response.data));
       return response.data;

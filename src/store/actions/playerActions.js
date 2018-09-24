@@ -21,14 +21,20 @@ export const previousSong = () => {
   };
 };
 
-export const playSong = (context = false, offset = 0) => {
-  if (context) {
+export const playSong = (context = false, offset) => {
+  if (context && offset) {
     axios.put('/me/player/play', {
       context_uri: context,
       offset: { position: offset }
     });
   } else {
-    axios.put('/me/player/play');
+    if (context) {
+      axios.put('/me/player/play', {
+        context_uri: context
+      });
+    } else {
+      axios.put('/me/player/play');
+    }
   }
   return {
     type: 'PLAY_STATE'

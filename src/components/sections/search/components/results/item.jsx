@@ -2,8 +2,20 @@ import React from 'react';
 
 import artist from '../../../../../containers/mainSection/images/artist.png';
 import playlist from '../../../../../containers/mainSection/images/playlist.png';
+import withStatus from '../../../../../hoc/statusHoc';
+import { playSong } from '../../../../../store/actions/playerActions';
 
-const item = ({ item, type, onClick }) => {
+const item = ({
+  item,
+  type,
+  onClick,
+  playSong,
+  pauseSong,
+  playTracks,
+  currentUri,
+  currentSong,
+  playing
+}) => {
   let img, title, description;
 
   switch (true) {
@@ -31,7 +43,21 @@ const item = ({ item, type, onClick }) => {
     <ul className={`item ${type === 'Artists' ? 'artist' : ''}`}>
       <div className="image">
         <img alt="song" src={img} />
-        <i className="fa fa-play-circle-o" aria-hidden="true" />
+        {(playing && currentUri === item.uri) || currentSong === item.id ? (
+          <i
+            className="fa fa-pause-circle-o"
+            aria-hidden="true"
+            onClick={() => pauseSong()}
+          />
+        ) : (
+          <i
+            className="fa fa-play-circle-o"
+            aria-hidden="true"
+            onClick={() =>
+              type === 'Songs' ? playTracks([item.uri], 0) : playSong(item.uri)
+            }
+          />
+        )}
       </div>
       <div
         className="details"
@@ -46,4 +72,4 @@ const item = ({ item, type, onClick }) => {
   );
 };
 
-export default item;
+export default withStatus(item);

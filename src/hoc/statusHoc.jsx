@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { playSong, pauseSong } from '../store/actions/playerActions';
+import {
+  playSong,
+  pauseSong,
+  playTracks
+} from '../store/actions/playerActions';
 
 export default function(ComposedComponent) {
   class StatusHoc extends Component {
@@ -35,7 +39,8 @@ export default function(ComposedComponent) {
     return bindActionCreators(
       {
         pauseSong,
-        playSong
+        playSong,
+        playTracks
       },
       dispatch
     );
