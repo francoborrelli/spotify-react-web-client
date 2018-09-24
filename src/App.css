@@ -11,15 +11,19 @@ body {
   position: relative; }
   .app .main-section {
     position: relative;
-    left: 200px;
-    padding: 0 10px;
-    margin-left: 20px; }
+    margin-left: 20px;
+    margin: auto; }
   .app .main-section-container {
     position: relative;
     top: 50px;
     padding-bottom: 50px; }
-  @media (max-width: 550px) {
+  @media (max-width: 1100px) {
     .app .main-section {
-      left: 0; }
+      padding-left: 200px; }
+    .app .right-section {
+      display: none; } }
+  @media (max-width: 700px) {
+    .app .main-section {
+      padding-left: 0px; }
     .app .left-section {
       display: none; } }

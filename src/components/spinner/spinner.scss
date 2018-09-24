@@ -4,8 +4,7 @@
   display: table;
   &.section {
     .sk-circle {
-      left: 50%;
-      bottom: 54%;
+      top: -90px;
       .sk-child:before {
         background-color: #b6b7b6;
       }
@@ -13,14 +12,14 @@
   }
 }
 .sk-circle {
-  display: table-cell;
-  vertical-align: middle;
   width: 80px;
   height: 80px;
   position: fixed;
-  color: #ccc;
-  left: 46%;
-  bottom: 50%;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 .sk-circle .sk-child {
   width: 100%;

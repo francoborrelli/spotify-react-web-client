@@ -1,19 +1,27 @@
 .browse-headers {
   display: flex;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @media (max-width: 850px) {
+    display: grid;
+    text-align: right;
+    p {
+      display: inline;
+      margin-top: 10px !important;
+    }
+    .active {
+      border-bottom: 2px solid #1db954;
+      &:after {
+        width: 0px;
+      }
+    }
+  }
   padding: 20px 20px 0px;
   .active {
     position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 35px;
-      left: 50%;
-      top: 22px;
-      border-bottom: 2px solid #1db954;
-      transform: translate(-50%, -50%);
-    }
+    border-bottom: 2px solid #1db954;
+    padding-bottom: 2px;
   }
 
   p {

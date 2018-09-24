@@ -19,18 +19,17 @@ class Search extends Component {
       this.props.albums.length;
 
     return (
-      <Spinner loading={this.props.fetching}>
+      <Spinner section loading={this.props.fetching}>
         <div className="search-container">
           {!this.props.query && <Index />}
-          {this.props.query &&
-            results && (
-              <Results
-                artists={this.props.artists}
-                playlists={this.props.playlists}
-                albums={this.props.albums}
-                songs={this.props.songs}
-              />
-            )}
+          {this.props.query && results ? (
+            <Results
+              artists={this.props.artists}
+              playlists={this.props.playlists}
+              albums={this.props.albums}
+              songs={this.props.songs}
+            />
+          ) : null}
           {this.props.query &&
             !results && <NoResults query={this.props.query} />}
         </div>

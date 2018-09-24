@@ -3,19 +3,31 @@
   height: 100%;
 
   @media (max-width: 1800px) {
-    width: 1200px;
+    width: 1100px;
   }
 
-  @media (max-width: 1500px) {
+  @media (max-width: 1600px) {
     width: 1000px;
   }
 
-  @media (max-width: 1300px) {
+  @media (max-width: 1500px) {
     width: 850px;
   }
 
+  @media (max-width: 1400px) {
+    width: 750px;
+  }
+
+  @media (max-width: 1200px) {
+    width: 650px;
+  }
+
   @media (max-width: 1100px) {
-    padding-left: 13px;
-    width: 550px;
+    width: 85%;
+    margin: 0 auto;
+  }
+  @media (max-width: 600px) {
+    width: 300px;
+    margin: 0 auto;
   }
 }
