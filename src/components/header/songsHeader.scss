@@ -14,8 +14,13 @@
   font-size: 14px;
   letter-spacing: 1px;
   outline: none;
-
+  -webkit-transition: background-color 200ms ease-in-out;
+  -ms-transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
   &:hover {
-    width: 102px;
+    background: #21cc5d;
+  }
+  &:active {
+    background: #19a74b;
   }
 }

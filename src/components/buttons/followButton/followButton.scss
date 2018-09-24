@@ -5,9 +5,18 @@
   opacity: 0.7;
   font-family: 'Proxima Nova', Georgia, sans-serif;
   color: #fff;
-  border: 1px solid white;
+  border: 1px solid #bbb;
   padding: 10px;
   letter-spacing: 1px;
+  -webkit-transition: border 400ms ease-in-out;
+  -ms-transition: border 400ms ease-in-out;
+  transition: border 400ms ease-in-out;
+  &:hover {
+    border: 1px solid white;
+  }
+  &:active {
+    border: 1px solid #aaa;
+  }
 }
 
 .menu-btn {
@@ -16,11 +25,6 @@
   margin-top: 10px;
   font-size: 15px;
   margin-left: 50px;
-  &:hover {
-    height: 39px;
-    width: 39px;
-    margin-top: 9px;
-  }
 }
 .btns-section {
   display: inline-flex;
@@ -33,22 +37,11 @@
 .follow-btn {
   margin: 10px 0px;
   font-size: 13px;
-  &:hover {
-    margin: 9px 0px;
-    height: 38px;
-    width: 103px;
-  }
 }
 
 .follow-btn {
   border-radius: 20px;
   width: 150px;
-  &:hover {
-    width: 153px;
-  }
-  &:active {
-    width: 150px;
-  }
   &.following {
     color: #00ff5b;
     &:after {

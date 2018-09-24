@@ -25,6 +25,9 @@ button {
     &:hover {
       background-color: #cccccc14;
     }
+    &:active {
+      background-color: #252020ad;
+    }
     display: flex;
     cursor: pointer;
     p {
@@ -116,14 +119,20 @@ button {
     background: transparent;
     font-family: 'Proxima Nova', Georgia, sans-serif;
     color: #fff;
-    border: 1px solid white;
+    border: 1px solid #ccc;
     padding: 10px;
     letter-spacing: 1px;
     margin: 20px 2px 20px 2px;
     border-radius: 20px;
     width: 190px;
+    -webkit-transition: border 400ms ease-in-out;
+    -ms-transition: border 400ms ease-in-out;
+    transition: border 400ms ease-in-out;
     &:hover {
-      width: 192px;
+      border: 1px solid white;
+    }
+    &:active {
+      border: 1px solid #aaa;
     }
   }
 

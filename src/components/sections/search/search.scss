@@ -47,6 +47,7 @@
       .result-header {
         width: 100%;
         border-bottom: 1px solid #676666;
+        height: 50px;
         h4 {
           display: inline-block;
           width: 50%;
@@ -68,6 +69,7 @@
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+        height: 170px;
         .item {
           display: flex;
           padding-left: 0px;
