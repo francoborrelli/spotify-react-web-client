@@ -22,16 +22,17 @@ class Search extends Component {
       <Spinner loading={this.props.fetching}>
         <div className="search-container">
           {!this.props.query && <Index />}
-          {this.props.query && results ? (
-            <Results
-              artists={this.props.artists}
-              playlists={this.props.playlists}
-              albums={this.props.albums}
-              songs={this.props.songs}
-            />
-          ) : (
-            <NoResults query={this.props.query} />
-          )}
+          {this.props.query &&
+            results && (
+              <Results
+                artists={this.props.artists}
+                playlists={this.props.playlists}
+                albums={this.props.albums}
+                songs={this.props.songs}
+              />
+            )}
+          {this.props.query &&
+            !results && <NoResults query={this.props.query} />}
         </div>
       </Spinner>
     );

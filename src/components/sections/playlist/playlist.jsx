@@ -9,7 +9,6 @@ import Spinner from '../../spinner/spinner';
 
 class Playlist extends Component {
   render = () => {
-    const id = this.props.playlist ? this.props.playlist.id : null;
     return (
       <Spinner section loading={this.props.fetching}>
         <div className="player-container">

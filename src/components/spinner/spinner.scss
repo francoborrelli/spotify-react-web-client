@@ -4,6 +4,8 @@
   display: table;
   &.section {
     .sk-circle {
+      left: 50%;
+      bottom: 54%;
       .sk-child:before {
         background-color: #b6b7b6;
       }
@@ -17,8 +19,8 @@
   height: 80px;
   position: fixed;
   color: #ccc;
-  left: 47%;
-  bottom: 48%;
+  left: 46%;
+  bottom: 50%;
 }
 .sk-circle .sk-child {
   width: 100%;

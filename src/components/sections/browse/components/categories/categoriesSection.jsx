@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import withUiActions from '../../../../../hoc/uiHoc';
-import Spinner from '../../../../spinner/spinner';
 import {
   fetchGenres,
   fetchNewReleases,

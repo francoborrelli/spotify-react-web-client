@@ -1,5 +1,5 @@
 import React from 'react';
-import { Direction, Slider, FormattedTime } from 'react-player-controls';
+import { Direction, Slider } from 'react-player-controls';
 
 const SliderBar = ({ value, style, className }) => (
   <div

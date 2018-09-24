@@ -14,8 +14,6 @@ const item = ({ item, type, onClick }) => {
       title = item.name;
       description = item.artists.map(i => i.name).join(', ');
       break;
-    case type === 'Albums':
-      description = item.artists.map(i => i.name).join(', ');
     default:
       img = item.images.length
         ? item.images[2]
@@ -25,8 +23,8 @@ const item = ({ item, type, onClick }) => {
           ? artist
           : playlist;
       title = item.name;
-      description = null;
-      break;
+      description =
+        type === 'Albums' ? item.artists.map(i => i.name).join(', ') : null;
   }
 
   return (

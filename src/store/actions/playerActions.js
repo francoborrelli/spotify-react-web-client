@@ -35,8 +35,11 @@ export const playSong = (context = false, offset = 0) => {
   };
 };
 
-export const playTracks = tracks => {
-  axios.put('/me/player/play');
+export const playTracks = (tracks, offset) => {
+  axios.put('/me/player/play', {
+    uris: tracks,
+    offset: { position: offset }
+  });
   return {
     type: 'PLAY_STATE'
   };

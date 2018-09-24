@@ -5,16 +5,6 @@ import { bindActionCreators } from 'redux';
 import { setStatus } from '../store/actions/playerActions';
 import { setDeviceId, setActiveDevice } from '../store/actions/sessionActions';
 
-let webPlaybackSdkProps = {
-  playerName: 'Spotify React Player',
-  playerInitialVolume: 1.0,
-  playerRefreshRateMs: 100,
-  playerAutoConnect: true,
-  onPlayerRequestAccessToken: () => this.state.token,
-  onPlayerLoading: () => this.setState({ playerLoaded: true }),
-  onPlayerError: playerError => console.error(playerError)
-};
-
 class WebPlayback extends Component {
   deviceSelectedInterval = null;
   statePollingInterval = null;
@@ -29,10 +19,6 @@ class WebPlayback extends Component {
     if (state) {
       this.props.setStatus(state);
     } else {
-      let {
-        _options: { id: device_id }
-      } = this.webPlaybackInstance;
-
       this.clearStatePolling();
       await this.waitForDeviceToBeSelected();
     }

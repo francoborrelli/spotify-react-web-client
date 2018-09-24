@@ -8,7 +8,7 @@ export default function(ComposedComponent) {
   class StatusHoc extends Component {
     render = () => (
       <ComposedComponent
-        playTracks={this.playTracks}
+        playTracks={this.props.playTracks}
         playSong={this.props.playSong}
         pauseSong={this.props.pauseSong}
         {...this.props}

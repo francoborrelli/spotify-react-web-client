@@ -38,7 +38,7 @@ class SongsList extends Component {
       <div className="player-container">
         <Header
           title={this.props.recently ? 'Recently Played' : 'Songs'}
-          playSong={() => this.props.playTracks(null, 0)}
+          playSong={() => this.playTracks(this.props.songs, 0)}
           pauseSong={this.props.pauseSong}
           playing={this.props.playing}
         />
