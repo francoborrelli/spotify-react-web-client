@@ -9,6 +9,7 @@ import uiReducer from './uiReducer';
 import artistReducer from './artistReducer';
 import albumReducer from './albumReducer';
 import playerReducer from './playerReducer';
+import searchReducer from './searchReducer';
 
 export default combineReducers({
   sessionReducer,
@@ -19,5 +20,6 @@ export default combineReducers({
   uiReducer,
   artistReducer,
   albumReducer,
-  playerReducer
+  playerReducer,
+  searchReducer
 });

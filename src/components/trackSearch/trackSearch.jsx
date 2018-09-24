@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import withUiActions from '../../hoc/uiHoc';
+import { fetchSearchData } from '../../store/actions/searchActions';
 
 const container = {
   position: 'relative',
@@ -18,17 +21,32 @@ const input = {
   marginTop: -2
 };
 
-const search = props => (
-  <div className="track-search-container" style={container}>
-    <form>
-      <input
-        type="text"
-        placeholder="Search..."
-        style={input}
-        onClick={props.onSearch}
-      />
-    </form>
-  </div>
-);
+class search extends Component {
+  render = () => (
+    <div className="track-search-container" style={container}>
+      <form>
+        <input
+          type="text"
+          placeholder="Search..."
+          style={input}
+          onChange={event => this.props.fetchSearchData(event.target.value)}
+          onClick={this.props.onSearch}
+        />
+      </form>
+    </div>
+  );
+}
 
-export default withUiActions(search);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      fetchSearchData
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withUiActions(search));
