@@ -24,6 +24,7 @@ export default function(ComposedComponent) {
         nextSong={this.props.nextSong}
         previousSong={this.props.previousSong}
         pauseSong={this.props.pauseSong}
+        playContext={(context, offset) => this.props.playSong(context, offset)}
         playSong={() => this.props.playSong()}
         seekSong={this.props.seekSong}
         shuffleSong={this.props.shuffle}

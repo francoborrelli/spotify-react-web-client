@@ -121,6 +121,7 @@
 
 .song-album,
 .song-album-header {
+  display: inherit;
   @media (max-width: 850px) {
     display: none;
   }

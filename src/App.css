@@ -11,8 +11,8 @@ body {
   position: relative; }
   .app .main-section {
     position: relative;
-    margin-left: 20px;
-    margin: auto; }
+    margin: auto;
+    margin-bottom: 100px; }
   .app .main-section-container {
     position: relative;
     top: 50px;

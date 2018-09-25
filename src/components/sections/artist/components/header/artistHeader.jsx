@@ -7,7 +7,7 @@ import FollowBtn from '../../../../buttons/followButton/followArtist';
 const artistHeader = ({
   artist,
   playing,
-  playSong,
+  playContext,
   pauseSong,
   currentSong
 }) => (
@@ -32,7 +32,7 @@ const artistHeader = ({
             ) : (
               <button
                 className="main-pause-play-btn artist-button"
-                onClick={() => playSong(artist.uri, 0)}
+                onClick={() => playContext(artist.uri, 0)}
               >
                 {'PLAY'}
               </button>
