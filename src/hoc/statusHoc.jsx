@@ -8,7 +8,11 @@ import {
   playTracks
 } from '../store/actions/playerActions';
 
-import { removeSong, addSong } from '../store/actions/libraryActions';
+import {
+  removeSong,
+  addSong,
+  containsSong
+} from '../store/actions/libraryActions';
 
 export default function(ComposedComponent) {
   class StatusHoc extends Component {
@@ -37,6 +41,7 @@ export default function(ComposedComponent) {
         playSong,
         playTracks,
         removeSong,
+        containsSong,
         addSong
       },
       dispatch

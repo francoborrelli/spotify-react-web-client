@@ -4,6 +4,24 @@
   100% {
     left: -200%; } }
 
+.add-remove-section {
+  display: flex; }
+  .add-remove-section i {
+    width: 20px;
+    margin-top: 9px;
+    margin-left: 10px;
+    font-size: 23px;
+    -webkit-text-stroke: 4px #282828 !important;
+    color: #ccc; }
+    .add-remove-section i:hover {
+      color: white; }
+    .add-remove-section i:active {
+      color: #aaa; }
+  .add-remove-section .fa-check {
+    color: #01da01; }
+    .add-remove-section .fa-check:hover:before {
+      content: '\f00d'; }
+
 .song-sider-container {
   display: flex;
   width: 40%;
@@ -52,23 +70,6 @@
 .player-container .details-section {
   left: 20px;
   top: 7px; }
-  .player-container .details-section .name-section {
-    display: flex; }
-    .player-container .details-section .name-section i {
-      width: 20px;
-      margin-top: 9px;
-      margin-left: 10px;
-      font-size: 23px;
-      -webkit-text-stroke: 4px #282828;
-      color: #ccc; }
-      .player-container .details-section .name-section i:hover {
-        color: white; }
-      .player-container .details-section .name-section i:active {
-        color: #aaa; }
-    .player-container .details-section .name-section .fa-check {
-      color: #01da01; }
-      .player-container .details-section .name-section .fa-check:hover:before {
-        content: '\f00d'; }
 
 .player-container .volume-control-container {
   right: 20px;

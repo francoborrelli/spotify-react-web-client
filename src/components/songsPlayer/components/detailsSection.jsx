@@ -13,7 +13,7 @@ const detailsSection = props => {
   const artists = props.artists.length;
   return (
     <div className="details-section">
-      <div className="name-section">
+      <div className="add-remove-section">
         <p
           onClick={() => props.onAlbumClick(props.album)}
           className={

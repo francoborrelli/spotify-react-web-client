@@ -36,6 +36,17 @@ const song = props => {
           {active ? <i className="fa fa-volume-up" /> : null}
         </div>
       )}
+      <div className="add-remove-section">
+        {props.contains ? (
+          <i
+            className="fa fa-check"
+            aria-hidden="true"
+            onClick={props.onDelete}
+          />
+        ) : (
+          <i className="fa fa-plus" aria-hidden="true" onClick={props.onAdd} />
+        )}
+      </div>
       <div className="song-title">
         <p>{props.item.track.name}</p>
       </div>

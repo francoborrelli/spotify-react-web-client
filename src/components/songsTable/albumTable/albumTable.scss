@@ -2,6 +2,14 @@
   max-width: initial !important;
   width: 100%;
 
+  .add-remove-section {
+    .fa {
+      margin-top: 9px !important;
+      margin-left: 4px !important;
+      text-align: center;
+    }
+  }
+
   .cd-header {
     line-height: 40px;
     padding-left: 17px;
@@ -65,8 +73,15 @@
       }
     }
     &.active {
+      .add-remove-section {
+        .fa {
+          display: inline !important;
+        }
+      }
+
       .r-song {
         padding-top: 5px;
+
         .fa:first-of-type {
           display: none;
         }
