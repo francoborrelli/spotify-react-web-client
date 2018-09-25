@@ -44,7 +44,7 @@
   overflow: hidden;
   position: absolute;
   height: 56px;
-  width: 180px;
+  width: 200px;
   line-height: 14px;
   cursor: default;
   text-overflow: ellipsis; }
@@ -52,6 +52,23 @@
 .player-container .details-section {
   left: 20px;
   top: 7px; }
+  .player-container .details-section .name-section {
+    display: flex; }
+    .player-container .details-section .name-section i {
+      width: 20px;
+      margin-top: 9px;
+      margin-left: 10px;
+      font-size: 23px;
+      -webkit-text-stroke: 4px #282828;
+      color: #ccc; }
+      .player-container .details-section .name-section i:hover {
+        color: white; }
+      .player-container .details-section .name-section i:active {
+        color: #aaa; }
+    .player-container .details-section .name-section .fa-check {
+      color: #01da01; }
+      .player-container .details-section .name-section .fa-check:hover:before {
+        content: '\f00d'; }
 
 .player-container .volume-control-container {
   right: 20px;

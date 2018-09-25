@@ -12,23 +12,29 @@ import {
   repeatContext
 } from '../store/actions/playerActions';
 
+import { containsCurrentSong } from '../store/actions/libraryActions';
+
 export default function(ComposedComponent) {
   class PlayerHoc extends Component {
     shouldComponentUpdate(nextProps) {
       return nextProps.playing || (this.props.playing && !nextProps.playing);
     }
 
+    componentDidUpdate(prevProps) {
+      if (prevProps.currentSong.id !== this.props.currentSong.id) {
+        const id = this.props.currentSong.id;
+        const other = this.props.currentSong.linked_from
+          ? this.props.currentSong.linked_from.id
+          : null;
+        this.props.containsCurrentSong(other ? `${id},${other}` : id);
+      }
+    }
+
     render = () => (
       <ComposedComponent
         {...this.props}
-        nextSong={this.props.nextSong}
-        previousSong={this.props.previousSong}
-        pauseSong={this.props.pauseSong}
         playContext={(context, offset) => this.props.playSong(context, offset)}
         playSong={() => this.props.playSong()}
-        seekSong={this.props.seekSong}
-        shuffleSong={this.props.shuffle}
-        repeatContext={this.props.repeatContext}
       />
     );
   }
@@ -38,6 +44,7 @@ export default function(ComposedComponent) {
       currentSong: state.playerReducer.status
         ? state.playerReducer.status.track_window.current_track
         : {},
+      contains: state.libraryReducer.containsCurrent ? true : false,
       trackPosition: state.playerReducer.status
         ? state.playerReducer.status.position
         : 0,
@@ -62,7 +69,8 @@ export default function(ComposedComponent) {
         playSong,
         seekSong,
         shuffle,
-        repeatContext
+        repeatContext,
+        containsCurrentSong
       },
       dispatch
     );

@@ -107,7 +107,6 @@ class Categories extends Component {
     <InfiniteScroll
       hasMore={this.props.next ? true : false}
       loadMore={this.props.fetchMoreCategories}
-      threshold={400}
     >
       <ul className="browse-container">{this.renderCategories()}</ul>
     </InfiniteScroll>

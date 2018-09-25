@@ -8,15 +8,11 @@ import {
   playTracks
 } from '../store/actions/playerActions';
 
+import { removeSong, addSong } from '../store/actions/libraryActions';
+
 export default function(ComposedComponent) {
   class StatusHoc extends Component {
-    render = () => (
-      <ComposedComponent
-        playSong={this.props.playSong}
-        pauseSong={this.props.pauseSong}
-        {...this.props}
-      />
-    );
+    render = () => <ComposedComponent {...this.props} />;
   }
 
   const mapStateToProps = state => {
@@ -39,7 +35,9 @@ export default function(ComposedComponent) {
       {
         pauseSong,
         playSong,
-        playTracks
+        playTracks,
+        removeSong,
+        addSong
       },
       dispatch
     );

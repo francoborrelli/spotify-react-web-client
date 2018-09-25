@@ -30,7 +30,6 @@ export const fetchMoreCategories = () => {
   return async (dispatch, getState) => {
     try {
       const next = getState().browseReducer.categories.next;
-      console.log(next);
       if (next) {
         const response = await axios.get(next);
         const result =
@@ -51,7 +50,7 @@ const fetchCategories = path => {
     try {
       const country = getState().userReducer.user.country || 'US';
       const response = await axios.get(
-        `/browse/${path}country=${country}&limit=10`
+        `/browse/${path}country=${country}&limit=38`
       );
       const result =
         response.data.categories ||

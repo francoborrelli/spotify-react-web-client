@@ -1,6 +1,7 @@
 import React from 'react';
 
 import withUiActions from '../../../hoc/uiHoc';
+import withStatus from '../../../hoc/statusHoc';
 
 const artistName = {
   fontFamily: "'Proxima Thin', Georgia, sans-serif",
@@ -12,14 +13,29 @@ const detailsSection = props => {
   const artists = props.artists.length;
   return (
     <div className="details-section">
-      <p
-        onClick={() => props.onAlbumClick(props.album)}
-        className={
-          'song-name' + (props.songName.length > 30 ? ' overflow' : '')
-        }
-      >
-        {props.songName}
-      </p>
+      <div className="name-section">
+        <p
+          onClick={() => props.onAlbumClick(props.album)}
+          className={
+            'song-name' + (props.songName.length > 30 ? ' overflow' : '')
+          }
+        >
+          {props.songName}
+        </p>
+        {props.contains ? (
+          <i
+            className="fa fa-check"
+            aria-hidden="true"
+            onClick={() => props.removeSong(props.ids, true)}
+          />
+        ) : (
+          <i
+            className="fa fa-plus"
+            aria-hidden="true"
+            onClick={() => props.addSong(props.ids, true)}
+          />
+        )}
+      </div>
       <div className="artist-name" style={artistName}>
         {props.artists.map((artist, i) => (
           <span key={i}>
@@ -37,4 +53,4 @@ const detailsSection = props => {
   );
 };
 
-export default withUiActions(detailsSection);
+export default withUiActions(withStatus(detailsSection));
