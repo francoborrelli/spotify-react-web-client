@@ -44,6 +44,15 @@ export const playlistReducer = (state = {}, action) => {
         fetchPlaylistError: true,
         fetchPlaylistPending: false
       };
+    case 'FETCH_MORE_SUCCESS':
+      let items = [...state.playlist.tracks.items, ...action.songs];
+      return {
+        ...state,
+        playlist: {
+          ...state.playlist,
+          tracks: { ...state.playlist.tracks, next: action.next, items: items }
+        }
+      };
 
     case 'FOLLOW_PLAYLIST':
       let array = state.playlists.items;

@@ -4,6 +4,7 @@ import './playlistTable.css';
 
 import Song from '../items/song';
 import EmptySection from './components/emptySection/empty';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const playlistTable = props => {
   return props.songs.length === 0 ? (
@@ -27,18 +28,26 @@ const playlistTable = props => {
           <i className="fa fa-clock-o" aria-hidden="true" />
         </div>
       </div>
-      {props.songs.map((item, i) => (
-        <Song
-          item={item}
-          key={item.track.id}
-          uri={props.uri}
-          offset={i}
-          current={props.current}
-          playing={props.playing}
-          pauseSong={props.pauseSong}
-          playSong={props.playSong}
-        />
-      ))}
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={props.fetchMoreSongs}
+        hasMore={props.more}
+        threshold={400}
+        loader={<div className="loader" key={0} />}
+      >
+        {props.songs.map((item, i) => (
+          <Song
+            item={item}
+            key={item.track.id + i}
+            uri={props.uri}
+            offset={i}
+            current={props.current}
+            playing={props.playing}
+            pauseSong={props.pauseSong}
+            playSong={props.playSong}
+          />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 };

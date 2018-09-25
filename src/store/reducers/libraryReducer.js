@@ -21,6 +21,17 @@ export const playlistReducer = (state = {}, action) => {
         fetchSongsPending: false
       };
 
+    case 'FETCH_MORE_SONGS_SUCCESS':
+      let items = [...state.songs.items, ...action.songs];
+      return {
+        ...state,
+        songs: {
+          ...state.songs,
+          next: action.next,
+          items: items
+        }
+      };
+
     default:
       return state;
   }
