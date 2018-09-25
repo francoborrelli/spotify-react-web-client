@@ -15,7 +15,8 @@ const playlistHeader = ({
   pauseSong,
   playing,
   showModal,
-  currentUri
+  currentUri,
+  empty = false
 }) => {
   const img =
     playlist.images && playlist.images.length !== 0
@@ -96,12 +97,14 @@ const playlistHeader = ({
         )}
         <div className="btns-section">
           <div>
-            <button
-              onClick={event}
-              className="main-pause-play-btn artist-button"
-            >
-              {playingPlaylist ? 'PAUSE' : 'PLAY'}
-            </button>
+            {!empty && (
+              <button
+                onClick={event}
+                className="main-pause-play-btn artist-button"
+              >
+                {playingPlaylist ? 'PAUSE' : 'PLAY'}
+              </button>
+            )}
           </div>
           <div>
             {!album &&

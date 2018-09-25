@@ -15,6 +15,11 @@ class Playlist extends Component {
       <Spinner section loading={this.props.fetching}>
         <div className="player-container">
           <Header
+            empty={
+              this.props.playlist && this.props.playlist.tracks.items.length
+                ? false
+                : true
+            }
             playlist={this.props.playlist || {}}
             currentUri={this.props.currentUri}
             playing={this.props.playing}
