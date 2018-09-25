@@ -32,7 +32,6 @@ const playlistTable = props => {
         pageStart={0}
         loadMore={props.fetchMoreSongs}
         hasMore={props.more}
-        threshold={400}
         loader={<div className="loader" key={0} />}
       >
         {props.songs.map((item, i) => (

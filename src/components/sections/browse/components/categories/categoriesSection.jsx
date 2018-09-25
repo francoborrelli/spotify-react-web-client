@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import InfiniteScroll from 'react-infinite-scroller';
 import withUiActions from '../../../../../hoc/uiHoc';
 import {
   fetchGenres,
   fetchNewReleases,
   fetchFeatured,
   fetchCharts,
+  fetchMoreCategories,
   fetchPlaylistForCategory
 } from '../../../../../store/actions/browseActions';
 
@@ -102,15 +104,24 @@ class Categories extends Component {
   };
 
   render = () => (
-    <ul className="browse-container">{this.renderCategories()}</ul>
+    <InfiniteScroll
+      hasMore={this.props.next ? true : false}
+      loadMore={this.props.fetchMoreCategories}
+      threshold={400}
+    >
+      <ul className="browse-container">{this.renderCategories()}</ul>
+    </InfiniteScroll>
   );
 }
 
 const mapStateToProps = state => {
   return {
     categories: state.browseReducer.categories
-      ? state.browseReducer.categories
+      ? state.browseReducer.categories.items
       : [],
+    next: state.browseReducer.categories
+      ? state.browseReducer.categories.next
+      : false,
     fetching: state.browseReducer.fetchCategoriesPending
   };
 };
@@ -122,7 +133,8 @@ const mapDispatchToProps = dispatch => {
       fetchNewReleases,
       fetchFeatured,
       fetchCharts,
-      fetchPlaylistForCategory
+      fetchPlaylistForCategory,
+      fetchMoreCategories
     },
     dispatch
   );
