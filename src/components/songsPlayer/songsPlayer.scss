@@ -6,6 +6,33 @@
     left: -200%;
   }
 }
+.add-remove-section {
+  display: flex;
+  i {
+    width: 20px;
+    margin-top: 9px;
+    margin-left: 10px;
+    font-size: 23px;
+    -webkit-text-stroke: 4px #282828 !important;
+    color: #ccc;
+
+    &:hover {
+      color: white;
+    }
+
+    &:active {
+      color: #aaa;
+    }
+  }
+  .fa-check {
+    color: #01da01;
+    &:hover {
+      &:before {
+        content: '\f00d';
+      }
+    }
+  }
+}
 
 .song-sider-container {
   display: flex;
@@ -60,7 +87,7 @@
     overflow: hidden;
     position: absolute;
     height: 56px;
-    width: 180px;
+    width: 200px;
     line-height: 14px;
     cursor: default;
     text-overflow: ellipsis;

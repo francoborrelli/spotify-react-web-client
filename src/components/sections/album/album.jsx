@@ -20,7 +20,7 @@ class Album extends Component {
             playSong={() => this.props.playSong(this.props.album.uri, 0)}
           />
           <Table
-            tracks={this.props.album.tracks ? this.props.album.tracks : []}
+            songs={this.props.album.tracks ? this.props.album.tracks : []}
             uri={this.props.album ? this.props.album.uri : ''}
             {...this.props}
           />

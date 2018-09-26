@@ -3,7 +3,9 @@ import React from 'react';
 import './playlistTable.css';
 
 import Song from '../items/song';
+import withSongsState from '../hoc/songHoc';
 import EmptySection from './components/emptySection/empty';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const playlistTable = props => {
   return props.songs.length === 0 ? (
@@ -27,20 +29,36 @@ const playlistTable = props => {
           <i className="fa fa-clock-o" aria-hidden="true" />
         </div>
       </div>
-      {props.songs.map((item, i) => (
-        <Song
-          item={item}
-          key={item.track.id}
-          uri={props.uri}
-          offset={i}
-          current={props.current}
-          playing={props.playing}
-          pauseSong={props.pauseSong}
-          playSong={props.playSong}
-        />
-      ))}
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={props.fetchMoreSongs}
+        hasMore={props.more}
+        loader={<div className="loader" key={0} />}
+      >
+        {props.songs.map((item, i) => (
+          <Song
+            onAdd={() => {
+              props.changeSongStatus(i, true);
+              props.addSong(item.track.id);
+            }}
+            onDelete={() => {
+              props.changeSongStatus(i, false);
+              props.removeSong(item.track.id);
+            }}
+            contains={props.songsStatus[i]}
+            item={item}
+            key={item.track.id + i}
+            uri={props.uri}
+            offset={i}
+            current={props.current}
+            playing={props.playing}
+            pauseSong={props.pauseSong}
+            playSong={props.playSong}
+          />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 };
 
-export default playlistTable;
+export default withSongsState(playlistTable);

@@ -14,7 +14,7 @@ const song = props => {
       </div>
       <div
         className="r-song"
-        onClick={!active ? props.playTracks : props.pauseSong}
+        onClick={!active ? props.playTrack : props.pauseSong}
       >
         <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
         <span>{props.index}</span>

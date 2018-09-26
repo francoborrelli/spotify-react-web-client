@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import { fetchMoreSongs } from '../../../store/actions/playlistActions';
 import Header from './components/header/playlistHeader';
 import Table from '../../songsTable/playlistTable/playlistTable';
 
@@ -13,6 +15,11 @@ class Playlist extends Component {
       <Spinner section loading={this.props.fetching}>
         <div className="player-container">
           <Header
+            empty={
+              this.props.playlist && this.props.playlist.tracks.items.length
+                ? false
+                : true
+            }
             playlist={this.props.playlist || {}}
             currentUri={this.props.currentUri}
             playing={this.props.playing}
@@ -20,6 +27,12 @@ class Playlist extends Component {
             playSong={() => this.props.playSong(this.props.playlist.uri, 0)}
           />
           <Table
+            more={
+              this.props.playlist && this.props.playlist.tracks.next
+                ? true
+                : false
+            }
+            fetchMoreSongs={this.props.fetchMoreSongs}
             current={this.props.currentSong}
             playing={this.props.playing}
             uri={this.props.playlist ? this.props.playlist.uri : ''}
@@ -41,4 +54,16 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withStatus(Playlist));
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      fetchMoreSongs
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStatus(Playlist));

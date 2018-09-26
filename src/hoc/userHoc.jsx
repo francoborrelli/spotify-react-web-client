@@ -10,20 +10,8 @@ import {
 
 export default function(ComposedComponent) {
   class UserHoc extends Component {
-    render = () => (
-      <ComposedComponent
-        followArtist={this.props.followArtist}
-        unfollowArtist={this.props.unfollowArtist}
-        followPlaylist={this.props.followPlaylist}
-        unfollowPlaylist={this.props.unfollowPlaylist}
-        {...this.props}
-      />
-    );
+    render = () => <ComposedComponent {...this.props} />;
   }
-
-  const mapStateToProps = state => {
-    return {};
-  };
 
   const mapDispatchToProps = dispatch => {
     return bindActionCreators(
@@ -33,7 +21,7 @@ export default function(ComposedComponent) {
   };
 
   return connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(UserHoc);
 }

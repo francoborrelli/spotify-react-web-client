@@ -4,10 +4,11 @@ import '../../sections/artist/components/popular/popular.css';
 import './albumTable.css';
 
 import Song from '../items/song';
+import withSongsStatus from '../hoc/songHoc';
 
 class Album extends Component {
   groupByCD() {
-    return this.props.tracks.reduce((memo, x) => {
+    return this.props.songs.reduce((memo, x) => {
       if (!memo[x['disc_number']]) {
         memo[x['disc_number']] = [];
       }
@@ -17,13 +18,13 @@ class Album extends Component {
   }
 
   renderTracks() {
-    const lastTrack = this.props.tracks[this.props.tracks.length - 1];
+    const lastTrack = this.props.songs[this.props.songs.length - 1];
     const count = lastTrack ? lastTrack.disc_number : 1;
 
     if (count > 1) {
       const cds = this.groupByCD();
 
-      const index = this.props.tracks.map(t => t.id);
+      const index = this.props.songs.map(t => t.id);
 
       return cds.map((cd, i) => (
         <div key={i}>
@@ -36,12 +37,13 @@ class Album extends Component {
       ));
     }
 
-    return this.renderSimple(this.props.tracks);
+    return this.renderSimple(this.props.songs);
   }
 
   renderSimple = (cd, index = null) =>
     cd.map((t, i) => (
       <Song
+        contains={this.props.songsStatus[i]}
         item={{ track: t }}
         key={i}
         index={i + 1}
@@ -52,6 +54,14 @@ class Album extends Component {
         playing={this.props.playing}
         pauseSong={this.props.pauseSong}
         playSong={this.props.playSong}
+        onAdd={() => {
+          this.props.changeSongStatus(i, true);
+          this.props.addSong(t.id);
+        }}
+        onDelete={() => {
+          this.props.changeSongStatus(i, false);
+          this.props.removeSong(t.id);
+        }}
       />
     ));
 
@@ -61,7 +71,8 @@ class Album extends Component {
         <div className="song-header-container">
           <div className="song-number-header">
             <p>#</p>
-          </div>
+          </div>{' '}
+          <div className="song-number-header" />
           <div className="song-title-header">
             <p>Title</p>
           </div>
@@ -79,4 +90,4 @@ class Album extends Component {
   }
 }
 
-export default Album;
+export default withSongsStatus(Album);

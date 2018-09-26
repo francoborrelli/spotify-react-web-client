@@ -3,7 +3,7 @@ export const browseReducer = (state = {}, action) => {
     case 'FETCH_CATEGORIES_SUCCESS':
       return {
         ...state,
-        categories: action.categories.items,
+        categories: action.categories,
         fetchCategoriesError: false,
         fetchCategoriesPending: false
       };
@@ -16,6 +16,16 @@ export const browseReducer = (state = {}, action) => {
       return {
         ...state,
         fetchCategoriesError: true
+      };
+    case 'FETCH_MORE_CATEGORIES_SUCCESS':
+      let items = [...state.categories.items, ...action.categories];
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          next: action.next,
+          items: items
+        }
       };
 
     default:

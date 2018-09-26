@@ -21,6 +21,14 @@ class SongsPlayer extends Component {
       <div className="player-container">
         {this.props.currentSong.id ? (
           <DetailSection
+            ids={
+              this.props.currentSong.linked_from.id
+                ? `${this.props.currentSong.linked_from.id},${
+                    this.props.currentSong.id
+                  }`
+                : this.props.currentSong.id
+            }
+            contains={this.props.contains}
             songName={this.props.currentSong.name || ''}
             album={this.props.currentSong.album.uri.split(':')[2]}
             artists={this.props.currentSong.artists || []}

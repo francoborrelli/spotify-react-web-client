@@ -31,7 +31,7 @@ class PopularTracks extends Component {
         item={i}
         index={key + 1}
         key={key}
-        playTracks={() => this.playTracks(key)}
+        playTrack={() => this.playTracks(key)}
       />
     ));
   }
@@ -56,7 +56,7 @@ class PopularTracks extends Component {
 
   render() {
     return (
-      <div style={{ display: 'flex' }}>
+      <div className="artist-details" style={{ display: 'flex' }}>
         <div className="popular-container">
           <p>Popular</p>
           <div className="songs">{this.renderSongs()}</div>

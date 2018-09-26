@@ -1,21 +1,75 @@
 import axios from '../../axios';
 
-export const fetchSongsPending = () => {
+const fetchSongsPending = () => {
   return {
     type: 'FETCH_SONGS_PENDING'
   };
 };
 
-export const fetchSongsSuccess = songs => {
+const fetchSongsSuccess = songs => {
   return {
     type: 'FETCH_SONGS_SUCCESS',
     songs
   };
 };
 
-export const fetchSongsError = () => {
+const fetchMoreSucess = (songs, next) => {
+  return {
+    type: 'FETCH_MORE_SONGS_SUCCESS',
+    songs,
+    next
+  };
+};
+
+const fetchSongsError = () => {
   return {
     type: 'FETCH_SONGS_ERROR'
+  };
+};
+
+const containsSongSuccess = contains => {
+  return {
+    type: 'CONTAINS_CURRENT_SUCCESS',
+    contains: contains
+  };
+};
+
+export const removeSong = (id, current = false) => {
+  axios.delete(`/me/tracks?ids=${id}`);
+  return {
+    type: 'REMOVE_SONG_SUCCESS',
+    current: current
+  };
+};
+
+export const addSong = (id, current = false) => {
+  axios.put(`/me/tracks?ids=${id}`);
+  return {
+    type: 'ADD_SONG_SUCCESS',
+    current: current
+  };
+};
+
+export const containsCurrentSong = id => {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`/me/tracks/contains?ids=${id}`);
+      dispatch(containsSongSuccess(response, true));
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+export const containsSong = id => {
+  return async () => {
+    try {
+      const response = await axios.get(`/me/tracks/contains?ids=${id}`);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
   };
 };
 
@@ -23,7 +77,7 @@ export const fetchSongs = () => {
   return async dispatch => {
     dispatch(fetchSongsPending());
     try {
-      const response = await axios.get('/me/tracks?limit=50');
+      const response = await axios.get('/me/tracks?limit=25');
       dispatch(fetchSongsSuccess(response.data));
       return response.data;
     } catch (error) {
@@ -43,13 +97,36 @@ const filterRepeatedSongs = (keyFn, array) => {
   });
 };
 
+export const fetchMoreSongs = () => {
+  return async (dispatch, getState) => {
+    const next = getState().libraryReducer.songs.next;
+    try {
+      if (next) {
+        const response = await axios.get(next);
+        const songs = await filterRepeatedSongs(
+          x => x.track.id,
+          response.data.items
+        );
+        dispatch(fetchMoreSucess(songs, response.data.next));
+        return songs;
+      }
+    } catch (error) {
+      dispatch(fetchSongsError());
+      return error;
+    }
+  };
+};
+
 export const fetchRecentSongs = () => {
   return async dispatch => {
     dispatch(fetchSongsPending());
     try {
       const response = await axios.get('/me/player/recently-played');
-      const songs = filterRepeatedSongs(x => x.track.id, response.data.items);
-      dispatch(fetchSongsSuccess({ items: songs }));
+      const songs = await filterRepeatedSongs(
+        x => x.track.id,
+        response.data.items
+      );
+      dispatch(fetchSongsSuccess({ ...response.data, items: songs }));
       return songs;
     } catch (error) {
       dispatch(fetchSongsError());

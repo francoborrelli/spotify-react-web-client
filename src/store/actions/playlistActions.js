@@ -60,6 +60,14 @@ export const updatePlaylist = playlist => {
   };
 };
 
+export const fetchMoreSuccess = (songs, next) => {
+  return {
+    type: 'FETCH_MORE_SUCCESS',
+    songs,
+    next
+  };
+};
+
 export const dispacher = a => {
   return a;
 };
@@ -85,6 +93,21 @@ export const unfollowPlaylist = () => {
         type: 'UNFOLLOW_PLAYLIST'
       })
     );
+  };
+};
+
+export const fetchMoreSongs = () => {
+  return async (dispatch, getState) => {
+    try {
+      const next = getState().playlistReducer.playlist.tracks.next;
+      if (next) {
+        const response = await axios.get(next);
+        dispatch(fetchMoreSuccess(response.data.items, response.data.next));
+        return response;
+      }
+    } catch (error) {
+      return error;
+    }
   };
 };
 

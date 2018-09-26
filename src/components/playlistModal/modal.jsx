@@ -31,7 +31,7 @@ class Modal extends Component {
         header: 'Edit Playlist Details',
         title: this.props.playlist.name || '',
         description: this.props.playlist.description || '',
-        image: this.props.playlist.images
+        image: this.props.playlist.images.length
           ? this.props.playlist.images[0].url
           : song,
         btn: 'Save',
@@ -186,7 +186,7 @@ class Modal extends Component {
 const mapStateToProps = state => {
   return {
     fetching: state.playlistReducer.fetchPlaylistPending,
-    playlist: state.playlistReducer.playlist || {},
+    playlist: state.playlistReducer.playlist || { images: [] },
     show: state.uiReducer.modal,
     edit: state.uiReducer.mode !== 'new',
     id: state.userReducer.user.id

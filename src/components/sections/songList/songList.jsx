@@ -6,7 +6,8 @@ import axios from '../../../axios';
 
 import {
   fetchSongs,
-  fetchRecentSongs
+  fetchRecentSongs,
+  fetchMoreSongs
 } from '../../../store/actions/libraryActions';
 
 import Playlist from '../../songsTable/playlistTable/playlistTable';
@@ -48,6 +49,8 @@ class SongsList extends Component {
           pauseSong={this.props.pauseSong}
           current={this.props.currentSong}
           playing={this.props.playing}
+          more={this.props.next ? true : false}
+          fetchMoreSongs={this.props.fetchMoreSongs}
         />
       </div>
     </Spinner>
@@ -57,7 +60,8 @@ const mapStateToProps = state => {
   return {
     songs: state.libraryReducer.songs ? state.libraryReducer.songs.items : [],
     user: state.userReducer.user.id,
-    fetching: state.libraryReducer.fetchSongsPending
+    fetching: state.libraryReducer.fetchSongsPending,
+    next: state.libraryReducer.songs ? state.libraryReducer.songs.next : false
   };
 };
 
@@ -65,7 +69,8 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       fetchSongs,
-      fetchRecentSongs
+      fetchRecentSongs,
+      fetchMoreSongs
     },
     dispatch
   );
