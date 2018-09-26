@@ -8,6 +8,7 @@ const results = ({
   artists,
   albums,
   playlists,
+  changeMode,
   onAlbumClick,
   onArtistClick,
   onPlaylistClick
@@ -16,23 +17,35 @@ const results = ({
     <div className="results-table">
       <div className="search-results">
         {songs.length ? (
-          <ResultGroup items={songs} onClick={onAlbumClick} title="Songs" />
+          <ResultGroup
+            items={songs}
+            onClick={onAlbumClick}
+            changeMode={changeMode}
+            type="Songs"
+          />
         ) : null}
         {artists.length ? (
           <ResultGroup
+            changeMode={changeMode}
             items={artists}
             onClick={onArtistClick}
-            title="Artists"
+            type="Artists"
           />
         ) : null}
         {albums.length ? (
-          <ResultGroup items={albums} onClick={onAlbumClick} title="Albums" />
+          <ResultGroup
+            changeMode={changeMode}
+            items={albums}
+            onClick={onAlbumClick}
+            type="Albums"
+          />
         ) : null}
         {playlists.length ? (
           <ResultGroup
+            changeMode={changeMode}
             items={playlists}
             onClick={onPlaylistClick}
-            title="Playlists"
+            type="Playlists"
           />
         ) : null}
       </div>

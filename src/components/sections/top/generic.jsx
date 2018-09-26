@@ -40,7 +40,6 @@ class Generic extends Component {
 
   render = () => {
     const Generic = this.props.type === 'artist' ? Artist : Album;
-    console.log(this.state.items);
     return (
       <div className="generic-container">
         <Spinner section loading={this.state.fetching}>

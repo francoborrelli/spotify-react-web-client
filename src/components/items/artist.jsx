@@ -20,6 +20,7 @@ const artist = ({ item, onClick }) => {
       <img
         className="category-image playlist"
         src={item.images[0].url}
+        alt={item.name}
         style={imgStyle}
       />
       <p className="name">{item.name}</p>

@@ -7,10 +7,25 @@ import { fetchSearchData } from '../../../store/actions/searchActions';
 import Index from './components/index/index';
 import NoResults from './components/noResults/noResults';
 import Results from './components/results/results';
+import AllResults from './components/allResults/allResults';
 import Spinner from '../../spinner/spinner';
 import './search.css';
 
 class Search extends Component {
+  state = {
+    mode: ''
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.query !== this.props.query) {
+      this.setState({ mode: '' });
+    }
+  }
+
+  changeMode = mode => {
+    this.setState({ mode: mode });
+  };
+
   render = () => {
     const results =
       this.props.songs.length ||
@@ -21,9 +36,16 @@ class Search extends Component {
     return (
       <Spinner section loading={this.props.fetching}>
         <div className="search-container">
+          {this.state.mode && (
+            <AllResults
+              type={this.state.mode}
+              playlists={this.props.playlists}
+            />
+          )}
           {!this.props.query && <Index />}
           {this.props.query && results ? (
             <Results
+              changeMode={this.changeMode}
               artists={this.props.artists}
               playlists={this.props.playlists}
               albums={this.props.albums}
