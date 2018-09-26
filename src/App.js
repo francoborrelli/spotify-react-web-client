@@ -40,7 +40,9 @@ class App extends Component {
       playerAutoConnect: true,
       onPlayerRequestAccessToken: () => this.state.token,
       onPlayerLoading: () => {},
-      onPlayerWaitingForDevice: () => {},
+      onPlayerWaitingForDevice: () => {
+        this.setState({ playerLoaded: true });
+      },
       onnPlayerError: () => {},
       onPlayerDeviceSelected: () => {
         this.setState({ playerLoaded: true });

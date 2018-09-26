@@ -17,25 +17,23 @@ const item = ({
 }) => {
   let img, title, description;
 
-  switch (true) {
-    case type === 'Songs':
-      img = item.album.images[2]
-        ? item.album.images[2].url
-        : item.album.images[0].url;
-      title = item.name;
-      description = item.artists.map(i => i.name).join(', ');
-      break;
-    default:
-      img = item.images.length
-        ? item.images[2]
-          ? item.images[2].url
-          : item.images[0].url
-        : type === 'Artists'
-          ? artist
-          : playlist;
-      title = item.name;
-      description =
-        type === 'Albums' ? item.artists.map(i => i.name).join(', ') : null;
+  if (type === 'Songs') {
+    img = item.album.images[2]
+      ? item.album.images[2].url
+      : item.album.images[0].url;
+    title = item.name;
+    description = item.artists.map(i => i.name).join(', ');
+  } else {
+    img = item.images.length
+      ? item.images[2]
+        ? item.images[2].url
+        : item.images[0].url
+      : type === 'Artists'
+        ? artist
+        : playlist;
+    title = item.name;
+    description =
+      type === 'Albums' ? item.artists.map(i => i.name).join(', ') : null;
   }
 
   return (
