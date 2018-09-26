@@ -1,16 +1,27 @@
 import React from 'react';
 
-import ResultsTable from './resultsTable';
+import Generic from '../../../top/generic';
 
-const results = props => (
-  <div className="all-results">
-    <h2>
-      Showing {props.type} for {props.query}
-    </h2>
-    <div>
-      <ResultsTable items={props.playlists} />
+const results = props => {
+  let type;
+  if (props.type === 'Artists') {
+    type = 'artist';
+  }
+  if (props.type === 'Albums') {
+    type = 'album';
+  }
+  if (props.type === 'Playlists') {
+    type = 'playlist';
+  }
+
+  return (
+    <div className="all-results">
+      <h2>
+        Showing {props.type} for "{props.query}"
+      </h2>
+      <Generic type={type} url={`/search?q=${props.query}&type=${type}`} />
     </div>
-  </div>
-);
+  );
+};
 
 export default results;

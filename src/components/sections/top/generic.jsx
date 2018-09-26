@@ -16,22 +16,26 @@ class Generic extends Component {
   };
 
   componentDidMount() {
-    axios.get(this.props.url).then(response => {
+    axios.get(this.props.url).then(r => {
+      const response =
+        r.data.artists || r.data.albums || r.data.playlists || r.data;
       this.setState({
         fetching: false,
-        items: response.data.items,
-        next: response.data.next
+        items: response.items,
+        next: response.next
       });
     });
   }
 
   fetchMore = () => {
     if (this.state.next) {
-      axios.get(this.state.next).then(response => {
+      axios.get(this.state.next).then(r => {
+        const response =
+          r.data.artists || r.data.albums || r.data.playlists || r.data;
         this.setState(prevState => {
           return {
-            items: [...prevState.items, ...response.data.items],
-            next: response.data.next
+            items: [...prevState.items, ...response.items],
+            next: response.next
           };
         });
       });
@@ -40,6 +44,12 @@ class Generic extends Component {
 
   render = () => {
     const Generic = this.props.type === 'artist' ? Artist : Album;
+    const onClick =
+      this.props.type === 'artist'
+        ? this.props.onArtistClick
+        : this.props.type === 'album'
+          ? this.props.onAlbumClick
+          : this.props.onPlaylistClick;
     return (
       <div className="generic-container">
         <Spinner section loading={this.state.fetching}>
@@ -52,11 +62,7 @@ class Generic extends Component {
             {this.state.items.map((i, key) => (
               <Generic
                 item={i.album || i}
-                onClick={
-                  this.props.type === 'artist'
-                    ? this.props.onArtistClick
-                    : this.props.onAlbumClick
-                }
+                onClick={onClick}
                 onArtistClick={this.props.onArtistClick}
                 key={key}
               />

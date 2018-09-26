@@ -1,4 +1,5 @@
 import React from 'react';
+import artistImg from '../../containers/mainSection/images/artist.png';
 
 const imgStyle = {
   height: 200,
@@ -19,7 +20,7 @@ const artist = ({ item, onClick }) => {
     >
       <img
         className="category-image playlist"
-        src={item.images[0].url}
+        src={item.images.length ? item.images[0].url : artistImg}
         alt={item.name}
         style={imgStyle}
       />

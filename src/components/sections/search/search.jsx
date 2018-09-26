@@ -38,12 +38,13 @@ class Search extends Component {
         <div className="search-container">
           {this.state.mode && (
             <AllResults
+              query={this.props.query}
               type={this.state.mode}
-              playlists={this.props.playlists}
+              items={this.props.playlists}
             />
           )}
-          {!this.props.query && <Index />}
-          {this.props.query && results ? (
+          {!this.state.mode && !this.props.query && <Index />}
+          {!this.state.mode && this.props.query && results ? (
             <Results
               changeMode={this.changeMode}
               artists={this.props.artists}
