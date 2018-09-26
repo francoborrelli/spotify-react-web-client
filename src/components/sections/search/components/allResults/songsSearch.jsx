@@ -12,6 +12,11 @@ class SongsSearcher extends Component {
     fetching: true
   };
 
+  playTracks = (context, offset) => {
+    const songs = this.state.items.slice(offset).map(s => s.uri);
+    axios.put('/me/player/play', { uris: songs });
+  };
+
   componentDidMount() {
     axios.get(`/search?q=${this.props.query}&type=track`).then(response => {
       this.setState({
@@ -47,7 +52,7 @@ class SongsSearcher extends Component {
             fetchMoreSongs={this.fetchMore}
             songs={this.state.items}
             pauseSong={this.props.pauseSong}
-            playSong={this.props.playSong}
+            playSong={this.playTracks}
           />
         </Spinner>
       </div>

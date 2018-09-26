@@ -24,13 +24,11 @@ const results = props => {
       <h2>
         Showing {props.type} for "{props.query}"
       </h2>
-      {
-        (type = 'track' ? (
-          <SongSearch query={props.query} />
-        ) : (
-          <Generic type={type} url={`/search?q=${props.query}&type=${type}`} />
-        ))
-      }
+      {type === 'track' ? (
+        <SongSearch query={props.query} />
+      ) : (
+        <Generic type={type} url={`/search?q=${props.query}&type=${type}`} />
+      )}
     </div>
   );
 };
