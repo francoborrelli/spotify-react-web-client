@@ -15,7 +15,8 @@ export default {
       'user-follow-modify',
       'playlist-read-private',
       'playlist-modify-public',
-      'playlist-modify-private'
+      'playlist-modify-private',
+      'user-top-read'
     ].join(' ');
 
     let scopes_encoded = scopes.replace(' ', '%20');

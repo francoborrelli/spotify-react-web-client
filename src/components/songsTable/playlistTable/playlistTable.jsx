@@ -13,7 +13,7 @@ const playlistTable = props => {
   ) : (
     <div>
       <div className="song-header-container">
-        <div className="header" />
+        <div style={{ width: 40 }} />
         <div className="song-title-header">
           <p>Title</p>
         </div>

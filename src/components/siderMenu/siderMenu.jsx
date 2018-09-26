@@ -15,7 +15,7 @@ const sectionTwo = [
   { name: 'Recently Played', view: 'recently', id: 2 },
   { name: 'Songs', view: 'songs', id: 3 },
   { name: 'Albums', view: 'albums', id: 4 },
-  { name: 'Artists', id: 5 }
+  { name: 'Artists', view: 'artists', id: 5 }
 ];
 
 class SiderMenu extends Component {
