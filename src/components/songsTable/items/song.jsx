@@ -10,10 +10,10 @@ const msToMinutesAndSeconds = ms => {
 };
 
 const song = props => {
-  const active = props.item.track.id === props.current && props.playing;
+  const active = props.id === props.current && props.playing;
   const buttonClass = active ? 'fa-pause-circle-o' : 'fa-play-circle-o';
 
-  const artists = props.item.track ? props.item.track.artists.length : 0;
+  const artists = props.item ? props.item.artists.length : 0;
 
   const event = active
     ? props.pauseSong
@@ -48,12 +48,12 @@ const song = props => {
         )}
       </div>
       <div className="song-title">
-        <p>{props.item.track.name}</p>
+        <p>{props.item.name}</p>
       </div>
       <div className="song-artist">
         <p>
-          {props.item.track.artists
-            ? props.item.track.artists.map((a, i) => (
+          {props.item.artists
+            ? props.item.artists.map((a, i) => (
                 <span key={i}>
                   <span
                     className="artist"
@@ -71,26 +71,25 @@ const song = props => {
         <div className="song-album">
           <p
             className="album"
-            onClick={() => props.onAlbumClick(props.item.track.album.id)}
+            onClick={() => props.onAlbumClick(props.item.album.id)}
           >
-            {props.item.track.album.name}
+            {props.item.album.name}
           </p>
         </div>
       )}
-      {!props.isAlbum && (
-        <div className="song-added">
-          <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>
-        </div>
-      )}
+      {!props.isAlbum &&
+        !props.removeDate && (
+          <div className="song-added">
+            <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>
+          </div>
+        )}
       {props.isAlbum && (
         <div className="song-explicit">
-          {props.item.track.explicit ? (
-            <p className="explicit">EXPLICIT</p>
-          ) : null}
+          {props.item.explicit ? <p className="explicit">EXPLICIT</p> : null}
         </div>
       )}
       <div className="song-length">
-        <p>{msToMinutesAndSeconds(props.item.track.duration_ms)}</p>
+        <p>{msToMinutesAndSeconds(props.item.duration_ms)}</p>
       </div>
     </li>
   );

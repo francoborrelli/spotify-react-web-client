@@ -23,9 +23,11 @@ const playlistTable = props => {
         <div className="song-album-header">
           <p>Album</p>
         </div>
-        <div className="song-added-header">
-          <i className="fa fa-calendar-plus-o" aria-hidden="true" />
-        </div>
+        {props.removeDate ? null : (
+          <div className="song-added-header">
+            <i className="fa fa-calendar-plus-o" aria-hidden="true" />
+          </div>
+        )}
         <div className="song-length-header">
           <i className="fa fa-clock-o" aria-hidden="true" />
         </div>
@@ -46,9 +48,11 @@ const playlistTable = props => {
               props.changeSongStatus(i, false);
               props.removeSong(item.track.id);
             }}
+            removeDate={props.removeDate}
             contains={props.songsStatus[i]}
-            item={item}
-            key={item.track.id + i}
+            item={item.track || item}
+            key={item.track ? item.track.id + i : item.id + i}
+            id={item.track ? item.track.id : item.id}
             uri={props.uri}
             offset={i}
             current={props.current}
