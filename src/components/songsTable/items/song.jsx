@@ -80,7 +80,7 @@ const song = props => {
       {!props.isAlbum &&
         !props.removeDate && (
           <div className="song-added">
-            <p>{moment(props.item.added_at).format('YYYY-MM-DD')}</p>
+            <p>{moment(props.added_at).format('YYYY-MM-DD')}</p>
           </div>
         )}
       {props.isAlbum && (

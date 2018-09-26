@@ -49,6 +49,7 @@ const playlistTable = props => {
               props.removeSong(item.track.id);
             }}
             removeDate={props.removeDate}
+            added_at={item.track ? item.added_at : ''}
             contains={props.songsStatus[i]}
             item={item.track || item}
             key={item.track ? item.track.id + i : item.id + i}
