@@ -14,7 +14,7 @@ const sectionOne = [{ name: 'Browse', view: 'browse', id: 1 }];
 const sectionTwo = [
   { name: 'Recently Played', view: 'recently', id: 2 },
   { name: 'Songs', view: 'songs', id: 3 },
-  { name: 'Albums', id: 4 },
+  { name: 'Albums', view: 'albums', id: 4 },
   { name: 'Artists', id: 5 }
 ];
 

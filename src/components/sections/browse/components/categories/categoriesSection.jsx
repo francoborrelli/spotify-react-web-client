@@ -13,7 +13,7 @@ import {
   fetchPlaylistForCategory
 } from '../../../../../store/actions/browseActions';
 
-import Album from '../items/album';
+import Album from '../../../../items/album';
 import Genre from '../items/genre';
 import Playlist from '../items/playlist';
 
