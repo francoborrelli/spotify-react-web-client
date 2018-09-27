@@ -44,7 +44,7 @@ class Album extends Component {
     cd.map((t, i) => (
       <Song
         contains={this.props.songsStatus[i]}
-        item={{ track: t }}
+        item={t}
         key={i}
         index={i + 1}
         isAlbum={true}

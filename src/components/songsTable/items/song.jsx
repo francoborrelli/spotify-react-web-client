@@ -13,7 +13,7 @@ const song = props => {
   const active = props.id === props.current && props.playing;
   const buttonClass = active ? 'fa-pause-circle-o' : 'fa-play-circle-o';
 
-  const artists = props.item ? props.item.artists.length : 0;
+  const artists = props.item.artists ? props.item.artists.length : 0;
 
   const event = active
     ? props.pauseSong
