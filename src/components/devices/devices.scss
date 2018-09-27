@@ -7,7 +7,7 @@
 .devices {
   position: fixed;
   z-index: 1000000000;
-  background: #282828;
+  background: $bar-color;
   padding: 10px;
   width: 230px;
   bottom: 65px;
@@ -37,7 +37,7 @@
   }
   .no-results {
     font-size: 13px;
-    color: #ccc;
+    color: $gray;
     white-space: pre-wrap; /* CSS3 */
     white-space: -moz-pre-wrap; /* Firefox */
     white-space: -pre-wrap; /* Opera <7 */
@@ -67,7 +67,7 @@
   }
 
   .triangle {
-    background: #282828;
+    background: $bar-color;
     height: 20px;
     width: 20px;
     position: absolute;
@@ -103,7 +103,7 @@
         margin: 5px 0px 2px;
       }
       span {
-        color: #aaa;
+        color: $darker-gray;
         font-size: 11px;
       }
     }

@@ -49,7 +49,7 @@
     font-family: 'Proxima Thin', Georgia, sans-serif;
     font-size: 13px;
     .artist-link {
-      color: #fff;
+      color: $light-gray;
       cursor: default;
       &:hover {
         text-decoration: underline;
@@ -68,13 +68,13 @@
   .description {
     margin: 0px;
     margin-top: 10px;
-    color: #aaa;
+    color: $darker-gray;
   }
 
   .created-by {
     margin-top: 10px;
 
-    color: #aaa;
+    color: $darker-gray;
     padding: 8px 0;
     .artist {
       padding-bottom: 10px;
@@ -83,7 +83,7 @@
 
   .lighter-text {
     font-family: 'Proxima Nova', Georgia, sans-serif;
-    color: #fff;
+    color: $light-gray;
   }
 }
 

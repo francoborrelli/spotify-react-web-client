@@ -15,7 +15,7 @@
   .add-remove-section {
     width: 40px;
     .fa {
-      color: #ccc;
+      color: $gray;
       margin-top: 12px;
       margin-left: 12px;
       text-align: center;
@@ -27,7 +27,7 @@
     background: rgb(51, 51, 51);
     .add-remove-section {
       .fa {
-        -webkit-text-stroke: 4px #333333 !important;
+        -webkit-text-stroke: 4px #$backgroud-color !important;
       }
     }
 
@@ -41,19 +41,19 @@
     background: rgb(51, 51, 51);
     .add-remove-section {
       .fa {
-        -webkit-text-stroke: 4px #333333 !important;
+        -webkit-text-stroke: 4px #$backgroud-color !important;
       }
     }
     .fa-pause-circle-o {
       font-size: 30px !important;
       top: 7.5px !important;
-      -webkit-text-stroke: 2px #333333;
+      -webkit-text-stroke: 2px #$backgroud-color;
     }
     .play-song {
       opacity: 1;
       .fa {
-        color: #ccc;
-        -webkit-text-stroke: 1px #333333;
+        color: $gray;
+        -webkit-text-stroke: 1px #$backgroud-color;
         font-size: 25px;
         top: 11.5px;
       }
@@ -85,17 +85,17 @@
       font-size: 30px;
       position: relative;
       top: 7.5px;
-      color: #ccc;
+      color: $gray;
       cursor: pointer;
-      -webkit-text-stroke: 2px #333333;
+      -webkit-text-stroke: 2px #$backgroud-color;
       left: 5px;
 
       &:hover {
-        color: #fff;
+        color: $light-gray;
       }
 
       &:active {
-        color: #aaa;
+        color: $darker-gray;
       }
     }
   }
@@ -106,7 +106,7 @@
   cursor: pointer;
   z-index: 1;
   width: 20px;
-  color: #fff;
+  color: $light-gray;
 
   .fa {
     -webkit-text-stroke: 3px rgb(24, 24, 24);
@@ -166,7 +166,7 @@
 .song-album-header,
 .song-length-header {
   & p:hover {
-    color: #fff;
+    color: $light-gray;
     cursor: default;
   }
 
@@ -174,29 +174,29 @@
     font-family: 'Proxima Thin', Georgia, sans-serif;
     text-transform: uppercase;
     font-size: 12px;
-    color: #ccc;
+    color: $gray;
     padding: 0 15px;
   }
 }
 
 .song-length-header .fa-clock-o {
   font-size: 17px;
-  color: #ccc;
+  color: $gray;
   padding-top: 10px;
   &:hover {
-    color: #fff;
+    color: $light-gray;
   }
 }
 
 .song-added-header {
   width: 80px;
-  color: #ccc;
+  color: $gray;
 
   .fa-calendar-plus-o {
     padding-top: 10px;
   }
   &:hover {
-    color: #fff;
+    color: $light-gray;
   }
 }
 
@@ -204,7 +204,7 @@
 .song-added-header,
 .song-added,
 .song-length {
-  color: #aaa;
+  color: $darker-gray;
   @media (max-width: 1100px) {
     display: none;
   }

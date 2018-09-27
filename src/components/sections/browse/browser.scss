@@ -61,7 +61,7 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    color: #ccc;
+    color: $gray;
   }
 
   .album-title,
@@ -73,7 +73,7 @@
     text-overflow: ellipsis;
     &:hover {
       text-decoration: underline;
-      color: #fff;
+      color: $light-gray;
     }
   }
 }

@@ -23,7 +23,7 @@ button {
   padding-top: 20px;
   .artist-item {
     &:hover {
-      background-color: #cccccc14;
+      background-color: $grayccc14;
     }
     &:active {
       background-color: #252020ad;
@@ -70,7 +70,7 @@ button {
     }
     &:hover {
       .explicit {
-        color: #ccc;
+        color: $gray;
       }
       .r-song {
         padding-top: 5px;
@@ -119,8 +119,8 @@ button {
     text-transform: uppercase;
     background: transparent;
     font-family: 'Proxima Nova', Georgia, sans-serif;
-    color: #fff;
-    border: 1px solid #ccc;
+    color: $light-gray;
+    border: 1px solid $gray;
     padding: 10px;
     letter-spacing: 1px;
     margin: 20px 2px 20px 2px;
@@ -133,7 +133,7 @@ button {
       border: 1px solid white;
     }
     &:active {
-      border: 1px solid #aaa;
+      border: 1px solid $darker-gray;
     }
   }
 
@@ -149,13 +149,13 @@ button {
       display: none;
       font-size: 30px;
       top: 7px;
-      color: #ccc;
+      color: $gray;
       cursor: pointer;
-      -webkit-text-stroke: 2px #333333;
+      -webkit-text-stroke: 2px #$backgroud-color;
       left: 5px;
 
       &:hover {
-        color: #fff;
+        color: $light-gray;
       }
     }
     &:hover {

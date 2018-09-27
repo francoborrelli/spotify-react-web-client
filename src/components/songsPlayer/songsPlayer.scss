@@ -13,15 +13,15 @@
     margin-top: 9px;
     margin-left: 10px;
     font-size: 23px;
-    -webkit-text-stroke: 4px #282828 !important;
-    color: #ccc;
+    -webkit-text-stroke: 4px $bar-color !important;
+    color: $gray;
 
     &:hover {
       color: white;
     }
 
     &:active {
-      color: #aaa;
+      color: $darker-gray;
     }
   }
   .fa-check {
@@ -42,7 +42,7 @@
   margin-top: 0px;
   span {
     font-size: 10px;
-    color: #aaa;
+    color: $darker-gray;
     &:first-of-type {
       padding-right: 4px;
     }
@@ -58,7 +58,7 @@
     transition: width 0.1s;
     border-radius: 4px;
     .position-sider {
-      background-color: #ccc;
+      background-color: $gray;
     }
     .handler-sider {
       display: none;
@@ -105,10 +105,10 @@
     .fa {
       color: #ddd;
       &:hover {
-        color: #fff;
+        color: $light-gray;
       }
       &:active {
-        color: #aaa;
+        color: $darker-gray;
       }
     }
     .fa-desktop {
@@ -136,7 +136,7 @@
         transition: width 0.1s;
         border-radius: 4px;
         .position-sider {
-          background-color: #ccc;
+          background-color: $gray;
         }
         .handler-sider {
           display: inline;
@@ -160,12 +160,12 @@
 
   .song-name {
     font-family: 'Proxima Nova', Georgia, sans-serif;
-    color: #fff;
+    color: $light-gray;
     font-size: 14px;
     margin-bottom: 10px;
     &:hover {
       text-decoration: underline;
-      color: #fff;
+      color: $light-gray;
     }
     &.overflow {
       -webkit-transition: 5.3s;
@@ -180,7 +180,7 @@
         margin-left: -180px;
         text-overflow: initial;
         text-decoration: underline;
-        color: #fff;
+        color: $light-gray;
       }
     }
     text-overflow: ellipsis;
@@ -201,20 +201,20 @@
 
   .song-control .fa {
     padding: 0px 20px;
-    -webkit-text-stroke: 1px #282828;
+    -webkit-text-stroke: 1px $bar-color;
 
     &.play-btn {
-      -webkit-text-stroke: 3px #282828;
+      -webkit-text-stroke: 3px $bar-color;
     }
 
-    color: #ccc;
+    color: $gray;
 
     &:hover {
-      color: #fff;
+      color: $light-gray;
     }
 
     &:active {
-      color: #aaa !important;
+      color: $darker-gray !important;
     }
   }
 }
@@ -234,7 +234,7 @@
   position: relative;
   top: -10px;
   font-size: 35px;
-  -webkit-text-stroke: 2px #333333;
+  -webkit-text-stroke: 2px $backgroud-color;
   &:hover {
     font-size: 39px;
     margin: -2px -2px;
@@ -249,7 +249,7 @@
   .artist {
     &:hover {
       text-decoration: underline;
-      color: #fff;
+      color: $light-gray;
     }
   }
 }

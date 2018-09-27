@@ -12,7 +12,7 @@
     position: fixed;
     height: 100%;
     text-align: center;
-    color: #ccc;
+    color: $gray;
     left: 0;
     right: 0;
     top: 35%;
@@ -73,7 +73,7 @@
           font-size: 14px;
           text-align: right;
           display: inline-block;
-          color: #ccc;
+          color: $gray;
           &:hover {
             text-decoration: underline;
             color: white;
@@ -166,7 +166,7 @@
               font-size: 15px;
             }
             span {
-              color: #ccc;
+              color: $gray;
               font-size: 13px;
             }
           }

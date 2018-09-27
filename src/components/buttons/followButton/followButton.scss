@@ -4,7 +4,7 @@
   background: black;
   opacity: 0.7;
   font-family: 'Proxima Nova', Georgia, sans-serif;
-  color: #fff;
+  color: $light-gray;
   border: 1px solid #bbb;
   padding: 10px;
   letter-spacing: 1px;
@@ -15,7 +15,7 @@
     border: 1px solid white;
   }
   &:active {
-    border: 1px solid #aaa;
+    border: 1px solid $darker-gray;
   }
 }
 
