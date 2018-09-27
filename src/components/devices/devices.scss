@@ -1,3 +1,5 @@
+$green: green;
+
 .devices-container {
   .overlay.active {
     opacity: 0;
@@ -108,12 +110,12 @@
       }
     }
     &.active {
-      color: green;
+      color: $green;
       .fa {
-        color: green;
+        color: $green;
       }
       span {
-        color: green;
+        color: $green;
       }
     }
   }

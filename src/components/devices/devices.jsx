@@ -59,7 +59,7 @@ class Devices extends Component {
           <h4>Conect to a device</h4>
           <i className="fa fa-question-circle-o" aria-hidden="true" />
         </div>
-        <img src={media} />
+        <img src={media} alt="devices" />
         {this.state.devices.length > 1 && this.renderDevices()}
         {this.state.devices.length === 1 && (
           <div className="no-results">

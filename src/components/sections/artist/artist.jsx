@@ -15,7 +15,7 @@ class Artist extends Component {
           tracks={this.props.artist.popularTracks || []}
           artists={this.props.artist.relatedArtists || []}
         />
-        {this.props.artist.album && this.props.artist.albums.length ? (
+        {this.props.artist.albums && this.props.artist.albums.length ? (
           <Albums albums={this.props.artist.albums} />
         ) : null}
         {this.props.artist.singles && this.props.artist.singles.length ? (
