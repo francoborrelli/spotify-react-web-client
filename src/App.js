@@ -43,7 +43,9 @@ class App extends Component {
       onPlayerWaitingForDevice: () => {
         this.setState({ playerLoaded: true });
       },
-      onnPlayerError: () => {},
+      onPlayerError: e => {
+        console.log(e);
+      },
       onPlayerDeviceSelected: () => {
         this.setState({ playerLoaded: true });
       }
