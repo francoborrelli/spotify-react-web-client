@@ -59,7 +59,7 @@ const item = ({
       <div
         className="details"
         onClick={() => {
-          onClick(item.id);
+          onClick(item.album ? item.album.id : item.id);
         }}
       >
         <h4>{title}</h4>
