@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import axios from '../../../axios';
 import VolumeSider from './volumeSider';
+import Devices from '../../devices/devices';
 
 class VolumeControl extends Component {
   state = {
@@ -42,7 +43,7 @@ class VolumeControl extends Component {
 
   render = () => (
     <div className="volume-control-container">
-      <i className="fa fa-desktop" />
+      <Devices />
       <VolumeSider
         value={this.state.volume}
         onClick={this.onClick}
