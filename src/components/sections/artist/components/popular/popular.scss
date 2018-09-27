@@ -1,3 +1,5 @@
+@import 'src/utilities/variables';
+
 button {
   outline: none;
 }
@@ -23,7 +25,7 @@ button {
   padding-top: 20px;
   .artist-item {
     &:hover {
-      background-color: $grayccc14;
+      background-color: $gray;
     }
     &:active {
       background-color: #252020ad;
@@ -151,7 +153,7 @@ button {
       top: 7px;
       color: $gray;
       cursor: pointer;
-      -webkit-text-stroke: 2px #$backgroud-color;
+      -webkit-text-stroke: 2px $backgroud-color;
       left: 5px;
 
       &:hover {

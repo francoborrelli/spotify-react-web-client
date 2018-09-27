@@ -1,3 +1,5 @@
+@import 'src/utilities/variables';
+
 .overlay {
   position: fixed;
   width: 100%;
@@ -63,7 +65,7 @@
   .modal-title {
     text-align: center;
     width: 100%;
-    border-bottom: 1px solid $grayccc59;
+    border-bottom: 1px solid $gray;
     h4 {
       margin: 10px 0px;
       font-size: 14px;

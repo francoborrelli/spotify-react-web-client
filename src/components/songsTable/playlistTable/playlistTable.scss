@@ -1,3 +1,5 @@
+@import 'src/utilities/variables';
+
 .section-title {
   font-size: 34px;
   font-weight: 800;
@@ -27,7 +29,7 @@
     background: rgb(51, 51, 51);
     .add-remove-section {
       .fa {
-        -webkit-text-stroke: 4px #$backgroud-color !important;
+        -webkit-text-stroke: 4px $backgroud-color !important;
       }
     }
 
@@ -41,19 +43,19 @@
     background: rgb(51, 51, 51);
     .add-remove-section {
       .fa {
-        -webkit-text-stroke: 4px #$backgroud-color !important;
+        -webkit-text-stroke: 4px $backgroud-color !important;
       }
     }
     .fa-pause-circle-o {
       font-size: 30px !important;
       top: 7.5px !important;
-      -webkit-text-stroke: 2px #$backgroud-color;
+      -webkit-text-stroke: 2px $backgroud-color;
     }
     .play-song {
       opacity: 1;
       .fa {
         color: $gray;
-        -webkit-text-stroke: 1px #$backgroud-color;
+        -webkit-text-stroke: 1px $backgroud-color;
         font-size: 25px;
         top: 11.5px;
       }
@@ -87,7 +89,7 @@
       top: 7.5px;
       color: $gray;
       cursor: pointer;
-      -webkit-text-stroke: 2px #$backgroud-color;
+      -webkit-text-stroke: 2px $backgroud-color;
       left: 5px;
 
       &:hover {

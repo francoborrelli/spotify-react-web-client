@@ -1,8 +1,4 @@
-$bar-color: #282828;
-$backgroud-color: #333333;
-$darker-gray: #aaa;
-$gray: #ccc;
-$light-gray: #fff;
+@import 'src/utilities/variables';
 
 body {
   background: rgb(24, 24, 24);
