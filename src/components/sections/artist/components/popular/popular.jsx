@@ -60,9 +60,13 @@ class PopularTracks extends Component {
         <div className="popular-container">
           <p>Popular</p>
           <div className="songs">{this.renderSongs()}</div>
-          <button className="more-btn" onClick={this.toddleHandler}>
-            {this.state.showAll ? 'Show only 5 songs' : 'Show 5 more'}
-          </button>
+          {this.props.tracks
+            ? this.props.tracks.length === 10 && (
+                <button className="more-btn" onClick={this.toddleHandler}>
+                  {this.state.showAll ? 'Show only 5 songs' : 'Show 5 more'}
+                </button>
+              )
+            : null}
         </div>
         <div className="related-artists">
           <p>Fans also like</p>

@@ -42,31 +42,26 @@ class Devices extends Component {
   };
 
   renderDevices = () => {
-    return (
-      <div className="devices-section">
-        {this.state.devices.map((d, key) => (
-          <Device item={d} key={key} onClick={this.transferDevice} />
-        ))}
-      </div>
-    );
+    return this.state.devices.map((d, key) => (
+      <Device item={d} key={key} onClick={this.transferDevice} />
+    ));
   };
 
   render = () => (
-    <div>
+    <div className="devices-container">
       <i onClick={this.toddleState} className="fa fa-desktop" />
+      <div
+        onClick={this.hideDevices}
+        className={`overlay ${this.state.show ? 'active' : ''}`}
+      />
       <div className={`devices ${!this.state.show ? 'hide' : ''}`}>
-        <div onClick={this.hideDevices} className="overlay" />
         <div className="devices-header">
           <h4>Conect to a device</h4>
-          <i
-            className="fa fa-question-circle-o"
-            aria-hidden="true"
-            onClick={() => window.open('https://www.spotify.com/connect/')}
-          />
+          <i className="fa fa-question-circle-o" aria-hidden="true" />
         </div>
         <img src={media} />
-        {this.state.devices.length && this.renderDevices()}
-        {!this.state.devices.length && (
+        {this.state.devices.length > 1 && this.renderDevices()}
+        {this.state.devices.length === 1 && (
           <div className="no-results">
             <div>
               Connect lets you play and control Spotify on your devices.
@@ -74,14 +69,14 @@ class Devices extends Component {
             <div>
               Start Spotify on another device and it will magically appear here.
             </div>
-            <button
-              className="learn-more"
-              onClick={() => window.open('https://www.spotify.com/connect/')}
-            >
-              LEARN MORE
-            </button>
           </div>
         )}
+        <button
+          className="learn-more"
+          onClick={() => window.open('https://www.spotify.com/connect/')}
+        >
+          LEARN MORE
+        </button>
         <div className="triangle" />
       </div>
     </div>

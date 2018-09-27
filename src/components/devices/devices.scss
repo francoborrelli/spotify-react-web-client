@@ -1,3 +1,9 @@
+.devices-container {
+  .overlay.active {
+    opacity: 0;
+  }
+}
+
 .devices {
   position: fixed;
   z-index: 1000000000;
@@ -41,22 +47,25 @@
     div {
       margin: 15px 0px;
     }
-    .learn-more {
-      height: 25px;
-      width: 110px;
-      border-radius: 25px;
-      background-color: #0296e0;
-      border: 0px;
-      color: white;
-      margin-bottom: 10px;
-      &:hover {
-        background-color: #23a6e8;
-      }
-      &:active {
-        background-color: #045d8a;
-      }
+  }
+
+  .learn-more {
+    height: 25px;
+    width: 110px;
+    border-radius: 25px;
+    background-color: #0296e0;
+    border: 0px;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    &:hover {
+      background-color: #23a6e8;
+    }
+    &:active {
+      background-color: #045d8a;
     }
   }
+
   .triangle {
     background: #282828;
     height: 20px;
@@ -69,9 +78,6 @@
     box-shadow: 4px 4px 7px -5px #000000;
     margin: auto;
     transform: rotate(45deg);
-  }
-  .devices-section {
-    margin-bottom: 20px;
   }
 
   .device {

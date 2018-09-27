@@ -15,8 +15,12 @@ class Artist extends Component {
           tracks={this.props.artist.popularTracks || []}
           artists={this.props.artist.relatedArtists || []}
         />
-        <Albums albums={this.props.artist.albums || []} />
-        <Albums albums={this.props.artist.singles || []} singles />
+        {this.props.artist.album && this.props.artist.albums.length ? (
+          <Albums albums={this.props.artist.albums} />
+        ) : null}
+        {this.props.artist.singles && this.props.artist.singles.length ? (
+          <Albums albums={this.props.artist.singles || []} singles />
+        ) : null}
       </div>
     </Spinner>
   );
