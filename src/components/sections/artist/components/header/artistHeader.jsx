@@ -16,7 +16,7 @@ const artistHeader = ({
       <img
         alt="artist"
         className="current-artist-image"
-        src={artist.images[0] ? artist.images[0].url : ''}
+        src={artist.images && artist.images[0] ? artist.images[0].url : ''}
       />
       <div className="current-artist-info">
         <h3>{artist.name}</h3>
