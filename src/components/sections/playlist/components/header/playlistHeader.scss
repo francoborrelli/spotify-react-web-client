@@ -25,6 +25,17 @@
         top: 90px;
         display: block;
       }
+      @media (max-width: 900px) {
+        height: 234px;
+        .fa {
+          position: relative;
+          font-size: 58px;
+          z-index: 100;
+          left: 5px;
+          top: -155px;
+          display: block;
+        }
+      }
     }
   }
   .playlist-image {
@@ -37,6 +48,21 @@
 .playlist-title-container {
   display: flex;
   padding-top: 15px;
+
+  @media (max-width: 900px) {
+    display: block;
+    text-align: center;
+    .playlist-info-container {
+      padding-left: 0px;
+    }
+    .btns-section {
+      display: block;
+      div {
+        display: block;
+        margin: 15px auto;
+      }
+    }
+  }
 }
 
 .playlist-info-container {
@@ -65,6 +91,10 @@
     letter-spacing: 1px;
     font-size: 12px;
     margin-top: 10px;
+    @media (max-width: 900px) {
+      float: none;
+      text-align: center;
+    }
   }
 
   .description {

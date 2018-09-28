@@ -7,6 +7,14 @@
   font-family: 'Proxima Bold', Georgia, sans-serif;
 }
 
+.playlist-table {
+  display: block;
+  margin: 0 auto;
+  @media (max-width: 900px) {
+    width: 90%;
+  }
+}
+
 .user-song-item {
   list-style-type: none;
   border-bottom: 1px solid #666;
@@ -156,11 +164,23 @@
 .song-artist,
 .song-artist-header {
   width: 180px;
+  @media (max-width: 800px) {
+    width: 35% !important;
+  }
+  @media (max-width: 550px) {
+    display: none;
+  }
 }
 
 .song-title,
 .song-title-header {
   width: 250px;
+  @media (max-width: 800px) {
+    width: 35% !important;
+  }
+  @media (max-width: 550px) {
+    width: 60% !important;
+  }
 }
 
 .song-title-header,
@@ -207,7 +227,7 @@
 .song-added,
 .song-length {
   color: $darker-gray;
-  @media (max-width: 1100px) {
+  @media (max-width: 1150px) {
     display: none;
   }
 }
@@ -243,8 +263,8 @@
     }
   }
   width: 20%;
-  @media (max-width: 1100px) {
-    width: 35%;
+  @media (max-width: 1150px) {
+    width: 30%;
   }
   @media (max-width: 850px) {
     width: 50%;
@@ -254,6 +274,9 @@
 .song-added,
 .song-added-header {
   width: 10%;
+  @media (max-width: 1300px) {
+    display: none;
+  }
 }
 
 .empty-section {

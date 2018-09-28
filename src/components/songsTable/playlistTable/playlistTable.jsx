@@ -11,7 +11,7 @@ const playlistTable = props => {
   return props.songs.length === 0 ? (
     <EmptySection />
   ) : (
-    <div>
+    <div className="playlist-table">
       <div className="song-header-container">
         <div style={{ width: 40 }} />
         <div className="song-title-header">

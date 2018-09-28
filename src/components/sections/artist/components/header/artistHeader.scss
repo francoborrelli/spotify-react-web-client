@@ -26,4 +26,22 @@
       font-size: 13px;
     }
   }
+  @media (max-width: 600px) {
+    .current-artist-image {
+      height: 300px;
+    }
+    .current-artist-info {
+      top: 150px;
+      h3 {
+        font-size: 45px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 275px;
+      }
+      .menu-btn {
+        display: none;
+      }
+    }
+  }
 }

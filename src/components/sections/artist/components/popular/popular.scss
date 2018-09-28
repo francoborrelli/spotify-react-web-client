@@ -8,48 +8,68 @@ button {
   display: block !important;
 }
 
-.popular-container {
-  max-width: 600px;
-  width: 70%;
-}
-
-.popular-container,
-.related-artists {
-  display: inline-block;
-}
-
-.related-artists {
-  width: 30%;
-  max-width: 300px;
-  margin-left: 100px;
-  padding-top: 20px;
-  .artist-item {
-    &:hover {
-      background-color: $gray;
+.artist-details {
+  justify-content: space-around;
+  .popular-container,
+  .related-artists {
+    display: inline-block;
+  }
+  .popular-container {
+    max-width: 600px;
+    width: 70%;
+  }
+  .related-artists {
+    width: 30%;
+    max-width: 300px;
+    margin-left: 100px;
+    padding-top: 20px;
+    .artist-item {
+      &:hover {
+        background-color: $gray;
+      }
+      &:active {
+        background-color: #252020ad;
+      }
+      display: flex;
+      cursor: pointer;
+      p {
+        line-height: 21px;
+        font-size: 13px;
+      }
     }
-    &:active {
-      background-color: #252020ad;
-    }
-    display: flex;
-    cursor: pointer;
-    p {
-      line-height: 21px;
-      font-size: 13px;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      margin-top: 5px;
     }
   }
-
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    margin-top: 5px;
+  @media (max-width: 1200px) {
+    .popular-container {
+      width: 400px;
+    }
+    .related-artists {
+      margin-left: 50px;
+    }
+  }
+  @media (max-width: 900px) {
+    .popular-container {
+      width: 98%;
+    }
+    .related-artists {
+      display: none;
+    }
+    .more-btn {
+      display: block;
+      margin: 20px auto !important;
+    }
   }
 }
 
 .popular-container,
 .album-container {
-  padding-top: 20px;
   padding-left: 10px;
   max-width: 600px;
   .title {
@@ -93,6 +113,9 @@ button {
       width: 35px;
       margin-top: 12px;
       line-height: 12px;
+      @media (max-width: 900px) {
+        display: none;
+      }
     }
     .r-song {
       width: 40px;

@@ -98,12 +98,21 @@
   .details-section {
     left: 20px;
     top: 7px;
+    @media (max-width: 700px) {
+      width: 150px;
+    }
+    @media (max-width: 550px) {
+      width: 100px;
+    }
   }
 
   .volume-control-container {
     right: 20px;
     top: 37px;
     display: flex;
+    @media (max-width: 750px) {
+      display: none;
+    }
     .fa {
       color: #ddd;
       &:hover {
@@ -198,6 +207,9 @@
           color: #10ff41;
         }
       }
+    }
+    @media (max-width: 700px) {
+      display: none;
     }
   }
 

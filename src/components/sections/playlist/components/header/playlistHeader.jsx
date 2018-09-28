@@ -95,6 +95,10 @@ const playlistHeader = ({
             </div>
           </div>
         )}
+        <div>
+          {!album &&
+            !playlist.mine && <FollowBtn following={playlist.follows} />}
+        </div>
         <div className="btns-section">
           <div>
             {!empty && (
@@ -105,10 +109,6 @@ const playlistHeader = ({
                 {playingPlaylist ? 'PAUSE' : 'PLAY'}
               </button>
             )}
-          </div>
-          <div>
-            {!album &&
-              !playlist.mine && <FollowBtn following={playlist.follows} />}
           </div>
         </div>
 

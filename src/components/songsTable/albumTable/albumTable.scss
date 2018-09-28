@@ -3,7 +3,10 @@
 .album-container {
   max-width: initial !important;
   width: 100%;
-
+  @media (max-width: 900px) {
+    margin: 0 auto;
+    width: 80%;
+  }
   .add-remove-section {
     .fa {
       margin-top: 9px !important;
