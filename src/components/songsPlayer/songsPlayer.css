@@ -70,11 +70,20 @@
 .player-container .details-section {
   left: 20px;
   top: 7px; }
+  @media (max-width: 700px) {
+    .player-container .details-section {
+      width: 150px; } }
+  @media (max-width: 550px) {
+    .player-container .details-section {
+      width: 100px; } }
 
 .player-container .volume-control-container {
   right: 20px;
   top: 37px;
   display: flex; }
+  @media (max-width: 750px) {
+    .player-container .volume-control-container {
+      display: none; } }
   .player-container .volume-control-container .fa {
     color: #ddd; }
     .player-container .volume-control-container .fa:hover {
@@ -145,6 +154,11 @@
   .player-container .shuffle-song.active i:hover,
   .player-container .repeat-song.active i:hover {
     color: #10ff41; }
+
+@media (max-width: 700px) {
+  .player-container .shuffle-song,
+  .player-container .repeat-song {
+    display: none; } }
 
 .player-container .song-control .fa {
   padding: 0px 20px;

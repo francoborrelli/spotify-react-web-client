@@ -8,6 +8,9 @@
       .sk-child:before {
         background-color: #b6b7b6;
       }
+      @media (max-width: 1100px) and (min-width: 600px) {
+        left: 23%;
+      }
     }
   }
 }
