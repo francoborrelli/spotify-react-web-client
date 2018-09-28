@@ -43,11 +43,11 @@ const playlistTable = props => {
           <Song
             onAdd={() => {
               props.changeSongStatus(i, true);
-              props.addSong(item.track.id);
+              props.addSong(item.track ? item.track.id : item.id);
             }}
             onDelete={() => {
               props.changeSongStatus(i, false);
-              props.removeSong(item.track.id);
+              props.removeSong(item.track ? item.track.id : item.id);
             }}
             removeDate={props.removeDate}
             added_at={item.track ? item.added_at : ''}
