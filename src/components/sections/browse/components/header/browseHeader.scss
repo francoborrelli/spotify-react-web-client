@@ -18,6 +18,9 @@
         width: 0px;
       }
     }
+    @media (max-width: 700px) {
+      width: 98%;
+    }
   }
   padding: 20px 20px 0px;
   .active {
