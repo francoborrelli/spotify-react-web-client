@@ -50,6 +50,7 @@ class Album extends Component {
         isAlbum={true}
         offset={index ? index.indexOf(t.id) : i}
         uri={this.props.uri}
+        id={t.id}
         current={this.props.currentSong}
         playing={this.props.playing}
         pauseSong={this.props.pauseSong}
