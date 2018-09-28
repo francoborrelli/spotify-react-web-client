@@ -68,25 +68,25 @@ class Album extends Component {
 
   render() {
     return (
-      <table className="album-container">
-        <tr className="song-header-container">
-          <td className="song-number-header">
+      <div className="album-container">
+        <div className="song-header-container">
+          <div className="song-number-header">
             <p>#</p>
-          </td>{' '}
-          <td className="song-number-header" />
-          <td className="song-title-header">
+          </div>{' '}
+          <div className="song-number-header" />
+          <div className="song-title-header">
             <p>Title</p>
-          </td>
-          <td className="song-artist-header">
+          </div>
+          <div className="song-artist-header">
             <p>Artists</p>
-          </td>
-          <td className="explicit-header" />
-          <td className="song-length-header">
+          </div>
+          <div className="explicit-header" />
+          <div className="song-length-header">
             <i className="fa fa-clock-o" aria-hidden="true" />
-          </td>
-        </tr>
+          </div>
+        </div>
         {this.renderTracks()}
-      </table>
+      </div>
     );
   }
 }
