@@ -6,28 +6,47 @@ Spotify Web Client using [Spotify Web API](https://developer.spotify.com/documen
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+
 ## Features
 
 * Play full audio tracks.
-* Control playback (pause, volume, skip track, etc).
-* Add or edit your playlist.
-* Follow and unfollow playlist and artist.
+* Control playback (pause, volume, shuffle, etc).
+* Add or edit your playlists.
+* See your recently played tracks and your top artists.
+* Follow and unfollow playlists and artists.
 * Add or remove tracks from your library.
 * Change the device in which you are currently playing.
 * Search for tracks, albums, artists and playlists.
 
+
 ## Try it out
 https://spotify-react-web-client.herokuapp.com
 
-**Warning:** Spotify Playback to work requires users to authenticate with a valid Spotify Premium subscription.
+**Warning:** Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
 
 ## How to Run locally
 
+First you need a [Spotify Client ID](https://developer.spotify.com/dashboard/applications).
+
+```bash
+$ git clone https://github.com/francoborrelli/spotify-react-web-client.git
+$ cd spotify-react-web-client
+$ npm i
+```
+
+You will have to define a '.env' file and set the following variables:
+```
+REACT_APP_CLIENT_ID="YOUR_CLIENT_ID"
+REACT_APP_REDIRECT_ID=http://localhost:3000/
+```
+
+Now run:
 ```bash
 $ npm start
 ```
-Then visit http://localhost:3000.
-
+and visit http://localhost:3000.
+ 
 ## Screenshots
 ![browse](images/browse.png?raw=true "Playlist")
 ![playlist](images/playlist.png?raw=true "Artist")
