@@ -46,10 +46,7 @@ class Search extends Component {
         {!this.state.mode && this.props.query && results ? (
           <Results
             changeMode={this.changeMode}
-            artists={this.props.artists}
-            playlists={this.props.playlists}
-            albums={this.props.albums}
-            songs={this.props.songs}
+            {...this.props}
           />
         ) : null}
         {this.props.query && !results && <NoResults query={this.props.query} />}

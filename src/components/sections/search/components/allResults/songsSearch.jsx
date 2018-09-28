@@ -46,13 +46,13 @@ class SongsSearcher extends Component {
         <Spinner section loading={this.state.fetching}>
           <PlaylistTable
             removeDate={true}
+            fetchMoreSongs={this.fetchMore}
+            playSong={this.playTracks}
+            pauseSong={this.props.pauseSong}
             current={this.props.currentSong}
             playing={this.props.playing}
             more={this.state.next ? true : false}
-            fetchMoreSongs={this.fetchMore}
             songs={this.state.items}
-            pauseSong={this.props.pauseSong}
-            playSong={this.playTracks}
           />
         </Spinner>
       </div>

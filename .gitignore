@@ -21,5 +21,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
+.editorconfig
+.prettierrc.json
 src/**/*.css

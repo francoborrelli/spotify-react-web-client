@@ -35,15 +35,7 @@ class SongsPlayer extends Component {
           />
         ) : null}
         <SongsControl
-          nextSong={this.props.nextSong}
-          previousSong={this.props.previousSong}
-          pauseSong={this.props.pauseSong}
-          playSong={this.props.playSong}
-          playing={this.props.playing}
-          shuffleSong={this.props.shuffle}
-          repeatContext={this.props.repeatContext}
-          shuffleActive={this.props.shuffleActive}
-          repeatActive={this.props.repeatActive}
+          {...this.props}
         />
         <SongSider
           isEnabled

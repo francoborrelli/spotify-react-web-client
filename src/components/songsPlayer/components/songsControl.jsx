@@ -5,7 +5,7 @@ import Button from './controlButton';
 const songsControl = props => (
   <div className="song-control">
     <Button
-      onClick={() => props.shuffleSong(!props.shuffleActive)}
+      onClick={() => props.shuffle(!props.shuffleActive)}
       className={'shuffle-song' + (props.shuffleActive ? ' active' : '')}
       icon="fa-random"
     />
