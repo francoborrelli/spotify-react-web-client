@@ -61,7 +61,7 @@ const song = props => {
                   >
                     {a.name}
                   </span>
-                  {artists !== i + 1 ? <span> , </span> : null}
+                  {artists !== i + 1 ? <span>, </span> : null}
                 </span>
               ))
             : ''}
