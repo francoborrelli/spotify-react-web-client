@@ -19,7 +19,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Try it out
 https://spotify-react-web-client.herokuapp.com
 
-**Warning:** Spotify Playback to work requires users to authenticate with a valid Spotify Premium subscription.
+**Warning:** Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
 
 ## How to Run locally
 
