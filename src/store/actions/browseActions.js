@@ -6,11 +6,6 @@ const fetchCategoriesSuccess = categories => {
     categories
   };
 };
-const fetchCategoriesPending = () => {
-  return {
-    type: 'FETCH_CATEGORIES_PENDING'
-  };
-};
 
 const fetchCategoriesError = () => {
   return {
