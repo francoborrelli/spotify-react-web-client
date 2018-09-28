@@ -1,19 +1,19 @@
 import axios from '../../axios';
 
-export const fetchPlaylistMenuPending = () => {
+const fetchPlaylistMenuPending = () => {
   return {
     type: 'FETCH_PLAYLIST_MENU_PENDING'
   };
 };
 
-export const fetchPlaylistMenuSuccess = playlists => {
+const fetchPlaylistMenuSuccess = playlists => {
   return {
     type: 'FETCH_PLAYLIST_MENU_SUCCESS',
     playlists
   };
 };
 
-export const fetchPlaylistMenuError = () => {
+const fetchPlaylistMenuError = () => {
   return {
     type: 'FETCH_PLAYLIST_MENU_ERROR'
   };
@@ -34,20 +34,20 @@ export const fetchPlaylistsMenu = () => {
   };
 };
 
-export const fetchPlaylistPending = () => {
+const fetchPlaylistPending = () => {
   return {
     type: 'FETCH_PLAYLIST_PENDING'
   };
 };
 
-export const fetchPlaylistSuccess = playlist => {
+const fetchPlaylistSuccess = playlist => {
   return {
     type: 'FETCH_PLAYLIST_SUCCESS',
     playlist
   };
 };
 
-export const fetchPlaylistError = () => {
+const fetchPlaylistError = () => {
   return {
     type: 'FETCH_PLAYLIST_ERROR'
   };
@@ -60,7 +60,7 @@ export const updatePlaylist = playlist => {
   };
 };
 
-export const fetchMoreSuccess = (songs, next) => {
+const fetchMoreSuccess = (songs, next) => {
   return {
     type: 'FETCH_MORE_SUCCESS',
     songs,
@@ -68,7 +68,7 @@ export const fetchMoreSuccess = (songs, next) => {
   };
 };
 
-export const dispacher = a => {
+const dispacher = a => {
   return a;
 };
 

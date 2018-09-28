@@ -1,25 +1,25 @@
 import axios from '../../axios';
 
-export const fetchArtistPending = () => {
+const fetchArtistPending = () => {
   return {
     type: 'FETCH_ARTIST_PENDING'
   };
 };
 
-export const fetchArtistSuccess = artist => {
+const fetchArtistSuccess = artist => {
   return {
     type: 'FETCH_ARTIST_SUCCESS',
     artist
   };
 };
 
-export const fetchArtistError = () => {
+const fetchArtistError = () => {
   return {
     type: 'FETCH_ARTIST_ERROR'
   };
 };
 
-export const dispacher = a => {
+const dispacher = a => {
   return a;
 };
 
@@ -84,7 +84,7 @@ export const fetchArtistAlbums = id => {
   };
 };
 
-export const fetchAlbumsSuccess = albums => {
+const fetchAlbumsSuccess = albums => {
   return {
     type: 'FETCH_ALBUMS_SUCCESS',
     albums
@@ -111,7 +111,7 @@ export const fetchArtistPopular = id => {
   };
 };
 
-export const fetchPopularSuccess = popular => {
+const fetchPopularSuccess = popular => {
   return {
     type: 'FETCH_POPULAR_SUCCESS',
     popular

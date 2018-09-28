@@ -1,13 +1,13 @@
 import axios from '../../axios';
 
-export const fetchUserSuccess = user => {
+const fetchUserSuccess = user => {
   return {
     type: 'FETCH_USER_SUCCESS',
     user
   };
 };
 
-export const fetchUserError = () => {
+const fetchUserError = () => {
   return {
     type: 'FETCH_USER_ERROR'
   };

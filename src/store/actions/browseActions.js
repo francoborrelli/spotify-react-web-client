@@ -1,24 +1,24 @@
 import axios from '../../axios';
 
-export const fetchCategoriesSuccess = categories => {
+const fetchCategoriesSuccess = categories => {
   return {
     type: 'FETCH_CATEGORIES_SUCCESS',
     categories
   };
 };
-export const fetchCategoriesPending = () => {
+const fetchCategoriesPending = () => {
   return {
     type: 'FETCH_CATEGORIES_PENDING'
   };
 };
 
-export const fetchCategoriesError = () => {
+const fetchCategoriesError = () => {
   return {
     type: 'FETCH_CATEGORIES_ERROR'
   };
 };
 
-export const fetchMoreSuccess = (categories, next) => {
+const fetchMoreSuccess = (categories, next) => {
   return {
     type: 'FETCH_MORE_CATEGORIES_SUCCESS',
     categories,

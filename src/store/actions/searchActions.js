@@ -1,19 +1,19 @@
 import axios from '../../axios';
 
-export const fetchDataPending = () => {
+const fetchDataPending = () => {
   return {
     type: 'FETCH_DATA_PENDING'
   };
 };
 
-export const fetchDataSuccess = data => {
+const fetchDataSuccess = data => {
   return {
     type: 'FETCH_DATA_SUCCESS',
     data
   };
 };
 
-export const fetchDataError = () => {
+const fetchDataError = () => {
   return {
     type: 'FETCH_DATA_ERROR'
   };

@@ -1,19 +1,19 @@
 import axios from '../../axios';
 
-export const fetchAlbumSuccess = album => {
+const fetchAlbumSuccess = album => {
   return {
     type: 'FETCH_ALBUM_SUCCESS',
     album
   };
 };
 
-export const fetchAlbumError = () => {
+const fetchAlbumError = () => {
   return {
     type: 'FETCH_ALBUM_ERROR'
   };
 };
 
-export const fetchAlbumPending = () => {
+const fetchAlbumPending = () => {
   return {
     type: 'FETCH_ALBUM_PENDING'
   };
