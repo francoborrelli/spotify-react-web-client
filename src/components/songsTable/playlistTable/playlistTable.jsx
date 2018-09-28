@@ -11,27 +11,28 @@ const playlistTable = props => {
   return props.songs.length === 0 ? (
     <EmptySection />
   ) : (
-    <div className="playlist-table">
-      <div className="song-header-container">
-        <div style={{ width: 40 }} />
-        <div className="song-title-header">
+    <table className="playlist-table">
+      <tr className="song-header-container">
+        <th style={{ width: 40 }} />
+        <th style={{ width: 40 }} />
+        <th className="song-title-header">
           <p>Title</p>
-        </div>
-        <div className="song-artist-header">
+        </th>
+        <th className="song-artist-header">
           <p>Artist</p>
-        </div>
-        <div className="song-album-header">
+        </th>
+        <th className="song-album-header">
           <p>Album</p>
-        </div>
+        </th>
         {props.removeDate ? null : (
-          <div className="song-added-header">
+          <th className="song-added-header">
             <i className="fa fa-calendar-plus-o" aria-hidden="true" />
-          </div>
+          </th>
         )}
-        <div className="song-length-header">
+        <th className="song-length-header">
           <i className="fa fa-clock-o" aria-hidden="true" />
-        </div>
-      </div>
+        </th>
+      </tr>
       <InfiniteScroll
         pageStart={0}
         loadMore={props.fetchMoreSongs}
@@ -63,7 +64,7 @@ const playlistTable = props => {
           />
         ))}
       </InfiniteScroll>
-    </div>
+    </table>
   );
 };
 

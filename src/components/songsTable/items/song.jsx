@@ -20,23 +20,23 @@ const song = props => {
     : () => props.playSong(props.uri, props.offset);
 
   return (
-    <li className={'user-song-item' + (active ? ' active' : '')}>
+    <tr className={'user-song-item' + (active ? ' active' : '')}>
       {props.isAlbum ? (
-        <div className="r-song" onClick={event}>
+        <td className="r-song" onClick={event}>
           <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
           {active ? (
             <i className="fa fa-volume-up playing" />
           ) : (
             <span>{props.index}</span>
           )}
-        </div>
+        </td>
       ) : (
-        <div className="play-song" onClick={event}>
+        <td className="play-song" onClick={event}>
           <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
           {active ? <i className="fa fa-volume-up" /> : null}
-        </div>
+        </td>
       )}
-      <div className="add-remove-section">
+      <td className="add-remove-section">
         {props.contains ? (
           <i
             className="fa fa-check"
@@ -46,11 +46,11 @@ const song = props => {
         ) : (
           <i className="fa fa-plus" aria-hidden="true" onClick={props.onAdd} />
         )}
-      </div>
-      <div className="song-title">
+      </td>
+      <td className="song-title">
         <p>{props.item.name}</p>
-      </div>
-      <div className="song-artist">
+      </td>
+      <td className="song-artist">
         <p>
           {props.item.artists
             ? props.item.artists.map((a, i) => (
@@ -66,32 +66,32 @@ const song = props => {
               ))
             : ''}
         </p>
-      </div>
+      </td>
       {!props.isAlbum && (
-        <div className="song-album">
+        <td className="song-album">
           <p
             className="album"
             onClick={() => props.onAlbumClick(props.item.album.id)}
           >
             {props.item.album.name}
           </p>
-        </div>
+        </td>
       )}
       {!props.isAlbum &&
         !props.removeDate && (
-          <div className="song-added">
+          <td className="song-added">
             <p>{moment(props.added_at).format('YYYY-MM-DD')}</p>
-          </div>
+          </td>
         )}
       {props.isAlbum && (
-        <div className="song-explicit">
+        <td className="song-explicit">
           {props.item.explicit ? <p className="explicit">EXPLICIT</p> : null}
-        </div>
+        </td>
       )}
-      <div className="song-length">
+      <td className="song-length">
         <p>{msToMinutesAndSeconds(props.item.duration_ms)}</p>
-      </div>
-    </li>
+      </td>
+    </tr>
   );
 };
 

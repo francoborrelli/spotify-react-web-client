@@ -127,10 +127,6 @@
   }
 }
 
-.song-title-header {
-  margin-left: 60px;
-}
-
 .song-title p,
 .song-artist p,
 .song-album p,
@@ -199,6 +195,7 @@
 .song-artist-header,
 .song-album-header,
 .song-length-header {
+  text-align: left;
   & p:hover {
     color: $light-gray;
     cursor: default;
