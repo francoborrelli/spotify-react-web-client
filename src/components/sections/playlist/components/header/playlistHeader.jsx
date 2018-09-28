@@ -95,10 +95,12 @@ const playlistHeader = ({
             </div>
           </div>
         )}
-        <div>
-          {!album &&
-            !playlist.mine && <FollowBtn following={playlist.follows} />}
-        </div>
+        {!album && (
+          <div className="followers">
+            <div>FOLLOWERS</div>
+            {playlist.followers ? playlist.followers.total : 0}
+          </div>
+        )}
         <div className="btns-section">
           <div>
             {!empty && (
@@ -110,14 +112,11 @@ const playlistHeader = ({
               </button>
             )}
           </div>
-        </div>
-
-        {!album && (
-          <div className="followers">
-            <div>FOLLOWERS</div>
-            {playlist.followers ? playlist.followers.total : 0}
+          <div>
+            {!album &&
+              !playlist.mine && <FollowBtn following={playlist.follows} />}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
