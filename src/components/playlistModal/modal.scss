@@ -31,6 +31,22 @@
   -webkit-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
+
+  @media (max-width: 600px) {
+    width: 98%;
+    input {
+      width: 63% !important;
+    }
+    textarea {
+      width: 88% !important;
+    }
+
+    button {
+      display: block;
+      width: 90% !important;
+      margin-bottom: 20px !important;
+    }
+  }
 }
 
 .active .modal-content {

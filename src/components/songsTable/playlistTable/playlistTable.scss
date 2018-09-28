@@ -156,6 +156,10 @@
 .song-album,
 .song-album-header {
   display: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   @media (max-width: 850px) {
     display: none;
   }
@@ -164,6 +168,10 @@
 .song-artist,
 .song-artist-header {
   width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   @media (max-width: 800px) {
     width: 35% !important;
   }
@@ -174,6 +182,10 @@
 
 .song-title,
 .song-title-header {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   width: 250px;
   @media (max-width: 800px) {
     width: 35% !important;
