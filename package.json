@@ -12,7 +12,7 @@
     "react-infinite-scroller": "^1.2.1",
     "react-player-controls": "^1.0.0-beta.0",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.5",
+    "react-scripts": "^2.1.8",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
   },
@@ -26,5 +26,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
