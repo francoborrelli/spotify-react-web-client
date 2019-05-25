@@ -10,6 +10,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import ReactDragListView from "react-drag-listview";
 
 const playlistTable = props => {
+  const isMine = props.playlist && props.playlist.mine;
+
+  const Draggable = isMine ? ReactDragListView : "div";
+
   const dragProps = {
     onDragEnd(fromIndex, toIndex) {
       props.movePlaylistSong(props.playlist, fromIndex, toIndex);
@@ -44,7 +48,7 @@ const playlistTable = props => {
           <i className="fa fa-clock-o" aria-hidden="true" />
         </div>
       </div>
-      <ReactDragListView {...dragProps}>
+      <Draggable {...dragProps}>
         <InfiniteScroll
           pageStart={0}
           loadMore={props.fetchMoreSongs}
@@ -76,7 +80,7 @@ const playlistTable = props => {
             />
           ))}
         </InfiniteScroll>
-      </ReactDragListView>
+      </Draggable>
     </div>
   );
 };
