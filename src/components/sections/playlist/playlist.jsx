@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { fetchMoreSongs } from '../../../store/actions/playlistActions';
-import Header from './components/header/playlistHeader';
-import Table from '../../songsTable/playlistTable/playlistTable';
+import {
+  fetchMoreSongs,
+  movePlaylistSong
+} from "../../../store/actions/playlistActions";
 
-import withStatus from '../../../hoc/statusHoc';
-import Spinner from '../../spinner/spinner';
+import Header from "./components/header/playlistHeader";
+import Table from "../../songsTable/playlistTable/playlistTable";
+
+import withStatus from "../../../hoc/statusHoc";
+import Spinner from "../../spinner/spinner";
 
 class Playlist extends Component {
   render = () => {
@@ -32,10 +36,12 @@ class Playlist extends Component {
                 ? true
                 : false
             }
+            playlist={this.props.playlist || {}}
             fetchMoreSongs={this.props.fetchMoreSongs}
+            movePlaylistSong={this.props.movePlaylistSong}
             current={this.props.currentSong}
             playing={this.props.playing}
-            uri={this.props.playlist ? this.props.playlist.uri : ''}
+            uri={this.props.playlist ? this.props.playlist.uri : ""}
             songs={this.props.playlist ? this.props.playlist.tracks.items : []}
             pauseSong={this.props.pauseSong}
             playSong={this.props.playSong}
@@ -57,7 +63,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      fetchMoreSongs
+      fetchMoreSongs,
+      movePlaylistSong
     },
     dispatch
   );

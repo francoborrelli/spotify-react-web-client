@@ -1,4 +1,4 @@
-@import 'src/utilities/variables';
+@import "src/utilities/variables";
 
 @keyframes slideshow {
   0% {
@@ -30,7 +30,7 @@
     color: #01da01;
     &:hover {
       &:before {
-        content: '\f00d';
+        content: "\f00d";
       }
     }
   }
@@ -170,7 +170,7 @@
   }
 
   .song-name {
-    font-family: 'Proxima Nova', Georgia, sans-serif;
+    font-family: "Proxima Nova", Georgia, sans-serif;
     color: $light-gray;
     font-size: 14px;
     margin-bottom: 10px;
@@ -248,7 +248,7 @@
   position: relative;
   top: -10px;
   font-size: 35px;
-  -webkit-text-stroke: 2px $backgroud-color;
+  -webkit-text-stroke: 2px $background-color;
   &:hover {
     font-size: 39px;
     margin: -2px -2px;

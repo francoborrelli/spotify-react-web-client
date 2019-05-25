@@ -1,4 +1,4 @@
-@import 'src/utilities/variables';
+@import "src/utilities/variables";
 
 button {
   outline: none;
@@ -143,7 +143,7 @@ button {
     padding-left: 10px;
     text-transform: uppercase;
     background: transparent;
-    font-family: 'Proxima Nova', Georgia, sans-serif;
+    font-family: "Proxima Nova", Georgia, sans-serif;
     color: $light-gray;
     border: 1px solid $gray;
     padding: 10px;
@@ -176,7 +176,7 @@ button {
       top: 7px;
       color: $gray;
       cursor: pointer;
-      -webkit-text-stroke: 2px $backgroud-color;
+      -webkit-text-stroke: 2px $background-color;
       left: 5px;
 
       &:hover {
