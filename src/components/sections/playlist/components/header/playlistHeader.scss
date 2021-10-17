@@ -1,4 +1,4 @@
-@import 'src/utilities/variables';
+@import 'utilities/variables';
 
 .header-title {
   font-size: 48px;
@@ -40,8 +40,7 @@
   }
   .playlist-image {
     width: 230px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.103),
-      0 6px 15px 0 rgba(0, 0, 0, 0.075);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.103), 0 6px 15px 0 rgba(0, 0, 0, 0.075);
   }
 }
 

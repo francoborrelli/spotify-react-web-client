@@ -1,4 +1,4 @@
-@import "src/utilities/variables";
+@import 'utilities/variables';
 
 .side-menu-container {
   padding: 20px;
@@ -20,7 +20,7 @@
 
     &.active {
       &:before {
-        content: "";
+        content: '';
         position: relative;
         left: -18px;
         border-left: 3px solid #1db954;
@@ -31,7 +31,7 @@
   .library-header {
     font-weight: 300;
     text-transform: uppercase;
-    font-family: "Proxima Thin", Georgia, sans-serif;
+    font-family: 'Proxima Thin', Georgia, sans-serif;
     font-size: 12px;
     margin: 0;
     padding: 30px 0 5px 0;

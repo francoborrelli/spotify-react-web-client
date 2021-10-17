@@ -1,10 +1,10 @@
-@import "src/utilities/variables";
+@import 'utilities/variables';
 
 .section-title {
   font-size: 34px;
   font-weight: 800;
   padding: 0 0 20px 0;
-  font-family: "Proxima Bold", Georgia, sans-serif;
+  font-family: 'Proxima Bold', Georgia, sans-serif;
 }
 
 .playlist-table {
@@ -207,7 +207,7 @@
   }
 
   & p {
-    font-family: "Proxima Thin", Georgia, sans-serif;
+    font-family: 'Proxima Thin', Georgia, sans-serif;
     text-transform: uppercase;
     font-size: 12px;
     color: $gray;

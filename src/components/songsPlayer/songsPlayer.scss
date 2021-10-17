@@ -1,4 +1,4 @@
-@import "src/utilities/variables";
+@import 'utilities/variables';
 
 @keyframes slideshow {
   0% {
@@ -30,7 +30,7 @@
     color: #01da01;
     &:hover {
       &:before {
-        content: "\f00d";
+        content: '\f00d';
       }
     }
   }
@@ -170,7 +170,7 @@
   }
 
   .song-name {
-    font-family: "Proxima Nova", Georgia, sans-serif;
+    font-family: 'Proxima Nova', Georgia, sans-serif;
     color: $light-gray;
     font-size: 14px;
     margin-bottom: 10px;

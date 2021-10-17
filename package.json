@@ -1,12 +1,11 @@
 {
   "name": "spotify-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
-    "moment": "^2.22.2",
-    "node-sass-chokidar": "^1.3.3",
-    "npm-run-all": "^4.1.3",
+    "axios": "^0.23.0",
+    "moment": "^2.29.1",
+    "npm-run-all": "^4.1.5",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-drag-listview": "^0.1.4",
@@ -15,11 +14,12 @@
     "react-redux": "^5.0.7",
     "react-scripts": "^2.1.8",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sass": "^1.43.2"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "build-css": "sass --load-path=src src/:src/",
+    "watch-css": "npm run build-css && sass -w --load-path=src src/:src/",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",

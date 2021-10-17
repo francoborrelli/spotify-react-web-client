@@ -1,4 +1,4 @@
-@import "src/utilities/variables";
+@import 'utilities/variables';
 
 button {
   outline: none;
@@ -143,7 +143,7 @@ button {
     padding-left: 10px;
     text-transform: uppercase;
     background: transparent;
-    font-family: "Proxima Nova", Georgia, sans-serif;
+    font-family: 'Proxima Nova', Georgia, sans-serif;
     color: $light-gray;
     border: 1px solid $gray;
     padding: 10px;
