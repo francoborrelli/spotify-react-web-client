@@ -13,7 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Follow and unfollow playlists and artists.
 - Add or remove tracks from your library.
 - Change the device in which you are currently playing.
-- Search for tracks, albums, artists and playlists.
+- Search tracks, albums, artists and playlists.
 
 ## Try it out
 
