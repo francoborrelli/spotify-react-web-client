@@ -12,7 +12,7 @@
     "react-infinite-scroller": "^1.2.1",
     "react-player-controls": "^1.0.0-beta.0",
     "react-redux": "^5.0.7",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "^5.0.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "sass": "^1.43.2"
