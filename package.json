@@ -19,14 +19,13 @@
   },
   "scripts": {
     "build-css": "sass --load-path=src src/:src/",
-    "watch-css": "npm run build-css && sass -w --load-path=src src/:src/",
+    "watch-css": "yarn run build-css && sass -w --load-path=src src/:src/",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts --openssl-legacy-provider build",
+    "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "eject": "react-scripts eject"
   },
   "browserslist": [
     ">0.2%",
