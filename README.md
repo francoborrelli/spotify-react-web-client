@@ -28,7 +28,7 @@ First you need a [Spotify Client ID](https://developer.spotify.com/dashboard/app
 ```bash
 $ git clone https://github.com/francoborrelli/spotify-react-web-client.git
 $ cd spotify-react-web-client
-$ npm i
+$ yarn install
 ```
 
 You will have to define a '.env' file and set the following variables:
@@ -41,7 +41,7 @@ REACT_APP_REDIRECT_ID=http://localhost:3000/
 Now run:
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 and visit http://localhost:3000.
