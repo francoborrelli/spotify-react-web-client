@@ -8,13 +8,13 @@ const SliderBar = ({ value, style, className }) => (
       {},
       {
         position: 'absolute',
-        borderRadius: 4
+        borderRadius: 4,
       },
       {
         top: 0,
         bottom: 0,
         left: 0,
-        width: `${value * 100}%`
+        width: `${value * 100}%`,
       },
       style
     )}
@@ -34,58 +34,37 @@ const SliderHandle = ({ value, style, className }) => (
         transform: 'scale(1)',
         transition: 'transform 0.2s',
         '&:hover': {
-          transform: 'scale(1.3)'
-        }
+          transform: 'scale(1.3)',
+        },
       },
       {
         top: 0,
         left: `${value * 100}%`,
         marginTop: -3,
-        marginLeft: -8
+        marginLeft: -8,
       },
       style
     )}
   />
 );
 
-const ProgressBar = ({
-  isEnabled,
-  direction = Direction.HORIZONTAL,
-  value,
-  ...props
-}) => {
+const ProgressBar = ({ isEnabled, direction = Direction.HORIZONTAL, value, ...props }) => {
   const volumeClass =
-    value > 0.5
-      ? 'fa-volume-up'
-      : value === 0
-        ? 'fa-volume-off'
-        : 'fa-volume-down';
+    value > 0.5 ? 'fa-volume-up' : value === 0 ? 'fa-volume-off' : 'fa-volume-down';
   return (
-    <div className="volume-sider-container">
-      <i
-        onClick={props.onClick}
-        className={'volumen fa ' + volumeClass}
-        aria-hidden="true"
-      />
+    <div className='volume-sider-container'>
+      <i onClick={props.onClick} className={'volumen fa ' + volumeClass} aria-hidden='true' />
       <Slider
         isEnabled={isEnabled}
         direction={direction}
-        className="volume-sider"
+        className='volume-sider'
         style={{
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
         {...props}
       >
-        <SliderBar
-          className="position-sider"
-          direction={direction}
-          value={value}
-        />
-        <SliderHandle
-          className="handler-sider"
-          direction={direction}
-          value={value}
-        />
+        <SliderBar className='position-sider' direction={direction} value={value} />
+        <SliderHandle className='handler-sider' direction={direction} value={value} />
       </Slider>
     </div>
   );

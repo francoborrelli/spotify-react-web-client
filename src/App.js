@@ -18,7 +18,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {};
 
 class App extends Component {
   state = {
-    playerLoaded: false
+    playerLoaded: false,
   };
 
   componentDidMount() {
@@ -43,16 +43,16 @@ class App extends Component {
       onPlayerWaitingForDevice: () => {
         this.setState({ playerLoaded: true });
       },
-      onPlayerError: e => {
+      onPlayerError: (e) => {
         console.log(e);
       },
       onPlayerDeviceSelected: () => {
         this.setState({ playerLoaded: true });
-      }
+      },
     };
 
     return (
-      <div className="app">
+      <div className='app'>
         <WebPlaybackReact {...webPlaybackSdkProps}>
           <Spinner loading={!this.state.playerLoaded}>
             <LeftSection />
@@ -65,18 +65,15 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    token: state.sessionReducer.token
+    token: state.sessionReducer.token,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  setToken: token => dispatch(setToken(token)),
-  fetchUser: () => dispatch(fetchUser())
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (token) => dispatch(setToken(token)),
+  fetchUser: () => dispatch(fetchUser()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
