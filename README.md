@@ -80,6 +80,7 @@ REACT_APP_REDIRECT_ID=http://localhost:3000/
 3️⃣ Now run:
 
 ```bash
+$ yarn install
 $ yarn start
 ```
 
