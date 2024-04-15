@@ -8,6 +8,7 @@ export default {
       'user-read-private',
       'user-read-birthdate',
       'user-read-email',
+      'playlist-modify-public',
       'user-read-recently-played',
       'user-read-playback-state',
       'user-modify-playback-state',
@@ -16,7 +17,9 @@ export default {
       'playlist-read-private',
       'playlist-modify-public',
       'playlist-modify-private',
-      'user-top-read'
+      'user-top-read',
+      'user-follow-modify',
+      'user-follow-read',
     ].join(' ');
 
     let scopes_encoded = scopes.replace(' ', '%20');
@@ -27,7 +30,7 @@ export default {
       `&redirect_uri=${redirect_uri}`,
       `&scope=${scopes_encoded}`,
       '&response_type=token',
-      '&show_dialog=true'
+      '&show_dialog=true',
     ].join('');
   },
 
@@ -41,5 +44,5 @@ export default {
     }
     window.location.hash = '';
     return hashParams.access_token;
-  }
+  },
 };
