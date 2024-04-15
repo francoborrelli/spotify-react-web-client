@@ -37,6 +37,29 @@
 
 🎵 Search tracks, albums, artists and playlists.
 
+## 🖥️ Screenshots
+
+More in images folder.
+
+<div align="center">
+    <table >
+     <tr>
+       <td>
+         <img src="images/browse.png?raw=true 'Playlist'"/>
+         <img src="images/devices.png?raw=true 'Playlist'"/>
+       </td>
+             <td>
+         <img src="images/playlist.png?raw=true 'Playlist'"/>
+          <img src="images/newPlaylist.png?raw=true 'Playlist'"/>
+       </td>
+                 <td>
+         <img src="images/artist.png?raw=true 'Playlist'"/>
+          <img src="images/artists.png?raw=true 'Playlist'"/>
+       </td>
+     </tr>
+    </table>
+    </div>
+
 ## 👨‍💻 How to Run locally
 
 1️⃣ First you need a [Spotify Client ID](https://developer.spotify.com/dashboard/applications).
@@ -68,26 +91,5 @@ and visit http://localhost:3000.
 docker-compose up -d
 ```
 
-## 🖥️ Screenshots
 
-More in images folder.
-
-<div align="center">
-    <table >
-     <tr>
-       <td>
-         <img src="images/browse.png?raw=true 'Playlist'"/>
-         <img src="images/devices.png?raw=true 'Playlist'"/>
-       </td>
-             <td>
-         <img src="images/playlist.png?raw=true 'Playlist'"/>
-          <img src="images/newPlaylist.png?raw=true 'Playlist'"/>
-       </td>
-                 <td>
-         <img src="images/artist.png?raw=true 'Playlist'"/>
-          <img src="images/artists.png?raw=true 'Playlist'"/>
-       </td>
-     </tr>
-    </table>
-    </div>
 
