@@ -8,6 +8,10 @@
 
 ![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 
+> [!IMPORTANT]  
+> Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
+
+
 <p>
   ⚡ Spotify Web Client using <a href="https://developer.spotify.com/documentation/web-api/">Spotify Web API</a> and <a href="https://developer.spotify.com/documentation/web-playback-sdk/">Spotify Playback SDK</a>. 
 </p>
@@ -15,9 +19,6 @@
 <p>
   ⚡ This project was bootstrapped with <a href="https://github.com/facebookincubator/create-react-app">Create React App<a/>.
 </p>
-
-⚠️ **Warning:** Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
-
 
 ## 🎹 Features
 
