@@ -71,9 +71,9 @@ $ cd spotify-react-web-client
 $ yarn install
 ```
 
-2️⃣ You will have to define a '.env' file and set the following variables:
+2️⃣ You will have to define a `.env` file and set the following variables:
 
-```
+```bash
 REACT_APP_CLIENT_ID="YOUR_CLIENT_ID"
 REACT_APP_REDIRECT_ID=http://localhost:3000/
 ```
@@ -89,7 +89,7 @@ and visit http://localhost:3000.
 
 ## 🐳 Use Docker!
 
-```
+```bash
 docker-compose up -d
 ```
 
