@@ -9,7 +9,7 @@ import VolumeControl from './components/volumeControl';
 import withPlayer from '../../hoc/playerHoc';
 
 class SongsPlayer extends Component {
-  toSeconds = ms => ms / 1000;
+  toSeconds = (ms) => ms / 1000;
 
   render = () => {
     const position = this.toSeconds(this.props.trackPosition) || 0;
@@ -18,14 +18,12 @@ class SongsPlayer extends Component {
       : 1;
 
     return (
-      <div className="player-container">
+      <div className='player-container'>
         {this.props.currentSong.id ? (
           <DetailSection
             ids={
               this.props.currentSong.linked_from.id
-                ? `${this.props.currentSong.linked_from.id},${
-                    this.props.currentSong.id
-                  }`
+                ? `${this.props.currentSong.linked_from.id},${this.props.currentSong.id}`
                 : this.props.currentSong.id
             }
             contains={this.props.contains}
@@ -34,17 +32,13 @@ class SongsPlayer extends Component {
             artists={this.props.currentSong.artists || []}
           />
         ) : null}
-        <SongsControl
-          {...this.props}
-        />
+        <SongsControl {...this.props} />
         <SongSider
           isEnabled
           value={position / duration}
           position={position}
           duration={duration}
-          onChange={value =>
-            this.props.seekSong(Math.round(value * duration * 1000))
-          }
+          onChange={(value) => this.props.seekSong(Math.round(value * duration * 1000))}
         />
         <VolumeControl />
       </div>

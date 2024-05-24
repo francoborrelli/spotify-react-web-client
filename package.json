@@ -1,9 +1,9 @@
 {
   "name": "spotify-client",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "dependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "moment": "^2.30.1",
     "npm-run-all": "^4.1.5",
     "react": "^16.5.1",
@@ -15,13 +15,13 @@
     "react-scripts": "^2.1.8",
     "redux": "^4.0.0",
     "redux-thunk": "^2.4.2",
-    "sass": "^1.75.0"
+    "sass": "^1.77.2"
   },
   "scripts": {
     "build-css": "sass --load-path=src src/:src/",
     "watch-css": "yarn run build-css && sass -w --load-path=src src/:src/",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
