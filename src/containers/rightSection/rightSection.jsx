@@ -5,7 +5,11 @@ import github from '../../images/github.png';
 import './rightSection.css';
 
 const UserHeader = (props) => (
-  <a target='_blank' href='https://github.com/francoborrelli/spotify-react-web-client'>
+  <a
+    target='_blank'
+    rel='noopener noreferrer'
+    href='https://github.com/francoborrelli/spotify-react-web-client'
+  >
     <div className='user-header'>
       <div className='details-container'>
         <img alt='user' className='user-image' src={props.img} />
