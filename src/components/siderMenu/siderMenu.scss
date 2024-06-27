@@ -13,18 +13,20 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 170px;
+    overflow: hidden;
 
     &:hover {
       color: $light-gray;
     }
 
     &.active {
-      &:before {
-        content: '';
-        position: relative;
-        left: -18px;
-        border-left: 3px solid #1db954;
-      }
+      color: #1db954;
+      // &:before {
+      //   content: '';
+      //   position: relative;
+      //   left: -18px;
+      //   border-left: 3px solid #1db954;
+      // }
     }
   }
 
