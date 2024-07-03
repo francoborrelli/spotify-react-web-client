@@ -15,7 +15,7 @@
     "react-scripts": "^2.1.8",
     "redux": "^4.0.0",
     "redux-thunk": "^2.4.2",
-    "sass": "^1.77.2"
+    "sass": "^1.77.6"
   },
   "scripts": {
     "build-css": "sass --load-path=src src/:src/",
