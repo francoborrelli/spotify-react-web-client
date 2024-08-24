@@ -35,14 +35,6 @@ export type Description = {
   tags?: TagType[];
 };
 
-export type User = {
-  name: string;
-  imageUrl?: string;
-  playlists: Playlist[];
-  linkedIn?: string;
-  github?: string;
-};
-
 export type TagType = {
   text: string;
   color: string;

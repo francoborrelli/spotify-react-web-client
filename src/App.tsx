@@ -64,6 +64,7 @@ const RootComponent = () => {
     onPlayerLoading: () => {},
     onPlayerWaitingForDevice: () => {
       dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
+      dispatch(authActions.fetchUser());
     },
     onPlayerError: (e) => {
       console.log(e);

@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { Space } from 'antd';
+import { Link } from 'react-router-dom';
+
+// Utils
+import { useTranslation } from 'react-i18next';
+
+// Redux
+import { useAppSelector } from '../../../../store/store';
 
 const Header = ({ opacity }: { opacity: number; title?: string }) => {
   const { t } = useTranslation(['navbar']);
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <div
@@ -33,7 +39,7 @@ const Header = ({ opacity }: { opacity: number; title?: string }) => {
                 id='user-avatar'
                 alt='User Avatar'
                 style={{ marginTop: -1 }}
-                src={`${process.env.PUBLIC_URL}/images/profile.jpeg`}
+                src={user?.images[0].url}
               />
             </Link>
           </div>
