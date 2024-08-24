@@ -1,36 +1,67 @@
 {
   "name": "spotify-client",
-  "version": "0.2.4",
+  "version": "2.0.0",
   "private": true,
   "dependencies": {
+    "antd": "^5.20.2",
     "axios": "^1.7.5",
-    "dayjs": "^1.11.13",
-    "npm-run-all": "^4.1.5",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-drag-listview": "^0.2.1",
-    "react-infinite-scroller": "^1.2.6",
+    "devicons-react": "^1.3.0",
+    "html-react-parser": "^5.1.12",
+    "i18next": "^23.14.0",
+    "lodash": "^4.17.21",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-full-screen": "^1.1.1",
+    "react-i18next": "^15.0.1",
+    "react-icons": "^5.3.0",
     "react-player-controls": "^1.1.0",
-    "react-redux": "^5.0.7",
-    "react-scripts": "^2.1.8",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.4.2",
-    "sass": "^1.77.8"
+    "react-redux": "^9.1.2",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "5.0.1",
+    "redux-persist": "^6.0.0",
+    "tinycolor2": "^1.6.0"
   },
   "scripts": {
-    "build-css": "sass --load-path=src src/:src/",
-    "watch-css": "yarn run build-css && sass -w --load-path=src src/:src/",
-    "start-js": "react-scripts --openssl-legacy-provider start",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build && cp build/index.html build/404.html",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@reduxjs/toolkit": "^2.2.6",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/lodash": "^4.17.6",
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/spotify-web-playback-sdk": "^0.1.19",
+    "@types/tinycolor2": "^1.4.6",
+    "gh-pages": "^6.1.1",
+    "sass": "^1.77.6",
+    "typescript": "^4.4.2",
+    "web-vitals": "^4.2.1"
+  }
 }

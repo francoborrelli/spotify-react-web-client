@@ -1,0 +1,185 @@
+@use './variables.scss' as *;
+
+.playing-section {
+  overflow: scroll;
+  border-radius: $container-border-radius;
+  background-color: $background-color;
+  height: calc(100vh - 150px);
+  width: 100%;
+  min-width: 350px;
+  max-width: 350px;
+
+  @media (max-width: 900px) {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .playing-section-title {
+    color: $text-primary-color;
+    font-weight: 700;
+    margin: 10px;
+    margin-left: 15px;
+  }
+}
+
+.playing-now-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 12px;
+
+  background-color: #242424;
+  border-radius: 8px;
+  z-index: 1;
+
+  .playing-now-card-title {
+    color: $text-primary-color;
+    font-weight: 700;
+  }
+
+  .playing-now-card-subtitle {
+    color: $text-secondary-color;
+    margin-top: 5px;
+  }
+
+  .playing-now-card-body {
+    margin-top: 10px;
+    color: $text-secondary-color;
+  }
+
+  .playing-now-card-text {
+    padding: 16px;
+    padding-top: 8px;
+  }
+
+  .playing-now-card-image {
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 8px 8px 0 0;
+    padding-bottom: 50%;
+    position: relative;
+    width: 100%;
+
+    .playing-now-card-image-text {
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .ant-avatar {
+    margin: 5px;
+  }
+}
+
+.playing-section-close-button {
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 10px;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+}
+
+.queue-song {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+
+  .queue-song-image-container {
+    position: relative;
+    width: 48px;
+    height: 48px;
+
+    margin-right: 10px;
+
+    .queue-song-overlay {
+      display: none;
+
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      border: 0;
+      border-radius: 4px;
+      color: $text-primary-color;
+
+      svg {
+        fill: $text-primary-color !important;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: #34343438;
+
+    .queue-song-overlay {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+    }
+  }
+
+  #song-and-artist-name {
+    h3,
+    p {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}
+
+.ant-drawer {
+  .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+  .ant-drawer-header {
+    display: none !important;
+  }
+  .ant-drawer-body {
+    padding: 0;
+
+    .playing-section {
+      height: 100%;
+      border-radius: 0px;
+    }
+  }
+}
+
+.ant-image {
+  border-radius: 5px;
+  overflow: hidden;
+  max-height: 250px;
+
+  img {
+    max-height: 250px;
+    object-fit: contain;
+    background: #00000066;
+  }
+}
+
+.ant-image-preview-wrap {
+  background: #000000e0;
+}

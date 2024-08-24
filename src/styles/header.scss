@@ -1,0 +1,67 @@
+@use './variables.scss' as *;
+
+.avatar-container {
+  border-radius: 50%;
+  background-color: #1f1f1f;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  .avatar {
+    border-radius: 50%;
+    width: 30px;
+  }
+
+  &:hover,
+  .hoverable-icon:hover {
+    fill: white !important;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    &:active {
+      transform: scale(1);
+    }
+  }
+}
+
+.news {
+  padding: 5px;
+  border-radius: 50%;
+  background: $background-color;
+  border: 2px solid $background-color;
+}
+
+.contact-me {
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  background-color: var(--background-base, rgba(0, 0, 0, 0.54));
+  color: var(--text-base, #ffffff) !important;
+  display: flex;
+  border-radius: var(--encore-button-corner-radius, 9999px);
+  font-size: inherit;
+  min-block-size: var(--encore-control-size-smaller, 30px);
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-block-start: var(--encore-spacing-tighter-4, 3px);
+  padding-block-end: var(--encore-spacing-tighter-4, 3px);
+  padding-inline-start: 16px;
+  padding-inline-end: var(--encore-spacing-base, 16px);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:active {
+    transform: scale(1);
+  }
+}

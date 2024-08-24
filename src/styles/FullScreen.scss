@@ -1,0 +1,49 @@
+.Full-screen-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+
+  background: linear-gradient(-45deg, #541d0c, #40081e, #084359, #054233);
+  background-size: 400% 400%;
+
+  animation: gradient 25s ease infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .album-cover {
+    height: 70px;
+    width: 70px;
+  }
+
+  #song-and-artist-name {
+    p {
+      width: 100%;
+      text-decoration: none;
+    }
+  }
+
+  .volume-control-container {
+    float: right;
+  }
+
+  .song-title {
+    display: -webkit-box;
+    font-size: 2em;
+    line-height: 1.25em;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

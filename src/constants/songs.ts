@@ -1,0 +1,51 @@
+export const AVAILABLE_SONGS = [
+  {
+    file: '0.mp3',
+    name: 'Solar Flares',
+    artist: 'Sky Gienger',
+    color: '#393939',
+    image: '1.png',
+  },
+  {
+    file: '1.mp3',
+    name: 'Drive to where...',
+    artist: 'JamesBellX',
+    color: '#E91E63',
+    image: '2.png',
+  },
+  {
+    file: '2.mp3',
+    name: 'Breathing in',
+    artist: 'Infraction',
+    color: '#9c27b0',
+    image: '3.png',
+  },
+  {
+    file: '3.mp3',
+    name: 'Never Too Late',
+    artist: 'anotherday',
+    color: '#795548',
+    image: '4.png',
+  },
+  {
+    file: '4.mp3',
+    name: 'For you and me',
+    artist: 'MarcusWay',
+    color: '#9E9E9E',
+    image: '5.png',
+  },
+  {
+    file: '5.mp3',
+    name: 'Burned into Steam',
+    artist: 'badbadmeow',
+    color: '#FF5722',
+    image: '6.png',
+  },
+  {
+    file: '6.mp3',
+    name: 'Could i be enough',
+    artist: 'Roads',
+    color: '#0073ce',
+    image: '7.png',
+  },
+] as const;

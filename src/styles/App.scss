@@ -1,0 +1,347 @@
+@use './variables.scss' as *;
+
+@use './home.scss';
+@use './header.scss';
+@use './Navbar.scss';
+@use './Profile.scss';
+@use './language.scss';
+@use './PlayingNow.scss';
+@use './CirclePlay.scss';
+@use './PlayingBar.scss';
+@use './FullScreen.scss';
+@use './SearchPage.scss';
+@use './PlaylistPage.scss';
+
+@font-face {
+  font-family: SpotifyMixUITitle;
+  src: url(https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2);
+}
+
+@font-face {
+  font-family: SpotifyMixUITitle;
+  font-weight: bold;
+  src: url(https://encore.scdn.co/fonts/SpotifyMixUITitle-Bold-37290f1de77f297fcc26d71e9afcf43f.woff2);
+}
+
+@font-face {
+  font-family: SpotifyMixUITitle;
+  font-weight: bolder;
+  src: url(https://encore.scdn.co/fonts/SpotifyMixUITitle-Extrabold-ba6c73cd7f82c81e49cf2204017803ed.woff2);
+}
+
+@font-face {
+  font-family: SpotifyMixUI;
+  src: url(https://encore.scdn.co/fonts/SpotifyMixUI-Regular-cc3b1de388efa4cbca6c75cebc24585e.woff2);
+}
+
+@font-face {
+  font-family: SpotifyMixUI;
+  font-weight: bold;
+  src: url(https://encore.scdn.co/fonts/SpotifyMixUI-Bold-4264b799009b1db5c491778b1bc8e5b7.woff2);
+}
+
+html,
+body {
+  font-family: SpotifyMixUI, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek,
+    CircularSp-Deva, var(sans-serif) !important;
+}
+
+/* hide scrollbar but allow scrolling */
+.Main-section,
+.playing-section {
+  -ms-overflow-style: none !important; /* for Internet Explorer, Edge */
+  scrollbar-width: none !important; /* for Firefox */
+  overflow-y: scroll !important;
+}
+
+body::-webkit-scrollbar {
+  display: none !important;
+}
+
+.App {
+  text-align: center;
+}
+
+h3 {
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Main-section {
+  border-radius: $container-border-radius;
+  background-color: $background-color;
+  height: calc(100vh - 150px);
+  width: 100%;
+  overflow: scroll;
+}
+
+.Playlist-section,
+.Profile-section {
+  width: 100%;
+  height: 100%;
+}
+
+.Home-seccion {
+  padding: 20px;
+  height: 100%;
+  border-radius: $container-border-radius;
+}
+
+.Navigation-button {
+  font-size: 17px;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(179 179 179);
+}
+
+.library {
+  height: 100%;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+
+.library-card {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9em;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px;
+  width: 98%;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease-in-out;
+
+  &.collapsed {
+    margin-bottom: 10px;
+  }
+
+  img {
+    border-radius: 4px;
+  }
+
+  .artist {
+    opacity: 0.7;
+    font-weight: 400;
+    font-size: 0.93em;
+  }
+
+  &:hover {
+    background-color: #ffffff0d;
+  }
+
+  &[data-active='true'] {
+    background-color: #ffffff1a;
+  }
+}
+
+.hoverable-icon.active:hover {
+  fill: #38ec77 !important;
+}
+
+.ant-dropdown-menu-root {
+  -webkit-app-region: no-drag !important;
+  background-color: #282828 !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2) !important;
+  max-height: calc(100vh - 24px) !important;
+  max-width: 350px !important;
+  min-width: 160px !important;
+  overflow-y: auto !important;
+  padding: 4px !important;
+
+  li {
+    color: white !important;
+
+    &.active {
+      color: #1ed760 !important;
+    }
+  }
+
+  .ant-dropdown-menu-item {
+    border: 0;
+    border-radius: 2px;
+    color: hsla(0, 0%, 100%, 0.9);
+    cursor: default;
+    gap: 12px;
+    text-decoration: none;
+    padding: 12px;
+    -webkit-padding-end: 8px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 40px;
+    padding-inline-end: 8px;
+    position: relative;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: start;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 100%;
+  }
+
+  .ant-dropdown-menu-item-selected {
+    background: transparent !important;
+    color: #1db954 !important;
+  }
+}
+
+.ant-dropdown-menu-title-content {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: #ffffff17 !important;
+  .ant-dropdown-menu-title-content {
+    color: #1db954 !important;
+  }
+}
+
+@media (max-width: $desktop-breakpoint) {
+  #root > div:first-child {
+    padding: 0px !important;
+  }
+}
+
+.link-social-button {
+  display: block;
+  padding: 6px;
+  border-radius: 43px;
+  color: white !important;
+  background: #2d2d2d;
+  font-size: 20px;
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(1);
+  }
+}
+
+.link-text {
+  color: $text-primary-color !important;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.fullscreen {
+  display: none !important;
+}
+
+.fullscreen-enabled {
+  display: block !important;
+}
+
+.active-icon-button {
+  position: relative;
+
+  &::after {
+    background-color: #1db954;
+    border-radius: 50%;
+    bottom: -10px;
+    content: '';
+    display: block;
+    height: 4px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 4px;
+    inline-size: 4px !important;
+  }
+}
+
+.nav-header {
+  z-index: 2;
+  position: fixed;
+  margin-top: -1px;
+  visibility: hidden;
+  padding: 10px 20px;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overscroll-behavior: contain;
+
+  overscroll-behavior-y: contain;
+  overflow-y: auto;
+  transition: background-color 0.3s ease-in-out, visibility 0.2s ease-in-out;
+
+  @media (max-width: $desktop-breakpoint) {
+    visibility: hidden !important;
+    opacity: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    .header-title {
+      display: none !important;
+    }
+  }
+
+  &.active {
+    visibility: visible;
+
+    .header-title {
+      display: block;
+    }
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-header-playlist-title {
+    font-size: 1.6rem;
+    white-space: nowrap;
+    margin-block: 0px;
+    font-weight: 600;
+    color: $text-primary-color;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.ant-avatar {
+  svg {
+    width: 1.3rem !important;
+    height: 1.3rem !important;
+  }
+}
+
+.avatar-tag {
+  svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
+}
+
+.main-container {
+  padding: 7px;
+
+  @media (max-width: $desktop-breakpoint) {
+    padding: 0;
+  }
+}
+
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.25s;
+}
+
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}

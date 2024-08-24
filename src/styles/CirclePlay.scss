@@ -1,0 +1,33 @@
+.circle-play {
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  background-color: var(--background-base, #1ed760);
+  color: var(--text-base, #000000);
+  display: flex;
+  border-radius: var(--encore-button-corner-radius, 9999px);
+  font-size: inherit;
+  min-block-size: var(--encore-control-size-smaller, 40px);
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  margin-right: 15px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  inline-size: var(--encore-control-size-smaller, 40px);
+  block-size: var(--encore-control-size-smaller, 40px);
+
+  &.big {
+    min-block-size: var(--encore-control-size-smaller, 60px);
+    inline-size: var(--encore-control-size-smaller, 60px);
+    block-size: var(--encore-control-size-smaller, 60px);
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(1);
+  }
+}

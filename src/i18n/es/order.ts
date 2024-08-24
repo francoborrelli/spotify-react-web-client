@@ -1,0 +1,16 @@
+export const order = {
+  COURSE: 'Cursos',
+  EXAM: 'Exámenes',
+  DEGREE: 'Títulos',
+  JOB: 'Trabajos',
+  ALL: 'Todos',
+  WEB: 'Sitios Web',
+  MOBILE: 'Aplicaciones Móviles',
+  UNLP: 'LIFIA - UNLP',
+  THESIS: 'Tesis',
+  JOURNAL: 'Revistas',
+  CONFERENCE: 'Conferencias',
+  CURRENT: 'Actualmente usando',
+  PAST_FREQUENTLY: 'Usé en el pasado',
+  PAST_OCCASIONALLY: 'Algo de conocimiento en',
+};

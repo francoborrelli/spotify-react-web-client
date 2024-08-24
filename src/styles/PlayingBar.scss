@@ -1,0 +1,332 @@
+@use './variables.scss' as *;
+
+.player-pause-button {
+  margin-bottom: 5px;
+  background-color: #fff;
+  border: none;
+  border-radius: 20px;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 32px;
+  min-width: 32px;
+  position: relative;
+  -webkit-transition: none 33ms cubic-bezier(0.3, 0, 0.7, 1);
+  transition: none 33ms cubic-bezier(0.3, 0, 0.7, 1);
+  -webkit-transition-property: all;
+  transition-property: all;
+  width: 32px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  cursor: pointer;
+  justify-content: center;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(1);
+  }
+}
+
+/* heart animation */
+
+.heart-like {
+  cursor: pointer;
+  position: relative;
+  display: grid;
+  place-content: center;
+
+  #center-heart {
+    #inner {
+      fill: transparent;
+      transition: 0.2s ease;
+    }
+
+    #outer {
+      fill: white;
+      transition: 0.2s ease;
+    }
+  }
+
+  #left-hearts > *,
+  #right-hearts > * {
+    opacity: 0;
+    transition: 0.2s ease;
+  }
+
+  @media (max-width: 980px) {
+    display: none;
+  }
+}
+
+.heart-liked {
+  cursor: pointer;
+
+  ::before {
+    content: '';
+    display: grid;
+    border-radius: 100%;
+    position: absolute;
+    outline: 25px solid #64d26d;
+    height: 300px;
+    width: 300px;
+    animation: scalePulse 0.5s cubic-bezier(0.12, 0.84, 0.5, 0.44) forwards;
+  }
+
+  ::after {
+    content: '';
+    display: grid;
+    border-radius: 100%;
+    position: absolute;
+    outline: 25px solid #64d26d;
+    height: 300px;
+    width: 300px;
+    animation: scalePulse 0.5s cubic-bezier(0.12, 0.84, 0.5, 0.44) forwards;
+    opacity: 1;
+    transform: scale(0);
+    animation-delay: 0.2s;
+  }
+
+  #center-heart {
+    #inner,
+    #outer {
+      fill: #64d26d;
+    }
+  }
+
+  #left-hearts > * {
+    transform-origin: center center;
+    animation: floatingHearts 0.65s cubic-bezier(0.12, 0.84, 0.5, 0.44) forwards;
+  }
+
+  #right-hearts {
+    > * {
+      transform-origin: center center;
+      animation: floatingHearts 0.65s cubic-bezier(0.12, 0.84, 0.5, 0.44) forwards;
+    }
+
+    g {
+      &:first-child {
+        animation-delay: 0.3s;
+      }
+
+      &:last-child {
+        animation-delay: 0.1s;
+      }
+    }
+  }
+
+  #left-hearts g {
+    &:first-child {
+      animation-delay: 0.2s;
+    }
+
+    &:last-child {
+      animation-delay: 0.5s;
+    }
+  }
+}
+
+@keyframes floatingHearts {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes scalePulse {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+.volume-sider-container {
+  width: 100%;
+
+  .volumen {
+    padding-right: 2px;
+  }
+
+  .volume-sider {
+    margin-bottom: 4px;
+    padding-left: 10px;
+    display: inline-block;
+    width: 100%;
+    height: 4px;
+    background-color: #696969;
+    transition: width 0.1s;
+    border-radius: 4px;
+
+    .position-sider {
+      background-color: white;
+    }
+
+    .handler-sider {
+      display: inline;
+    }
+
+    &:hover {
+      .position-sider {
+        background-color: #21cc44 !important;
+      }
+
+      .handler-sider {
+        display: block;
+        background: white;
+        height: 10px;
+        width: 10px;
+        border-radius: 5px;
+        margin-top: -7px;
+      }
+    }
+  }
+}
+
+.album-cover {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.queue-song-image-container,
+.mobile-player {
+  .album-cover {
+    width: 47px;
+    height: 47px;
+  }
+}
+
+#song-and-artist-name {
+  h3,
+  p {
+    width: 110px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.replay {
+  &:after {
+    background-color: currentcolor;
+    border-radius: 50%;
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 4px;
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 4px;
+    color: #1db954;
+  }
+
+  &.active {
+    &:hover {
+      &:after {
+        fill: #38ec77 !important;
+      }
+    }
+    fill: #1db954 !important;
+  }
+}
+
+.hiddable-icon {
+  @media (max-width: 980px) {
+    display: none;
+  }
+}
+
+.mobile-bar {
+  position: fixed;
+  bottom: 5px;
+
+  background: linear-gradient(transparent 0%, rgb(0, 0, 0) 40%);
+
+  .mobile-player {
+    border-radius: 5px;
+    margin: 20px 10px;
+    padding: 10px;
+    width: calc(100vw - 20px);
+
+    svg {
+      fill: white !important;
+    }
+
+    .time-line {
+      height: 3px;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 10px;
+      margin-bottom: -10px;
+      background: rgb(0 0 0 / 24%);
+
+      .current-time {
+        height: 3px;
+        background: white;
+      }
+    }
+  }
+
+  .mobile-menu {
+    display: flex;
+    justify-content: center;
+    font-weight: 400;
+    background: transparent;
+    align-items: baseline;
+
+    a,
+    button {
+      all: unset;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 33%;
+
+      gap: 4px;
+      cursor: pointer;
+      color: $text-secondary-color;
+
+      p {
+        font-size: 0.7em;
+        font-weight: 400;
+      }
+    }
+
+    svg {
+      font-size: 1em;
+    }
+  }
+
+  @media (min-width: $desktop-breakpoint) {
+    display: none;
+  }
+}
+
+@media (max-width: $desktop-breakpoint) {
+  .Main-section {
+    padding-bottom: 50px !important;
+  }
+}

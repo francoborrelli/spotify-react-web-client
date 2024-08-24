@@ -1,0 +1,137 @@
+@use './variables.scss' as *;
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px;
+  }
+}
+
+.Navigation-section {
+  padding: 20px 0px;
+  border-radius: $container-border-radius;
+  background-color: $background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  @media (max-width: 950px) {
+    padding: 20px 10px;
+  }
+
+  @media (max-width: 800px) {
+    padding: 20px 5px;
+  }
+
+  &.open {
+    min-width: 260px;
+    padding: 20px 20px;
+  }
+}
+
+#playlist-song-and-artist-name {
+  h3,
+  p {
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    @media (max-width: 1110px) {
+      width: 80%;
+    }
+  }
+}
+
+.search-input {
+  &:hover {
+    box-shadow: 0 0 0 1px #858383;
+  }
+  &:focus,
+  &:active,
+  &:focus-within {
+    color: #fff !important;
+    box-shadow: 0 0 0 2px #fff;
+    svg {
+      fill: #fff;
+    }
+  }
+
+  @media (min-width: 750px) {
+    min-width: 310px !important;
+  }
+
+  @media (min-width: 950px) {
+    min-width: 420px !important;
+  }
+
+  @media (min-width: 1100px) {
+    min-width: 500px !important;
+  }
+
+  color: #b3b3b3;
+
+  .ant-input-prefix {
+    margin-inline-start: -5px !important;
+    margin-inline-end: 10px !important;
+  }
+
+  input::placeholder {
+    color: #b3b3b3;
+    margin-left: 5px;
+  }
+
+  .ant-input-suffix {
+    border-left: 1px solid #b3b3b3;
+    padding-left: 10px;
+  }
+
+  min-width: 100%;
+  padding: 11px 16px;
+  background: #1f1f1f !important;
+  border-radius: 30px;
+  cursor: unset;
+  text-overflow: ellipsis;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  appearance: none;
+  background-image: none;
+  border: 0px;
+  transition: box-shadow 100ms ease-in-out, color 100ms ease-in-out;
+  inline-size: 100%;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  margin-block: 0px;
+}
+
+.navigation-button {
+  padding: 11px;
+  border-radius: 30px;
+  justify-content: center;
+  background-color: #1f1f1f;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.playlist-avatar {
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 30px;
+  cursor: pointer;
+
+  &:hover,
+  .hoverable-icon:hover {
+    fill: white !important;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    &:active {
+      transform: scale(1);
+    }
+  }
+}

@@ -1,0 +1,89 @@
+@use './variables.scss' as *;
+
+.Profile-section {
+  .profile-header {
+    background: linear-gradient(180deg, transparent 0px, #222833 80%),
+      url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+
+    .profile-title {
+      visibility: visible;
+      width: 100%;
+      font-size: 4.5rem;
+      white-space: nowrap;
+      margin-block: 0px;
+      color: $text-primary-color;
+      font-weight: 900;
+
+      @media (max-width: $desktop-small-breakpoint) {
+        font-size: 3.5rem;
+      }
+
+      @media (max-width: $desktop-breakpoint) {
+        font-size: 3rem;
+      }
+
+      @media (max-width: 600px) {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .owner span {
+        display: none;
+      }
+      .songs-number {
+        margin-bottom: 5px;
+        display: block !important;
+      }
+    }
+
+    .profile-img {
+      border-radius: 50%;
+      -webkit-box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+      -o-object-fit: cover;
+      object-fit: cover;
+      -o-object-position: center center;
+      object-position: center center;
+      height: 100%;
+      width: 100%;
+
+      @media (max-width: 575px) {
+        height: 50%;
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .profile-body {
+    height: 100%;
+    padding: 40px;
+    background: linear-gradient(#222833 -10%, rgb(18, 18, 18) 35%);
+
+    .social-networks {
+      margin-bottom: 20px;
+    }
+
+    .about-me-title {
+      font-size: 1.3rem;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      color: #fff;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .about-me-text {
+      p {
+        color: #b7b7b7;
+        margin-bottom: 20px;
+        font-weight: 400;
+        font-size: 15px;
+      }
+    }
+  }
+}
