@@ -1,53 +1,27 @@
 // Components
 import { Col, Row } from 'antd';
-import { PlaylistHorizontal } from './PlaylistHorizontal';
+import { TopTracks } from './topTracks';
+import { NewReleases } from './newReleases';
 
 // Utils
-import { useTranslation } from 'react-i18next';
-import { FC, useState } from 'react';
-
-// Constants
-import { playlists } from '../../constants/cv';
-import { SOCIAL_NETWORKS } from '../../constants/socialNetworks';
+import { FC, useEffect, useState } from 'react';
 
 // Interfaces
-import type { Playlist } from '../../interfaces/types';
-import { PlaylistsSection } from './playlists';
+import { useAppDispatch } from '../../store/store';
+import { homeActions } from '../../store/slices/home';
 
-interface HomeProps {
-  playlists: Playlist[];
-}
+interface HomeProps {}
 
-interface PlaylistListProps extends HomeProps {
-  onSetColor: (color: string) => void;
-}
-
-const HorizontalPlaylists: FC<PlaylistListProps> = (props) => {
-  return (
-    <Row gutter={[16, 16]} style={{ margin: 10 }} justify='space-between'>
-      {SOCIAL_NETWORKS.map((socialNetwork) => {
-        return (
-          <Col key={socialNetwork.name} xs={12} md={12} xl={6}>
-            <PlaylistHorizontal socialNetwork={socialNetwork} />
-          </Col>
-        );
-      })}
-    </Row>
-  );
-};
-
-const Playlists: FC<PlaylistListProps> = ({ playlists, onSetColor }) => {
-  const { t } = useTranslation(['home']);
-
-  return (
-    <div className='home'>
-      <PlaylistsSection title={`${t('Made for')} Franco Borrelli`} />
-    </div>
-  );
-};
-
-const Home = () => {
+const Home: FC<HomeProps> = () => {
   const [color, setColor] = useState('rgb(66, 32, 35)');
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(homeActions.fetchTopTracks());
+    dispatch(homeActions.fetchNewReleases());
+  }, [color]);
+
   return (
     <div
       className='Home-seccion'
@@ -58,10 +32,11 @@ const Home = () => {
     >
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <HorizontalPlaylists playlists={playlists} onSetColor={setColor} />
+          <TopTracks />
         </Col>
+
         <Col span={24}>
-          <Playlists playlists={playlists} onSetColor={setColor} />
+          <NewReleases />
         </Col>
       </Row>
     </div>

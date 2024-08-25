@@ -14,6 +14,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 // Reducers
 import authReducer from './slices/auth';
+import homeReducer from './slices/home';
 import spotifyReducer from './slices/spotify';
 import libraryReducer from './slices/library';
 import languageReducer from './slices/language';
@@ -22,6 +23,7 @@ import playingBarReducer from './slices/playingBar';
 
 const appReducer = combineReducers({
   auth: authReducer,
+  home: homeReducer,
   spotify: spotifyReducer,
   library: libraryReducer,
   language: languageReducer,

@@ -6,7 +6,6 @@ import { Col, Row } from 'antd';
 import { TopResult } from './topResult';
 import { SearchedSongs } from './songs';
 import NoSearchResults from './noResults';
-import { PlaylistsSection } from '../Home/playlists';
 
 // Constants
 import { playlists } from '../../constants/cv';
@@ -58,9 +57,7 @@ export const SearchPage = () => {
           <SearchedSongs songs={items.slice(0, 4)} />
         </Col>
 
-        <Col span={24}>
-          <PlaylistsSection title={searchT('Playlists')} />
-        </Col>
+        <Col span={24}>{/* <PlaylistsSection title={searchT('Playlists')} /> */}</Col>
       </Row>
     </div>
   );

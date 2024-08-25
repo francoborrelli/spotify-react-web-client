@@ -18,6 +18,7 @@ import { SearchPage } from './pages/Search';
 import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
 import login from './utils/spotify/login';
 import { authActions, loginToSpotify } from './store/slices/auth';
+import { Spinner } from './components/spinner/spinner';
 
 // Pages
 const Home = lazy(() => import('./pages/Home'));
@@ -76,23 +77,25 @@ const RootComponent = () => {
 
   return (
     <WebPlayback {...webPlaybackSdkProps}>
-      <Router>
-        <AppLayout>
-          <div className='Main-section' ref={container}>
-            <div style={{ minHeight: 'calc(100vh - 230px)', width: '100%' }}>
-              <Routes>
-                {routes.map((route) => (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={<Suspense>{route.element}</Suspense>}
-                  />
-                ))}
-              </Routes>
+      <Spinner loading={!token}>
+        <Router>
+          <AppLayout>
+            <div className='Main-section' ref={container}>
+              <div style={{ minHeight: 'calc(100vh - 230px)', width: '100%' }}>
+                <Routes>
+                  {routes.map((route) => (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      element={<Suspense>{route.element}</Suspense>}
+                    />
+                  ))}
+                </Routes>
+              </div>
             </div>
-          </div>
-        </AppLayout>
-      </Router>
+          </AppLayout>
+        </Router>
+      </Spinner>
     </WebPlayback>
   );
 };
