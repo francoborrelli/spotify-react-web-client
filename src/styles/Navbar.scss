@@ -24,18 +24,21 @@
   }
 
   &.open {
-    min-width: 260px;
+    min-width: 270px;
     padding: 20px 20px;
   }
 }
 
 #playlist-song-and-artist-name {
+  width: 100%;
+
   h3,
   p {
     font-size: 15px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    max-width: 180px;
 
     @media (max-width: 1110px) {
       width: 80%;

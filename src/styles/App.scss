@@ -122,6 +122,12 @@ h3 {
     border-radius: 4px;
   }
 
+  .rounded {
+    img {
+      border-radius: 50%;
+    }
+  }
+
   .artist {
     opacity: 0.7;
     font-weight: 400;
@@ -344,4 +350,94 @@ h3 {
 
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
+}
+
+.chip {
+  font-weight: 400;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  border: 0px;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+  letter-spacing: inherit;
+  padding: 0px;
+  border-radius: 9999px;
+  display: inline-flex;
+  vertical-align: middle;
+  max-inline-size: 100%;
+  margin-block-end: var(--encore-spacing-tighter-2, 8px);
+  text-decoration: none;
+  overflow-wrap: break-word;
+  position: relative;
+
+  span {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 9999px;
+    color: var(--text-base, #fff);
+    transition: background-color 200ms, color 200ms;
+    display: inline-flex;
+    min-inline-size: 0px;
+    min-block-size: var(--encore-control-size-smaller, 32px);
+    -webkit-box-align: center;
+    align-items: center;
+    padding-block-start: var(--encore-spacing-tighter-4, 4px);
+    padding-block-end: var(--encore-spacing-tighter-4, 4px);
+    padding-inline-start: var(--encore-spacing-tighter, 12px);
+    padding-inline-end: var(--encore-spacing-tighter, 12px);
+    background-color: #2a2929;
+  }
+
+  &:hover {
+    span {
+      background-color: #333333;
+    }
+  }
+  &:active {
+    span {
+      background-color: #1e1e1e;
+    }
+  }
+
+  &.active {
+    span {
+      color: #2a2929;
+      background-color: white;
+    }
+  }
+}
+
+.image-button {
+  opacity: 0;
+  pointer-events: auto;
+  position: absolute;
+  border: 0;
+  color: #fff;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.library-card:hover,
+.image-button:hover {
+  img {
+    background-color: hsla(0, 0%, 100%, 0.1);
+  }
+  .image-button {
+    opacity: 1;
+    visibility: visible;
+  }
 }

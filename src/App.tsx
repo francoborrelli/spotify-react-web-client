@@ -70,6 +70,7 @@ const RootComponent = () => {
     onPlayerError: (e) => {
       console.log(e);
       localStorage.removeItem('spo-token');
+      dispatch(loginToSpotify());
     },
     onPlayerDeviceSelected: () => {
       dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));

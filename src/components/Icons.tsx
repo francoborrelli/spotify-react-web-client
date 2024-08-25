@@ -529,6 +529,19 @@ export const CloseIcon = () => (
   </svg>
 );
 
+export const CloseIcon2 = () => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon'
+    style={{ ...ControlStyle, height: '0.75rem' }}
+  >
+    <path d='M2.47 2.47a.75.75 0 0 1 1.06 0L8 6.94l4.47-4.47a.75.75 0 1 1 1.06 1.06L9.06 8l4.47 4.47a.75.75 0 1 1-1.06 1.06L8 9.06l-4.47 4.47a.75.75 0 0 1-1.06-1.06L6.94 8 2.47 3.53a.75.75 0 0 1 0-1.06Z'></path>
+  </svg>
+);
+
 export const VerifiedIcon = () => (
   <svg
     data-encore-id='icon'
@@ -551,5 +564,12 @@ export const ExpandOutIcon = () => (
     style={SongExtraControlStyle}
   >
     <path d='M21.707 2.293a1 1 0 0 1 0 1.414L17.414 8h1.829a1 1 0 0 1 0 2H14V4.757a1 1 0 1 1 2 0v1.829l4.293-4.293a1 1 0 0 1 1.414 0zM2.293 21.707a1 1 0 0 1 0-1.414L6.586 16H4.757a1 1 0 0 1 0-2H10v5.243a1 1 0 0 1-2 0v-1.829l-4.293 4.293a1 1 0 0 1-1.414 0z'></path>
+  </svg>
+);
+
+export const SpeakerIcon = (props: any) => (
+  <svg {...props} data-encore-id='icon' role='img' aria-hidden='true' viewBox='0 0 16 16'>
+    <path d='M10.016 1.125A.75.75 0 0 0 8.99.85l-6.925 4a3.639 3.639 0 0 0 0 6.299l6.925 4a.75.75 0 0 0 1.125-.65v-13a.75.75 0 0 0-.1-.375zM11.5 5.56a2.75 2.75 0 0 1 0 4.88V5.56z'></path>
+    <path d='M16 8a5.752 5.752 0 0 1-4.5 5.614v-1.55a4.252 4.252 0 0 0 0-8.127v-1.55A5.752 5.752 0 0 1 16 8z'></path>
   </svg>
 );

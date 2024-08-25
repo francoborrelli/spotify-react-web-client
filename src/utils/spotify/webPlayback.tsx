@@ -5,7 +5,7 @@ import { playerService } from '../../services/player';
 
 export interface WebPlaybackProps {
   onPlayerError: (message: string) => void; // Función para manejar errores del reproductor
-  onPlayerRequestAccessToken?: () => Promise<string>; // Función para obtener el token de acceso
+  onPlayerRequestAccessToken: () => Promise<string>; // Función para obtener el token de acceso
   onPlayerLoading: () => void; // Notificación de que el reproductor está cargando
   onPlayerWaitingForDevice: (data: any) => void; // Notificación de que el reproductor espera el dispositivo
   onPlayerDeviceSelected: () => void; // Notificación de que se ha seleccionado el dispositivo
@@ -84,26 +84,28 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
       enableMediaSession: true,
       volume: playerInitialVolume,
       getOAuthToken: async (callback) => {
-        if (typeof onPlayerRequestAccessToken !== 'undefined') {
-          let userAccessToken = await onPlayerRequestAccessToken();
-          callback(userAccessToken);
-        }
+        const userAccessToken = await onPlayerRequestAccessToken();
+        callback(userAccessToken);
       },
     });
 
     webPlaybackInstance.current.on('initialization_error', (e) => {
+      console.log('initialization_error', e);
       onPlayerError(e.message);
     });
 
     webPlaybackInstance.current.on('authentication_error', (e) => {
+      console.log('authentication_error', e);
       onPlayerError(e.message);
     });
 
     webPlaybackInstance.current.on('account_error', (e) => {
+      console.log('account_error', e);
       onPlayerError(e.message);
     });
 
     webPlaybackInstance.current.on('playback_error', (e) => {
+      console.log('playback_error', e);
       onPlayerError(e.message);
     });
 
