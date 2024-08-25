@@ -4,12 +4,9 @@ import { Tooltip } from '../../../Tooltip';
 import { Slider } from '../../../Slider';
 import { VolumeIcon, VolumeMuteIcon, VolumeOneIcon, VolumeTwoIcon } from '../../../Icons';
 
-// Redux
-import { playingBarActions } from '../../../../store/slices/playingBar';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
-
 // I18n
 import { useTranslation } from 'react-i18next';
+import { playerService } from '../../../../services/player';
 
 const getIcon = (volume: number) => {
   if (volume === 0) {
@@ -30,9 +27,6 @@ const getIcon = (volume: number) => {
 export const VolumeControls = () => {
   const { t } = useTranslation(['playingBar']);
 
-  const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.spotify.state);
-
   const { volume_percent = 0 } = {};
   const volume = volume_percent / 100;
   const muted = volume_percent === 0;
@@ -43,7 +37,7 @@ export const VolumeControls = () => {
         <Tooltip title={muted ? t('Unmute') : t('Mute')}>
           <div
             onClick={() => {
-              dispatch(playingBarActions.setVolume({ volume: muted ? volume : 0 }));
+              playerService.setVolume(muted ? volume : 50).then();
             }}
           >
             {getIcon(muted ? 0 : volume)}
@@ -55,7 +49,7 @@ export const VolumeControls = () => {
             isEnabled
             value={muted ? 0 : volume}
             onChange={(value) => {
-              dispatch(playingBarActions.setVolume({ volume: value }));
+              playerService.setVolume(Math.round(value * 100)).then();
             }}
           />
         </div>

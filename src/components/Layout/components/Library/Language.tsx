@@ -16,7 +16,7 @@ import { AVAILABLE_LANGUAGES } from '../../../../constants/languages';
 export const LanguageButton = memo(() => {
   const { t } = useTranslation(['navbar']);
   const dispatch = useAppDispatch();
-  const collapsed = useAppSelector((state) => state.library.collapsed);
+  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
   const selectedLanguage = useAppSelector((state) => state.language.language);
 
   const currentLanguage = AVAILABLE_LANGUAGES.find(

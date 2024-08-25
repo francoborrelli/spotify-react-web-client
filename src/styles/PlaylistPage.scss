@@ -143,6 +143,7 @@
 
   .mobile-hidden {
     display: none;
+    overflow: hidden;
   }
 }
 
@@ -173,11 +174,11 @@
   justify-content: space-between;
 }
 
-.open {
-  .library-list-container {
-    width: 120%;
-  }
-}
+// .open {
+//   .library-list-container {
+//     width: 120%;
+//   }
+// }
 
 .ant-avatar-group .ant-avatar {
   border-color: #0000005c;

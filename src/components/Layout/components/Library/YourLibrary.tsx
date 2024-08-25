@@ -1,62 +1,26 @@
-// Icons
-import { LibraryCollapsedIcon, LibraryIcon } from '../../../Icons';
-
 // Utils
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Components
-import { Col, Space } from 'antd';
-import { Tooltip } from '../../../Tooltip';
-import PlaylistCardShort from './PlaylistCardShort';
+import { Col } from 'antd';
+import PlaylistCardShort, { AlbumCardShort } from './PlaylistCardShort';
 
 // I18n
 import { LanguageButton } from './Language';
-import { useTranslation } from 'react-i18next';
 
 // Redux
-import { libraryActions } from '../../../../store/slices/library';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { useAppSelector } from '../../../../store/store';
 
 // Interfaces
 import type { Playlist } from '../../../../interfaces/types';
+import { LibraryTitle } from './Title';
+import { getLibraryItems } from '../../../../store/slices/yourLibrary';
 
-const Title = memo(() => {
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation(['navbar']);
-  const collapsed = useAppSelector((state) => state.library.collapsed);
-
-  if (collapsed) {
-    return (
-      <Tooltip placement='right' title={t('Expand your library')}>
-        <button
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          onClick={() => dispatch(libraryActions.toggleLibrary())}
-        >
-          <LibraryCollapsedIcon />
-        </button>
-      </Tooltip>
-    );
-  }
-
-  return (
-    <Space wrap>
-      <Tooltip placement='top' title={t('Collapse your library')}>
-        <button onClick={() => dispatch(libraryActions.toggleLibrary())}>
-          <LibraryIcon />
-        </button>
-      </Tooltip>
-      <span className='Navigation-button'>{t('Your Library')}</span>
-    </Space>
-  );
-});
-
-const YourLibrary = ({ playlists }: { playlists: Playlist[] }) => {
+const YourLibrary = () => {
   const navigate = useNavigate();
-  const collapsed = useAppSelector((state) => state.library.collapsed);
+  const items = useAppSelector(getLibraryItems);
+  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
 
   const onClick = useCallback(
     (url: string) => {
@@ -67,27 +31,33 @@ const YourLibrary = ({ playlists }: { playlists: Playlist[] }) => {
 
   return (
     <div className={`Navigation-section library ${!collapsed ? 'open' : ''}`}>
-      <Title />
+      <LibraryTitle />
 
       <div className='library-list-container'>
         <Col
           style={
-            collapsed ? {} : ({ overflowY: 'scroll', height: '100%', marginLeft: -20 } as const)
+            collapsed
+              ? {}
+              : ({
+                  overflowY: 'scroll',
+                  height: '100%',
+                  marginLeft: -20,
+                  maxWidth: 320,
+                  marginRight: -20,
+                } as const)
           }
         >
           <div
-            style={collapsed ? { overflowY: 'scroll', overflowX: 'hidden', height: '100%' } : {}}
+            style={
+              collapsed
+                ? { overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100vh - 290px)' }
+                : { overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100vh - 290px)' }
+            }
           >
-            {playlists.map((playlist: Playlist, index: number) => {
-              return (
-                <PlaylistCardShort
-                  key={playlist.name}
-                  playlist={playlist}
-                  onClick={() => {
-                    onClick(playlist.name.toLowerCase());
-                  }}
-                />
-              );
+            {items.map((item) => {
+              if (item.type === 'artist') return null;
+              if (item.type === 'album') return <AlbumCardShort key={item.id} album={item} />;
+              return <PlaylistCardShort key={item.id} playlist={item} />;
             })}
           </div>
         </Col>

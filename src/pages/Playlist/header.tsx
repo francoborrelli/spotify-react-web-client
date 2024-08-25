@@ -25,8 +25,9 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ playlist, container })
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeHeader, setActiveHeader] = useState(false);
   const language = useAppSelector((state) => state.language.language);
-  const collapsed = useAppSelector((state) => state.library.collapsed);
   const detailsOpen = useAppSelector((state) => state.library.detailsOpen);
+
+  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
 
   useEffect(() => {
     const ref = container.current;

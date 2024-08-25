@@ -16,7 +16,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store, useAppDispatch, useAppSelector } from './store/store';
 import { SearchPage } from './pages/Search';
 import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
-import login from './utils/spotify/login';
 import { authActions, loginToSpotify } from './store/slices/auth';
 import { Spinner } from './components/spinner/spinner';
 

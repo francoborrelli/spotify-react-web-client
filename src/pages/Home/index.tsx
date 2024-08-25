@@ -20,7 +20,7 @@ const Home: FC<HomeProps> = () => {
   useEffect(() => {
     dispatch(homeActions.fetchTopTracks());
     dispatch(homeActions.fetchNewReleases());
-  }, [color]);
+  }, []);
 
   return (
     <div

@@ -136,7 +136,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
       onPlayerLoading();
       await waitForSpotify();
       await setupWebPlaybackEvents();
-      let device_data = await setupWaitingForDevice();
+      const device_data = await setupWaitingForDevice();
       onPlayerWaitingForDevice(device_data);
       await waitForDeviceToBeSelected();
       onPlayerDeviceSelected();
@@ -149,7 +149,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
       if (deviceSelectedInterval.current) clearInterval(deviceSelectedInterval.current);
       webPlaybackInstance.current?.disconnect();
     };
-  }, []); // Run only once when component mounts
+  }, []);
 
   return <>{children}</>;
 };

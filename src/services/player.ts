@@ -65,7 +65,7 @@ const setRepeatMode = async (state: 'track' | 'context' | 'off') => {
  * @param volume_percent The volume to set. Must be a value from 0 to 100 inclusive.
  */
 const setVolume = async (volume_percent: number) => {
-  await axios.put('/me/player/volume', { volume_percent });
+  await axios.put('/me/player/volume', {}, { params: { volume_percent } });
 };
 
 /**

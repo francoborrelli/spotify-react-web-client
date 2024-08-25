@@ -1,21 +1,18 @@
 import SongDetails from './SongDetails';
-import { getCurrentSongData, playingBarActions } from '../../../../store/slices/playingBar';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { Col, Row } from 'antd';
 import { ListIcon, Pause, Play } from '../../../Icons';
 
 // Redux
 import { libraryActions } from '../../../../store/slices/library';
+import { playerService } from '../../../../services/player';
 
 const PlayButton = () => {
-  const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
   const paused = state?.paused;
   return (
     <button
-      onClick={() =>
-        !paused ? dispatch(playingBarActions.setPause()) : dispatch(playingBarActions.setPlaying())
-      }
+      onClick={() => (!paused ? playerService.pausePlayback() : playerService.startPlayback())}
     >
       {paused ? <Play /> : <Pause />}
     </button>
@@ -32,9 +29,10 @@ const QueueButton = () => {
 };
 
 const NowPlayingBarMobile = () => {
-  const currentSongData = useAppSelector(getCurrentSongData);
   const state = useAppSelector((state) => state.spotify.state);
+  const currentSong = state?.track_window.current_track;
 
+  if (!currentSong) return <div></div>;
   const currentTime = state?.position || 0;
   const duration = state?.duration || 1;
 
@@ -43,7 +41,7 @@ const NowPlayingBarMobile = () => {
       <div
         className='mobile-player'
         style={{
-          background: `linear-gradient(${currentSongData.color} -50%, rgb(18, 18, 18) 300%)`,
+          background: `linear-gradient(${'blue'} -50%, rgb(18, 18, 18) 300%)`,
         }}
       >
         <Row justify='space-between'>
