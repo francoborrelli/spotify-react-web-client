@@ -1,8 +1,8 @@
-import { FC } from 'react';
 import { Space } from 'antd';
-import { PlayCircle } from '../PlayCircle';
+import { PlayCircle } from '../components/PlayCircle';
 
 // Interfaces
+import type { FC } from 'react';
 import type { Track } from '../../../interfaces/track';
 
 interface HorizontalCardProps {
@@ -26,7 +26,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = ({ item }) => {
             {item.name}
           </h3>
         </Space>
-        <PlayCircle />
+        <PlayCircle context={{ uris: [item.uri] }} />
       </div>
     </a>
   );

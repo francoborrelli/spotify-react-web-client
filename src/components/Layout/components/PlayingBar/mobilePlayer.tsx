@@ -3,18 +3,21 @@ import { getCurrentSongData, playingBarActions } from '../../../../store/slices/
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { Col, Row } from 'antd';
 import { ListIcon, Pause, Play } from '../../../Icons';
+
+// Redux
 import { libraryActions } from '../../../../store/slices/library';
 
 const PlayButton = () => {
   const dispatch = useAppDispatch();
-  const { playing } = useAppSelector((state) => state.playingBar);
+  const state = useAppSelector((state) => state.spotify.state);
+  const paused = state?.paused;
   return (
     <button
       onClick={() =>
-        playing ? dispatch(playingBarActions.setPause()) : dispatch(playingBarActions.setPlaying())
+        !paused ? dispatch(playingBarActions.setPause()) : dispatch(playingBarActions.setPlaying())
       }
     >
-      {!playing ? <Play /> : <Pause />}
+      {paused ? <Play /> : <Pause />}
     </button>
   );
 };
@@ -30,8 +33,10 @@ const QueueButton = () => {
 
 const NowPlayingBarMobile = () => {
   const currentSongData = useAppSelector(getCurrentSongData);
-  const duration = useAppSelector((state) => state.playingBar.duration);
-  const currentTime = useAppSelector((state) => state.playingBar.currentTime);
+  const state = useAppSelector((state) => state.spotify.state);
+
+  const currentTime = state?.position || 0;
+  const duration = state?.duration || 1;
 
   return (
     <div>

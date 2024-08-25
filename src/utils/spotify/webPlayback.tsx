@@ -1,6 +1,7 @@
 import { useEffect, useRef, FC } from 'react';
 import { useAppDispatch } from '../../store/store';
 import { spotifyActions } from '../../store/slices/spotify';
+import { playerService } from '../../services/player';
 
 export interface WebPlaybackProps {
   onPlayerError: (message: string) => void; // Función para manejar errores del reproductor
@@ -27,7 +28,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
   const statePollingInterval = useRef<NodeJS.Timeout | null>(null);
   const deviceSelectedInterval = useRef<NodeJS.Timeout | null>(null);
 
-  const handleState = async (state: Spotify.PlaybackState | null) => {
+  const handleState = async (state: any | null) => {
     if (state) {
       dispatch(spotifyActions.setState({ state }));
     } else {
@@ -80,6 +81,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
     let { Player } = window.Spotify;
     webPlaybackInstance.current = new Player({
       name: playerName,
+      enableMediaSession: true,
       volume: playerInitialVolume,
       getOAuthToken: async (callback) => {
         if (typeof onPlayerRequestAccessToken !== 'undefined') {
@@ -106,11 +108,14 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
     });
 
     webPlaybackInstance.current.on('player_state_changed', async (state) => {
+      console.log(state);
       await handleState(state);
     });
 
-    webPlaybackInstance.current.on('ready', (data) => {
+    webPlaybackInstance.current.on('ready', async (data) => {
+      dispatch(spotifyActions.setDeviceId({ deviceId: data.device_id }));
       dispatch(spotifyActions.setActiveDevice({ activeDevice: data.device_id }));
+      await playerService.transferPlayback(data.device_id);
     });
 
     if (playerAutoConnect) {
@@ -142,6 +147,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
     return () => {
       clearStatePolling();
       if (deviceSelectedInterval.current) clearInterval(deviceSelectedInterval.current);
+      webPlaybackInstance.current?.disconnect();
     };
   }, []); // Run only once when component mounts
 

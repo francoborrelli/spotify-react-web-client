@@ -1,5 +1,5 @@
 // Components
-import { PlayCircle } from '../Home/PlayCircle';
+import { PlayCircle } from '../Home/components/PlayCircle';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -50,15 +50,7 @@ export const TopResultSong = ({ item, onClick }: { item: SearchResult; onClick?:
         <p>{description}</p>
       </div>
       <div className='circle-play-div transition translate-y-1/4'>
-        <PlayCircle
-          onClick={(e) => {
-            if (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }
-            dispatch(libraryActions.setSongPlaying(item));
-          }}
-        />
+        <PlayCircle context={{ uris: ['2'] }} />
       </div>
     </div>
   );

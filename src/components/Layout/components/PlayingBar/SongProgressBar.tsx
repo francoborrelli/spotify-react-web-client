@@ -3,44 +3,35 @@
 import { Slider } from '../../../Slider';
 
 // Utils
-import { useEffect } from 'react';
-import { secondsToTime } from '../../../../utils';
+import { msToTime } from '../../../../utils';
 
 // Redux
-import { setCurrentTimeForPlayer } from '../../../../player';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
-import { playingBarActions } from '../../../../store/slices/playingBar';
+import { useAppSelector } from '../../../../store/store';
+import { playerService } from '../../../../services/player';
 
 const SongProgressBar = () => {
-  const dispatch = useAppDispatch();
-  const playing = useAppSelector((state) => state.playingBar.playing);
-  const duration = useAppSelector((state) => state.playingBar.duration);
-  const currentTime = useAppSelector((state) => state.playingBar.currentTime);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (playing) dispatch(playingBarActions.increaseTime());
-    }, 1000);
-    return () => {
-      clearInterval(id);
-    };
-  }, [playing, duration]);
+  const state = useAppSelector((state) => state.spotify.state);
 
   return (
     <div className='flex items-center justify-between w-full'>
-      <div className='text-white mr-2 text-xs'>{secondsToTime(currentTime)}</div>
+      <div className='text-white mr-2 text-xs'>
+        {state && state.position ? msToTime(state.position) : '0:00'}
+      </div>
       <div style={{ width: '100%' }}>
         <Slider
-          value={currentTime / duration}
+          value={state?.duration ? state.position / state.duration : 0}
           isEnabled
           onChange={(value) => {
-            const seconds = Math.floor(value * duration);
-            dispatch(playingBarActions.setTime({ time: seconds }));
-            setCurrentTimeForPlayer(seconds);
+            if (!state) return;
+            const newPosition = Math.round(state.duration * value);
+            playerService.seekToPosition(newPosition).then();
           }}
         />
       </div>
-      <div className='text-white ml-2 text-xs'>{secondsToTime(duration)}</div>
+      <div className='text-white ml-2 text-xs'>
+        {' '}
+        {state && state.duration ? msToTime(state.duration) : '0:00'}
+      </div>
     </div>
   );
 };

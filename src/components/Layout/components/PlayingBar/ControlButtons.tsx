@@ -1,60 +1,68 @@
 import { Col, Row } from 'antd';
-import { Pause, Play, Replay, ShuffleIcon, SkipBack, SkipNext } from '../../../Icons';
+import { Pause, Play, Replay, ReplayOne, ShuffleIcon, SkipBack, SkipNext } from '../../../Icons';
 
 // Utils
-import { playingBarActions } from '../../../../store/slices/playingBar';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { useAppSelector } from '../../../../store/store';
+
+// Services
+import { playerService } from '../../../../services/player';
 
 const ShuffleButton = () => {
+  const state = useAppSelector((state) => state.spotify.state);
+  const shuffle = state?.shuffle;
   return (
-    <button>
-      <ShuffleIcon />
+    <button onClick={() => playerService.toggleShuffle(!shuffle).then()}>
+      <ShuffleIcon active={!!shuffle} />
     </button>
   );
 };
 
 const SkipBackButton = () => {
-  const dispatch = useAppDispatch();
   return (
-    <button onClick={() => dispatch(playingBarActions.previousSong())}>
+    <button onClick={() => playerService.previousTrack().then()}>
       <SkipBack />
     </button>
   );
 };
 
 const PlayButton = () => {
-  const dispatch = useAppDispatch();
-  const { playing } = useAppSelector((state) => state.playingBar);
+  const state = useAppSelector((state) => state.spotify.state);
+  const isPlaying = !state?.paused;
   return (
     <button
       className='player-pause-button'
       onClick={() =>
-        playing ? dispatch(playingBarActions.setPause()) : dispatch(playingBarActions.setPlaying())
+        isPlaying ? playerService.pausePlayback().then() : playerService.startPlayback().then()
       }
     >
-      {!playing ? <Play /> : <Pause />}
+      {!isPlaying ? <Play /> : <Pause />}
     </button>
   );
 };
 
 const SkipNextButton = () => {
-  const dispatch = useAppDispatch();
   return (
-    <button onClick={() => dispatch(playingBarActions.previousSong())}>
+    <button onClick={() => playerService.nextTrack().then()}>
       <SkipNext />
     </button>
   );
 };
 
 const ReplayButton = () => {
-  const dispatch = useAppDispatch();
-  const { looping } = useAppSelector((state) => state.playingBar);
+  const state = useAppSelector((state) => state.spotify.state);
+  const looping = state?.repeat_mode === 1 || state?.repeat_mode === 2;
   return (
     <button
       className={looping ? 'active-icon-button' : ''}
-      onClick={() => dispatch(playingBarActions.toggleLooping())}
+      onClick={() =>
+        playerService
+          .setRepeatMode(
+            state?.repeat_mode === 2 ? 'off' : state?.repeat_mode === 1 ? 'context' : 'track'
+          )
+          .then()
+      }
     >
-      <Replay active={looping} />
+      {state?.repeat_mode === 2 ? <ReplayOne active /> : <Replay active={looping} />}
     </button>
   );
 };

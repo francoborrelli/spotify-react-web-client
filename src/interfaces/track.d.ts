@@ -1,4 +1,5 @@
 import type { Album } from './albums';
+import type { SimpleArtist } from './artist';
 
 export interface Track {
   /** @description The album on which the track appears. The album object includes a link in href to full information about the album. */

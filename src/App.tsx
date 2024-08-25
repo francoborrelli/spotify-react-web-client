@@ -36,6 +36,7 @@ window.addEventListener('resize', () => {
 const RootComponent = () => {
   const dispatch = useAppDispatch();
   const container = useRef<HTMLDivElement>(null);
+  const user = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
   const language = useAppSelector((state) => state.language.language);
 
@@ -57,10 +58,10 @@ const RootComponent = () => {
   ] as const;
 
   const webPlaybackSdkProps: WebPlaybackProps = {
-    playerName: 'Spotify React Player',
+    playerAutoConnect: true,
     playerInitialVolume: 1.0,
     playerRefreshRateMs: 1000,
-    playerAutoConnect: true,
+    playerName: 'Spotify React Player',
     onPlayerRequestAccessToken: () => Promise.resolve(token!),
     onPlayerLoading: () => {},
     onPlayerWaitingForDevice: () => {
@@ -69,6 +70,7 @@ const RootComponent = () => {
     },
     onPlayerError: (e) => {
       console.log(e);
+      localStorage.removeItem('spo-token');
     },
     onPlayerDeviceSelected: () => {
       dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
@@ -77,7 +79,7 @@ const RootComponent = () => {
 
   return (
     <WebPlayback {...webPlaybackSdkProps}>
-      <Spinner loading={!token}>
+      <Spinner loading={!user}>
         <Router>
           <AppLayout>
             <div className='Main-section' ref={container}>

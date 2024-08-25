@@ -18,7 +18,7 @@ export const ItemsList: FC<{ title: string; items: Album[] }> = (props) => {
         {items.map((item) => {
           return (
             <div key={item.id}>
-              <AlbumCard item={item} onClick={() => {}} />
+              <AlbumCard item={item} />
             </div>
           );
         })}

@@ -9,6 +9,7 @@ import { authService } from '../../services/auth';
 
 // Interfaces
 import type { User } from '../../interfaces/user';
+import { playerService } from '../../services/player';
 
 const initialState: { token?: string; playerLoaded: boolean; user?: User } = {
   user: undefined,
@@ -38,6 +39,7 @@ export const loginToSpotify = createAsyncThunk('auth/loginToSpotify', async () =
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
   const response = await authService.fetchUser();
+  playerService.fetchPlaybackState().then();
   return response.data;
 });
 

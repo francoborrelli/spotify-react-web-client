@@ -31,7 +31,11 @@ export const VolumeControls = () => {
   const { t } = useTranslation(['playingBar']);
 
   const dispatch = useAppDispatch();
-  const { muted, volume } = useAppSelector((state) => state.playingBar);
+  const state = useAppSelector((state) => state.spotify.state);
+
+  const { volume_percent = 0 } = {};
+  const volume = volume_percent / 100;
+  const muted = volume_percent === 0;
 
   return (
     <div className='volume-control-container'>
