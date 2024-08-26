@@ -40,16 +40,7 @@ const Queueing = () => {
 };
 
 export const Queue = () => {
-  const dispatch = useAppDispatch();
   const [t] = useTranslation(['playingBar']);
-  const context = useAppSelector((state) => state.spotify.state?.context.uri);
-  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track.id);
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(fetchQueue());
-    }, 1000);
-  }, [context, currentSong, dispatch]);
 
   return (
     <NowPlayingLayout title={t('Queue')}>

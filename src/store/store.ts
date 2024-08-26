@@ -21,6 +21,7 @@ import spotifyReducer from './slices/spotify';
 import libraryReducer from './slices/library';
 import languageReducer from './slices/language';
 import playlistReducer from './slices/playlist';
+import playingNowReducer from './slices/playingNow';
 import yourLibraryReducer from './slices/yourLibrary';
 
 const appReducer = combineReducers({
@@ -32,6 +33,7 @@ const appReducer = combineReducers({
   library: libraryReducer,
   language: languageReducer,
   playlist: playlistReducer,
+  playingNow: playingNowReducer,
   yourLibrary: yourLibraryReducer,
 });
 

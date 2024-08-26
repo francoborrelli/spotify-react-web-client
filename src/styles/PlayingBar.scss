@@ -222,9 +222,14 @@
   p {
     font-size: 0.9rem;
     width: 110px;
+    font-weight: 100;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .song-artist {
+    color: #b3b3b3;
   }
 
   .active {

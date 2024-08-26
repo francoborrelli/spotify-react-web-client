@@ -1,4 +1,4 @@
-import { NowPlayingCard } from './card';
+import { NowPlayingCard } from './data';
 import { NowPlayingLayout } from '../layout';
 import { AddSongToLibraryButton } from '../../../../AddSongToLibrary';
 
@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 // Interfaces
 import type { FC } from 'react';
+import { NextInQueue } from './next';
+import { Artist } from './artist';
 
 const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
   const dispatch = useAppDispatch();
@@ -36,6 +38,8 @@ export const Details = () => {
       <NowPlayingLayout title={song.name}>
         <div>
           <Container song={song} />
+          <Artist />
+          <NextInQueue />
         </div>
       </NowPlayingLayout>
     </div>

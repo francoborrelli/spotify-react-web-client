@@ -36,17 +36,14 @@ const DetailsButton = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['playingBar']);
 
-  const queue = useAppSelector((state) => state.library.queue);
-  const actions = useAppSelector((state) => state.library.detailsOpen);
-
-  const active = actions && !queue;
+  const active = useAppSelector((state) => !state.ui.detailsCollapsed);
 
   return (
     <>
       <Tooltip title={t('Now playing view')}>
         <button
           className={active ? 'active-icon-button' : ''}
-          onClick={() => dispatch(libraryActions.toggleSongPlaying())}
+          onClick={() => dispatch(uiActions.toggleDetails())}
           style={{
             marginLeft: 5,
             marginRight: 10,
@@ -63,9 +60,7 @@ const DetailsButton = () => {
 const QueueButton = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['playingBar']);
-
   const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
-
   return (
     <Tooltip title={t('Queue')}>
       <button

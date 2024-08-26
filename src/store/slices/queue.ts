@@ -5,7 +5,7 @@ import { userService } from '../../services/users';
 
 // Interfaces
 import type { Track } from '../../interfaces/track';
-import { Episode } from '../../interfaces/episode';
+import type { Episode } from '../../interfaces/episode';
 
 export interface QueueState {
   queue: (Track | Episode)[];

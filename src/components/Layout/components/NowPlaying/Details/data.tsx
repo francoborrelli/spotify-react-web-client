@@ -2,21 +2,9 @@ import { Col, Row } from 'antd';
 
 import type { FC } from 'react';
 
-export const DetailsCard: FC<{ title: string; children: any; extra?: any }> = (props) => {
-  const { title, children, extra } = props;
-  return (
-    <div className='now-playing-card'>
-      <div className='title-section'>
-        <div className='title'>{title}</div>
-        {extra}
-      </div>
-      <div>{children}</div>
-    </div>
-  );
-};
-
 interface NowPlayingCardProps {
   title: string;
+
   extra?: any;
   children?: any;
   image?: string;
@@ -24,9 +12,9 @@ interface NowPlayingCardProps {
   imageTitle?: string;
 }
 
-export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
+export const NowPlayingCard: FC<NowPlayingCardProps> = (props) => {
   return (
-    <div className='artist-playing-now-card'>
+    <div className='playing-now-card'>
       {props.image ? (
         <div
           className='playing-now-card-image'
@@ -59,6 +47,7 @@ export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
             </Col>
           ) : null}
         </Row>
+        {props.children ? <div className='playing-now-card-body'>{props.children}</div> : null}
       </div>
     </div>
   );

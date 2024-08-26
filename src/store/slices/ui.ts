@@ -20,6 +20,8 @@ const uiSlice = createSlice({
       state.detailsCollapsed = true;
     },
     toggleDetails(state) {
+      state.queueCollapsed = true;
+      state.libraryCollapsed = true;
       state.detailsCollapsed = !state.detailsCollapsed;
     },
     collapseLibrary(state) {
@@ -32,6 +34,8 @@ const uiSlice = createSlice({
       state.queueCollapsed = true;
     },
     toggleQueue(state) {
+      state.detailsCollapsed = true;
+      state.libraryCollapsed = true;
       state.queueCollapsed = !state.queueCollapsed;
     },
   },

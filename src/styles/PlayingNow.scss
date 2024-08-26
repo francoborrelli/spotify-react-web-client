@@ -25,9 +25,8 @@
   }
 }
 
+.artist-playing-now-card,
 .playing-now-card {
-  height: 90vh;
-
   img {
     border-radius: 50%;
   }
@@ -69,6 +68,7 @@
   }
 
   .playing-now-card-image {
+    min-height: 350px;
     height: 50%;
     background-position: 50% 50%;
     background-size: cover;
@@ -79,9 +79,11 @@
 
     .playing-now-card-image-text {
       left: 0;
+      color: white;
       position: absolute;
       right: 0;
       top: 0;
+      font-size: 1rem;
       padding: 16px;
       font-weight: 700;
     }
@@ -89,6 +91,59 @@
 
   .ant-avatar {
     margin: 5px;
+  }
+}
+
+.artist-playing-now-card {
+  margin: 5px;
+  margin-bottom: 20px;
+  border: 0;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: initial;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  background-color: #1f1f1f;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: transform 0.25s linear;
+  transition: transform 0.25s linear;
+
+  .playing-now-card-image {
+    min-height: 200px;
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 8px 8px 0 0;
+    padding-bottom: 60%;
+    position: relative;
+    width: 100%;
+  }
+
+  .playing-now-card-text {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 16px;
+    padding-top: 0px;
+  }
+
+  .playing-now-card-title {
+    color: $text-primary-color;
+    font-weight: 700;
+    font-size: 1rem;
   }
 }
 

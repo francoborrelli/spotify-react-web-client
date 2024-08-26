@@ -1,0 +1,39 @@
+.now-playing-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 16px 0;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  z-index: 1;
+  margin: 5px;
+
+  .title-section {
+    display: flex;
+    justify-content: space-between;
+    .title {
+      font-weight: 700;
+      color: white;
+      font-size: 1rem;
+    }
+  }
+
+  .queue-song {
+    margin: -5px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+  }
+}
+
+.link-button {
+  font-weight: 700;
+  color: #fff;
+  &:hover {
+    text-decoration: underline;
+  }
+}
