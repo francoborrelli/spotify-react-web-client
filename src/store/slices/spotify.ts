@@ -39,6 +39,9 @@ const spotifySlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setLiked(state, action: PayloadAction<{ liked: boolean }>) {
+      state.liked = action.payload.liked;
+    },
     setDeviceId(state, action: PayloadAction<{ deviceId: string | null }>) {
       state.deviceId = action.payload.deviceId;
     },

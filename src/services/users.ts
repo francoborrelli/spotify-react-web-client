@@ -49,8 +49,25 @@ const checkSavedTracks = async (ids: string[]) => {
   return await axios.get<boolean[]>('/me/tracks/contains', { params: { ids: ids.join(',') } });
 };
 
+/**
+ * @description Save one or more tracks to the current user's 'Your Music' library.
+ */
+const saveTracks = async (ids: string[]) => {
+  return await axios.put('/me/tracks', { ids });
+};
+
+/**
+ * @description Remove one or more tracks from the current user's 'Your Music' library.
+ * @param ids An array of the Spotify IDs of the tracks. A maximum of 50 IDs can be sent in one request.
+ */
+const deleteTracks = async (ids: string[]) => {
+  return await axios.delete('/me/tracks', { data: { ids } });
+};
+
 export const userService = {
+  saveTracks,
   fetchQueue,
+  deleteTracks,
   fetchTopArtists,
   fetchTopTracks,
   checkSavedTracks,

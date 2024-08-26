@@ -1,9 +1,16 @@
 import { memo } from 'react';
-import { HeartLike } from './Heart';
-import { useAppSelector } from '../../../../store/store';
+import { spotifyActions } from '../../../../store/slices/spotify';
+import { AddSongToLibraryButton } from '../../../AddSongToLibrary';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 const SongDetails = memo(() => {
+  const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
+  const isLiked = useAppSelector((state) => state.spotify.liked);
+
+  const handleToggle = () => {
+    dispatch(spotifyActions.setLiked({ liked: !isLiked }));
+  };
 
   const { track_window } = state || {};
   const { current_track } = track_window || {};
@@ -27,7 +34,12 @@ const SongDetails = memo(() => {
         </p>
       </div>
 
-      <HeartLike />
+      <AddSongToLibraryButton
+        size={17}
+        isSaved={isLiked}
+        id={current_track.id!}
+        onToggle={handleToggle}
+      />
     </div>
   );
 });
