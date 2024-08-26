@@ -13,8 +13,10 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 // Reducers
+import uiReducer from './slices/ui';
 import authReducer from './slices/auth';
 import homeReducer from './slices/home';
+import queueReducer from './slices/queue';
 import spotifyReducer from './slices/spotify';
 import libraryReducer from './slices/library';
 import languageReducer from './slices/language';
@@ -22,8 +24,10 @@ import playlistReducer from './slices/playlist';
 import yourLibraryReducer from './slices/yourLibrary';
 
 const appReducer = combineReducers({
+  ui: uiReducer,
   auth: authReducer,
   home: homeReducer,
+  queue: queueReducer,
   spotify: spotifyReducer,
   library: libraryReducer,
   language: languageReducer,

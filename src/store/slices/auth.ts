@@ -32,7 +32,7 @@ export const loginToSpotify = createAsyncThunk('auth/loginToSpotify', async () =
 
   if (token) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    // localStorage.setItem('spo-token', token);
+    localStorage.setItem('spo-token', token);
   }
   return { token };
 });

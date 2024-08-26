@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { languageActions } from '../../../../store/slices/language';
 import { libraryActions } from '../../../../store/slices/library';
 import { FullScreenPlayer } from '../../../FullScreen';
+import { uiActions } from '../../../../store/slices/ui';
 
 const LyricsButton = () => {
   const dispatch = useAppDispatch();
@@ -37,21 +38,19 @@ const DetailsButton = () => {
 
   const queue = useAppSelector((state) => state.library.queue);
   const actions = useAppSelector((state) => state.library.detailsOpen);
-  const songPlaying = useAppSelector((state) => state.library.songPlaying);
 
-  const active = actions && !!songPlaying && !queue;
+  const active = actions && !queue;
 
   return (
     <>
       <Tooltip title={t('Now playing view')}>
         <button
-          disabled={!songPlaying}
           className={active ? 'active-icon-button' : ''}
           onClick={() => dispatch(libraryActions.toggleSongPlaying())}
           style={{
             marginLeft: 5,
             marginRight: 10,
-            cursor: songPlaying ? 'pointer' : 'not-allowed',
+            cursor: 'pointer',
           }}
         >
           <DetailsIcon active={active} />
@@ -65,25 +64,20 @@ const QueueButton = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['playingBar']);
 
-  const isQueueOpen = useAppSelector((state) => state.library.queue);
-  const actions = useAppSelector((state) => state.library.detailsOpen);
-
-  const active = actions && !!isQueueOpen;
+  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
 
   return (
     <Tooltip title={t('Queue')}>
       <button
-        className={active ? 'active-icon-button' : ''}
-        onClick={() =>
-          isQueueOpen ? dispatch(libraryActions.closeQueue()) : dispatch(libraryActions.openQueue())
-        }
+        onClick={() => dispatch(uiActions.toggleQueue())}
+        className={!queueCollapsed ? 'active-icon-button' : ''}
         style={{
           marginLeft: 10,
           marginRight: 5,
-          cursor: isQueueOpen ? 'pointer' : 'not-allowed',
+          cursor: queueCollapsed ? 'pointer' : 'not-allowed',
         }}
       >
-        <ListIcon active={active} />
+        <ListIcon active={!queueCollapsed} />
       </button>
     </Tooltip>
   );

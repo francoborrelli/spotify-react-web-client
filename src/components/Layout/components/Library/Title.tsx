@@ -12,13 +12,13 @@ import { Tooltip } from '../../../Tooltip';
 import { useTranslation } from 'react-i18next';
 
 // Redux
+import { uiActions } from '../../../../store/slices/ui';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
-import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 export const LibraryTitle = memo(() => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['navbar']);
-  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
+  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   if (collapsed) {
     return (
@@ -28,7 +28,7 @@ export const LibraryTitle = memo(() => {
             display: 'flex',
             justifyContent: 'center',
           }}
-          onClick={() => dispatch(yourLibraryActions.toggleLibrary())}
+          onClick={() => dispatch(uiActions.toggleLibrary())}
         >
           <LibraryCollapsedIcon />
         </button>
@@ -39,7 +39,7 @@ export const LibraryTitle = memo(() => {
   return (
     <Space wrap>
       <Tooltip placement='top' title={t('Collapse your library')}>
-        <button onClick={() => dispatch(yourLibraryActions.toggleLibrary())}>
+        <button onClick={() => dispatch(uiActions.toggleLibrary())}>
           <LibraryIcon />
         </button>
       </Tooltip>

@@ -5,7 +5,9 @@ import { Details } from './Details';
 import { useAppSelector } from '../../../../store/store';
 
 export const PlayingNow = () => {
-  const queue = useAppSelector((state) => state.library.queue);
+  const queue = useAppSelector((state) => !state.ui.queueCollapsed);
+
   if (queue) return <Queue />;
+
   return <Details />;
 };

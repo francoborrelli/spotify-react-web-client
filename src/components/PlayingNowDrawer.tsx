@@ -22,8 +22,10 @@ function useWindowSize() {
 
 export const PlayingNowDrawer = memo(() => {
   const [width] = useWindowSize();
-  const open = useAppSelector((state) => state.library.detailsOpen);
+
+  const open = useAppSelector((state) => state.ui.queueCollapsed);
   if (width > 900) return null;
+
   return (
     <div className='playing-now-drawer'>
       <Drawer open={open}>

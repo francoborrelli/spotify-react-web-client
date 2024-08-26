@@ -6,8 +6,8 @@
   background-color: $background-color;
   height: calc(100vh - 150px);
   width: 100%;
-  min-width: 350px;
-  max-width: 350px;
+  min-width: 400px;
+  max-width: 400px;
 
   @media (max-width: 900px) {
     min-width: 100%;
@@ -19,6 +19,7 @@
     font-weight: 700;
     margin: 10px;
     margin-left: 15px;
+    font-size: 1rem;
   }
 }
 

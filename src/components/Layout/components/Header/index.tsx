@@ -21,7 +21,8 @@ export const PageHeader: FC<PageHeaderProps> = ({
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeHeader, setActiveHeader] = useState(true);
 
-  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
+  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
+  const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   useEffect(() => {
     const ref = container.current;
@@ -44,7 +45,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, collapsed, activeHeider]);
+  }, [container, queueCollapsed, libraryCollapsed, activeHeider]);
 
   return (
     <div

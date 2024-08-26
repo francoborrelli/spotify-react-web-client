@@ -23,7 +23,7 @@ const COLLAPSED_STYLE = {
 const YourLibrary = () => {
   const navigate = useNavigate();
   const items = useAppSelector(getLibraryItems);
-  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
+  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   const onClick = useCallback(
     (url: string) => {

@@ -4,8 +4,8 @@ import { Col, Row } from 'antd';
 import { CloseIcon } from '../../../../Icons';
 
 // Redux
-import { libraryActions } from '../../../../../store/slices/library';
 import { useAppDispatch } from '../../../../../store/store';
+import { uiActions } from '../../../../../store/slices/ui';
 
 interface NowPlayingLayoutProps {
   children: any;
@@ -19,7 +19,7 @@ const CloseButton = () => {
     <div className='playing-section-close-button'>
       <button
         onClick={() => {
-          dispatch(libraryActions.removeSongPlaying());
+          dispatch(uiActions.collapseQueue());
         }}
       >
         <CloseIcon />

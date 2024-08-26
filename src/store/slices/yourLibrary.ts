@@ -9,10 +9,8 @@ import { playlistService } from '../../services/playlists';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
-import { shuffle } from 'lodash';
 
 export interface YourLibraryState {
-  collapsed: boolean;
   myAlbums: Album[];
   myArtists: Artist[];
   myPlaylists: Playlist[];
@@ -28,7 +26,6 @@ const initialState: YourLibraryState = {
   myArtists: [],
   myPlaylists: [],
   orderBy: 'default',
-  collapsed: window.innerWidth < 973,
 };
 
 export const fetchMyPlaylists = createAsyncThunk('yourLibrary/fetchMyPlaylists', async () => {
@@ -50,12 +47,6 @@ const yourLibrarySlice = createSlice({
   name: 'yourLibrary',
   initialState,
   reducers: {
-    collapseLibrary(state) {
-      state.collapsed = true;
-    },
-    toggleLibrary(state) {
-      state.collapsed = !state.collapsed;
-    },
     setFilter(state, action: PayloadAction<{ filter: YourLibraryState['filter'] }>) {
       state.filter = action.payload.filter;
     },

@@ -52,7 +52,7 @@ const Pause = (
 const CardShort = (props: CardShortProps) => {
   const { image, title, subtitle, playing } = props;
 
-  const collapsed = useAppSelector((state) => state.yourLibrary.collapsed);
+  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   if (collapsed) {
     return (
