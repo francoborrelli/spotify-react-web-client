@@ -1,4 +1,5 @@
-import { useEffect, useRef, FC } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, FC, memo, useCallback } from 'react';
 import { useAppDispatch } from '../../store/store';
 import { spotifyActions } from '../../store/slices/spotify';
 import { playerService } from '../../services/player';
@@ -16,7 +17,7 @@ export interface WebPlaybackProps {
   children?: any; // Elementos hijos para renderizar dentro del componente
 }
 
-const WebPlayback: FC<WebPlaybackProps> = (props) => {
+const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
   const dispatch = useAppDispatch();
 
   const { playerName, playerInitialVolume } = props;
@@ -37,7 +38,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
     }
   };
 
-  const waitForSpotify = () => {
+  const waitForSpotify = useCallback(() => {
     return new Promise<void>((resolve) => {
       if ('Spotify' in window) {
         resolve();
@@ -48,7 +49,7 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
         };
       }
     });
-  };
+  }, []);
 
   const waitForDeviceToBeSelected = () => {
     return new Promise((resolve) => {
@@ -66,18 +67,18 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
     });
   };
 
-  const startStatePolling = () => {
+  const startStatePolling = useCallback(() => {
     statePollingInterval.current = setInterval(async () => {
       const state = await webPlaybackInstance.current!.getCurrentState();
       await handleState(state);
     }, playerRefreshRateMs || 1000);
-  };
+  }, [handleState, playerRefreshRateMs]);
 
-  const clearStatePolling = () => {
+  const clearStatePolling = useCallback(() => {
     if (statePollingInterval.current) clearInterval(statePollingInterval.current);
-  };
+  }, []);
 
-  const setupWebPlaybackEvents = async () => {
+  const setupWebPlaybackEvents = useCallback(async () => {
     let { Player } = window.Spotify;
     webPlaybackInstance.current = new Player({
       name: playerName,
@@ -115,23 +116,32 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
     });
 
     webPlaybackInstance.current.on('ready', async (data) => {
-      dispatch(spotifyActions.setDeviceId({ deviceId: data.device_id }));
+      dispatch(spotifyActions.setDeviceId(data.device_id));
       dispatch(spotifyActions.setActiveDevice({ activeDevice: data.device_id }));
       await playerService.transferPlayback(data.device_id);
     });
 
     if (playerAutoConnect) {
       webPlaybackInstance.current.connect();
+      dispatch(spotifyActions.setPlayer({ player: webPlaybackInstance.current }));
     }
-  };
+  }, [
+    playerName,
+    playerInitialVolume,
+    playerAutoConnect,
+    onPlayerRequestAccessToken,
+    onPlayerError,
+    handleState,
+    dispatch,
+  ]);
 
-  const setupWaitingForDevice = () => {
+  const setupWaitingForDevice = useCallback(() => {
     return new Promise((resolve) => {
       webPlaybackInstance.current!.on('ready', (data) => {
         resolve(data);
       });
     });
-  };
+  }, []);
 
   useEffect(() => {
     const initializePlayer = async () => {
@@ -154,6 +164,6 @@ const WebPlayback: FC<WebPlaybackProps> = (props) => {
   }, []);
 
   return <>{children}</>;
-};
+});
 
 export default WebPlayback;

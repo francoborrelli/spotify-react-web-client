@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './styles/App.scss';
 
 // Utils
 import i18next from 'i18next';
-import { Suspense, lazy, useEffect, useRef } from 'react';
+import { FC, Suspense, lazy, memo, useEffect, useRef } from 'react';
 
 // Components
 import { ConfigProvider } from 'antd';
@@ -15,9 +16,11 @@ import { libraryActions } from './store/slices/library';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store, useAppDispatch, useAppSelector } from './store/store';
 import { SearchPage } from './pages/Search';
-import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
-import { authActions, loginToSpotify } from './store/slices/auth';
+import { authActions, fetchUser, loginToSpotify } from './store/slices/auth';
 import { Spinner } from './components/spinner/spinner';
+
+import { getFromLocalStorageWithExpiry } from './utils/localstorage';
+import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
 
 // Pages
 const Home = lazy(() => import('./pages/Home'));
@@ -32,16 +35,53 @@ window.addEventListener('resize', () => {
   }
 });
 
-const RootComponent = () => {
+const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
   const dispatch = useAppDispatch();
-  const container = useRef<HTMLDivElement>(null);
-  const user = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
-  const language = useAppSelector((state) => state.language.language);
 
   useEffect(() => {
-    dispatch(loginToSpotify());
+    const token = getFromLocalStorageWithExpiry('access_token');
+    if (!token) {
+      dispatch(loginToSpotify());
+    } else {
+      dispatch(authActions.setToken({ token }));
+    }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUser());
+    }
+  }, [token, dispatch]);
+
+  if (!token) return <Spinner loading />;
+
+  const webPlaybackSdkProps: WebPlaybackProps = {
+    playerAutoConnect: true,
+    playerInitialVolume: 1.0,
+    playerRefreshRateMs: 1000,
+    playerName: 'Spotify React Player',
+    onPlayerRequestAccessToken: () => Promise.resolve(token!),
+    onPlayerLoading: () => {},
+    onPlayerWaitingForDevice: () => {
+      dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
+      dispatch(authActions.fetchUser());
+    },
+    onPlayerError: (e) => {
+      dispatch(loginToSpotify());
+    },
+    onPlayerDeviceSelected: () => {
+      dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
+    },
+  };
+
+  return <WebPlayback {...webPlaybackSdkProps}>{children}</WebPlayback>;
+});
+
+const RootComponent = () => {
+  const container = useRef<HTMLDivElement>(null);
+  const user = useAppSelector((state) => state.auth.user);
+  const language = useAppSelector((state) => state.language.language);
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', language);
@@ -56,49 +96,26 @@ const RootComponent = () => {
     { path: '*', element: <Page404 /> },
   ] as const;
 
-  const webPlaybackSdkProps: WebPlaybackProps = {
-    playerAutoConnect: true,
-    playerInitialVolume: 1.0,
-    playerRefreshRateMs: 1000,
-    playerName: 'Spotify React Player',
-    onPlayerRequestAccessToken: () => Promise.resolve(token!),
-    onPlayerLoading: () => {},
-    onPlayerWaitingForDevice: () => {
-      dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
-      dispatch(authActions.fetchUser());
-    },
-    onPlayerError: (e) => {
-      console.log(e);
-      localStorage.removeItem('spo-token');
-      dispatch(loginToSpotify());
-    },
-    onPlayerDeviceSelected: () => {
-      dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
-    },
-  };
-
   return (
-    <WebPlayback {...webPlaybackSdkProps}>
-      <Spinner loading={!user}>
-        <Router>
-          <AppLayout>
-            <div className='Main-section' ref={container}>
-              <div style={{ minHeight: 'calc(100vh - 230px)', width: '100%' }}>
-                <Routes>
-                  {routes.map((route) => (
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      element={<Suspense>{route.element}</Suspense>}
-                    />
-                  ))}
-                </Routes>
-              </div>
+    <Spinner loading={!user}>
+      <Router>
+        <AppLayout>
+          <div className='Main-section' ref={container}>
+            <div style={{ minHeight: 'calc(100vh - 230px)', width: '100%' }}>
+              <Routes>
+                {routes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<Suspense>{route.element}</Suspense>}
+                  />
+                ))}
+              </Routes>
             </div>
-          </AppLayout>
-        </Router>
-      </Spinner>
-    </WebPlayback>
+          </div>
+        </AppLayout>
+      </Router>
+    </Spinner>
   );
 };
 
@@ -107,7 +124,9 @@ function App() {
     <ConfigProvider theme={{ token: { fontFamily: 'SpotifyMixUI' } }}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <RootComponent />
+          <SpotifyContainer>
+            <RootComponent />
+          </SpotifyContainer>
         </PersistGate>
       </Provider>
     </ConfigProvider>

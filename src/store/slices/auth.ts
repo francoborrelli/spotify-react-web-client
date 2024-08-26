@@ -9,37 +9,35 @@ import { authService } from '../../services/auth';
 
 // Interfaces
 import type { User } from '../../interfaces/user';
-import { playerService } from '../../services/player';
+import { getFromLocalStorageWithExpiry } from '../../utils/localstorage';
 
 const initialState: { token?: string; playerLoaded: boolean; user?: User } = {
   user: undefined,
   playerLoaded: false,
-  token: localStorage.getItem('spo-token') || undefined,
+  token: getFromLocalStorageWithExpiry('access_token') || undefined,
 };
 
 export const loginToSpotify = createAsyncThunk('auth/loginToSpotify', async () => {
-  let token: string | undefined = localStorage.getItem('spo-token') as string;
+  let token: string | undefined = getFromLocalStorageWithExpiry('access_token') as string;
 
   if (token) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     return { token };
   }
 
-  token = login.getToken();
+  token = await login.getToken();
+
   if (!token) {
     login.logInWithSpotify();
+  } else {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
   }
 
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    localStorage.setItem('spo-token', token);
-  }
   return { token };
 });
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
   const response = await authService.fetchUser();
-  playerService.fetchPlaybackState().then();
   return response.data;
 });
 

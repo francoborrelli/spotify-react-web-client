@@ -1,5 +1,11 @@
-const client_id = process.env.REACT_APP_CLIENT_ID;
-const redirect_uri = process.env.REACT_APP_REDIRECT_ID;
+import axios from 'axios';
+import { getFromLocalStorageWithExpiry, setLocalStorageWithExpiry } from '../localstorage';
+
+/* eslint-disable import/no-anonymous-default-export */
+const client_id = process.env.REACT_APP_CLIENT_ID as string;
+const redirect_uri = process.env.REACT_APP_REDIRECT_ID as string;
+
+const authUrl = new URL('https://accounts.spotify.com/authorize');
 
 const SCOPES = [
   'streaming',
@@ -23,30 +29,114 @@ const SCOPES = [
   'user-follow-read',
 ] as const;
 
-const logInWithSpotify = () => {
-  const scopes = SCOPES.join(' ');
-  const scopes_encoded = scopes.replace(' ', '%20');
-  const url = [
-    'https://accounts.spotify.com/authorize',
-    `?client_id=${client_id}`,
-    `&redirect_uri=${redirect_uri}`,
-    `&scope=${scopes_encoded}`,
-    '&response_type=token',
-    '&show_dialog=true',
-  ].join('');
-  window.location.href = url;
+const sha256 = async (plain: string) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(plain);
+  return window.crypto.subtle.digest('SHA-256', data);
 };
 
-const getToken = () => {
-  const hashParams: Record<string, string | undefined> = {};
-  let e: string[] | null,
-    r = /([^&;=]+)=?([^&;]*)/g,
-    q = window.location.hash.substring(1);
-  while ((e = r.exec(q))) {
-    hashParams[e[1]] = decodeURIComponent(e[2]);
+const base64encode = (input: ArrayBuffer) => {
+  // @ts-ignore
+  return btoa(String.fromCharCode(...new Uint8Array(input)))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+};
+
+const generateRandomString = (length: number) => {
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const values = crypto.getRandomValues(new Uint8Array(length));
+  return values.reduce((acc, x) => acc + possible[x % possible.length], '');
+};
+
+const logInWithSpotify = async () => {
+  let codeVerifier = localStorage.getItem('code_verifier');
+
+  if (!codeVerifier) {
+    codeVerifier = generateRandomString(64);
+    localStorage.setItem('code_verifier', codeVerifier);
   }
-  window.location.hash = '';
-  return hashParams.access_token;
+
+  const hashed = await sha256(codeVerifier);
+  const codeChallenge = base64encode(hashed);
+
+  const params = {
+    client_id,
+    redirect_uri,
+    scope: SCOPES.join(' '),
+    response_type: 'code',
+    code_challenge_method: 'S256',
+    code_challenge: codeChallenge,
+  };
+
+  authUrl.search = new URLSearchParams(params).toString();
+  window.location.href = authUrl.toString();
 };
 
-export default { logInWithSpotify, getToken };
+const requestToken = async (code: string) => {
+  const code_verifier = localStorage.getItem('code_verifier') as string;
+
+  const body = {
+    code,
+    client_id,
+    redirect_uri,
+    code_verifier,
+    grant_type: 'authorization_code',
+  };
+
+  const { data: response } = await axios.post<{
+    access_token: string;
+    token_type: string;
+    expires_in: number;
+    refresh_token: string;
+  }>('https://accounts.spotify.com/api/token', body, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+
+  setLocalStorageWithExpiry('access_token', response.access_token, response.expires_in * 60 * 60);
+  localStorage.setItem('refresh_token', response.refresh_token);
+
+  return response.access_token;
+};
+
+const getToken = async () => {
+  const token = getFromLocalStorageWithExpiry('access_token');
+  if (token) return token;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  let code = urlParams.get('code') as string;
+
+  if (!code) return null;
+
+  return await requestToken(code);
+};
+
+export const getRefreshToken = async () => {
+  // refresh token that has been previously stored
+  const refreshToken = localStorage.getItem('refresh_token') as string;
+
+  const url = 'https://accounts.spotify.com/api/token';
+
+  const payload = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      client_id,
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    }),
+  };
+  const body = await fetch(url, payload);
+  const response = await body.json();
+  setLocalStorageWithExpiry('access_token', response.access_token, response.expires_in * 60 * 60);
+  if (response.refreshToken) {
+    localStorage.setItem('refresh_token', response.refreshToken);
+  }
+  return response.access_token;
+};
+
+export default { logInWithSpotify, getToken, getRefreshToken };

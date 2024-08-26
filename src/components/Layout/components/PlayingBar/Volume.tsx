@@ -7,6 +7,8 @@ import { VolumeIcon, VolumeMuteIcon, VolumeOneIcon, VolumeTwoIcon } from '../../
 // I18n
 import { useTranslation } from 'react-i18next';
 import { playerService } from '../../../../services/player';
+import { useAppSelector } from '../../../../store/store';
+import { useEffect, useState } from 'react';
 
 const getIcon = (volume: number) => {
   if (volume === 0) {
@@ -26,10 +28,19 @@ const getIcon = (volume: number) => {
 
 export const VolumeControls = () => {
   const { t } = useTranslation(['playingBar']);
+  const player = useAppSelector((state) => state.spotify.player);
 
-  const { volume_percent = 0 } = {};
-  const volume = volume_percent / 100;
-  const muted = volume_percent === 0;
+  const [volume, setVolume] = useState<number>(1);
+
+  useEffect(() => {
+    if (player) {
+      player.getVolume().then((volume) => {
+        setVolume(volume);
+      });
+    }
+  }, [player]);
+
+  const muted = volume === 0;
 
   return (
     <div className='volume-control-container'>
@@ -37,7 +48,8 @@ export const VolumeControls = () => {
         <Tooltip title={muted ? t('Unmute') : t('Mute')}>
           <div
             onClick={() => {
-              playerService.setVolume(muted ? volume : 50).then();
+              playerService.setVolume(muted ? volume : 1).then();
+              setVolume(muted ? volume : 1);
             }}
           >
             {getIcon(muted ? 0 : volume)}
@@ -49,7 +61,7 @@ export const VolumeControls = () => {
             isEnabled
             value={muted ? 0 : volume}
             onChange={(value) => {
-              playerService.setVolume(Math.round(value * 100)).then();
+              playerService.setVolume(Math.round(value)).then();
             }}
           />
         </div>
