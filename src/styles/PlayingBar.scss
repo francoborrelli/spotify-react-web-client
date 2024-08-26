@@ -201,14 +201,6 @@
   }
 }
 
-.album-cover {
-  width: 56px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 15px;
-}
-
 .queue-song-image-container,
 .mobile-player {
   .album-cover {
@@ -221,11 +213,19 @@
   h3,
   p {
     font-size: 0.9rem;
-    width: 110px;
+    width: 150px;
     font-weight: 100;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    h3,
+    p {
+      font-size: 0.8rem;
+      width: 200px;
+    }
   }
 
   .song-artist {
@@ -339,5 +339,50 @@
 @media (max-width: $desktop-breakpoint) {
   .Main-section {
     padding-bottom: 50px !important;
+  }
+}
+
+.album-cover {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.playing-cover-container {
+  position: relative;
+
+  .playing-cover-details-button {
+    right: 5px;
+    display: flex;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    top: 5px;
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 500px;
+    border-width: 0;
+    color: #b3b3b3;
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+    svg {
+      fill: #b3b3b3;
+    }
+  }
+
+  &:hover {
+    .playing-cover-details-button {
+      opacity: 1;
+      &:hover {
+        transform: scale(1.1);
+        svg {
+          fill: #fff;
+        }
+      }
+    }
   }
 }

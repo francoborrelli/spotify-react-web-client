@@ -1,8 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { NowPlayingLayout } from '../layout';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../store/store';
-import { fetchQueue } from '../../../../../store/slices/queue';
+import { useAppSelector } from '../../../../../store/store';
 
 import QueueSongDetailsProps from './SongDetails';
 

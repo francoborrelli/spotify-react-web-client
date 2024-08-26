@@ -1,9 +1,13 @@
 @use './variables.scss' as *;
 
 .horizontal-playlist {
-  display: flex;
   --item-height: 48px;
 
+  @media (min-width: 1000px) {
+    --item-height: 64px;
+  }
+
+  display: flex;
   background-color: hsla(0, 0%, 100%, 0.1);
   border-radius: 4px;
   container-type: size;
@@ -83,11 +87,24 @@
           -webkit-box-orient: vertical;
           white-space: normal;
           word-break: break-word;
+
+          @media (min-width: 1000px) {
+            font-size: 0.9rem;
+          }
         }
       }
     }
 
+    &:hover {
+      .button-container img {
+        display: none;
+      }
+    }
+
     .button-container {
+      img {
+        height: 15px;
+      }
       -webkit-box-flex: 0;
       display: -webkit-box;
       display: -ms-flexbox;
@@ -142,10 +159,10 @@
       display: none !important;
     }
 
-    img {
-      max-height: 40px;
-      max-width: 40px;
-    }
+    // img {
+    //   max-height: 40px;
+    //   max-width: 40px;
+    // }
 
     h3 {
       font-size: 13px;

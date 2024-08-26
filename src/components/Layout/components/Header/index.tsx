@@ -19,10 +19,11 @@ export const PageHeader: FC<PageHeaderProps> = ({
   activeHeider = 260,
 }) => {
   const [headerWidth, setHeaderWidth] = useState(0);
-  const [activeHeader, setActiveHeader] = useState(true);
+  const [activeHeader, setActiveHeader] = useState(false);
 
   const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
 
   useEffect(() => {
     const ref = container.current;
@@ -45,7 +46,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, libraryCollapsed, activeHeider]);
+  }, [container, queueCollapsed, libraryCollapsed, detailsCollapsed, activeHeider]);
 
   return (
     <div

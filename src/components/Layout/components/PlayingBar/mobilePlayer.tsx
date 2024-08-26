@@ -4,8 +4,10 @@ import { Col, Row } from 'antd';
 import { ListIcon, Pause, Play } from '../../../Icons';
 
 // Redux
-import { libraryActions } from '../../../../store/slices/library';
 import { playerService } from '../../../../services/player';
+import { useEffect, useState } from 'react';
+import { getImageAnalysis } from '../../../../utils/imageAnyliser';
+import { uiActions } from '../../../../store/slices/ui';
 
 const PlayButton = () => {
   const state = useAppSelector((state) => state.spotify.state);
@@ -22,7 +24,7 @@ const PlayButton = () => {
 const QueueButton = () => {
   const dispatch = useAppDispatch();
   return (
-    <button onClick={() => dispatch(libraryActions.openQueue())}>
+    <button onClick={() => dispatch(uiActions.toggleQueue())}>
       <ListIcon />
     </button>
   );
@@ -31,6 +33,13 @@ const QueueButton = () => {
 const NowPlayingBarMobile = () => {
   const state = useAppSelector((state) => state.spotify.state);
   const currentSong = state?.track_window.current_track;
+  const [currentColor, setColor] = useState('blue');
+
+  useEffect(() => {
+    if (currentSong) {
+      getImageAnalysis(currentSong.album.images[0].url).then((r) => setColor(r));
+    }
+  }, [currentSong]);
 
   if (!currentSong) return <div></div>;
   const currentTime = state?.position || 0;
@@ -40,13 +49,11 @@ const NowPlayingBarMobile = () => {
     <div>
       <div
         className='mobile-player'
-        style={{
-          background: `linear-gradient(${'blue'} -50%, rgb(18, 18, 18) 300%)`,
-        }}
+        style={{ background: `linear-gradient(${currentColor} -50%, rgb(18, 18, 18) 300%)` }}
       >
         <Row justify='space-between'>
           <Col>
-            <SongDetails />
+            <SongDetails isMobile />
           </Col>
           <Col style={{ display: 'flex' }}>
             <div

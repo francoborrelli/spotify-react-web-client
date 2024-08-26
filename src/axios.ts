@@ -19,11 +19,8 @@ axios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
-      console.log('Token expired, refreshing token interceptor');
-
       return getRefreshToken()
         .then((token) => {
-          console.log('Token retrive in axios:', token);
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
           error.config.headers['Authorization'] = 'Bearer ' + token;
           return axios(error.config);

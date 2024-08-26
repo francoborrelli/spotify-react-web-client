@@ -1,8 +1,5 @@
 import { PlayCircle } from '../Home/components/PlayCircle';
 
-// Redux
-import { useAppDispatch, useAppSelector } from '../../store/store';
-
 // Interfaces
 import type { FC } from 'react';
 

@@ -1,6 +1,6 @@
 // Utils
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useCallback } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 // Components
 import { Col } from 'antd';
@@ -21,16 +21,16 @@ const COLLAPSED_STYLE = {
 } as const;
 
 const YourLibrary = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const items = useAppSelector(getLibraryItems);
   const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
-  const onClick = useCallback(
-    (url: string) => {
-      navigate(`/playlist/${url}`);
-    },
-    [navigate]
-  );
+  // const onClick = useCallback(
+  //   (url: string) => {
+  //     navigate(`/playlist/${url}`);
+  //   },
+  //   [navigate]
+  // );
 
   return (
     <div className={`Navigation-section library ${!collapsed ? 'open' : ''}`}>
@@ -40,7 +40,14 @@ const YourLibrary = () => {
 
       <div className='library-list-container'>
         <Col style={collapsed ? {} : COLLAPSED_STYLE}>
-          <div style={{ overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100vh - 290px)' }}>
+          <div
+            className='library-list'
+            style={{
+              overflowY: 'scroll',
+              overflowX: 'hidden',
+              height: collapsed ? 'calc(100vh - 220px)' : 'calc(100vh - 290px)',
+            }}
+          >
             {items.map((item) => {
               if (item.type === 'artist') return <ArtistCardShort key={item.id} artist={item} />;
               if (item.type === 'album') return <AlbumCardShort key={item.id} album={item} />;

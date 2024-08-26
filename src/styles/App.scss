@@ -53,7 +53,9 @@ body {
 
 /* hide scrollbar but allow scrolling */
 .Main-section,
-.playing-section {
+.playing-section,
+.Navigation-section,
+.library-list {
   -ms-overflow-style: none !important; /* for Internet Explorer, Edge */
   scrollbar-width: none !important; /* for Firefox */
   overflow-y: scroll !important;
@@ -395,17 +397,17 @@ h3 {
     padding-block-end: var(--encore-spacing-tighter-4, 4px);
     padding-inline-start: var(--encore-spacing-tighter, 12px);
     padding-inline-end: var(--encore-spacing-tighter, 12px);
-    background-color: #2a2929;
+    background-color: hsla(0, 0%, 100%, 0.1);
   }
 
   &:hover {
     span {
-      background-color: #333333;
+      background-color: hsla(0, 0%, 100%, 0.3);
     }
   }
   &:active {
     span {
-      background-color: #1e1e1e;
+      background-color: hsla(0, 0%, 100%, 0.2);
     }
   }
 

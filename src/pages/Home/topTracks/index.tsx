@@ -7,15 +7,15 @@ import { useAppSelector } from '../../../store/store';
 // Interfaces
 import type { FC } from 'react';
 
-export const TopTracks: FC = () => {
+export const TopTracks: FC<{ setColor: (str: string) => void }> = (props) => {
   const topTracks = useAppSelector((state) => state.home.topTracks);
 
   return (
-    <Row gutter={[16, 16]} style={{ margin: '10px 0px' }} justify='space-between'>
+    <Row gutter={[16, 16]} style={{ margin: '20px 0px' }} justify='space-between'>
       {topTracks.map((item) => {
         return (
           <Col key={item.name} xs={12} md={12} xl={6}>
-            <HorizontalCard item={item} />
+            <HorizontalCard item={item} setColor={props.setColor} />
           </Col>
         );
       })}

@@ -12,7 +12,6 @@ import { DetailsIcon, DeviceIcon, ExpandIcon, ListIcon, MicrophoneIcon } from '.
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { languageActions } from '../../../../store/slices/language';
-import { libraryActions } from '../../../../store/slices/library';
 import { FullScreenPlayer } from '../../../FullScreen';
 import { uiActions } from '../../../../store/slices/ui';
 

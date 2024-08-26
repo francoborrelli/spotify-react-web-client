@@ -35,13 +35,13 @@ const Home: FC<HomeProps> = (props) => {
         className='Home-seccion'
         style={{
           paddingTop: 50,
-          transition: 'background: 0.5s',
+          transition: 'background: 5s',
           background: `linear-gradient(180deg, ${color} -20%, rgb(18, 18, 18) 50%)`,
         }}
       >
         <Row gutter={[16, 16]}>
           <Col span={24}>
-            <TopTracks />
+            <TopTracks setColor={setColor} />
           </Col>
 
           <Col span={24}>
