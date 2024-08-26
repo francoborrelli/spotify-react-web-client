@@ -23,7 +23,8 @@ function useWindowSize() {
 export const PlayingNowDrawer = memo(() => {
   const [width] = useWindowSize();
 
-  const open = useAppSelector((state) => state.ui.queueCollapsed);
+  const open = useAppSelector((state) => !state.ui.queueCollapsed || !state.ui.detailsCollapsed);
+
   if (width > 900) return null;
 
   return (

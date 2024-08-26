@@ -1,5 +1,6 @@
 import { Col, Row } from 'antd';
-import { FC } from 'react';
+
+import type { FC } from 'react';
 
 interface NowPlayingCardProps {
   title: string;
@@ -23,7 +24,7 @@ export const NowPlayingCard: FC<NowPlayingCardProps> = (props) => {
         >
           <div className='playing-now-card-image-text'>
             <div data-encore-id='text'>
-              <div className='zZdI03asKaUCNlbhjDAv'>{props.imageTitle}</div>
+              <div>{props.imageTitle}</div>
             </div>
           </div>
         </div>
@@ -40,7 +41,11 @@ export const NowPlayingCard: FC<NowPlayingCardProps> = (props) => {
             </div>
             <div className='playing-now-card-subtitle'>{props.subtitle}</div>
           </Col>
-          {props.extra ? <Col span={10}>{props.extra}</Col> : null}
+          {props.extra ? (
+            <Col span={2} style={{ textAlign: 'right' }}>
+              {props.extra}
+            </Col>
+          ) : null}
         </Row>
         {props.children ? <div className='playing-now-card-body'>{props.children}</div> : null}
       </div>

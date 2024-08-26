@@ -573,3 +573,21 @@ export const SpeakerIcon = (props: any) => (
     <path d='M16 8a5.752 5.752 0 0 1-4.5 5.614v-1.55a4.252 4.252 0 0 0 0-8.127v-1.55A5.752 5.752 0 0 1 16 8z'></path>
   </svg>
 );
+
+export const AddToLibrary = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 24 24'
+    width='24'
+    height='24'
+    stroke='#b3b3b3'
+    fill='#b3b3b3'
+    strokeWidth='0'
+    className='hoverable-icon'
+  >
+    <path d='M11.999 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-11 9c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z'></path>
+    <path d='M17.999 12a1 1 0 0 1-1 1h-4v4a1 1 0 1 1-2 0v-4h-4a1 1 0 1 1 0-2h4V7a1 1 0 1 1 2 0v4h4a1 1 0 0 1 1 1z'></path>
+  </svg>
+);

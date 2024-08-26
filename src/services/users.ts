@@ -42,9 +42,17 @@ const fetchQueue = async () => {
   );
 };
 
+/**
+ * @description Check if one or more tracks is already saved in the current Spotify user's 'Your Music' library.
+ */
+const checkSavedTracks = async (ids: string[]) => {
+  return await axios.get<boolean[]>('/me/tracks/contains', { params: { ids: ids.join(',') } });
+};
+
 export const userService = {
   fetchQueue,
   fetchTopArtists,
   fetchTopTracks,
+  checkSavedTracks,
   fetchFollowedArtists,
 };

@@ -9,8 +9,6 @@ interface HorizontalCardProps {
 }
 
 export const HorizontalCard: FC<HorizontalCardProps> = ({ item }) => {
-  return <div>sdfsdf</div>;
-
   return (
     <div className='horizontal-playlist'>
       <div style={{ display: 'flex' }}>

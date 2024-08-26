@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface UiState {
   queueCollapsed: boolean;
+  detailsCollapsed: boolean;
   libraryCollapsed: boolean;
 }
 
 const initialState: UiState = {
   queueCollapsed: true,
+  detailsCollapsed: true,
   libraryCollapsed: window.innerWidth < 973,
 };
 
@@ -14,6 +16,12 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
+    collapseDetails(state) {
+      state.detailsCollapsed = true;
+    },
+    toggleDetails(state) {
+      state.detailsCollapsed = !state.detailsCollapsed;
+    },
     collapseLibrary(state) {
       state.libraryCollapsed = true;
     },

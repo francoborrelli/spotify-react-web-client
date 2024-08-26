@@ -20,6 +20,7 @@ const CloseButton = () => {
       <button
         onClick={() => {
           dispatch(uiActions.collapseQueue());
+          dispatch(uiActions.collapseDetails());
         }}
       >
         <CloseIcon />
