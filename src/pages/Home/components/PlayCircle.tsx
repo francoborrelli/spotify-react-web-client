@@ -24,7 +24,7 @@ export const PlayCircle: FC<PlayCircleProps> = ({ size = 20, big, isCurrent, con
       ? playerService.startPlayback()
       : playerService.startPlayback(context);
     request.then();
-  }, [state?.paused, isCurrent, context]);
+  }, [state, isCurrent, context]);
 
   return (
     <button

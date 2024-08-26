@@ -2,6 +2,7 @@ import { PlayCircle } from './PlayCircle';
 
 // Interfaces
 import type { Album } from '../../../interfaces/albums';
+import type { Playlist } from '../../../interfaces/playlists';
 
 // Redux
 import { useAppSelector } from '../../../store/store';
@@ -52,6 +53,24 @@ export const AlbumCard = ({ item }: { item: Album }) => {
 
   const title = item.name;
   const description = item.artists.map((artist) => artist.name).join(', ');
+  const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
+
+  return (
+    <Card
+      title={title}
+      uri={item.uri}
+      description={description}
+      isCurrent={isCurrentAlbum}
+      image={item.images[0].url}
+    />
+  );
+};
+
+export const PlaylistCard = ({ item }: { item: Playlist }) => {
+  const state = useAppSelector((state) => state.spotify.state);
+
+  const title = item.name;
+  const description = item.tracks?.total + ' songs';
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (

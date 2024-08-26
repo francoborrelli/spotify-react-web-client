@@ -12,6 +12,10 @@
 @use './SearchPage.scss';
 @use './PlaylistPage.scss';
 
+body {
+  overscroll-behavior: none !important;
+}
+
 @font-face {
   font-family: SpotifyMixUITitle;
   src: url(https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2);
@@ -269,10 +273,13 @@ h3 {
 }
 
 .nav-header {
+  &.invisible {
+    visibility: hidden;
+  }
+
   z-index: 2;
   position: fixed;
   margin-top: -1px;
-  visibility: hidden;
   padding: 10px 20px;
   overflow: hidden;
   overflow-y: scroll;

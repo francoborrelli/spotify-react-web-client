@@ -41,7 +41,7 @@ const RootComponent = () => {
 
   useEffect(() => {
     dispatch(loginToSpotify());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', language);
@@ -49,7 +49,7 @@ const RootComponent = () => {
   }, [language]);
 
   const routes = [
-    { path: '', element: <Home /> },
+    { path: '', element: <Home container={container} /> },
     { path: '/profile', element: <Profile /> },
     { path: '/search/:search', element: <SearchPage /> },
     { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },

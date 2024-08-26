@@ -1,15 +1,12 @@
 import { FC } from 'react';
-import { AlbumCard } from './VerticalCard';
-
-// Utils
-import { useNavigate } from 'react-router-dom';
+import { AlbumCard, PlaylistCard } from './VerticalCard';
 
 // Interfaces
 import type { Album } from '../../../interfaces/albums';
+import type { Playlist } from '../../../interfaces/playlists';
 
-export const ItemsList: FC<{ title: string; items: Album[] }> = (props) => {
+export const ItemsList: FC<{ title: string; items: Album[] | Playlist[] }> = (props) => {
   const { items } = props;
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -18,7 +15,8 @@ export const ItemsList: FC<{ title: string; items: Album[] }> = (props) => {
         {items.map((item) => {
           return (
             <div key={item.id}>
-              <AlbumCard item={item} />
+              {item.type === 'album' ? <AlbumCard item={item} /> : null}
+              {item.type === 'playlist' ? <PlaylistCard item={item} /> : null}
             </div>
           );
         })}

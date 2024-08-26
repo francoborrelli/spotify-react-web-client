@@ -1,18 +1,23 @@
 // Components
 import { Col, Row } from 'antd';
+import { HomeHeader } from './header';
 import { TopTracks } from './topTracks';
 import { NewReleases } from './newReleases';
 
 // Utils
-import { FC, useEffect, useState } from 'react';
+import { FC, RefObject, useEffect, useState } from 'react';
 
 // Interfaces
 import { useAppDispatch } from '../../store/store';
 import { homeActions } from '../../store/slices/home';
+import { FeaturePlaylists } from './featurePlaylists';
 
-interface HomeProps {}
+interface HomeProps {
+  container: RefObject<HTMLDivElement>;
+}
 
-const Home: FC<HomeProps> = () => {
+const Home: FC<HomeProps> = (props) => {
+  const { container } = props;
   const [color, setColor] = useState('rgb(66, 32, 35)');
 
   const dispatch = useAppDispatch();
@@ -20,25 +25,34 @@ const Home: FC<HomeProps> = () => {
   useEffect(() => {
     dispatch(homeActions.fetchTopTracks());
     dispatch(homeActions.fetchNewReleases());
-  }, []);
+    dispatch(homeActions.fecthFeaturedPlaylists());
+  }, [dispatch]);
 
   return (
-    <div
-      className='Home-seccion'
-      style={{
-        transition: 'background: 0.5s',
-        background: `linear-gradient(180deg, ${color} -20%, rgb(18, 18, 18) 50%)`,
-      }}
-    >
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <TopTracks />
-        </Col>
+    <div>
+      <HomeHeader container={container} color={color} />
+      <div
+        className='Home-seccion'
+        style={{
+          paddingTop: 50,
+          transition: 'background: 0.5s',
+          background: `linear-gradient(180deg, ${color} -20%, rgb(18, 18, 18) 50%)`,
+        }}
+      >
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <TopTracks />
+          </Col>
 
-        <Col span={24}>
-          <NewReleases />
-        </Col>
-      </Row>
+          <Col span={24}>
+            <NewReleases />
+          </Col>
+
+          <Col span={24}>
+            <FeaturePlaylists />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };

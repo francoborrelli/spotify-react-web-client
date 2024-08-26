@@ -1,4 +1,3 @@
-import { Space } from 'antd';
 import { PlayCircle } from '../components/PlayCircle';
 
 // Interfaces
@@ -10,24 +9,31 @@ interface HorizontalCardProps {
 }
 
 export const HorizontalCard: FC<HorizontalCardProps> = ({ item }) => {
+  return <div>sdfsdf</div>;
+
   return (
-    <a className='horizontal-playlist-link' target='_blank' rel='noreferrer'>
-      <div className='horizontal-playlist'>
-        <Space style={{ width: '50%' }}>
-          <img width='60' src={item.album.images[0].url} alt='album cover'></img>
-          <h3
-            style={{
-              wordBreak: 'break-all',
-              whiteSpace: 'pre',
-              overflow: 'hidden',
-            }}
-            className='text-md font-semibold text-white'
-          >
-            {item.name}
-          </h3>
-        </Space>
-        <PlayCircle context={{ uris: [item.uri] }} />
+    <div className='horizontal-playlist'>
+      <div style={{ display: 'flex' }}>
+        <div className='img-container'>
+          <div className='img-section'>
+            <img src={item.album.images[0].url} alt={item.name} />
+          </div>
+        </div>
       </div>
-    </a>
+
+      <div className='text-container'>
+        <div className='text-section'>
+          <div>
+            <a draggable='false' title={item.name} href='/'>
+              <p>{item.name}</p>
+            </a>
+          </div>
+        </div>
+
+        <div className='button-container'>
+          <PlayCircle size={15} />
+        </div>
+      </div>
+    </div>
   );
 };

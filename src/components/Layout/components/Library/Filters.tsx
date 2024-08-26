@@ -31,19 +31,21 @@ export const LibraryFilters = () => {
   if (!hasAlbums && !hasArtists && !hasPlaylists) return null;
 
   return (
-    <Space>
-      {filter !== 'ALL' ? (
-        <Chip key='close' text={<CloseIcon2 />} onClick={() => onClick('ALL')} />
-      ) : null}
+    <div>
+      <Space>
+        {filter !== 'ALL' ? (
+          <Chip key='close' text={<CloseIcon2 />} onClick={() => onClick('ALL')} />
+        ) : null}
 
-      {items.map(({ text, type }) => {
-        if (filter === 'ALL' || type === filter) {
-          return (
-            <Chip key={text} text={text} active={filter === type} onClick={() => onClick(type)} />
-          );
-        }
-        return null;
-      })}
-    </Space>
+        {items.map(({ text, type }) => {
+          if (filter === 'ALL' || type === filter) {
+            return (
+              <Chip key={text} text={text} active={filter === type} onClick={() => onClick(type)} />
+            );
+          }
+          return null;
+        })}
+      </Space>
+    </div>
   );
 };

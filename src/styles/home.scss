@@ -2,20 +2,128 @@
 
 .horizontal-playlist {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  border-radius: 5px;
-  width: 100%;
-  cursor: pointer;
-  background-color: #ffffff1a;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  --item-height: 48px;
+
+  background-color: hsla(0, 0%, 100%, 0.1);
+  border-radius: 4px;
+  container-type: size;
+  height: var(--item-height);
   overflow: hidden;
-  font-size: 0.8em;
-  transition: background-color 0.2s ease-in-out;
-  -webkit-user-select: none;
-  user-select: none;
-  justify-content: space-between;
+  position: relative;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+
+  .img-container {
+    height: var(--item-height);
+    width: var(--item-height);
+
+    .img-section {
+      display: flex;
+      height: 100%;
+      position: relative;
+      width: 100%;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      background-color: hsla(0, 0%, 100%, 0.2);
+      -webkit-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      justify-content: center;
+
+      img {
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .text-container {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-padding-start: 8px;
+    color: #fff;
+    padding-inline-start: 8px;
+
+    .text-section {
+      gap: 2px;
+      display: flex;
+      -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+
+        p {
+          font-weight: 700;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          white-space: normal;
+          word-break: break-word;
+        }
+      }
+    }
+
+    .button-container {
+      -webkit-box-flex: 0;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex: 0 0 48px;
+      flex: 0 0 48px;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+
+      .circle-play {
+        // --encore-control-size-smaller: 25px;
+
+        margin-right: 5px !important;
+      }
+    }
+  }
+
+  // display: flex;
+  // align-items: center;
+  // gap: 15px;
+  // border-radius: 5px;
+  // width: 100%;
+  // cursor: pointer;
+  // background-color: #ffffff1a;
+  // -webkit-backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
+  // overflow: hidden;
+  // font-size: 0.8em;
+  // transition: background-color 0.2s ease-in-out;
+  // -webkit-user-select: none;
+  // user-select: none;
+  // justify-content: space-between;
 
   .circle-play {
     display: none;
@@ -176,8 +284,17 @@
 }
 
 .playlist-grid {
-  --min-column-width: 160px;
+  --min-column-width: 200px;
   --row-count: 1;
+
+  @media (max-width: $desktop-small-breakpoint) {
+    --min-column-width: 160px;
+  }
+
+  @media (max-width: $desktop-breakpoint) {
+    --min-column-width: 140px;
+  }
+
   margin-inline: -12px;
   display: grid;
   grid-gap: var(--grid-gap);
