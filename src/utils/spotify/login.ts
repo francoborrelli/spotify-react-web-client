@@ -11,7 +11,6 @@ const SCOPES = [
   'streaming',
   'user-read-private',
   'user-read-email',
-  'playlist-modify-public',
   'user-read-recently-played',
   'user-read-currently-playing',
   'user-read-playback-state',
@@ -27,6 +26,7 @@ const SCOPES = [
   'user-top-read',
   'user-follow-modify',
   'user-follow-read',
+  'ugc-image-upload',
 ] as const;
 
 const sha256 = async (plain: string) => {

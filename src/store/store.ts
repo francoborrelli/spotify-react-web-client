@@ -23,6 +23,7 @@ import languageReducer from './slices/language';
 import playlistReducer from './slices/playlist';
 import playingNowReducer from './slices/playingNow';
 import yourLibraryReducer from './slices/yourLibrary';
+import editPlaylistModalReducer from './slices/editPlaylistModal';
 
 const appReducer = combineReducers({
   ui: uiReducer,
@@ -35,6 +36,7 @@ const appReducer = combineReducers({
   playlist: playlistReducer,
   playingNow: playingNowReducer,
   yourLibrary: yourLibraryReducer,
+  editPlaylistModal: editPlaylistModalReducer,
 });
 
 // @ts-ignore

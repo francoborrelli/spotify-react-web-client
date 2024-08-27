@@ -1,10 +1,13 @@
 import { FC, memo, useMemo } from 'react';
 
-import { DeleteIcon, AddToQueueIcon, EditIcon, AddedToLibrary, AddToLibrary } from '../Icons';
+import { FaLock, FaUnlock } from 'react-icons/fa6';
 import { Dropdown, MenuProps, message } from 'antd';
+import { DeleteIcon, AddToQueueIcon, EditIcon, AddedToLibrary, AddToLibrary } from '../Icons';
 
 // Services
+import { userService } from '../../services/users';
 import { playerService } from '../../services/player';
+import { playlistService } from '../../services/playlists';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -15,10 +18,8 @@ import type { Playlist } from '../../interfaces/playlists';
 // Redux
 import { fetchQueue } from '../../store/slices/queue';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { userService } from '../../services/users';
 import { yourLibraryActions } from '../../store/slices/yourLibrary';
-import { FaLock, FaUnlock } from 'react-icons/fa6';
-import { playlistService } from '../../services/playlists';
+import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
 
 interface PlayistActionsWrapperProps {
   playlist: Playlist;
@@ -51,6 +52,9 @@ export const PlayistActionsWrapper: FC<PlayistActionsWrapperProps> = memo((props
           label: t('Edit details'),
           key: 1,
           icon: <EditIcon />,
+          onClick: () => {
+            dispatch(editPlaylistModalActions.setPlaylist({ playlist }));
+          },
         },
         {
           label: t('Delete playlist'),
@@ -157,7 +161,7 @@ export const PlayistActionsWrapper: FC<PlayistActionsWrapperProps> = memo((props
     });
 
     return items;
-  }, [canEdit, dispatch, inLibrary, playlist.id, playlist.public, playlist.uri, props, t]);
+  }, [canEdit, dispatch, inLibrary, playlist, props, t]);
 
   return (
     <Dropdown menu={{ items }} trigger={props.trigger}>

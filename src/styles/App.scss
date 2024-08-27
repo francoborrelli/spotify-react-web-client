@@ -12,6 +12,7 @@
 @use './SearchPage.scss';
 @use './PlaylistPage.scss';
 @use './nowPlaying.scss';
+@use './form.scss';
 
 body {
   overscroll-behavior: none !important;
@@ -520,4 +521,8 @@ h3 {
 .scale:active {
   transform: scale(1);
   opacity: 0.9;
+}
+
+.pointer {
+  cursor: pointer;
 }

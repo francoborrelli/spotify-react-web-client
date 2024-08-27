@@ -12,6 +12,7 @@ import { playlists } from '../../constants/cv';
 
 // Interfaces
 import type { FC, ReactElement } from 'react';
+import { EditPlaylistModal } from '../EditPlaylistModal';
 
 export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   return (
@@ -19,6 +20,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
       {/* Modals & Drawers */}
       <LanguageModal />
       <PlayingNowDrawer />
+      <EditPlaylistModal />
 
       {/* Main Component */}
       <div className='main-container'>

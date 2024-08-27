@@ -103,11 +103,22 @@ const changePlaylistDetails = async (
   return axios.put(`/playlists/${playlistId}`, data);
 };
 
+/**
+ * @description Replace the image used to represent a specific playlist.
+ * @body Base64 encoded JPEG image data, maximum payload size is 256 KB.
+ */
+const changePlaylistImage = async (playlistId: string, image: string, content: string) => {
+  return axios.put(`/playlists/${playlistId}/images`, image, {
+    headers: { 'Content-Type': content },
+  });
+};
+
 export const playlistService = {
   getPlaylist,
   getMyPlaylists,
   getPlaylistItems,
   addPlaylistItems,
+  changePlaylistImage,
   removePlaylistItems,
   getFeaturedPlaylists,
   reorderPlaylistItems,

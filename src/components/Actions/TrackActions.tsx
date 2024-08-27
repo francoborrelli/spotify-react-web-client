@@ -25,6 +25,7 @@ import { playlistActions } from '../../store/slices/playlist';
 import { getUserPlaylists } from '../../store/slices/yourLibrary';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { Track } from '../../interfaces/track';
+import { useNavigate } from 'react-router-dom';
 
 interface TrackActionsWrapperProps {
   track: Track;
@@ -39,6 +40,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
 
   const { t } = useTranslation(['playlist']);
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const myPlaylists = useAppSelector(getUserPlaylists);
 
@@ -111,16 +113,22 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         label: t('Go to artist'),
         key: '5',
         icon: <ArtistIcon />,
+        onClick: () => {
+          navigate(`/artist/${track.artists[0].id}`);
+        },
       },
       {
         label: t('Go to album'),
         key: '6',
         icon: <AlbumIcon />,
+        onClick: () => {
+          navigate(`/album/${track.album.id}`);
+        },
       }
     );
 
     return items;
-  }, [canEdit, dispatch, options, playlist, track.uri, t]);
+  }, [t, options, canEdit, playlist, track.uri, track.artists, track.album.id, dispatch, navigate]);
 
   return (
     <>

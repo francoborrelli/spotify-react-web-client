@@ -288,3 +288,55 @@
   padding: 3px 5px;
   text-transform: uppercase;
 }
+
+.playlist-img-overlay {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0px 12px;
+
+  .playlist-img-overlay-container {
+    height: 100%;
+    width: 100%;
+
+    &:hover {
+      button {
+        opacity: 1;
+      }
+    }
+
+    button {
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      text-align: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      border: none;
+      border-radius: 4px;
+      justify-content: center;
+      opacity: 0;
+      padding: 0;
+
+      .icon {
+        fill: #fff;
+        margin-top: 16px;
+        -webkit-transition: opacity 0.2s;
+        transition: opacity 0.2s;
+      }
+
+      span {
+        font-weight: 400;
+      }
+    }
+  }
+}

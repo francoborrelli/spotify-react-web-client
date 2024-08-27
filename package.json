@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "dependencies": {
+    "@ant-design/pro-form": "^2.29.0",
     "antd": "^5.20.2",
     "axios": "^1.7.5",
     "devicons-react": "^1.3.0",
