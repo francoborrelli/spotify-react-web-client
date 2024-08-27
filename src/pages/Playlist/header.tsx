@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 // Utils
 import tinycolor from 'tinycolor2';
 import { useAppSelector } from '../../store/store';
-import { PlayCircleButton } from './playCircle';
+import { PlayCircleButton } from './controls/playCircle';
 import { PlaylistTableHeader } from './table/header';
 
 interface PlaylistHeaderProps {

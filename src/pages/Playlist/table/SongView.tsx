@@ -17,6 +17,7 @@ import { msToTime } from '../../../utils';
 
 // Interfaces
 import type { PlaylistItem } from '../../../interfaces/playlists';
+import { Tooltip } from '../../../components/Tooltip';
 
 interface SongViewProps {
   index: number;
@@ -104,7 +105,11 @@ const SongData = ({ song, index }: SongDataProps) => {
         playlist={playlist!}
         trigger={['click']}
       >
-        <MenuIcon />
+        <Tooltip title={`More options for ${song.track?.name}`}>
+          <div>
+            <MenuIcon />
+          </div>
+        </Tooltip>
       </TrackActionsWrapper>
     </p>
   );
