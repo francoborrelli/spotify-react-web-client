@@ -512,3 +512,12 @@ h3 {
     display: none !important;
   }
 }
+
+.scale:hover {
+  transform: scale(1.1);
+}
+
+.scale:active {
+  transform: scale(1);
+  opacity: 0.9;
+}

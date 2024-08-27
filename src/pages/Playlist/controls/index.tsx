@@ -41,14 +41,14 @@ export const PlaylistControls: FC = () => {
             <PlayCircleButton />
 
             {!isMine ? (
-              <div style={{ marginRight: 10 }}>
+              <div className='scale' style={{ marginRight: 10 }}>
                 <AddPlaylistToLibraryButton id={playlist!.id} />
               </div>
             ) : null}
 
             <PlayistActionsWrapper playlist={playlist!} trigger={['click']}>
               <Tooltip title={`More options for ${playlist?.name}`}>
-                <div>
+                <div className='scale'>
                   <MenuDots />
                 </div>
               </Tooltip>

@@ -53,13 +53,11 @@ const ReplayButton = () => {
   const looping = state?.repeat_mode === 1 || state?.repeat_mode === 2;
   return (
     <button
-      className={looping ? 'active-icon-button' : ''}
+      className={state?.repeat_mode === 2 ? 'active-icon-button' : ''}
       onClick={() =>
-        playerService
-          .setRepeatMode(
-            state?.repeat_mode === 2 ? 'off' : state?.repeat_mode === 1 ? 'context' : 'track'
-          )
-          .then()
+        playerService.setRepeatMode(
+          state?.repeat_mode === 2 ? 'off' : state?.repeat_mode === 1 ? 'track' : 'context'
+        )
       }
     >
       {state?.repeat_mode === 2 ? <ReplayOne active /> : <Replay active={looping} />}

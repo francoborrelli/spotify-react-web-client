@@ -3,14 +3,13 @@ import { PlaylistList } from './table';
 import { PlaylistHeader } from './header';
 
 // Utils
-import { FC, RefObject, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FC, RefObject, useEffect, useState } from 'react';
+import { getImageAnalysis } from '../../utils/imageAnyliser';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { playlistActions } from '../../store/slices/playlist';
-import { Spinner } from '../../components/spinner/spinner';
-import { getImageAnalysis } from '../../utils/imageAnyliser';
 
 const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   const dispatch = useAppDispatch();
@@ -36,12 +35,11 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
     };
   }, [dispatch, playlistId]);
 
+  if (!playlist) return null;
   return (
     <div className='Playlist-section'>
-      <Spinner loading={!playlist}>
-        <PlaylistHeader container={props.container} color={color} />
-        <PlaylistList color={color} />
-      </Spinner>
+      <PlaylistHeader container={props.container} color={color} />
+      <PlaylistList color={color} />
     </div>
   );
 };
