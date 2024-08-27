@@ -29,6 +29,7 @@ export const PlaylistTableHeader = () => {
           <Clock />
         </h3>
       </div>
+      <div style={{ flex: 1 }} className='tablet-hidden'></div>
     </div>
   );
 };

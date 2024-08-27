@@ -2,7 +2,7 @@
 
 import ReactTimeAgo from 'react-time-ago';
 import { useCallback, useMemo } from 'react';
-import { Pause, Play } from '../../../components/Icons';
+import { MenuIcon, Pause, Play } from '../../../components/Icons';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 // Redux
@@ -93,6 +93,22 @@ const SongData = ({ song, index }: SongDataProps) => {
     </p>
   );
 
+  const actions = (
+    <p
+      className='text-right actions tablet-hidden'
+      style={{ flex: 1, display: 'flex', justifyContent: 'end' }}
+    >
+      <TrackActionsWrapper
+        canEdit={canEdit}
+        track={song.track}
+        playlist={playlist!}
+        trigger={['click']}
+      >
+        <MenuIcon />
+      </TrackActionsWrapper>
+    </p>
+  );
+
   return (
     <TrackActionsWrapper
       canEdit={canEdit}
@@ -128,6 +144,7 @@ const SongData = ({ song, index }: SongDataProps) => {
           {album}
           {added}
           {time}
+          {actions}
         </div>
       </div>
     </TrackActionsWrapper>

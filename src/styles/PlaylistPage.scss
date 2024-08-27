@@ -58,6 +58,16 @@
       visibility: hidden;
     }
 
+    &:hover {
+      .actions {
+        opacity: 1;
+      }
+    }
+
+    .actions {
+      opacity: 0;
+    }
+
     .title {
       font-size: 15px;
       color: $text-primary-color;

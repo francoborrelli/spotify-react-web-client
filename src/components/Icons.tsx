@@ -675,3 +675,19 @@ export const AlbumIcon = (props: any) => (
     <path d='M8 6.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM5 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z'></path>
   </svg>
 );
+
+export const MenuIcon = (props: any) => {
+  return (
+    <svg
+      {...props}
+      data-encore-id='icon'
+      role='img'
+      aria-hidden='true'
+      viewBox='0 0 16 16'
+      className='hoverable-icon expand-icon'
+      style={SongExtraControlStyle}
+    >
+      <path d='M3 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm6.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM16 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z'></path>
+    </svg>
+  );
+};
