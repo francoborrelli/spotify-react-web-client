@@ -4,6 +4,7 @@ import type { Track } from '../interfaces/track';
 import type { Artist } from '../interfaces/artist';
 import type { Pagination, PaginationQueryParams } from '../interfaces/api';
 import { Episode } from '../interfaces/episode';
+import { User } from '../interfaces/user';
 
 interface FetchTopItemsParams extends PaginationQueryParams {
   /** @description Over what time frame the affinities are computed. Valid values: long_term (calculated from ~1 year of data and including all new data as it becomes available), medium_term (approximately last 6 months), short_term (approximately last 4 weeks). Default: medium_term */
@@ -73,7 +74,15 @@ const checkFollowedPlaylist = async (playlistId: string) => {
   });
 };
 
+/**
+ * @description Get public profile information about a Spotify user.
+ */
+const getUser = async (id: string) => {
+  return await axios.get<User>(`/users/${id}`);
+};
+
 export const userService = {
+  getUser,
   saveTracks,
   fetchQueue,
   deleteTracks,

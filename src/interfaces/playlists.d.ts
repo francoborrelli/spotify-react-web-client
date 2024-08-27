@@ -51,6 +51,14 @@ export interface Playlist {
   }[];
 
   /**
+   * @description Followers object
+   */
+  followers: {
+    href: string;
+    total: number;
+  };
+
+  /**
    * @description The name of the playlist.
    * @example "Today's Top Hits"
    * @type string

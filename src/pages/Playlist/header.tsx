@@ -22,6 +22,7 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color }) =>
   const { t } = useTranslation(['playlist']);
 
   const playlist = useAppSelector((state) => state.playlist.playlist);
+  const owner = useAppSelector((state) => state.playlist.user);
 
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeHeader, setActiveHeader] = useState(false);
@@ -99,32 +100,32 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color }) =>
               </Col>
               <Col span={24}>
                 <Space className='owner'>
-                  {playlist?.owner?.images?.length ? (
+                  {owner?.images?.length ? (
                     <Link to='/profile'>
                       <img
                         className='playlist-avatar'
                         id='user-avatar'
                         alt='User Avatar'
-                        src={playlist?.owner?.images[0].url}
+                        src={owner?.images[0].url}
                       />{' '}
                     </Link>
                   ) : null}
 
                   <h3 className='text-sm font-semibold text-white'>
-                    {playlist?.owner ? (
-                      playlist?.owner?.display_name === 'Spotify' ? (
-                        <span className='link-text'>{playlist?.owner?.display_name}</span>
+                    {owner ? (
+                      owner?.display_name === 'Spotify' ? (
+                        <span className='link-text'>{owner?.display_name}</span>
                       ) : (
                         <Link to='/' className='link-text'>
-                          {playlist?.owner?.display_name}
+                          {owner?.display_name}
                         </Link>
                       )
                     ) : (
                       ''
                     )}{' '}
-                    •{' '}
                     <span className='songs-number'>
-                      {playlist?.tracks?.total} {t('songs')}
+                      {playlist?.followers?.total ? ` • ${playlist?.followers?.total} saves` : ' '}{' '}
+                      • {playlist?.tracks?.total} {t('songs')}
                     </span>
                   </h3>
                 </Space>

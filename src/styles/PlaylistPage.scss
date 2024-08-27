@@ -78,6 +78,10 @@
       overflow: hidden;
       word-break: break-word;
       color: hsla(0, 0%, 100%, 0.7);
+
+      display: flex;
+      gap: 5px;
+      align-items: center;
     }
 
     .song-details-play {
@@ -143,13 +147,19 @@
 .playlist-title {
   visibility: visible;
   width: 100%;
-  font-size: 4rem;
+  font-size: 5rem;
   white-space: nowrap;
   margin-block: 0px;
   font-weight: 600;
   color: $text-primary-color;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+@media (max-width: 1230px) {
+  .playlist-title {
+    font-size: 4rem;
+  }
 }
 
 @media (max-width: 1130px) {
@@ -247,4 +257,24 @@
     display: block !important;
     visibility: visible !important;
   }
+}
+
+.explicit {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: hsla(0, 0%, 100%, 0.6);
+  border-radius: 2px;
+  color: #121212;
+  font-size: 9px;
+  height: 16px;
+  line-height: 10px;
+  padding: 3px 5px;
+  text-transform: uppercase;
 }

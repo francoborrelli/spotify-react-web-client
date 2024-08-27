@@ -44,6 +44,28 @@ const getFeaturedPlaylists = async (params: GetFeaturedPlaylistsParams = {}) => 
 };
 
 /**
+ * @description Add one or more items to a user's playlist.
+ */
+const addPlaylistItems = async (playlistId: string, uris: string[], snapshot_id: string) => {
+  return axios.post(`/playlists/${playlistId}/tracks`, {
+    uris,
+    snapshot_id,
+  });
+};
+
+/**
+ * @description Remove one or more items from a user's playlist.
+ */
+const removePlaylistItems = async (playlistId: string, uris: string[], snapshot_id: string) => {
+  return axios.delete(`/playlists/${playlistId}/tracks`, {
+    data: {
+      tracks: uris.map((uri) => ({ uri })),
+      snapshot_id,
+    },
+  });
+};
+
+/**
  * @description Either reorder or replace items in a playlist depending on the request's parameters. To reorder items, include range_start, insert_before, range_length and snapshot_id in the request's body. To replace items, include uris as either a query parameter or in the request's body. Replacing items in a playlist will overwrite its existing items. This operation can be used for replacing or clearing items in a playlist.
  */
 const reorderPlaylistItems = async (
@@ -70,6 +92,8 @@ export const playlistService = {
   getPlaylist,
   getMyPlaylists,
   getPlaylistItems,
+  addPlaylistItems,
+  removePlaylistItems,
   getFeaturedPlaylists,
   reorderPlaylistItems,
 };

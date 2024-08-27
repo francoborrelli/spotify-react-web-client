@@ -77,7 +77,15 @@ const toggleShuffle = async (state: boolean) => {
   await axios.put('/me/player/shuffle', {}, { params: { state } });
 };
 
+/**
+ * @description Add an item to the end of the user's current playback queue. This API only works for users who have Spotify Premium. The order of execution is not guaranteed when you use this API with other Player API endpoints.
+ */
+const addToQueue = async (uri: string) => {
+  await axios.post('/me/player/queue', {}, { params: { uri } });
+};
+
 export const playerService = {
+  addToQueue,
   fetchPlaybackState,
   transferPlayback,
   startPlayback,

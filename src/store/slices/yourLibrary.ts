@@ -9,11 +9,13 @@ import { playlistService } from '../../services/playlists';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
+import { RootState } from '../store';
 
 export interface YourLibraryState {
   myAlbums: Album[];
   myArtists: Artist[];
   myPlaylists: Playlist[];
+
   search: string;
   orderBy: 'name' | 'added_at' | 'default';
   filter: 'ALL' | 'ALBUMS' | 'ARTISTS' | 'PLAYLISTS';
@@ -102,6 +104,11 @@ export const getLibraryItems = (state: { yourLibrary: typeof initialState }) => 
   ]
     .filter((r) => r)
     .flat();
+};
+
+export const getUserPlaylists = (state: RootState) => {
+  const user = state.auth.user;
+  return state.yourLibrary.myPlaylists.filter((playlist) => playlist.owner?.id === user?.id);
 };
 
 export const yourLibraryActions = {

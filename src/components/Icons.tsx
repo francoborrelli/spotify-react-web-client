@@ -609,3 +609,69 @@ export const AddedToLibrary = (props: any) => (
     <path d='M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12zm16.398-2.38a1 1 0 0 0-1.414-1.413l-6.011 6.01-1.894-1.893a1 1 0 0 0-1.414 1.414l3.308 3.308 7.425-7.425z'></path>
   </svg>
 );
+
+export const DeleteIcon = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon expand-icon'
+    style={SongExtraControlStyle}
+  >
+    <path d='M5.25 3v-.917C5.25.933 6.183 0 7.333 0h1.334c1.15 0 2.083.933 2.083 2.083V3h4.75v1.5h-.972l-1.257 9.544A2.25 2.25 0 0 1 11.041 16H4.96a2.25 2.25 0 0 1-2.23-1.956L1.472 4.5H.5V3h4.75zm1.5-.917V3h2.5v-.917a.583.583 0 0 0-.583-.583H7.333a.583.583 0 0 0-.583.583zM2.986 4.5l1.23 9.348a.75.75 0 0 0 .744.652h6.08a.75.75 0 0 0 .744-.652L13.015 4.5H2.985z'></path>
+  </svg>
+);
+
+export const AddToQueueIcon = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon expand-icon'
+    style={SongExtraControlStyle}
+  >
+    <path d='M16 15H2v-1.5h14V15zm0-4.5H2V9h14v1.5zm-8.034-6A5.484 5.484 0 0 1 7.187 6H13.5a2.5 2.5 0 0 0 0-5H7.966c.159.474.255.978.278 1.5H13.5a1 1 0 1 1 0 2H7.966zM2 2V0h1.5v2h2v1.5h-2v2H2v-2H0V2h2z'></path>
+  </svg>
+);
+
+export const AddToPlaylist = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon expand-icon'
+    style={SongExtraControlStyle}
+  >
+    <path d='M15.25 8a.75.75 0 0 1-.75.75H8.75v5.75a.75.75 0 0 1-1.5 0V8.75H1.5a.75.75 0 0 1 0-1.5h5.75V1.5a.75.75 0 0 1 1.5 0v5.75h5.75a.75.75 0 0 1 .75.75z'></path>
+  </svg>
+);
+
+export const ArtistIcon = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon expand-icon'
+    style={SongExtraControlStyle}
+  >
+    <path d='M11.757 2.987A4.356 4.356 0 0 0 7.618 0a4.362 4.362 0 0 0-4.139 2.987 5.474 5.474 0 0 0-.22 1.894 5.604 5.604 0 0 0 1.4 3.312l.125.152a.748.748 0 0 1-.2 1.128l-2.209 1.275A4.748 4.748 0 0 0 0 14.857v1.142h8.734A5.48 5.48 0 0 1 8.15 14.5H1.517a3.245 3.245 0 0 1 1.6-2.454l2.21-1.275a2.25 2.25 0 0 0 .6-3.386l-.128-.153a4.112 4.112 0 0 1-1.05-2.44A4.053 4.053 0 0 1 4.89 3.47a2.797 2.797 0 0 1 1.555-1.713 2.89 2.89 0 0 1 3.293.691c.265.296.466.644.589 1.022.12.43.169.876.144 1.322a4.12 4.12 0 0 1-1.052 2.44l-.127.153a2.239 2.239 0 0 0-.2 2.58c.338-.45.742-.845 1.2-1.173 0-.162.055-.32.156-.447l.126-.152a5.598 5.598 0 0 0 1.4-3.312 5.499 5.499 0 0 0-.218-1.894zm3.493 3.771a.75.75 0 0 0-.75.75v3.496h-1a2.502 2.502 0 0 0-2.31 1.542 2.497 2.497 0 0 0 1.822 3.406A2.502 2.502 0 0 0 16 13.502V7.508a.75.75 0 0 0-.75-.75zm-.75 6.744a.998.998 0 0 1-1.707.707 1 1 0 0 1 .707-1.706h1v1z'></path>
+  </svg>
+);
+
+export const AlbumIcon = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon expand-icon'
+    style={SongExtraControlStyle}
+  >
+    <path d='M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z'></path>
+    <path d='M8 6.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM5 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z'></path>
+  </svg>
+);

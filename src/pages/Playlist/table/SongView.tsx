@@ -1,20 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import ReactTimeAgo from 'react-time-ago';
 import { useCallback, useMemo } from 'react';
 import { Pause, Play } from '../../../components/Icons';
-
-// Interfaces
+import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { libraryActions } from '../../../store/slices/library';
 
-// Utils
-import { PlaylistItem } from '../../../interfaces/playlists';
-import { msToTime } from '../../../utils';
+// Service
 import { playerService } from '../../../services/player';
-import ReactTimeAgo from 'react-time-ago';
-import { Dropdown } from 'antd';
+
+// Utils
+import { msToTime } from '../../../utils';
+
+// Interfaces
+import type { PlaylistItem } from '../../../interfaces/playlists';
 
 interface SongViewProps {
   index: number;
@@ -27,6 +29,8 @@ const SongData = ({ song, index }: SongDataProps) => {
   const view = useAppSelector((state) => state.playlist.view);
   const isList = useMemo(() => view === 'LIST', [view]);
 
+  const language = useAppSelector((state) => state.language.language);
+  const canEdit = useAppSelector((state) => state.playlist.canEdit);
   const playlist = useAppSelector((state) => state.playlist.playlist);
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
@@ -61,6 +65,7 @@ const SongData = ({ song, index }: SongDataProps) => {
 
       {isList ? (
         <p className='text-left artist mobile-hidden'>
+          {song.track.explicit ? <span className='explicit'>E</span> : null}
           {song.track.artists.map((a) => a.name).join(', ')}
         </p>
       ) : null}
@@ -75,37 +80,26 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   const added = (
     <p className='text-left tablet-hidden' style={{ flex: 3 }}>
-      <ReactTimeAgo date={new Date(song.added_at)} />
+      <ReactTimeAgo
+        date={new Date(song.added_at)}
+        locale={language === 'es' ? 'es-AR' : undefined}
+      />
     </p>
   );
 
   const time = (
-    <p className='text-right ' style={{ flex: 3 }}>
+    <p className='text-right ' style={{ flex: 3, display: 'flex', justifyContent: 'end' }}>
       {msToTime(song.track.duration_ms)}
     </p>
   );
 
-  const items = [
-    {
-      label: '1st menu item',
-      key: '1',
-      children: [
-        { key: '1', label: 'Option 1' },
-        { key: '2', label: 'Option 2' },
-      ],
-    },
-    {
-      label: '2nd menu item',
-      key: '2',
-    },
-    {
-      label: '3rd menu item',
-      key: '3',
-    },
-  ];
-
   return (
-    <Dropdown menu={{ items }} trigger={['contextMenu']}>
+    <TrackActionsWrapper
+      canEdit={canEdit}
+      track={song.track}
+      playlist={playlist!}
+      trigger={['contextMenu']}
+    >
       <div
         className='song-details flex flex-row items-center w-full songDetails'
         onClick={() => {
@@ -122,7 +116,7 @@ const SongData = ({ song, index }: SongDataProps) => {
                   src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
                 />
               ) : (
-                index + 1
+                <span style={{ margin: '0 auto' }}>{index + 1}</span>
               )}
             </p>
             <button onClick={onClick} className='song-details-play'>
@@ -136,7 +130,7 @@ const SongData = ({ song, index }: SongDataProps) => {
           {time}
         </div>
       </div>
-    </Dropdown>
+    </TrackActionsWrapper>
   );
 };
 
@@ -146,8 +140,8 @@ const SongView = ({ song, index }: SongViewProps) => {
   return (
     <button
       key={song.track.id}
-      className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center p-2 rounded-lg`}
       onClick={toggleOpen}
+      className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center p-2 rounded-lg`}
     >
       <SongData song={song} index={index} />
     </button>

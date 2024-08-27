@@ -1,50 +1,69 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// Services
+import { userService } from '../../services/users';
 import { playlistService } from '../../services/playlists';
 
+// Interfaces
+import type { RootState } from '../store';
+import type { User } from '../../interfaces/user';
+import type { Pagination } from '../../interfaces/api';
 import type { Playlist, PlaylistItem } from '../../interfaces/playlists';
-import { userService } from '../../services/users';
-import { Pagination } from '../../interfaces/api';
-import { RootState } from '../store';
 
 const initialState: {
-  order: string;
-  loading: boolean;
-  following: boolean;
+  user: User | null;
   tracks: PlaylistItem[];
   playlist: Playlist | null;
-  view: 'LIST' | 'COMPACT';
+
+  loading: boolean;
   canEdit: boolean;
+  following: boolean;
+
+  order: string;
+  view: 'LIST' | 'COMPACT';
 } = {
+  user: null,
   tracks: [],
-  order: 'ALL',
-  loading: true,
   playlist: null,
-  following: false,
-  view: 'LIST',
+
+  loading: true,
   canEdit: false,
+  following: false,
+
+  order: 'ALL',
+  view: 'LIST',
 };
 
-export const fetchPlaylist = createAsyncThunk<[Playlist, PlaylistItem[], boolean, boolean], string>(
-  'playlist/fetchPlaylist',
-  async (id, { getState }) => {
-    const { auth } = getState() as RootState;
-    const { user } = auth;
+export const fetchPlaylist = createAsyncThunk<
+  [Playlist, PlaylistItem[], boolean, boolean, User],
+  string
+>('playlist/fetchPlaylist', async (id, { getState }) => {
+  const { auth } = getState() as RootState;
+  const { user } = auth;
 
-    const promises = [
-      playlistService.getPlaylist(id),
-      playlistService.getPlaylistItems(id),
-      userService.checkFollowedPlaylist(id),
-    ];
+  const promises = [
+    playlistService.getPlaylist(id),
+    playlistService.getPlaylistItems(id),
+    userService.checkFollowedPlaylist(id),
+  ];
 
-    const responses = await Promise.all(promises);
-    const playlist = responses[0].data as Playlist;
-    const { items } = responses[1].data as Pagination<PlaylistItem>;
-    const [following] = responses[2].data as boolean[];
+  const responses = await Promise.all(promises);
+  const playlist = responses[0].data as Playlist;
+  const { items } = responses[1].data as Pagination<PlaylistItem>;
+  const [following] = responses[2].data as boolean[];
 
-    const canEdit = user?.id === playlist.owner?.id || playlist.collaborative;
+  const { data: owner } = await userService.getUser(playlist.owner!.id);
 
-    return [playlist, items, following, canEdit];
+  const canEdit = user?.id === owner?.id || playlist.collaborative;
+
+  return [playlist, items, following, canEdit, owner];
+});
+
+export const refreshTracks = createAsyncThunk<PlaylistItem[], string>(
+  'playlist/refreshTracks',
+  async (id) => {
+    const { data } = await playlistService.getPlaylistItems(id);
+    return data.items;
   }
 );
 
@@ -54,7 +73,13 @@ const playlistSlice = createSlice({
   reducers: {
     setPlaylist(state, action: PayloadAction<{ playlist: Playlist | null }>) {
       state.playlist = action.payload.playlist;
-      state.loading = true;
+      if (!action.payload.playlist) {
+        state.tracks = [];
+        state.following = false;
+        state.canEdit = false;
+        state.user = null;
+        state.loading = true;
+      }
       state.view = 'LIST';
     },
     setView(state, action: PayloadAction<{ view: 'LIST' | 'COMPACT' }>) {
@@ -82,11 +107,15 @@ const playlistSlice = createSlice({
       state.tracks = action.payload[1];
       state.following = action.payload[2];
       state.canEdit = action.payload[3];
+      state.user = action.payload[4];
       state.loading = false;
+    });
+    builder.addCase(refreshTracks.fulfilled, (state, action) => {
+      state.tracks = action.payload;
     });
   },
 });
 
-export const playlistActions = { fetchPlaylist, ...playlistSlice.actions };
+export const playlistActions = { fetchPlaylist, ...playlistSlice.actions, refreshTracks };
 
 export default playlistSlice.reducer;
