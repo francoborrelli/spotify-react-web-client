@@ -1,3 +1,4 @@
+import { Track } from './track';
 import type { User } from './user';
 
 export interface Playlist {
@@ -96,4 +97,12 @@ export interface Playlist {
    * @type string
    */
   uri: string;
+}
+
+interface PlaylistItem {
+  added_at: string;
+  added_by: User;
+  is_local: boolean;
+  primary_color: string;
+  track: Track;
 }

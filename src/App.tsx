@@ -90,9 +90,9 @@ const RootComponent = () => {
 
   const routes = [
     { path: '', element: <Home container={container} /> },
+    { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
     { path: '/profile', element: <Profile /> },
     { path: '/search/:search', element: <SearchPage /> },
-    { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
     { path: '*', element: <Page404 /> },
   ] as const;
 

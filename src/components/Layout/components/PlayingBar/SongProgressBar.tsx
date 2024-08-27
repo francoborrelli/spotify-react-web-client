@@ -19,7 +19,13 @@ const SongProgressBar = () => {
       </div>
       <div style={{ width: '100%' }}>
         <Slider
-          value={state?.duration ? state.position / state.duration : 0}
+          value={
+            state?.duration
+              ? state.position >= state?.duration
+                ? 0
+                : state.position / state.duration
+              : 0
+          }
           isEnabled
           onChange={(value) => {
             if (!state) return;
@@ -29,7 +35,6 @@ const SongProgressBar = () => {
         />
       </div>
       <div className='text-white ml-2 text-xs'>
-        {' '}
         {state && state.duration ? msToTime(state.duration) : '0:00'}
       </div>
     </div>

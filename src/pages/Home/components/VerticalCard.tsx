@@ -6,6 +6,7 @@ import type { Playlist } from '../../../interfaces/playlists';
 
 // Redux
 import { useAppSelector } from '../../../store/store';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({
   uri,
@@ -13,17 +14,20 @@ const Card = ({
   image,
   isCurrent,
   description,
+  onClick,
 }: {
   uri: string;
   image: string;
   title: string;
   isCurrent: boolean;
   description: string;
+  onClick: () => void;
 }) => {
   const state = useAppSelector((state) => state.spotify.state);
 
   return (
     <div
+      onClick={onClick}
       style={{ cursor: 'pointer' }}
       className='playlist-card relative rounded-lg overflow-hidden  hover:bg-spotify-gray-lightest transition'
     >
@@ -49,6 +53,7 @@ const Card = ({
 };
 
 export const AlbumCard = ({ item }: { item: Album }) => {
+  const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
@@ -62,11 +67,13 @@ export const AlbumCard = ({ item }: { item: Album }) => {
       description={description}
       isCurrent={isCurrentAlbum}
       image={item.images[0].url}
+      onClick={() => navigate(`/album/${item.id}`)}
     />
   );
 };
 
 export const PlaylistCard = ({ item }: { item: Playlist }) => {
+  const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
@@ -80,6 +87,7 @@ export const PlaylistCard = ({ item }: { item: Playlist }) => {
       description={description}
       isCurrent={isCurrentAlbum}
       image={item.images[0].url}
+      onClick={() => navigate(`/playlist/${item.id}`)}
     />
   );
 };

@@ -12,21 +12,20 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Interfaces
 import type { FC } from 'react';
-import type { Playlist } from '../../interfaces/types';
 import { PlayCircleButton } from './playCircle';
 
-export const PlaylistControls: FC<{ playlist: Playlist }> = ({ playlist }) => {
+export const PlaylistControls: FC = () => {
   const dispatch = useAppDispatch();
   const order = useAppSelector((state) => state.playlist.order);
+  const playlist = useAppSelector((state) => state.playlist.playlist);
 
   const [tor] = useTranslation(['order']);
   const [t] = useTranslation(['playlist']);
 
-  const filters = ['ALL', ...(playlist.filters || [])];
+  const filters = ['List', 'Compact'];
 
   const items = filters.map((filter) => ({
     key: filter,
-    label: tor(filter),
     onClick: () => dispatch(playlistActions.setOrder({ order: filter })),
   }));
 
@@ -42,10 +41,7 @@ export const PlaylistControls: FC<{ playlist: Playlist }> = ({ playlist }) => {
         <Col>
           <Space>
             <Tooltip title={t('Filter')}>
-              <Dropdown
-                placement='bottomRight'
-                menu={{ items, selectedKeys: [order].filter((o) => o !== 'ALL') }}
-              >
+              <Dropdown placement='bottomRight' menu={{ items, selectedKeys: [order] }}>
                 <button className='order-button'>
                   <Space align='center'>
                     <span style={{ color: order !== 'ALL' ? 'inherit' : 'transparent' }}>

@@ -9,6 +9,7 @@ import type { Album } from '../../../../interfaces/albums';
 import type { Artist } from '../../../../interfaces/artist';
 import type { Playlist } from '../../../../interfaces/playlists';
 import { playerService } from '../../../../services/player';
+import { useNavigate } from 'react-router-dom';
 
 interface CardShortProps {
   uri: string;
@@ -17,6 +18,7 @@ interface CardShortProps {
   subtitle: string;
   rounded?: boolean;
   playing?: boolean;
+  onClick?: () => void;
 }
 
 const Play = (
@@ -50,7 +52,7 @@ const Pause = (
 );
 
 const CardShort = (props: CardShortProps) => {
-  const { image, title, subtitle, playing } = props;
+  const { image, title, subtitle, playing, onClick } = props;
 
   const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
@@ -66,6 +68,7 @@ const CardShort = (props: CardShortProps) => {
         }
       >
         <button
+          onClick={onClick}
           style={{ borderRadius: 10, display: 'flex', justifyContent: 'center' }}
           className='library-card collapsed'
         >
@@ -80,7 +83,10 @@ const CardShort = (props: CardShortProps) => {
   const button = (
     <button
       className='image-button'
-      onClick={async () => {
+      onClick={async (e) => {
+        if (e && e.stopPropagation) {
+          e.stopPropagation();
+        }
         if (playing) {
           return playerService.pausePlayback();
         }
@@ -92,7 +98,7 @@ const CardShort = (props: CardShortProps) => {
   );
 
   return (
-    <button style={{ borderRadius: 10 }} className='library-card'>
+    <button style={{ borderRadius: 10 }} className='library-card' onClick={onClick}>
       <div className={`image p-2 h-full items-center ${props.rounded ? 'rounded' : ''}`}>
         <div style={{ position: 'relative' }}>
           <div>
@@ -178,15 +184,21 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
 };
 
 const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
+  const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
+
+  const onClick = () => {
+    navigate(`/playlist/${playlist.id}`);
+  };
 
   return (
     <CardShort
-      image={playlist.images[0].url}
-      title={playlist.name}
-      subtitle={`Playlist • ${playlist.owner?.display_name}`}
+      onClick={onClick}
       uri={playlist.uri}
+      title={playlist.name}
+      image={playlist.images[0].url}
       playing={state?.context?.uri === playlist.uri}
+      subtitle={`Playlist • ${playlist.owner?.display_name}`}
     />
   );
 };

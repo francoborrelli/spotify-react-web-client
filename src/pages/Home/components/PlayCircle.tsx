@@ -16,15 +16,22 @@ export const PlayCircle: FC<PlayCircleProps> = ({ size = 20, big, isCurrent, con
   const state = useAppSelector((state) => state.spotify.state);
   const isPlaying = isCurrent && !state?.paused;
 
-  const onClick = useCallback(() => {
-    if (state && isCurrent && !state.paused) {
-      return playerService.pausePlayback().then();
-    }
-    const request = isCurrent
-      ? playerService.startPlayback()
-      : playerService.startPlayback(context);
-    request.then();
-  }, [state, isCurrent, context]);
+  const onClick = useCallback(
+    (e: any) => {
+      if (e && e.stopPropagation) {
+        e.stopPropagation();
+      }
+
+      if (state && isCurrent && !state.paused) {
+        return playerService.pausePlayback().then();
+      }
+      const request = isCurrent
+        ? playerService.startPlayback()
+        : playerService.startPlayback(context);
+      request.then();
+    },
+    [state, isCurrent, context]
+  );
 
   return (
     <button

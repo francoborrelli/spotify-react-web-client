@@ -1,41 +1,47 @@
 // Components
-import { PlaylistList } from './list';
+import { PlaylistList } from './table';
 import { PlaylistHeader } from './header';
 
 // Utils
-import { FC, RefObject, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
-// Constants
-import { playlists } from '../../constants/cv';
+import { FC, RefObject, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 // Redux
-import { useAppDispatch } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { playlistActions } from '../../store/slices/playlist';
+import { Spinner } from '../../components/spinner/spinner';
+import { getImageAnalysis } from '../../utils/imageAnyliser';
 
 const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { playlistId } = useParams();
+  const { playlistId } = useParams<{ playlistId: string }>();
 
-  const playlist = playlists.find((playlist) => playlist.name.toLowerCase() === playlistId);
+  const [color, setColor] = useState<string>('#121212');
+  const playlist = useAppSelector((state) => state.playlist.playlist);
 
   useEffect(() => {
-    if (!playlist) {
-      navigate('/404');
+    if (playlist && playlist.images?.length) {
+      getImageAnalysis(playlist.images[0].url).then((color) => {
+        setColor(color);
+      });
     }
+  }, [playlist]);
 
-    dispatch(playlistActions.resetOrder({ order: playlist?.defaultFilter || '' }));
-  }, [dispatch, playlist, navigate]);
-
-  if (!playlist) {
-    return null;
-  }
+  useEffect(() => {
+    if (playlistId) {
+      dispatch(playlistActions.fetchPlaylist(playlistId));
+    }
+    return () => {
+      dispatch(playlistActions.setPlaylist({ playlist: null }));
+    };
+  }, [dispatch, playlistId]);
 
   return (
     <div className='Playlist-section'>
-      <PlaylistHeader playlist={playlist} container={props.container} />
-      <PlaylistList playlist={playlist} />
+      <Spinner loading={!playlist}>
+        <PlaylistHeader container={props.container} color={color} />
+        <PlaylistList color={color} />
+      </Spinner>
     </div>
   );
 };

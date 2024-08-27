@@ -20,7 +20,9 @@ const transferPlayback = async (deviceId: string) => {
 /**
  * @description Start a new context or resume current playback on the user's active device. This API only works for users who have Spotify Premium. The order of execution is not guaranteed when you use this API with other Player API endpoints.
  */
-const startPlayback = async (body: { context_uri?: string; uris?: string[] } = {}) => {
+const startPlayback = async (
+  body: { context_uri?: string; uris?: string[]; offset?: { position: number } } = {}
+) => {
   await axios.put('/me/player/play', body);
 };
 

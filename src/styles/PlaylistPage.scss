@@ -76,6 +76,7 @@
 
     .song-details-play {
       display: none;
+      margin: 0 auto;
       font-size: 10px;
       justify-content: center;
 
@@ -114,7 +115,16 @@
 }
 
 .playlist-table {
-  border-bottom: 1px solid #282c34;
+  border-bottom: 1px solid #b3b3b3;
+}
+
+.playlist-description {
+  color: #d0baa3;
+  font-size: 0.9rem;
+}
+
+.owner {
+  margin-top: 20px;
 }
 
 .playlist-title {
@@ -127,7 +137,6 @@
   color: $text-primary-color;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin-bottom: 10px;
 }
 
 @media (max-width: 1130px) {
@@ -204,5 +213,25 @@
   font-size: 0.8rem;
   &:hover {
     color: white;
+  }
+}
+
+.nav-bar-header-table-container {
+  display: none;
+  visibility: hidden;
+  color: #bababa;
+  margin-top: 10px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: -10px;
+  background: #1f1f1f;
+
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+  -webkit-box-shadow: 0 -1px 0 0 #181818;
+  box-shadow: 0 -1px 0 0 #181818;
+
+  &.active {
+    display: block !important;
+    visibility: visible !important;
   }
 }

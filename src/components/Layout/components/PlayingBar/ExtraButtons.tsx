@@ -41,7 +41,7 @@ const DetailsButton = () => {
     <>
       <Tooltip title={t('Now playing view')}>
         <button
-          className={active ? 'active-icon-button' : ''}
+          className={active ? 'active-icon-button tablet-hidden' : 'tablet-hidden'}
           onClick={() => dispatch(uiActions.toggleDetails())}
           style={{
             marginLeft: 5,
@@ -91,6 +91,7 @@ const ExpandButton = () => {
 
       <Tooltip title={t('Full Screen')}>
         <button
+          className='tablet-hidden'
           onClick={handle.enter}
           style={{
             marginRight: 5,

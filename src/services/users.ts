@@ -64,6 +64,15 @@ const deleteTracks = async (ids: string[]) => {
   return await axios.delete('/me/tracks', { data: { ids } });
 };
 
+/**
+ * @description Check to see if the current user is following a specified playlist.
+ */
+const checkFollowedPlaylist = async (playlistId: string) => {
+  return await axios.get<boolean[]>(`/playlists/${playlistId}/followers/contains`).catch(() => {
+    return { data: false };
+  });
+};
+
 export const userService = {
   saveTracks,
   fetchQueue,
@@ -72,4 +81,5 @@ export const userService = {
   fetchTopTracks,
   checkSavedTracks,
   fetchFollowedArtists,
+  checkFollowedPlaylist,
 };
