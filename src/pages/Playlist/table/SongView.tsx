@@ -16,12 +16,14 @@ import { playerService } from '../../../services/player';
 import { msToTime } from '../../../utils';
 
 // Interfaces
-import type { PlaylistItem } from '../../../interfaces/playlists';
+import type { PlaylistItemWithSaved } from '../../../interfaces/playlists';
 import { Tooltip } from '../../../components/Tooltip';
+import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
+import { refreshTracks } from '../../../store/slices/playlist';
 
 interface SongViewProps {
   index: number;
-  song: PlaylistItem;
+  song: PlaylistItemWithSaved;
 }
 interface SongDataProps extends SongViewProps {}
 
@@ -88,8 +90,24 @@ const SongData = ({ song, index }: SongDataProps) => {
     </p>
   );
 
+  const addToLiked = (
+    <p
+      className='text-right actions tablet-hidden'
+      style={{ flex: 1, display: 'flex', justifyContent: 'end' }}
+    >
+      <AddSongToLibraryButton
+        size={18}
+        id={song.track.id}
+        isSaved={song.saved}
+        onToggle={() => {
+          dispatch(refreshTracks(playlist!.id));
+        }}
+      />
+    </p>
+  );
+
   const time = (
-    <p className='text-right ' style={{ flex: 3, display: 'flex', justifyContent: 'end' }}>
+    <p className='text-right ' style={{ flex: 1, display: 'flex', justifyContent: 'end' }}>
       {msToTime(song.track.duration_ms)}
     </p>
   );
@@ -148,6 +166,7 @@ const SongData = ({ song, index }: SongDataProps) => {
           {title}
           {album}
           {added}
+          {addToLiked}
           {time}
           {actions}
         </div>

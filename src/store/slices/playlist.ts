@@ -8,11 +8,11 @@ import { playlistService } from '../../services/playlists';
 import type { RootState } from '../store';
 import type { User } from '../../interfaces/user';
 import type { Pagination } from '../../interfaces/api';
-import type { Playlist, PlaylistItem } from '../../interfaces/playlists';
+import type { Playlist, PlaylistItem, PlaylistItemWithSaved } from '../../interfaces/playlists';
 
 const initialState: {
   user: User | null;
-  tracks: PlaylistItem[];
+  tracks: PlaylistItemWithSaved[];
   playlist: Playlist | null;
 
   loading: boolean;
@@ -35,7 +35,7 @@ const initialState: {
 };
 
 export const fetchPlaylist = createAsyncThunk<
-  [Playlist, PlaylistItem[], boolean, boolean, User],
+  [Playlist, PlaylistItemWithSaved[], boolean, boolean, User],
   string
 >('playlist/fetchPlaylist', async (id, { getState }) => {
   const { auth } = getState() as RootState;
@@ -52,18 +52,39 @@ export const fetchPlaylist = createAsyncThunk<
   const { items } = responses[1].data as Pagination<PlaylistItem>;
   const [following] = responses[2].data as boolean[];
 
-  const { data: owner } = await userService.getUser(playlist.owner!.id);
+  const extraPromises = [
+    userService.getUser(playlist.owner!.id),
+    userService.checkSavedTracks(items.map((item) => item.track.id)),
+  ];
+
+  const extraResponses = await Promise.all(extraPromises);
+
+  const owner = extraResponses[0].data as User;
+  const saved = extraResponses[1].data as boolean[];
 
   const canEdit = user?.id === owner?.id || playlist.collaborative;
 
-  return [playlist, items, following, canEdit, owner];
+  const itemsWithSave: PlaylistItemWithSaved[] = items.map((item, index) => ({
+    ...item,
+    saved: saved[index],
+  }));
+
+  return [playlist, itemsWithSave, following, canEdit, owner];
 });
 
-export const refreshTracks = createAsyncThunk<PlaylistItem[], string>(
+export const refreshTracks = createAsyncThunk<PlaylistItemWithSaved[], string>(
   'playlist/refreshTracks',
   async (id) => {
     const { data } = await playlistService.getPlaylistItems(id);
-    return data.items;
+    const { data: saved } = await userService.checkSavedTracks(
+      data.items.map((item) => item.track.id)
+    );
+    const itemsWithSave: PlaylistItemWithSaved[] = data.items.map((item, index) => ({
+      ...item,
+      saved: saved[index],
+    }));
+
+    return itemsWithSave;
   }
 );
 

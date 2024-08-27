@@ -4,16 +4,20 @@ import { Tooltip } from './Tooltip';
 import { useTranslation } from 'react-i18next';
 import { userService } from '../services/users';
 import { AddedToLibrary, AddToLibrary } from './Icons';
+import { message } from 'antd';
 
 const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
   size,
   onToggle,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['playlist']);
 
   const handleAddToLibrary = () => {
-    userService.saveTracks([id]).then(() => onToggle());
+    userService.saveTracks([id]).then(() => {
+      message.success(t('Song added to Liked Songs'));
+      onToggle();
+    });
   };
 
   return (
@@ -33,7 +37,10 @@ const DeleteSongFromLibrary: FC<{ id: string; onToggle: () => void; size?: numbe
   const { t } = useTranslation();
 
   const handleDeleteFromLibrary = () => {
-    userService.deleteTracks([id]).then(() => onToggle());
+    userService.deleteTracks([id]).then(() => {
+      message.success(t('Song removed from Liked Songs'));
+      onToggle();
+    });
   };
 
   return (

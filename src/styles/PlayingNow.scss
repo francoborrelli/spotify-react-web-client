@@ -158,6 +158,14 @@
   display: flex;
   justify-content: end;
   margin-bottom: 20px;
+
+  button {
+    padding: 6px;
+    border-radius: 50%;
+    &:hover {
+      background-color: rgba(98, 98, 98, 0.23);
+    }
+  }
 }
 
 .queue-song {

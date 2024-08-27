@@ -107,10 +107,14 @@ export interface Playlist {
   uri: string;
 }
 
-interface PlaylistItem {
+export interface PlaylistItem {
   added_at: string;
   added_by: User;
   is_local: boolean;
   primary_color: string;
   track: Track;
+}
+
+export interface PlaylistItemWithSaved extends PlaylistItem {
+  saved: boolean;
 }

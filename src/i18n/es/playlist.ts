@@ -20,4 +20,6 @@ export const playlist = {
   'Removed from Your Library': 'Eliminado de Tu biblioteca',
   'Save to Your Library': 'Guardar en Tu biblioteca',
   'Saved to Your Library': 'Guardado en Tu biblioteca',
+  'Add to Liked Songs': 'Agregar a Canciones Me Gusta',
+  'Remove from Liked Songs': 'Eliminar de Canciones Me Gusta',
 };

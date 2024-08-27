@@ -18,9 +18,10 @@ export const PlaylistTableHeader = () => {
       <div style={{ flex: 3 }}>
         <h3 className='column-name tablet-hidden text-left'>{t('Date Added')}</h3>
       </div>
+      <div style={{ flex: 1 }} className='tablet-hidden'></div>
       <div
         style={{
-          flex: 3,
+          flex: 1,
           display: 'flex',
           justifyContent: 'flex-end',
         }}
