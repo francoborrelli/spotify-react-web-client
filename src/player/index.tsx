@@ -1,11 +1,5 @@
 import { store } from '../store/store';
 
-// Utils
-import { getSongPath } from '../utils/getPublicPath';
-
-// Constants
-import { AVAILABLE_SONGS } from '../constants/songs';
-
 export const pauseAudio = () => {
   // @ts-ignore
   // AudioPlayer?.pause();

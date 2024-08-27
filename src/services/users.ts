@@ -81,6 +81,20 @@ const getUser = async (id: string) => {
   return await axios.get<User>(`/users/${id}`);
 };
 
+/**
+ * @description Remove the current user as a follower of a playlist.
+ */
+const unfollowPlaylist = async (playlistId: string) => {
+  return await axios.delete(`/playlists/${playlistId}/followers`);
+};
+
+/**
+ * @description Add the current user as a follower of a playlist.
+ */
+const followPlaylist = async (playlistId: string) => {
+  return await axios.put(`/playlists/${playlistId}/followers`);
+};
+
 export const userService = {
   getUser,
   saveTracks,
@@ -89,6 +103,8 @@ export const userService = {
   fetchTopArtists,
   fetchTopTracks,
   checkSavedTracks,
+  followPlaylist,
   fetchFollowedArtists,
   checkFollowedPlaylist,
+  unfollowPlaylist,
 };

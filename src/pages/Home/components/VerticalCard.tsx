@@ -7,6 +7,7 @@ import type { Playlist } from '../../../interfaces/playlists';
 // Redux
 import { useAppSelector } from '../../../store/store';
 import { useNavigate } from 'react-router-dom';
+import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
 
 const Card = ({
   uri,
@@ -81,13 +82,17 @@ export const PlaylistCard = ({ item }: { item: Playlist }) => {
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (
-    <Card
-      title={title}
-      uri={item.uri}
-      description={description}
-      isCurrent={isCurrentAlbum}
-      image={item.images[0].url}
-      onClick={() => navigate(`/playlist/${item.id}`)}
-    />
+    <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>
+      <div>
+        <Card
+          title={title}
+          uri={item.uri}
+          description={description}
+          isCurrent={isCurrentAlbum}
+          image={item.images[0].url}
+          onClick={() => navigate(`/playlist/${item.id}`)}
+        />
+      </div>
+    </PlayistActionsWrapper>
   );
 };

@@ -10,6 +10,7 @@ import type { Artist } from '../../../../interfaces/artist';
 import type { Playlist } from '../../../../interfaces/playlists';
 import { playerService } from '../../../../services/player';
 import { useNavigate } from 'react-router-dom';
+import { PlayistActionsWrapper } from '../../../Actions/PlaylistActions';
 
 interface CardShortProps {
   uri: string;
@@ -192,14 +193,18 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
   };
 
   return (
-    <CardShort
-      onClick={onClick}
-      uri={playlist.uri}
-      title={playlist.name}
-      image={playlist.images[0].url}
-      playing={state?.context?.uri === playlist.uri}
-      subtitle={`Playlist • ${playlist.owner?.display_name}`}
-    />
+    <PlayistActionsWrapper playlist={playlist} trigger={['contextMenu']}>
+      <div>
+        <CardShort
+          onClick={onClick}
+          uri={playlist.uri}
+          title={playlist.name}
+          image={playlist.images[0].url}
+          playing={state?.context?.uri === playlist.uri}
+          subtitle={`Playlist • ${playlist.owner?.display_name}`}
+        />
+      </div>
+    </PlayistActionsWrapper>
   );
 };
 

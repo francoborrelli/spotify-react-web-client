@@ -96,7 +96,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   const actions = (
     <p
       className='text-right actions tablet-hidden'
-      style={{ flex: 1, display: 'flex', justifyContent: 'end' }}
+      style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
     >
       <TrackActionsWrapper
         canEdit={canEdit}

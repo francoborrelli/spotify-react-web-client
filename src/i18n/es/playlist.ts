@@ -13,6 +13,11 @@ export const playlist = {
   'Added to queue': 'Agregado a la cola',
   'Go to album': 'Ir al álbum',
   'Go to artist': 'Ir al artista',
+  'Delete playlist': 'Eliminar playlist',
   Title: 'Título',
   Album: 'Álbum',
+  'Remove from Your Library': 'Eliminar de Tu biblioteca',
+  'Removed from Your Library': 'Eliminado de Tu biblioteca',
+  'Save to Your Library': 'Guardar en Tu biblioteca',
+  'Saved to Your Library': 'Guardado en Tu biblioteca',
 };
