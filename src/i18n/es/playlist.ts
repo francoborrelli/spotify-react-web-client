@@ -22,4 +22,5 @@ export const playlist = {
   'Saved to Your Library': 'Guardado en Tu biblioteca',
   'Add to Liked Songs': 'Agregar a Canciones Me Gusta',
   'Remove from Liked Songs': 'Eliminar de Canciones Me Gusta',
+  'Private Playlist': 'Playlist Privada',
 };

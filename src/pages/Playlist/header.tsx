@@ -94,7 +94,9 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color }) =>
           <Col xs={24} sm={18} lg={19}>
             <Row justify='space-between'>
               <Col span={24}>
-                <p className='text-white'>{t('Playlist')}</p>
+                <p className='text-white'>
+                  {t(playlist?.public ? 'Playlist' : 'Private Playlist')}
+                </p>
                 <h1 className='playlist-title'>{playlist?.name}</h1>
                 <p className='playlist-description'>{playlist?.description}</p>
               </Col>

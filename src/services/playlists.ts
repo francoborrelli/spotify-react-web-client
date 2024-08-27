@@ -88,6 +88,21 @@ const reorderPlaylistItems = async (
   );
 };
 
+/**
+ * @description Change a playlist's name and public/private state. (The user must, of course, own the playlist.)
+ */
+const changePlaylistDetails = async (
+  playlistId: string,
+  data: {
+    name?: string;
+    public?: boolean;
+    collaborative?: boolean;
+    description?: string;
+  }
+) => {
+  return axios.put(`/playlists/${playlistId}`, data);
+};
+
 export const playlistService = {
   getPlaylist,
   getMyPlaylists,
@@ -96,4 +111,5 @@ export const playlistService = {
   removePlaylistItems,
   getFeaturedPlaylists,
   reorderPlaylistItems,
+  changePlaylistDetails,
 };

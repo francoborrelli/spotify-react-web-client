@@ -17,9 +17,13 @@ import { fetchQueue } from '../../store/slices/queue';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { userService } from '../../services/users';
 import { yourLibraryActions } from '../../store/slices/yourLibrary';
+import { FaLock, FaUnlock } from 'react-icons/fa6';
+import { playlistService } from '../../services/playlists';
 
 interface PlayistActionsWrapperProps {
   playlist: Playlist;
+  isCurrent?: boolean;
+  onRefresh?: () => void;
   trigger?: ('contextMenu' | 'click')[];
   children: React.ReactNode | React.ReactNode[];
 }
@@ -58,6 +62,40 @@ export const PlayistActionsWrapper: FC<PlayistActionsWrapperProps> = memo((props
           type: 'divider',
         }
       );
+
+      if (playlist.public) {
+        items.push({
+          label: t('Make private'),
+          key: 4,
+          icon: <FaLock size={16} fill='#bababa' style={{ padding: 0, marginInlineEnd: 0 }} />,
+          onClick: () => {
+            playlistService.changePlaylistDetails(playlist.id, { public: false }).then(() => {
+              props.onRefresh?.();
+              message.open({
+                type: 'success',
+                content: t('Playlist is now private'),
+              });
+            });
+          },
+        });
+      } else {
+        items.push({
+          label: t('Make public'),
+          key: 5,
+          icon: <FaUnlock size={16} fill='#bababa' style={{ padding: 0, marginInlineEnd: 0 }} />,
+          onClick: () => {
+            playlistService
+              .changePlaylistDetails(playlist.id, { public: true, collaborative: false })
+              .then(() => {
+                props.onRefresh?.();
+                message.open({
+                  type: 'success',
+                  content: t('Playlist is now public'),
+                });
+              });
+          },
+        });
+      }
     } else {
       if (inLibrary) {
         items.push(
@@ -119,7 +157,7 @@ export const PlayistActionsWrapper: FC<PlayistActionsWrapperProps> = memo((props
     });
 
     return items;
-  }, [canEdit, dispatch, inLibrary, playlist.id, playlist.uri, t]);
+  }, [canEdit, dispatch, inLibrary, playlist.id, playlist.public, playlist.uri, props, t]);
 
   return (
     <Dropdown menu={{ items }} trigger={props.trigger}>

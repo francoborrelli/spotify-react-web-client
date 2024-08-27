@@ -88,6 +88,14 @@ export const refreshTracks = createAsyncThunk<PlaylistItemWithSaved[], string>(
   }
 );
 
+export const refreshPlaylist = createAsyncThunk<Playlist, string>(
+  'playlist/refreshPlaylist',
+  async (id) => {
+    const { data } = await playlistService.getPlaylist(id);
+    return data;
+  }
+);
+
 const playlistSlice = createSlice({
   name: 'playlist',
   initialState,
@@ -100,8 +108,8 @@ const playlistSlice = createSlice({
         state.canEdit = false;
         state.user = null;
         state.loading = true;
+        state.view = 'LIST';
       }
-      state.view = 'LIST';
     },
     setView(state, action: PayloadAction<{ view: 'LIST' | 'COMPACT' }>) {
       state.view = action.payload.view;
@@ -134,9 +142,17 @@ const playlistSlice = createSlice({
     builder.addCase(refreshTracks.fulfilled, (state, action) => {
       state.tracks = action.payload;
     });
+    builder.addCase(refreshPlaylist.fulfilled, (state, action) => {
+      state.playlist = action.payload;
+    });
   },
 });
 
-export const playlistActions = { fetchPlaylist, ...playlistSlice.actions, refreshTracks };
+export const playlistActions = {
+  fetchPlaylist,
+  refreshTracks,
+  refreshPlaylist,
+  ...playlistSlice.actions,
+};
 
 export default playlistSlice.reducer;

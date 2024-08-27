@@ -7,7 +7,7 @@ import { MenuDots, OrderListIcon } from '../../../components/Icons';
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { playlistActions } from '../../../store/slices/playlist';
+import { playlistActions, refreshPlaylist } from '../../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Interfaces
@@ -46,7 +46,13 @@ export const PlaylistControls: FC = () => {
               </div>
             ) : null}
 
-            <PlayistActionsWrapper playlist={playlist!} trigger={['click']}>
+            <PlayistActionsWrapper
+              playlist={playlist!}
+              trigger={['click']}
+              onRefresh={() => {
+                dispatch(refreshPlaylist(playlist!.id));
+              }}
+            >
               <Tooltip title={`More options for ${playlist?.name}`}>
                 <div className='scale'>
                   <MenuDots />

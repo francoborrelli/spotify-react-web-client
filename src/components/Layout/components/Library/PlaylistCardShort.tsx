@@ -2,7 +2,7 @@ import { Tooltip } from '../../../Tooltip';
 import { SpeakerIcon } from '../../../Icons';
 
 // Redux
-import { useAppSelector } from '../../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Interface
 import type { Album } from '../../../../interfaces/albums';
@@ -11,6 +11,7 @@ import type { Playlist } from '../../../../interfaces/playlists';
 import { playerService } from '../../../../services/player';
 import { useNavigate } from 'react-router-dom';
 import { PlayistActionsWrapper } from '../../../Actions/PlaylistActions';
+import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 interface CardShortProps {
   uri: string;
@@ -185,6 +186,7 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
 };
 
 const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
 
@@ -193,7 +195,13 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
   };
 
   return (
-    <PlayistActionsWrapper playlist={playlist} trigger={['contextMenu']}>
+    <PlayistActionsWrapper
+      playlist={playlist}
+      trigger={['contextMenu']}
+      onRefresh={() => {
+        dispatch(yourLibraryActions.fetchMyPlaylists());
+      }}
+    >
       <div>
         <CardShort
           onClick={onClick}
