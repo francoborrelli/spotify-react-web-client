@@ -4,10 +4,6 @@ import { PlayCircle } from '../Home/components/PlayCircle';
 // Utils
 import { useTranslation } from 'react-i18next';
 
-// Redux
-import { useAppDispatch } from '../../store/store';
-import { libraryActions } from '../../store/slices/library';
-
 // Interfaces
 import type { SearchResult } from '.';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +22,6 @@ export const TopResultSong = ({ item, onClick }: { item: SearchResult; onClick?:
   const [t] = useTranslation(['cv']);
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const title = t(item.name);
   const description = `${t(item.artist!)} • ${t(item.playlist)}`;

@@ -48,7 +48,7 @@ export const VolumeControls = () => {
         <Tooltip title={muted ? t('Unmute') : t('Mute')}>
           <div
             onClick={() => {
-              playerService.setVolume(muted ? volume : 1).then();
+              playerService.setVolume(muted ? volume : 100).then();
               setVolume(muted ? volume : 1);
             }}
           >
@@ -61,7 +61,11 @@ export const VolumeControls = () => {
             isEnabled
             value={muted ? 0 : volume}
             onChange={(value) => {
-              playerService.setVolume(Math.round(value)).then();
+              setVolume(value);
+            }}
+            onChangeEnd={(value) => {
+              setVolume(value);
+              playerService.setVolume(Math.round(value * 100)).then();
             }}
           />
         </div>

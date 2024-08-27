@@ -54,7 +54,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   ) : null;
 
   const title = (
-    <div className='flex flex-col' style={{ flex: 8 }}>
+    <div className='flex flex-col' style={{ flex: 7 }}>
       <div className='flex flex-row items-center'>
         <p className='title text-left'>{song.track.name}</p>
       </div>
@@ -74,7 +74,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   );
 
   const added = (
-    <p className='text-left tablet-hidden' style={{ flex: 4 }}>
+    <p className='text-left tablet-hidden' style={{ flex: 3 }}>
       <ReactTimeAgo date={new Date(song.added_at)} />
     </p>
   );

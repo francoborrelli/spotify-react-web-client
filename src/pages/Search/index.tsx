@@ -20,7 +20,6 @@ const searchableKeys: (keyof SearchResult)[] = ['name', 'artist', 'playlist', 'd
 
 export const SearchPage = () => {
   const { t } = useTranslation(['cv']);
-  const { t: searchT } = useTranslation(['search']);
 
   const params = useParams<{ search: string }>();
   const [items, searchItems] = useState<SearchResult[]>([]);

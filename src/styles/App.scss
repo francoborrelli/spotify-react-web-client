@@ -451,3 +451,16 @@ h3 {
     visibility: visible;
   }
 }
+
+.drag-line {
+  color: #1db954;
+  border: 1px solid #1db954 !important;
+  background-color: #1db954;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  cursor: pointer;
+}

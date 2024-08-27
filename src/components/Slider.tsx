@@ -75,7 +75,9 @@ export const Slider = ({
   isEnabled: boolean;
   direction?: Direction;
   value: number;
+  onChangeStart?: () => void;
   onChange: (value: number) => void;
+  onChangeEnd?: (value: number) => void;
 }) => {
   return (
     <div className='volume-sider-container'>
@@ -83,9 +85,7 @@ export const Slider = ({
         isEnabled={isEnabled}
         direction={direction}
         className='volume-sider'
-        style={{
-          cursor: 'pointer',
-        }}
+        style={{ cursor: 'pointer' }}
         {...props}
       >
         <SliderBar className='position-sider' direction={direction} value={value} />

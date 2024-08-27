@@ -14,19 +14,17 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import type { FC } from 'react';
 import { PlayCircleButton } from './playCircle';
 
+const filters = ['LIST', 'COMPACT'] as const;
+
 export const PlaylistControls: FC = () => {
   const dispatch = useAppDispatch();
-  const order = useAppSelector((state) => state.playlist.order);
-  const playlist = useAppSelector((state) => state.playlist.playlist);
-
   const [tor] = useTranslation(['order']);
-  const [t] = useTranslation(['playlist']);
-
-  const filters = ['List', 'Compact'];
+  const view = useAppSelector((state) => state.playlist.view);
 
   const items = filters.map((filter) => ({
     key: filter,
-    onClick: () => dispatch(playlistActions.setOrder({ order: filter })),
+    label: tor(filter),
+    onClick: () => dispatch(playlistActions.setView({ view: filter })),
   }));
 
   return (
@@ -40,13 +38,11 @@ export const PlaylistControls: FC = () => {
         </Col>
         <Col>
           <Space>
-            <Tooltip title={t('Filter')}>
-              <Dropdown placement='bottomRight' menu={{ items, selectedKeys: [order] }}>
+            <Tooltip title={tor('VIEW')}>
+              <Dropdown placement='bottomRight' menu={{ items, selectedKeys: [view] }}>
                 <button className='order-button'>
                   <Space align='center'>
-                    <span style={{ color: order !== 'ALL' ? 'inherit' : 'transparent' }}>
-                      {tor(order)}
-                    </span>
+                    <span>{tor(view)}</span>
                     <OrderListIcon />
                   </Space>
                 </button>

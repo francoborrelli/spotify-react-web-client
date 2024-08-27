@@ -43,9 +43,33 @@ const getFeaturedPlaylists = async (params: GetFeaturedPlaylistsParams = {}) => 
   return axios.get<{ playlists: Pagination<Playlist> }>('/browse/featured-playlists', { params });
 };
 
+/**
+ * @description Either reorder or replace items in a playlist depending on the request's parameters. To reorder items, include range_start, insert_before, range_length and snapshot_id in the request's body. To replace items, include uris as either a query parameter or in the request's body. Replacing items in a playlist will overwrite its existing items. This operation can be used for replacing or clearing items in a playlist.
+ */
+const reorderPlaylistItems = async (
+  playlistId: string,
+  uris: string[],
+  rangeStart: number,
+  insertBefore: number,
+  rangeLength: number,
+  snapshotId: string
+) => {
+  return axios.put(
+    `/playlists/${playlistId}/tracks`,
+    {
+      range_start: rangeStart,
+      insert_before: insertBefore,
+      range_length: rangeLength,
+      snapshot_id: snapshotId,
+    },
+    { params: { uris } }
+  );
+};
+
 export const playlistService = {
   getPlaylist,
   getMyPlaylists,
   getPlaylistItems,
   getFeaturedPlaylists,
+  reorderPlaylistItems,
 };
