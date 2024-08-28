@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { GenreHeader } from './container/header';
 
 // Redux
-import { fetchGenre } from '../../store/slices/genre';
+import { fetchGenre, genreActions } from '../../store/slices/genre';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Utils
@@ -21,6 +21,9 @@ export const GenrePage = memo(() => {
     if (params.genreId) {
       dispatch(fetchGenre(params.genreId));
     }
+    return () => {
+      dispatch(genreActions.setGenre(null));
+    };
   }, [dispatch, params.genreId]);
 
   useEffect(() => {

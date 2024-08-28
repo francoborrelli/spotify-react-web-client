@@ -39,7 +39,11 @@ export const fetchGenre = createAsyncThunk<[Category, Playlist[]], string>(
 const genreSlice = createSlice({
   name: 'genre',
   initialState,
-  reducers: {},
+  reducers: {
+    setGenre: (state, action) => {
+      state.category = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchGenre.pending, (state) => {
       state.loading = true;

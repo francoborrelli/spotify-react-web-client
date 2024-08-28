@@ -9,6 +9,7 @@ import { useAppSelector } from '../../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
 import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
+import { useTranslation } from 'react-i18next';
 
 const Card = ({
   uri,
@@ -80,10 +81,11 @@ export const AlbumCard = ({ item }: { item: Album }) => {
 
 export const PlaylistCard = ({ item }: { item: Playlist }) => {
   const navigate = useNavigate();
+  const [t] = useTranslation(['playlist']);
   const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
-  const description = item.tracks?.total + ' songs';
+  const description = item.tracks?.total + ' ' + t('songs');
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (

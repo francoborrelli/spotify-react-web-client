@@ -11,6 +11,8 @@ export const FeaturePlaylists: FC<NewReleasesProps> = () => {
   const { t } = useTranslation(['home']);
   const featurePlaylists = useAppSelector((state) => state.home.featurePlaylists);
 
+  if (!featurePlaylists || !featurePlaylists.length) return null;
+
   return (
     <div className='home'>
       <ItemsList title={`${t('Feature playlists')}`} items={featurePlaylists} />

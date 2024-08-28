@@ -10,6 +10,8 @@ import type { FC } from 'react';
 export const TopTracks: FC<{ setColor: (str: string) => void }> = (props) => {
   const topTracks = useAppSelector((state) => state.home.topTracks);
 
+  if (!topTracks || !topTracks.length) return null;
+
   return (
     <Row gutter={[16, 16]} style={{ margin: '20px 0px' }} justify='space-between'>
       {topTracks.map((item) => {
