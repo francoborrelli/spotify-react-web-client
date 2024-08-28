@@ -46,3 +46,8 @@ export interface Album {
   /** @description The Spotify URI for the album. */
   uri: string;
 }
+
+interface AlbumFullObject extends Album {
+  /** @description The tracks of the album. */
+  tracks: Track[];
+}

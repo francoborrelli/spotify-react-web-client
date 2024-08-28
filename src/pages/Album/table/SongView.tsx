@@ -1,12 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { useCallback, useMemo } from 'react';
-import { Pause, Play } from '../../../components/Icons';
-// import { Album } from '../../../components/Actions`';
+
+import { Tooltip } from '../../../components/Tooltip';
+import { MenuIcon, Pause, Play } from '../../../components/Icons';
+import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
+import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { libraryActions } from '../../../store/slices/library';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Service
 import { playerService } from '../../../services/player';
@@ -15,10 +18,7 @@ import { playerService } from '../../../services/player';
 import { msToTime } from '../../../utils';
 
 // Interfaces
-import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
-
 import type { TrackWithSave } from '../../../interfaces/track';
-import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 interface SongViewProps {
   index: number;
@@ -55,7 +55,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   ) : null;
 
   const title = (
-    <div className='flex flex-col' style={{ flex: 7 }}>
+    <div className='flex flex-col' style={{ flex: 8 }}>
       <div className='flex flex-row items-center'>
         <p className='title text-left'>{song.name}</p>
       </div>
@@ -68,6 +68,12 @@ const SongData = ({ song, index }: SongDataProps) => {
       ) : null}
     </div>
   );
+
+  const artist = !isList ? (
+    <p className='text-right tablet-hidden' style={{ flex: 4 }}>
+      {song.artists.map((a) => a.name).join(', ')}
+    </p>
+  ) : null;
 
   const addToLiked = (
     <p
@@ -91,25 +97,20 @@ const SongData = ({ song, index }: SongDataProps) => {
     </p>
   );
 
-  // const actions = (
-  //   <p
-  //     className='text-right actions tablet-hidden'
-  //     style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
-  //   >
-  //     <TrackActionsWrapper
-  //       canEdit={canEdit}
-  //       track={song.track}
-  //       playlist={playlist!}
-  //       trigger={['click']}
-  //     >
-  //       <Tooltip title={`More options for ${song.track?.name}`}>
-  //         <div>
-  //           <MenuIcon />
-  //         </div>
-  //       </Tooltip>
-  //     </TrackActionsWrapper>
-  //   </p>
-  // );
+  const actions = (
+    <p
+      className='text-right actions tablet-hidden'
+      style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
+    >
+      <TrackActionsWrapper track={song} album={album!} trigger={['click']}>
+        <Tooltip title={`More options for ${song?.name}`}>
+          <div>
+            <MenuIcon />
+          </div>
+        </Tooltip>
+      </TrackActionsWrapper>
+    </p>
+  );
 
   return (
     <TrackActionsWrapper track={song} trigger={['contextMenu']}>
@@ -138,10 +139,10 @@ const SongData = ({ song, index }: SongDataProps) => {
           </div>
           {image}
           {title}
+          {artist}
           {addToLiked}
           {time}
-          {/* {time}
-          {actions} */}
+          {actions}
         </div>
       </div>
     </TrackActionsWrapper>

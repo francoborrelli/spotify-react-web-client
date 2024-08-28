@@ -5,15 +5,18 @@ import { PlayCircle } from '../../Home/components/PlayCircle';
 import { memo, useMemo, type FC } from 'react';
 
 export const PlayCircleButton: FC<{ size?: number }> = memo(({ size = 30 }) => {
-  const playlist = useAppSelector((state) => state.playlist.playlist);
+  const album = useAppSelector((state) => state.album.album);
+
   const context = useAppSelector((state) => state.spotify.state?.context.uri);
-  const isCurrent = useMemo(() => playlist?.uri === context, [playlist, context]);
+
+  const isCurrent = useMemo(() => album?.uri === context, [album, context]);
+
   return (
     <PlayCircle
       size={size}
       big={size >= 30}
       isCurrent={isCurrent}
-      context={{ context_uri: playlist?.uri! }}
+      context={{ context_uri: album?.uri! }}
     />
   );
 });

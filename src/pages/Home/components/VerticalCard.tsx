@@ -8,6 +8,7 @@ import type { Playlist } from '../../../interfaces/playlists';
 import { useAppSelector } from '../../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
+import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
 
 const Card = ({
   uri,
@@ -62,14 +63,18 @@ export const AlbumCard = ({ item }: { item: Album }) => {
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (
-    <Card
-      title={title}
-      uri={item.uri}
-      description={description}
-      isCurrent={isCurrentAlbum}
-      image={item.images[0].url}
-      onClick={() => navigate(`/album/${item.id}`)}
-    />
+    <AlbumActionsWrapper album={item} trigger={['contextMenu']}>
+      <div>
+        <Card
+          title={title}
+          uri={item.uri}
+          description={description}
+          isCurrent={isCurrentAlbum}
+          image={item.images[0].url}
+          onClick={() => navigate(`/album/${item.id}`)}
+        />
+      </div>
+    </AlbumActionsWrapper>
   );
 };
 

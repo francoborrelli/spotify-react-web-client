@@ -1,31 +1,29 @@
 import { Col, Dropdown, Row, Space } from 'antd';
 
+import { PlayCircleButton } from './playCircle';
 import { Tooltip } from '../../../components/Tooltip';
 import { MenuDots, OrderListIcon } from '../../../components/Icons';
+import { AddAlbumToLibraryButton } from './AddAlbumToLibrary';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { playlistActions, refreshPlaylist } from '../../../store/slices/playlist';
+import { playlistActions } from '../../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Interfaces
 import type { FC } from 'react';
-import { PlayCircleButton } from './playCircle';
-import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
-import { AddPlaylistToLibraryButton } from './AddPlaylistToLibrary';
+import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
 
 const filters = ['LIST', 'COMPACT'] as const;
 
-export const PlaylistControls: FC = () => {
+export const AlbumControls: FC = () => {
   const dispatch = useAppDispatch();
   const [tor] = useTranslation(['order']);
-  const view = useAppSelector((state) => state.playlist.view);
-  const playlist = useAppSelector((state) => state.playlist.playlist);
-  const user = useAppSelector((state) => state.auth.user);
 
-  const isMine = playlist?.owner?.id === user?.id;
+  const album = useAppSelector((state) => state.album.album);
+  const view = useAppSelector((state) => state.playlist.view);
 
   const items = filters.map((filter) => ({
     key: filter,
@@ -40,25 +38,23 @@ export const PlaylistControls: FC = () => {
           <Space align='center'>
             <PlayCircleButton />
 
-            {!isMine ? (
-              <div className='scale' style={{ marginRight: 10 }}>
-                {/* <AddPlaylistToLibraryButton id={playlist!.id} /> */}
-              </div>
-            ) : null}
+            <div className='scale' style={{ marginRight: 10 }}>
+              <AddAlbumToLibraryButton id={album!.id} />
+            </div>
 
-            {/* <PlayistActionsWrapper
-              playlist={playlist!}
+            <AlbumActionsWrapper
+              album={album!}
               trigger={['click']}
               onRefresh={() => {
-                dispatch(refreshPlaylist(playlist!.id));
+                // dispatch(refreshPlaylist(playlist!.id));
               }}
             >
-              <Tooltip title={`More options for ${playlist?.name}`}>
+              <Tooltip title={`More options for ${album?.name}`}>
                 <div className='scale'>
                   <MenuDots />
                 </div>
               </Tooltip>
-            </PlayistActionsWrapper> */}
+            </AlbumActionsWrapper>
           </Space>
         </Col>
         <Col>

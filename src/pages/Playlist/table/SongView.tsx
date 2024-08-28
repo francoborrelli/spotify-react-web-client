@@ -75,6 +75,12 @@ const SongData = ({ song, index }: SongDataProps) => {
     </div>
   );
 
+  const artist = !isList ? (
+    <p className='text-left tablet-hidden' style={{ flex: 5 }}>
+      {song.track.artists.map((a) => a.name).join(', ')}
+    </p>
+  ) : null;
+
   const album = (
     <p className='text-left tablet-hidden' style={{ flex: 5 }}>
       {song.track.album.name}
@@ -164,6 +170,7 @@ const SongData = ({ song, index }: SongDataProps) => {
           </div>
           {image}
           {title}
+          {artist}
           {album}
           {added}
           {addToLiked}

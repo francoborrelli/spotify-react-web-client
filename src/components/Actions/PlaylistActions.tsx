@@ -124,7 +124,7 @@ export const PlayistActionsWrapper: FC<PlayistActionsWrapperProps> = memo((props
       } else {
         items.push(
           {
-            label: t('Save to Your Library'),
+            label: t('Add to Your Library'),
             key: 8,
             icon: <AddToLibrary style={{ height: 16, width: 16, marginInlineEnd: 0 }} />,
             onClick: () => {

@@ -3,15 +3,20 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Services
 import { userService } from '../../services/users';
 import { albumsService } from '../../services/albums';
+import { artistService } from '../../services/artist';
 
 // Interfaces
-import type { Album } from '../../interfaces/albums';
+import type { Album, AlbumFullObject } from '../../interfaces/albums';
 import type { Pagination } from '../../interfaces/api';
+import type { Artist } from '../../interfaces/artist';
 import type { Track, TrackWithSave } from '../../interfaces/track';
 
 const initialState: {
-  album: Album | null;
+  artist: Artist | null;
   tracks: TrackWithSave[];
+  album: AlbumFullObject | null;
+
+  otherAlbums: Album[];
 
   loading: boolean;
   following: boolean;
@@ -21,6 +26,8 @@ const initialState: {
 } = {
   tracks: [],
   album: null,
+  artist: null,
+  otherAlbums: [],
 
   loading: true,
   following: false,
@@ -29,44 +36,54 @@ const initialState: {
   view: 'LIST',
 };
 
-export const fetchAlbum = createAsyncThunk<[Album, TrackWithSave[], boolean], string>(
-  'album/fetchAlbum',
-  async (id) => {
-    const promises = [
-      albumsService.fetchAlbum(id),
-      albumsService.fetchAlbumTracks(id, { limit: 50 }),
-      userService.checkFollowingArtists([id]),
-    ];
+export const fetchAlbum = createAsyncThunk<
+  [AlbumFullObject, TrackWithSave[], boolean, Artist, Album[]],
+  string
+>('album/fetchAlbum', async (id) => {
+  const promises = [
+    albumsService.fetchAlbum(id),
+    albumsService.fetchAlbumTracks(id, { limit: 50 }),
+    userService.checkFollowingArtists([id]),
+  ];
 
-    const responses = await Promise.all(promises);
-    const playlist = responses[0].data as Album;
-    const { items } = responses[1].data as Pagination<Track>;
-    const [following] = responses[2].data as boolean[];
+  const responses = await Promise.all(promises);
+  const album = responses[0].data as AlbumFullObject;
+  const { items } = responses[1].data as Pagination<Track>;
+  const [following] = responses[2].data as boolean[];
 
-    const extraPromises = [userService.checkSavedTracks(items.map((item) => item.id))];
+  const extraPromises = [
+    userService.checkSavedTracks(items.map((item) => item.id)),
+    artistService.fetchArtist(album.artists[0].id),
+    artistService.fetchArtistAlbums(album.artists[0].id, { limit: 10 }),
+  ];
 
-    const extraResponses = await Promise.all(extraPromises);
-    const saved = extraResponses[0].data as boolean[];
+  const extraResponses = await Promise.all(extraPromises);
+  const saved = extraResponses[0].data as boolean[];
+  const artist = extraResponses[1].data as Artist;
+  const albums = extraResponses[2].data.items as Album[];
 
-    const itemsWithSave: TrackWithSave[] = items.map((item, index) => ({
-      ...item,
-      saved: saved[index],
-    }));
+  const itemsWithSave: TrackWithSave[] = items.map((item, index) => ({
+    ...item,
+    saved: saved[index],
+  }));
 
-    return [playlist, itemsWithSave, following];
-  }
-);
+  return [album, itemsWithSave, following, artist, albums];
+});
 
 const albumSlice = createSlice({
   name: 'album',
   initialState,
   reducers: {
-    setAlbum(state, action: PayloadAction<{ album: Album | null }>) {
+    setFollowing(state, action: PayloadAction<{ following: boolean }>) {
+      state.following = action.payload.following;
+    },
+    setAlbum(state, action: PayloadAction<{ album: AlbumFullObject | null }>) {
       state.album = action.payload.album;
       if (!action.payload.album) {
         state.tracks = [];
         state.following = false;
         state.loading = true;
+        state.artist = null;
         state.view = 'LIST';
       }
     },
@@ -93,7 +110,9 @@ const albumSlice = createSlice({
     builder.addCase(fetchAlbum.fulfilled, (state, action) => {
       state.album = action.payload[0];
       state.tracks = action.payload[1];
+      state.artist = action.payload[3];
       state.following = action.payload[2];
+      state.otherAlbums = action.payload[4];
       state.loading = false;
     });
   },

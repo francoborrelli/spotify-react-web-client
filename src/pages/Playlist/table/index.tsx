@@ -32,38 +32,40 @@ export const PlaylistList: FC<PlaylistListProps> = memo(({ color }) => {
       <div className='playlist-table'>
         <PlaylistTableHeader />
       </div>
-      {canEdit ? (
-        <div>
-          <ReactDragListView
-            nodeSelector='button'
-            lineClassName='drag-line'
-            onDragEnd={(from, to) => {
-              playlistService
-                .reorderPlaylistItems(
-                  playlist?.id!,
-                  [tracks[from].track.uri],
-                  from,
-                  to,
-                  1,
-                  playlist?.snapshot_id!
-                )
-                .then(() => {
-                  dispatch(playlistActions.reorderTracks({ from, to }));
-                });
-            }}
-          >
+      <div style={{ paddingBottom: 30 }}>
+        {canEdit ? (
+          <div>
+            <ReactDragListView
+              nodeSelector='button'
+              lineClassName='drag-line'
+              onDragEnd={(from, to) => {
+                playlistService
+                  .reorderPlaylistItems(
+                    playlist?.id!,
+                    [tracks[from].track.uri],
+                    from,
+                    to,
+                    1,
+                    playlist?.snapshot_id!
+                  )
+                  .then(() => {
+                    dispatch(playlistActions.reorderTracks({ from, to }));
+                  });
+              }}
+            >
+              {tracks.map((song, index) => (
+                <SongView song={song} key={song.track.id} index={index} />
+              ))}
+            </ReactDragListView>
+          </div>
+        ) : (
+          <div>
             {tracks.map((song, index) => (
               <SongView song={song} key={song.track.id} index={index} />
             ))}
-          </ReactDragListView>
-        </div>
-      ) : (
-        <div>
-          {tracks.map((song, index) => (
-            <SongView song={song} key={song.track.id} index={index} />
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 });

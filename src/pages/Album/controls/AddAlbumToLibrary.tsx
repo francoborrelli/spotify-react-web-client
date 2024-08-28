@@ -5,21 +5,25 @@ import { Tooltip } from '../../../components/Tooltip';
 import { AddedToLibrary, AddToLibrary } from '../../../components/Icons';
 
 // Services
-import { userService } from '../../../services/users';
+import { albumsService } from '../../../services/albums';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { yourLibraryActions } from '../../../store/slices/yourLibrary';
+import { albumActions } from '../../../store/slices/album';
 
-const FollowPlaylist: FC<{ id: string; onToggle: () => void; size?: number }> = ({
+const FollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
   size,
   onToggle,
 }) => {
   const { t } = useTranslation(['playlist']);
-
+  const dispatch = useAppDispatch();
   const handleAddToLibrary = () => {
-    userService.followPlaylist(id).then(() => onToggle());
+    albumsService.saveAlbums([id]).then(() => {
+      dispatch(albumActions.setFollowing({ following: true }));
+      onToggle();
+    });
   };
 
   return (
@@ -31,16 +35,20 @@ const FollowPlaylist: FC<{ id: string; onToggle: () => void; size?: number }> = 
   );
 };
 
-const UnfollowPlaylist: FC<{ id: string; onToggle: () => void; size?: number }> = ({
+const UnfollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
   size,
   onToggle,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const handleDeleteFromLibrary = useCallback(() => {
-    userService.unfollowPlaylist(id).then(() => onToggle());
-  }, [id, onToggle]);
+    albumsService.deleteAlbums([id]).then(() => {
+      dispatch(albumActions.setFollowing({ following: false }));
+      onToggle();
+    });
+  }, [dispatch, id, onToggle]);
 
   return (
     <Tooltip title={t('Remove from Your Library')}>
@@ -51,20 +59,17 @@ const UnfollowPlaylist: FC<{ id: string; onToggle: () => void; size?: number }> 
   );
 };
 
-export const AddPlaylistToLibraryButton = ({ id }: { id: string }) => {
+export const AddAlbumToLibraryButton = ({ id }: { id: string }) => {
   const dispatch = useAppDispatch();
-  const myPlaylists = useAppSelector((state) => state.yourLibrary.myPlaylists);
-  const isSaved = useMemo(
-    () => myPlaylists.some((playlist) => playlist.id === id),
-    [myPlaylists, id]
-  );
+  const isSaved = useAppSelector((state) => state.album.following);
+
   const onToggle = () => {
-    dispatch(yourLibraryActions.fetchMyPlaylists());
+    dispatch(yourLibraryActions.fetchMyAlbums());
   };
 
   return isSaved ? (
-    <UnfollowPlaylist size={32} id={id} onToggle={onToggle} />
+    <UnfollowAlbum size={32} id={id} onToggle={onToggle} />
   ) : (
-    <FollowPlaylist size={32} id={id} onToggle={onToggle} />
+    <FollowAlbum size={32} id={id} onToggle={onToggle} />
   );
 };

@@ -1,30 +1,41 @@
 import { Col, Row, Space } from 'antd';
+import { Link } from 'react-router-dom';
+import { PlaylistTableHeader } from './table/header';
+import { PlayCircleButton } from './controls/playCircle';
 
 // I18n
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
+import type { Track } from '../../interfaces/track';
 import { RefObject, useEffect, useState, type FC } from 'react';
-import { Link } from 'react-router-dom';
+
+// Redux
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Utils
+import dayjs from 'dayjs';
 import tinycolor from 'tinycolor2';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { PlayCircleButton } from './controls/playCircle';
-import { PlaylistTableHeader } from './table/header';
-import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
 
 interface AlbumHeaderProps {
   color: string;
   container: RefObject<HTMLDivElement>;
 }
 
+// function that sums tracks length and return duration in minutes and seconds
+export const sumTracksLength = (tracks: Track[]): string => {
+  const totalDuration = tracks.reduce((acc, track) => acc + track.duration_ms, 0);
+  const minutes = Math.floor(totalDuration / 60000);
+  const seconds = Math.floor((totalDuration % 60000) / 1000);
+  return `${minutes} min ${seconds} sec`;
+};
+
 export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
   const { t } = useTranslation(['album']);
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
   const album = useAppSelector((state) => state.album.album);
+  const artist = useAppSelector((state) => state.album.artist);
 
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeTable, setActiveTable] = useState(false);
@@ -33,6 +44,8 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
   const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
   const detailsCollaped = useAppSelector((state) => state.ui.detailsCollapsed);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+
+  const tracks = useAppSelector((state) => state.album.tracks);
 
   useEffect(() => {
     const ref = container.current;
@@ -100,38 +113,35 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
               <Col span={24}>
                 <p className='text-white'>{t('Album')}</p>
                 <h1 className='playlist-title'>{album?.name}</h1>
-                {/* <p className='playlist-description'>{album?.}</p> */}
               </Col>
               <Col span={24}>
                 <Space className='owner'>
-                  {/* {album?.artists?.length ? (
+                  {artist ? (
                     <Link to='/profile'>
                       <img
-                        className='playlist-avatar'
                         id='user-avatar'
                         alt='User Avatar'
-                        src={album.artists?.images[0].url}
-                      />{' '}
+                        src={artist.images[0].url}
+                        className='playlist-avatar'
+                      />
                     </Link>
-                  ) : null} */}
+                  ) : null}
 
-                  {/* <h3 className='text-sm font-semibold text-white'>
-                    {owner ? (
-                      owner?.display_name === 'Spotify' ? (
-                        <span className='link-text'>{owner?.display_name}</span>
-                      ) : (
-                        <Link to='/' className='link-text'>
-                          {owner?.display_name}
-                        </Link>
-                      )
+                  <h3 className='text-sm font-semibold text-white'>
+                    {artist ? (
+                      <Link to='/' className='link-text'>
+                        {artist?.name}
+                      </Link>
                     ) : (
                       ''
                     )}{' '}
                     <span className='songs-number'>
-                      {playlist?.followers?.total ? ` • ${playlist?.followers?.total} saves` : ' '}{' '}
-                      • {playlist?.tracks?.total} {t('songs')}
+                      {' '}
+                      • {dayjs(album?.release_date!).format('YYYY')} • {album?.total_tracks} songs,
+                      {'  '}
+                      {sumTracksLength(tracks)}
                     </span>
-                  </h3> */}
+                  </h3>
                 </Space>
               </Col>
             </Row>
