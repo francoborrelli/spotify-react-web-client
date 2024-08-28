@@ -1,4 +1,5 @@
 import { home } from './home';
+import { album } from './album';
 import { order } from './order';
 import { search } from './search';
 import { errors } from './errors';
@@ -8,4 +9,4 @@ import { playlist } from './playlist';
 import { navigation } from './navigation';
 import { playingBar } from './playingBar';
 
-export { home, order, errors, search, navbar, playlist, playingBar, profile, navigation };
+export { home, album, order, errors, search, navbar, playlist, playingBar, profile, navigation };

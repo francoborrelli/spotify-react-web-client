@@ -166,7 +166,9 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color }) =>
                       ''
                     )}{' '}
                     <span className='songs-number'>
-                      {playlist?.followers?.total ? ` • ${playlist?.followers?.total} saves` : ' '}{' '}
+                      {playlist?.followers?.total
+                        ? ` • ${playlist?.followers?.total} ${t('saves')}`
+                        : ' '}{' '}
                       • {playlist?.tracks?.total} {t('songs')}
                     </span>
                   </h3>

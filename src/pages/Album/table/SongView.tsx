@@ -16,6 +16,7 @@ import { playerService } from '../../../services/player';
 
 // Utils
 import { msToTime } from '../../../utils';
+import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { TrackWithSave } from '../../../interfaces/track';
@@ -28,6 +29,8 @@ interface SongDataProps extends SongViewProps {}
 
 const SongData = ({ song, index }: SongDataProps) => {
   const dispatch = useAppDispatch();
+  const [tor] = useTranslation(['order']);
+
   const view = useAppSelector((state) => state.playlist.view);
   const isList = useMemo(() => view === 'LIST', [view]);
 
@@ -103,7 +106,7 @@ const SongData = ({ song, index }: SongDataProps) => {
       style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
     >
       <TrackActionsWrapper track={song} album={album!} trigger={['click']}>
-        <Tooltip title={`More options for ${song?.name}`}>
+        <Tooltip title={`${tor('More options for')} ${song?.name}`}>
           <div>
             <MenuIcon />
           </div>

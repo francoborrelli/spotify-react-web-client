@@ -11,7 +11,7 @@ import type { Track } from '../../interfaces/track';
 import { RefObject, useEffect, useState, type FC } from 'react';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useAppSelector } from '../../store/store';
 
 // Utils
 import dayjs from 'dayjs';
@@ -33,7 +33,6 @@ export const sumTracksLength = (tracks: Track[]): string => {
 export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
   const { t } = useTranslation(['album']);
 
-  const dispatch = useAppDispatch();
   const album = useAppSelector((state) => state.album.album);
   const artist = useAppSelector((state) => state.album.artist);
 
@@ -137,8 +136,8 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
                     )}{' '}
                     <span className='songs-number'>
                       {' '}
-                      • {dayjs(album?.release_date!).format('YYYY')} • {album?.total_tracks} songs,
-                      {'  '}
+                      • {dayjs(album?.release_date!).format('YYYY')} • {album?.total_tracks}{' '}
+                      {t('songs')},{'  '}
                       {sumTracksLength(tracks)}
                     </span>
                   </h3>

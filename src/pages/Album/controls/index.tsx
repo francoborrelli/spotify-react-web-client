@@ -49,7 +49,7 @@ export const AlbumControls: FC = () => {
                 // dispatch(refreshPlaylist(playlist!.id));
               }}
             >
-              <Tooltip title={`More options for ${album?.name}`}>
+              <Tooltip title={`${tor('More options for')} ${album?.name}`}>
                 <div className='scale'>
                   <MenuDots />
                 </div>

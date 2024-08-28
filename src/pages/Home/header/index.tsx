@@ -2,8 +2,13 @@ import { Space } from 'antd';
 import { FC, RefObject } from 'react';
 import Chip from '../../../components/Chip';
 import { PageHeader } from '../../../components/Layout/components/Header';
-import { useAppSelector } from '../../../store/store';
-import { capitalizeText } from '../../../utils/capitalize';
+
+// Utils
+import { useTranslation } from 'react-i18next';
+
+// Redux
+import { homeActions } from '../../../store/slices/home';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 interface HomeHeaderProps {
   color: string;
@@ -15,17 +20,19 @@ const SECTIONS = ['ALL', 'MUSIC', 'PODCASTS'];
 export const HomeHeader: FC<HomeHeaderProps> = (props) => {
   const { container, color } = props;
 
+  const dispatch = useAppDispatch();
+  const [t] = useTranslation(['home']);
   const section = useAppSelector((state) => state.home.section);
 
   return (
     <PageHeader color={color} container={container} activeHeider={20}>
-      <Space style={{ marginLeft: 10, marginTop: 5 }}>
+      <Space style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
         {SECTIONS.map((item) => (
           <Chip
             key={item}
+            text={t(item)}
             active={section === item}
-            text={capitalizeText(item)}
-            onClick={() => console.log('Change section')}
+            onClick={() => dispatch(homeActions.setSection(item as any))}
           />
         ))}
       </Space>

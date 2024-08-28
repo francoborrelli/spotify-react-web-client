@@ -2,24 +2,25 @@
 
 import ReactTimeAgo from 'react-time-ago';
 import { useCallback, useMemo } from 'react';
+import { Tooltip } from '../../../components/Tooltip';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
+import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { libraryActions } from '../../../store/slices/library';
+import { refreshTracks } from '../../../store/slices/playlist';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Service
 import { playerService } from '../../../services/player';
 
 // Utils
 import { msToTime } from '../../../utils';
+import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { PlaylistItemWithSaved } from '../../../interfaces/playlists';
-import { Tooltip } from '../../../components/Tooltip';
-import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
-import { refreshTracks } from '../../../store/slices/playlist';
 
 interface SongViewProps {
   index: number;
@@ -29,6 +30,8 @@ interface SongDataProps extends SongViewProps {}
 
 const SongData = ({ song, index }: SongDataProps) => {
   const dispatch = useAppDispatch();
+  const [tor] = useTranslation(['order']);
+
   const view = useAppSelector((state) => state.playlist.view);
   const isList = useMemo(() => view === 'LIST', [view]);
 
@@ -129,7 +132,7 @@ const SongData = ({ song, index }: SongDataProps) => {
         playlist={playlist!}
         trigger={['click']}
       >
-        <Tooltip title={`More options for ${song.track?.name}`}>
+        <Tooltip title={`${tor('More options for')} ${song.track?.name}`}>
           <div>
             <MenuIcon />
           </div>

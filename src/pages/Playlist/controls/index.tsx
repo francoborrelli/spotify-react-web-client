@@ -1,29 +1,30 @@
 import { Col, Dropdown, Row, Space } from 'antd';
 
+import { PlayCircleButton } from './playCircle';
 import { Tooltip } from '../../../components/Tooltip';
 import { MenuDots, OrderListIcon } from '../../../components/Icons';
+import { AddPlaylistToLibraryButton } from './AddPlaylistToLibrary';
+import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { playlistActions, refreshPlaylist } from '../../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { playlistActions, refreshPlaylist } from '../../../store/slices/playlist';
 
 // Interfaces
 import type { FC } from 'react';
-import { PlayCircleButton } from './playCircle';
-import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
-import { AddPlaylistToLibraryButton } from './AddPlaylistToLibrary';
 
 const filters = ['LIST', 'COMPACT'] as const;
 
 export const PlaylistControls: FC = () => {
   const dispatch = useAppDispatch();
   const [tor] = useTranslation(['order']);
+
+  const user = useAppSelector((state) => state.auth.user);
   const view = useAppSelector((state) => state.playlist.view);
   const playlist = useAppSelector((state) => state.playlist.playlist);
-  const user = useAppSelector((state) => state.auth.user);
 
   const isMine = playlist?.owner?.id === user?.id;
 
@@ -53,7 +54,7 @@ export const PlaylistControls: FC = () => {
                 dispatch(refreshPlaylist(playlist!.id));
               }}
             >
-              <Tooltip title={`More options for ${playlist?.name}`}>
+              <Tooltip title={`${tor('More options for')} ${playlist?.name}`}>
                 <div className='scale'>
                   <MenuDots />
                 </div>

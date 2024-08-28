@@ -226,6 +226,10 @@ h3 {
 
 .ant-dropdown-menu-submenu {
   min-width: 170px;
+
+  .ant-dropdown-menu-title-content {
+    margin-left: 10px;
+  }
 }
 
 .ant-dropdown-menu-sub {
@@ -237,7 +241,6 @@ h3 {
 
   svg {
     fill: hsla(0, 0%, 100%, 0.9);
-    margin-right: 11px;
   }
   .ant-dropdown-menu-submenu-title {
     width: 100%;

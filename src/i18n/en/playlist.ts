@@ -14,4 +14,5 @@ export const playlist = {
   'Go to artist': 'Go to artist',
   Title: 'Title',
   Album: 'Album',
+  Artist: 'Artist',
 };

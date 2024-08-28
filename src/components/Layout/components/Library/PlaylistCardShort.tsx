@@ -1,17 +1,22 @@
 import { Tooltip } from '../../../Tooltip';
 import { SpeakerIcon } from '../../../Icons';
+import { AlbumActionsWrapper } from '../../../Actions/AlbumActions';
+import { PlayistActionsWrapper } from '../../../Actions/PlaylistActions';
+
+// Utils
+import { useNavigate } from 'react-router-dom';
+
+// Services
+import { playerService } from '../../../../services/player';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 // Interface
 import type { Album } from '../../../../interfaces/albums';
 import type { Artist } from '../../../../interfaces/artist';
 import type { Playlist } from '../../../../interfaces/playlists';
-import { playerService } from '../../../../services/player';
-import { useNavigate } from 'react-router-dom';
-import { PlayistActionsWrapper } from '../../../Actions/PlaylistActions';
-import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 interface CardShortProps {
   uri: string;
@@ -172,16 +177,27 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
 };
 
 export const AlbumCardShort = ({ album }: { album: Album }) => {
+  const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
 
   return (
-    <CardShort
-      image={album.images[0].url}
-      title={album.name}
-      subtitle={album.artists[0].name}
-      uri={album.uri}
-      playing={state?.context?.uri === album.uri}
-    />
+    <AlbumActionsWrapper
+      album={album}
+      trigger={['contextMenu']}
+      onRefresh={() => {
+        dispatch(yourLibraryActions.fetchMyAlbums());
+      }}
+    >
+      <div>
+        <CardShort
+          image={album.images[0].url}
+          title={album.name}
+          subtitle={album.artists[0].name}
+          uri={album.uri}
+          playing={state?.context?.uri === album.uri}
+        />
+      </div>
+    </AlbumActionsWrapper>
   );
 };
 

@@ -5,4 +5,5 @@ export const order = {
   ORDER: 'Order',
   ORDER_LIST: 'Order List',
   VIEW: 'View',
+  'More options for': 'More options for',
 };
