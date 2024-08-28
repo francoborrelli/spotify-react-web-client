@@ -2,24 +2,25 @@
 
 import { useCallback, useMemo } from 'react';
 
-import { Tooltip } from '../../../components/Tooltip';
-import { MenuIcon, Pause, Play } from '../../../components/Icons';
-import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
-import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
+// Components
+import { Tooltip } from '../../../../components/Tooltip';
+import { MenuIcon, Pause, Play } from '../../../../components/Icons';
+import { AddSongToLibraryButton } from '../../../../components/AddSongToLibrary';
+import { TrackActionsWrapper } from '../../../../components/Actions/TrackActions';
 
 // Redux
-import { libraryActions } from '../../../store/slices/library';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { libraryActions } from '../../../../store/slices/library';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Service
-import { playerService } from '../../../services/player';
+import { playerService } from '../../../../services/player';
 
 // Utils
-import { msToTime } from '../../../utils';
+import { msToTime } from '../../../../utils';
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
-import type { TrackWithSave } from '../../../interfaces/track';
+import type { TrackWithSave } from '../../../../interfaces/track';
 
 interface SongViewProps {
   index: number;
@@ -30,11 +31,6 @@ interface SongDataProps extends SongViewProps {}
 const SongData = ({ song, index }: SongDataProps) => {
   const dispatch = useAppDispatch();
   const [tor] = useTranslation(['order']);
-
-  const view = useAppSelector((state) => state.playlist.view);
-  const isList = useMemo(() => view === 'LIST', [view]);
-
-  const album = useAppSelector((state) => state.album.album);
 
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
@@ -48,35 +44,21 @@ const SongData = ({ song, index }: SongDataProps) => {
       return playerService.startPlayback();
     }
     return playerService.startPlayback({
-      context_uri: album?.uri,
-      offset: { position: index },
+      // improve
     });
-  }, [album?.uri, index, isCurrent, isPlaying]);
+  }, [isCurrent, isPlaying]);
 
-  const image = isList ? (
-    <img alt='song cover' src={album!.images[0].url} className='w-10 h-10 mr-4 rounded-md' />
-  ) : null;
+  const image = (
+    <img alt='song cover' src={song.album.images[0].url} className='w-10 h-10 mr-4 rounded-md' />
+  );
 
   const title = (
     <div className='flex flex-col' style={{ flex: 8 }}>
       <div className='flex flex-row items-center'>
         <p className='title text-left'>{song.name}</p>
       </div>
-
-      {isList ? (
-        <p className='text-left artist mobile-hidden'>
-          {song.explicit ? <span className='explicit'>E</span> : null}
-          {song.artists.map((a) => a.name).join(', ')}
-        </p>
-      ) : null}
     </div>
   );
-
-  const artist = !isList ? (
-    <p className='text-right tablet-hidden' style={{ flex: 4 }}>
-      {song.artists.map((a) => a.name).join(', ')}
-    </p>
-  ) : null;
 
   const addToLiked = (
     <p
@@ -105,7 +87,7 @@ const SongData = ({ song, index }: SongDataProps) => {
       className='text-right actions tablet-hidden'
       style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
     >
-      <TrackActionsWrapper track={song} album={album!} trigger={['click']}>
+      <TrackActionsWrapper track={song} trigger={['click']}>
         <Tooltip title={`${tor('More options for')} ${song?.name}`}>
           <div>
             <MenuIcon />
@@ -142,7 +124,6 @@ const SongData = ({ song, index }: SongDataProps) => {
           </div>
           {image}
           {title}
-          {artist}
           {addToLiked}
           {time}
           {actions}
@@ -152,7 +133,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   );
 };
 
-const SongView = ({ song, index }: SongViewProps) => {
+const TopSong = ({ song, index }: SongViewProps) => {
   const toggleOpen = useCallback(() => {}, []);
 
   return (
@@ -166,4 +147,4 @@ const SongView = ({ song, index }: SongViewProps) => {
   );
 };
 
-export default SongView;
+export default TopSong;

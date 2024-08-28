@@ -1,3 +1,6 @@
+// @ts-expect-error
+import ColorThief from '../../node_modules/colorthief/dist/color-thief.mjs';
+
 /* eslint-disable eqeqeq */
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -69,4 +72,12 @@ export const getImageAnalysis = async (src: string) => {
   const img = await loadImage(src);
   const response = getAverageRGB(img);
   return rgbToHex(response.r, response.g, response.b);
+};
+
+export const getImageAnalysis2 = async (src: string) => {
+  const img = await loadImage(src);
+  var colorThief = new ColorThief();
+  console.log(colorThief.getColor(img));
+  // @ts-ignore
+  return rgbToHex(...colorThief.getColor(img));
 };

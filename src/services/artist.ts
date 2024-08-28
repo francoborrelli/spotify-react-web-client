@@ -1,5 +1,9 @@
 import axios from '../axios';
+
+import type { Track } from '../interfaces/track';
+import type { Album } from '../interfaces/albums';
 import type { Artist } from '../interfaces/artist';
+import type { Pagination } from '../interfaces/api';
 
 /**
  * @description Get Spotify catalog information for a single artist identified by their unique Spotify ID.
@@ -21,9 +25,16 @@ const fetchArtistAlbums = (
     /** @description The country for which the release date will be formatted. */
     market?: string;
   } = {}
-) => axios.get(`/artists/${id}/albums`, { params });
+) => axios.get<Pagination<Album>>(`/artists/${id}/albums`, { params });
+
+/**
+ * @description Get Spotify catalog information about an artist's top tracks by country.
+ */
+const fetchArtistTopTracks = (id: string) =>
+  axios.get<{ tracks: Track }>(`/artists/${id}/top-tracks`);
 
 export const artistService = {
   fetchArtist,
   fetchArtistAlbums,
+  fetchArtistTopTracks,
 };

@@ -5,7 +5,7 @@ import { AlbumHeader } from './header';
 // Utils
 import { useParams } from 'react-router-dom';
 import { FC, RefObject, useEffect, useState } from 'react';
-import { getImageAnalysis } from '../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 
 // Redux
 import { albumActions } from '../../store/slices/album';
@@ -20,7 +20,7 @@ const AlbumView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
 
   useEffect(() => {
     if (album && album.images?.length) {
-      getImageAnalysis(album.images[0].url).then((color) => {
+      getImageAnalysis2(album.images[0].url).then((color) => {
         setColor(color);
       });
     }

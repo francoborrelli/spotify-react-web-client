@@ -1,8 +1,10 @@
-import { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/store';
 import { Col, Row } from 'antd';
-import { fetchCategories } from '../../store/slices/browse';
 import { BrowseCard } from './card';
+import { memo, useEffect } from 'react';
+
+// Redux
+import { fetchCategories } from '../../store/slices/browse';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 export const BrowsePage = memo(() => {
   const dispatch = useAppDispatch();
@@ -11,6 +13,8 @@ export const BrowsePage = memo(() => {
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
+  if (!categories) return null;
 
   return (
     <div style={{ margin: 20, marginTop: 30 }}>

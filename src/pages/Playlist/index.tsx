@@ -5,7 +5,7 @@ import { PlaylistHeader } from './header';
 // Utils
 import { useParams } from 'react-router-dom';
 import { FC, RefObject, useEffect, useState } from 'react';
-import { getImageAnalysis } from '../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -20,7 +20,7 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
 
   useEffect(() => {
     if (playlist && playlist.images?.length) {
-      getImageAnalysis(playlist.images[0].url).then((color) => {
+      getImageAnalysis2(playlist.images[0].url).then((color) => {
         setColor(color);
       });
     }

@@ -229,7 +229,13 @@
   }
 
   .song-artist {
-    color: #b3b3b3;
+    color: #f9f9f9;
+    font-size: 0.75rem;
+    &:hover {
+      opacity: 1;
+      color: #fff !important;
+      text-decoration: underline;
+    }
   }
 
   .active {

@@ -47,6 +47,12 @@
     }
   }
 
+  &:hover {
+    .button-container img {
+      display: none;
+    }
+  }
+
   .text-container {
     display: flex;
     -webkit-box-align: center;
@@ -92,12 +98,6 @@
             font-size: 0.9rem;
           }
         }
-      }
-    }
-
-    &:hover {
-      .button-container img {
-        display: none;
       }
     }
 

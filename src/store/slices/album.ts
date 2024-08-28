@@ -60,7 +60,7 @@ export const fetchAlbum = createAsyncThunk<
   const extraResponses = await Promise.all(extraPromises);
   const saved = extraResponses[0].data as boolean[];
   const artist = extraResponses[1].data as Artist;
-  const albums = extraResponses[2].data.items as Album[];
+  const albums = (extraResponses[2].data as any).items as Album[];
 
   const itemsWithSave: TrackWithSave[] = items.map((item, index) => ({
     ...item,

@@ -3,7 +3,7 @@ import { PlayCircle } from '../components/PlayCircle';
 // Interfaces
 import { memo, useEffect, type FC } from 'react';
 import type { Track } from '../../../interfaces/track';
-import { getImageAnalysis } from '../../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../../utils/imageAnyliser';
 import { useAppSelector } from '../../../store/store';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
@@ -17,7 +17,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
   const isCurrent = currentSong?.id === item.id;
 
   useEffect(() => {
-    if (item) getImageAnalysis(item.album.images[0].url).then();
+    if (item) getImageAnalysis2(item.album.images[0].url).then();
   }, [item]);
 
   return (
@@ -25,7 +25,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
       <div
         className='horizontal-playlist'
         onMouseEnter={() => {
-          getImageAnalysis(item.album.images[0].url).then((r) => setColor(r));
+          getImageAnalysis2(item.album.images[0].url).then((r) => setColor(r));
         }}
       >
         <div style={{ display: 'flex' }}>

@@ -52,80 +52,80 @@
       }
     }
   }
+}
 
-  .song-details {
-    .drawer-icon {
-      visibility: hidden;
-    }
+.song-details {
+  .drawer-icon {
+    visibility: hidden;
+  }
 
-    &:hover {
-      .actions {
-        opacity: 1;
-      }
-    }
-
+  &:hover {
     .actions {
-      opacity: 0;
+      opacity: 1;
+    }
+  }
+
+  .actions {
+    opacity: 0;
+  }
+
+  .title {
+    font-size: 15px;
+    color: $text-primary-color;
+  }
+
+  .artist:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-height: 74px;
+    overflow: hidden;
+    word-break: break-word;
+    color: hsla(0, 0%, 100%, 0.7);
+
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .song-details-play {
+    display: none;
+    margin: 0 auto;
+    font-size: 10px;
+    justify-content: center;
+
+    svg {
+      fill: $text-primary-color !important;
+    }
+  }
+
+  &:hover {
+    .song-details-index {
+      display: none;
+    }
+    .song-details-play {
+      display: flex;
+    }
+  }
+
+  @media (max-width: $desktop-breakpoint) {
+    img {
+      border-radius: 1px;
     }
 
     .title {
-      font-size: 15px;
-      color: $text-primary-color;
-    }
-
-    .artist:hover {
-      cursor: pointer;
-      text-decoration: underline;
+      font-size: 13px;
     }
 
     p {
-      font-size: 14px;
-      font-weight: 400;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      max-height: 74px;
-      overflow: hidden;
-      word-break: break-word;
-      color: hsla(0, 0%, 100%, 0.7);
-
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-
-    .song-details-play {
-      display: none;
-      margin: 0 auto;
-      font-size: 10px;
-      justify-content: center;
-
-      svg {
-        fill: $text-primary-color !important;
-      }
-    }
-
-    &:hover {
-      .song-details-index {
-        display: none;
-      }
-      .song-details-play {
-        display: flex;
-      }
-    }
-
-    @media (max-width: $desktop-breakpoint) {
-      img {
-        border-radius: 1px;
-      }
-
-      .title {
-        font-size: 13px;
-      }
-
-      p {
-        font-size: 11px;
-      }
+      font-size: 11px;
     }
   }
 }

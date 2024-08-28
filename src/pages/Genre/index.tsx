@@ -7,7 +7,7 @@ import { fetchGenre, genreActions } from '../../store/slices/genre';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Utils
-import { getImageAnalysis } from '../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 import GenreContent from './container/content';
 
 export const GenrePage = memo(() => {
@@ -29,7 +29,7 @@ export const GenrePage = memo(() => {
   useEffect(() => {
     if (category && category.icons.length) {
       const { url } = category.icons[0];
-      getImageAnalysis(url).then((color) => {
+      getImageAnalysis2(url).then((color) => {
         setColor(color);
       });
     }

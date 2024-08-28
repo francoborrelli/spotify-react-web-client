@@ -74,7 +74,7 @@ const SongData = ({ song, index, hasSkills }: SongDataProps) => {
 
   return (
     <div
-      className='song-details flex flex-row items-center w-full songDetails'
+      className='song-details flex flex-row items-center w-full'
       onClick={() => {
         dispatch(libraryActions.setSongPlaying(song));
       }}

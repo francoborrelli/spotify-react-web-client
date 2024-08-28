@@ -149,7 +149,7 @@ const SongData = ({ song, index }: SongDataProps) => {
       trigger={['contextMenu']}
     >
       <div
-        className='song-details flex flex-row items-center w-full songDetails'
+        className='song-details flex flex-row items-center w-full '
         onClick={() => {
           dispatch(libraryActions.setSongPlaying(song));
         }}

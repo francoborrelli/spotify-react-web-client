@@ -29,6 +29,7 @@ const Profile = lazy(() => import('./pages/Profile'));
 const AlbumView = lazy(() => import('./pages/Album'));
 const GenrePage = lazy(() => import('./pages/Genre'));
 const BrowsePage = lazy(() => import('./pages/Browse'));
+const ArtistPage = lazy(() => import('./pages/Artist'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
 
 window.addEventListener('resize', () => {
@@ -95,6 +96,7 @@ const RootComponent = () => {
     { path: '', element: <Home container={container} /> },
     { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
     { path: '/album/:albumId', element: <AlbumView container={container} /> },
+    { path: '/artist/:artistId', element: <ArtistPage container={container} /> },
     { path: '/profile', element: <Profile /> },
     { path: '/browse', element: <BrowsePage /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
