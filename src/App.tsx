@@ -26,6 +26,7 @@ import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
 const Home = lazy(() => import('./pages/Home'));
 const Page404 = lazy(() => import('./pages/404'));
 const Profile = lazy(() => import('./pages/Profile'));
+const AlbumView = lazy(() => import('./pages/Album'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
 
 window.addEventListener('resize', () => {
@@ -91,6 +92,7 @@ const RootComponent = () => {
   const routes = [
     { path: '', element: <Home container={container} /> },
     { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
+    { path: '/album/:albumId', element: <AlbumView container={container} /> },
     { path: '/profile', element: <Profile /> },
     { path: '/search/:search', element: <SearchPage /> },
     { path: '*', element: <Page404 /> },

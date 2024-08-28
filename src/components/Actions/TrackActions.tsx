@@ -17,6 +17,7 @@ import { playlistService } from '../../services/playlists';
 import { useTranslation } from 'react-i18next';
 
 // Interface
+import type { Album } from '../../interfaces/albums';
 import type { Playlist } from '../../interfaces/playlists';
 
 // Redux
@@ -29,6 +30,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface TrackActionsWrapperProps {
   track: Track;
+  album?: Album;
   canEdit?: boolean;
   playlist?: Playlist;
   trigger?: ('contextMenu' | 'click')[];
@@ -36,7 +38,7 @@ interface TrackActionsWrapperProps {
 }
 
 export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) => {
-  const { children, track, playlist, canEdit } = props;
+  const { children, track, playlist, canEdit, album } = props;
 
   const { t } = useTranslation(['playlist']);
 
@@ -74,7 +76,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
       },
     ];
 
-    if (canEdit) {
+    if (canEdit && playlist) {
       items.push({
         label: t('Remove from this playlist'),
         key: '2',
@@ -114,21 +116,35 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         key: '5',
         icon: <ArtistIcon />,
         onClick: () => {
-          navigate(`/artist/${track.artists[0].id}`);
-        },
-      },
-      {
-        label: t('Go to album'),
-        key: '6',
-        icon: <AlbumIcon />,
-        onClick: () => {
-          navigate(`/album/${track.album.id}`);
+          navigate(`/artist/${track.artists[0]?.id}`);
         },
       }
     );
 
+    if (!album) {
+      items.push({
+        label: t('Go to album'),
+        key: '6',
+        icon: <AlbumIcon />,
+        onClick: () => {
+          navigate(`/album/${track.album?.id}`);
+        },
+      });
+    }
+
     return items;
-  }, [t, options, canEdit, playlist, track.uri, track.artists, track.album.id, dispatch, navigate]);
+  }, [
+    t,
+    options,
+    canEdit,
+    playlist,
+    album,
+    track.uri,
+    track.artists,
+    track.album?.id,
+    dispatch,
+    navigate,
+  ]);
 
   return (
     <>

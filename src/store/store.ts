@@ -16,6 +16,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import uiReducer from './slices/ui';
 import authReducer from './slices/auth';
 import homeReducer from './slices/home';
+import albumReducer from './slices/album';
 import queueReducer from './slices/queue';
 import spotifyReducer from './slices/spotify';
 import libraryReducer from './slices/library';
@@ -29,6 +30,7 @@ const appReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
   home: homeReducer,
+  album: albumReducer,
   queue: queueReducer,
   spotify: spotifyReducer,
   library: libraryReducer,

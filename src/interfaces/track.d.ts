@@ -61,3 +61,7 @@ export interface Track {
   /** @description The Spotify URI for the track. */
   uri: string;
 }
+
+export interface TrackWithSave extends Track {
+  saved: boolean;
+}

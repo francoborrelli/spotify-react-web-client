@@ -28,17 +28,7 @@ const getIcon = (volume: number) => {
 
 export const VolumeControls = () => {
   const { t } = useTranslation(['playingBar']);
-  const player = useAppSelector((state) => state.spotify.player);
-
   const [volume, setVolume] = useState<number>(1);
-
-  useEffect(() => {
-    if (player) {
-      player.getVolume().then((volume) => {
-        setVolume(volume);
-      });
-    }
-  }, [player]);
 
   const muted = volume === 0;
 

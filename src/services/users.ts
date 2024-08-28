@@ -75,6 +75,15 @@ const checkFollowedPlaylist = async (playlistId: string) => {
 };
 
 /**
+ * @description Check to see if the current user is following one or more artists or other Spotify users.
+ */
+const checkFollowingArtists = async (ids: string[]) => {
+  return await axios.get<boolean[]>('/me/following/contains', {
+    params: { type: 'artist', ids: ids.join(',') },
+  });
+};
+
+/**
  * @description Get public profile information about a Spotify user.
  */
 const getUser = async (id: string) => {
@@ -107,4 +116,5 @@ export const userService = {
   fetchFollowedArtists,
   checkFollowedPlaylist,
   unfollowPlaylist,
+  checkFollowingArtists,
 };

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Services
 import { userService } from '../../services/users';
@@ -6,10 +6,10 @@ import { albumsService } from '../../services/albums';
 import { playlistService } from '../../services/playlists';
 
 // Interfaces
+import type { RootState } from '../store';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
-import { RootState } from '../store';
 
 export interface YourLibraryState {
   myAlbums: Album[];
@@ -72,44 +72,58 @@ const yourLibrarySlice = createSlice({
   },
 });
 
-export const getLibraryItems = (state: { yourLibrary: typeof initialState }) => {
-  if (state.yourLibrary.filter === 'ALBUMS') return state.yourLibrary.myAlbums;
-  if (state.yourLibrary.filter === 'ARTISTS') return state.yourLibrary.myArtists;
-  if (state.yourLibrary.filter === 'PLAYLISTS') return state.yourLibrary.myPlaylists;
+export const getLibraryItems = createSelector(
+  [
+    (state: RootState) => state.yourLibrary.filter,
+    (state: RootState) => state.yourLibrary.myAlbums,
+    (state: RootState) => state.yourLibrary.myArtists,
+    (state: RootState) => state.yourLibrary.myPlaylists,
+  ],
+  (filter, myAlbums, myArtists, myPlaylists) => {
+    if (filter === 'ALBUMS') return myAlbums;
+    if (filter === 'ARTISTS') return myArtists;
+    if (filter === 'PLAYLISTS') return myPlaylists;
 
-  return [
-    state.yourLibrary.myPlaylists.slice(0, 3),
-    state.yourLibrary.myAlbums.slice(0, 2),
-    state.yourLibrary.myPlaylists.slice(3, 6),
-    state.yourLibrary.myArtists.slice(0, 1),
-    state.yourLibrary.myAlbums.slice(2, 5),
-    state.yourLibrary.myArtists.slice(1, 2),
-    state.yourLibrary.myPlaylists.slice(6, 10),
-    state.yourLibrary.myAlbums.slice(5, 9),
-    state.yourLibrary.myArtists.slice(2, 6),
-    state.yourLibrary.myPlaylists.slice(10, 15),
-    state.yourLibrary.myAlbums.slice(9, 13),
-    state.yourLibrary.myArtists.slice(6, 10),
-    state.yourLibrary.myPlaylists.slice(15, 20),
-    state.yourLibrary.myAlbums.slice(13, 17),
-    state.yourLibrary.myArtists.slice(10, 14),
-    state.yourLibrary.myPlaylists.slice(20, 25),
-    state.yourLibrary.myAlbums.slice(17, 21),
-    state.yourLibrary.myArtists.slice(14, 18),
-    state.yourLibrary.myPlaylists.slice(25, 30),
-    state.yourLibrary.myAlbums.slice(21, 25),
-    state.yourLibrary.myArtists.slice(18, 22),
-    state.yourLibrary.myPlaylists.slice(30, 35),
-    state.yourLibrary.myAlbums.slice(25, 43),
-  ]
-    .filter((r) => r)
-    .flat();
-};
+    return [
+      myPlaylists.slice(0, 3),
+      myAlbums.slice(0, 2),
+      myPlaylists.slice(3, 6),
+      myArtists.slice(0, 1),
+      myAlbums.slice(2, 5),
+      myArtists.slice(1, 2),
+      myPlaylists.slice(6, 10),
+      myAlbums.slice(5, 9),
+      myArtists.slice(2, 6),
+      myPlaylists.slice(10, 15),
+      myAlbums.slice(9, 13),
+      myArtists.slice(6, 10),
+      myPlaylists.slice(15, 20),
+      myAlbums.slice(13, 17),
+      myArtists.slice(10, 14),
+      myPlaylists.slice(20, 25),
+      myAlbums.slice(17, 21),
+      myArtists.slice(14, 18),
+      myPlaylists.slice(25, 30),
+      myAlbums.slice(21, 25),
+      myArtists.slice(18, 22),
+      myPlaylists.slice(30, 35),
+      myAlbums.slice(25, 43),
+      // all the rest
+      myPlaylists.slice(35),
+      myArtists.slice(22),
+      myAlbums.slice(43),
+    ]
+      .filter((r) => r)
+      .flat();
+  }
+);
 
-export const getUserPlaylists = (state: RootState) => {
-  const user = state.auth.user;
-  return state.yourLibrary.myPlaylists.filter((playlist) => playlist.owner?.id === user?.id);
-};
+export const getUserPlaylists = createSelector(
+  [(state: RootState) => state.yourLibrary.myPlaylists, (state: RootState) => state.auth.user],
+  (playlists, user) => {
+    return playlists.filter((playlist) => playlist.owner?.id === user?.id);
+  }
+);
 
 export const yourLibraryActions = {
   fetchMyAlbums,
