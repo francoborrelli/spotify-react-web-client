@@ -18,6 +18,8 @@ import authReducer from './slices/auth';
 import homeReducer from './slices/home';
 import albumReducer from './slices/album';
 import queueReducer from './slices/queue';
+import genreReducer from './slices/genre';
+import browseReducer from './slices/browse';
 import spotifyReducer from './slices/spotify';
 import libraryReducer from './slices/library';
 import languageReducer from './slices/language';
@@ -32,6 +34,8 @@ const appReducer = combineReducers({
   home: homeReducer,
   album: albumReducer,
   queue: queueReducer,
+  genre: genreReducer,
+  browse: browseReducer,
   spotify: spotifyReducer,
   library: libraryReducer,
   language: languageReducer,

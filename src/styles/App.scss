@@ -13,6 +13,8 @@
 @use './PlaylistPage.scss';
 @use './nowPlaying.scss';
 @use './form.scss';
+@use './Browse.scss';
+@use './Genre.scss';
 
 body {
   overscroll-behavior: none !important;

@@ -1,0 +1,60 @@
+@use './variables.scss' as *;
+
+.browse-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .browse-card-container {
+    border-radius: 8px;
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    width: 100%;
+
+    img {
+      right: 0;
+      -webkit-transform: rotate(25deg) translate(18%, -2%);
+      transform: rotate(25deg) translate(18%, -2%);
+      border-radius: 4px;
+      bottom: 0;
+      -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      position: absolute;
+      width: 45%;
+      -o-object-fit: cover;
+      object-fit: cover;
+      -o-object-position: center center;
+      object-position: center center;
+      user-select: none;
+    }
+
+    span {
+      color: #fff !important;
+      font-weight: 700;
+      text-wrap: balance;
+      font-size: 1.5rem;
+      -ms-hyphens: auto;
+      hyphens: auto;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      padding: 16px;
+      position: absolute;
+      -webkit-padding-end: 30%;
+      padding-inline-end: 30%;
+
+      @media (max-width: $desktop-breakpoint) {
+        font-size: 1rem;
+        -webkit-padding-end: 20%;
+        padding-inline-end: 20%;
+      }
+
+      @media (max-width: $desktop-small-breakpoint) {
+        font-size: 1.2rem;
+        -webkit-padding-end: 20%;
+        padding-inline-end: 20%;
+      }
+    }
+  }
+}

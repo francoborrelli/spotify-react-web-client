@@ -27,6 +27,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Page404 = lazy(() => import('./pages/404'));
 const Profile = lazy(() => import('./pages/Profile'));
 const AlbumView = lazy(() => import('./pages/Album'));
+const GenrePage = lazy(() => import('./pages/Genre'));
 const BrowsePage = lazy(() => import('./pages/Browse'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
 
@@ -96,6 +97,7 @@ const RootComponent = () => {
     { path: '/album/:albumId', element: <AlbumView container={container} /> },
     { path: '/profile', element: <Profile /> },
     { path: '/browse', element: <BrowsePage /> },
+    { path: '/genre/:genreId', element: <GenrePage /> },
     { path: '/search/:search', element: <SearchPage /> },
     { path: '*', element: <Page404 /> },
   ] as const;
