@@ -30,13 +30,21 @@ export const Search = () => {
         size='large'
         className='search-input'
         prefix={<SearchIcon />}
-        suffix={<BrowseIcon />}
+        suffix={
+          <button
+            onClick={() => {
+              navigate('/browse');
+            }}
+          >
+            <BrowseIcon />
+          </button>
+        }
         defaultValue={INITIAL_VALUE}
         placeholder={t('SearchPlaceholder')}
         onChange={(e) => {
           const value = e.target.value;
           if (value === '') {
-            navigate('/');
+            navigate('/browse');
           } else {
             navigate(`/search/${e.target.value}`);
           }

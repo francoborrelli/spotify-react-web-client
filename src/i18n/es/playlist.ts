@@ -17,6 +17,7 @@ export const playlist = {
   Title: 'Título',
   Album: 'Álbum',
   Artist: 'Artista',
+  Disk: 'Disco',
   saves: 'seguidores',
   'Remove from Your Library': 'Eliminar de Tu biblioteca',
   'Removed from Your Library': 'Eliminado de Tu biblioteca',

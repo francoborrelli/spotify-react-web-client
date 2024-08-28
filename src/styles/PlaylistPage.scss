@@ -340,3 +340,22 @@
     }
   }
 }
+
+.disk-section {
+  display: flex;
+  padding: 15px 50px;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  color: #bababa;
+  align-items: center;
+
+  @media (max-width: $desktop-breakpoint) {
+    padding: 15px 20px;
+  }
+
+  svg {
+    margin-right: 10px;
+    fill: #bababa;
+  }
+}

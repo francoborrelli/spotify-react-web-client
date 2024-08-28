@@ -27,6 +27,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Page404 = lazy(() => import('./pages/404'));
 const Profile = lazy(() => import('./pages/Profile'));
 const AlbumView = lazy(() => import('./pages/Album'));
+const BrowsePage = lazy(() => import('./pages/Browse'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
 
 window.addEventListener('resize', () => {
@@ -94,6 +95,7 @@ const RootComponent = () => {
     { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
     { path: '/album/:albumId', element: <AlbumView container={container} /> },
     { path: '/profile', element: <Profile /> },
+    { path: '/browse', element: <BrowsePage /> },
     { path: '/search/:search', element: <SearchPage /> },
     { path: '*', element: <Page404 /> },
   ] as const;
