@@ -11,6 +11,7 @@ import { FC, RefObject, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../../store/store';
 import { homeActions } from '../../store/slices/home';
 import { FeaturePlaylists } from './featurePlaylists';
+import { MadeForYou } from './madeForYou';
 
 interface HomeProps {
   container: RefObject<HTMLDivElement>;
@@ -25,6 +26,7 @@ const Home: FC<HomeProps> = (props) => {
 
   useEffect(() => {
     dispatch(homeActions.fetchTopTracks());
+    dispatch(homeActions.fetchMadeForYou());
     dispatch(homeActions.fetchNewReleases());
     dispatch(homeActions.fecthFeaturedPlaylists());
   }, [dispatch]);
@@ -43,6 +45,10 @@ const Home: FC<HomeProps> = (props) => {
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <TopTracks setColor={setColor} />
+          </Col>
+
+          <Col span={24}>
+            <MadeForYou />
           </Col>
 
           <Col span={24}>

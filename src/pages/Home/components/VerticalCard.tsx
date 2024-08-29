@@ -55,12 +55,22 @@ const Card = ({
   );
 };
 
-export const AlbumCard = ({ item }: { item: Album }) => {
+export const AlbumCard = ({
+  item,
+  getDescription,
+}: {
+  item: Album;
+  getDescription?: (playlist: Album) => string;
+}) => {
   const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
-  const description = item.artists.map((artist) => artist.name).join(', ');
+
+  const description = getDescription
+    ? getDescription(item)
+    : item.artists.map((artist) => artist.name).join(', ');
+
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (
@@ -79,13 +89,19 @@ export const AlbumCard = ({ item }: { item: Album }) => {
   );
 };
 
-export const PlaylistCard = ({ item }: { item: Playlist }) => {
+export const PlaylistCard = ({
+  item,
+  getDescription,
+}: {
+  item: Playlist;
+  getDescription?: (playlist: Playlist) => string;
+}) => {
   const navigate = useNavigate();
   const [t] = useTranslation(['playlist']);
   const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
-  const description = item.tracks?.total + ' ' + t('songs');
+  const description = getDescription ? getDescription(item) : item.tracks?.total + ' ' + t('songs');
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (

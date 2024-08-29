@@ -7,5 +7,6 @@ export const home = {
   'Liked Songs': 'Canciones gustadas',
   Artists: 'Artistas',
   MUSIC: 'Música',
+  'Featured playlists': '¡En tendencia!',
   'Popular playlists': 'Playlists populares',
 };

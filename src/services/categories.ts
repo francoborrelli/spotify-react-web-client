@@ -1,6 +1,6 @@
 import axios from '../axios';
 
-import type { Playlist } from '../interfaces/types';
+import type { Playlist } from '../interfaces/playlists';
 import type { Category } from '../interfaces/categories';
 import type { Pagination, PaginationQueryParams } from '../interfaces/api';
 

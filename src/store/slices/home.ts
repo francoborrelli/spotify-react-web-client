@@ -10,18 +10,29 @@ import type { RootState } from '../store';
 import type { Track } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
 import type { Playlist } from '../../interfaces/playlists';
+import { categoriesService } from '../../services/categories';
+
+// Constants
+import { MADE_FOR_YOU_URI } from '../../constants/spotify';
 
 const initialState: {
   topTracks: Track[];
   newReleases: Album[];
+  madeForYou: Playlist[];
   featurePlaylists: Playlist[];
   section: 'ALL' | 'MUSIC' | 'PODCAST';
 } = {
   topTracks: [],
   section: 'ALL',
+  madeForYou: [],
   newReleases: [],
   featurePlaylists: [],
 };
+
+export const fetchMadeForYou = createAsyncThunk('home/fetchMadeForYou', async () => {
+  const response = await categoriesService.fetchCategoryPlaylists(MADE_FOR_YOU_URI, { limit: 10 });
+  return response.data.playlists.items;
+});
 
 export const fetchNewReleases = createAsyncThunk('home/fetchNewReleases', async () => {
   const response = await albumsService.fetchNewRelases({ limit: 10 });
@@ -63,12 +74,16 @@ const homeSlice = createSlice({
     builder.addCase(fecthFeaturedPlaylists.fulfilled, (state, action) => {
       state.featurePlaylists = action.payload;
     });
+    builder.addCase(fetchMadeForYou.fulfilled, (state, action) => {
+      state.madeForYou = action.payload;
+    });
   },
 });
 
 export const homeActions = {
   ...homeSlice.actions,
   fetchTopTracks,
+  fetchMadeForYou,
   fetchNewReleases,
   fecthFeaturedPlaylists,
 };

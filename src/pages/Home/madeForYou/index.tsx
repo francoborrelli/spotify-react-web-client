@@ -8,18 +8,20 @@ import { getPlaylistDescription } from '../../../utils/getDescription';
 
 interface NewReleasesProps {}
 
-export const FeaturePlaylists: FC<NewReleasesProps> = () => {
+export const MadeForYou: FC<NewReleasesProps> = () => {
   const { t } = useTranslation(['home']);
-  const featurePlaylists = useAppSelector((state) => state.home.featurePlaylists);
 
-  if (!featurePlaylists || !featurePlaylists.length) return null;
+  const user = useAppSelector((state) => state.auth.user);
+  const madeForYou = useAppSelector((state) => state.home.madeForYou);
+
+  if (!madeForYou || !madeForYou.length) return null;
 
   return (
     <div className='home'>
       <ItemsList
-        items={featurePlaylists}
-        title={`${t('Featured playlists')}`}
+        items={madeForYou}
         getDescription={getPlaylistDescription}
+        title={`${t('Made for')} ${user?.display_name}`}
       />
     </div>
   );
