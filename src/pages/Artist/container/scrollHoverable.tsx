@@ -6,8 +6,8 @@ import { Space } from 'antd';
 
 interface ArtistPageProps {
   color: string;
-
   container: RefObject<HTMLDivElement>;
+  sectionContainer: RefObject<HTMLDivElement>;
 }
 
 export const ArtistHoverableMenu: FC<ArtistPageProps> = memo((props) => {

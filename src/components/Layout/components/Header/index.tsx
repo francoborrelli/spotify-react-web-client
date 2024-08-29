@@ -11,18 +11,19 @@ interface PageHeaderProps {
   activeHeider?: number;
   activeContentHeight?: number;
   container: RefObject<HTMLDivElement>;
+  sectionContainer?: RefObject<HTMLDivElement>;
 }
 
 export const PageHeader: FC<PageHeaderProps> = ({
   color,
   children,
   container,
+  sectionContainer,
   activeHeider = 260,
   activeContentHeight = 260,
 }) => {
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeHeader, setActiveHeader] = useState(false);
-  // const [activeContent, setActiveContent] = useState(false);
 
   const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
@@ -30,20 +31,12 @@ export const PageHeader: FC<PageHeaderProps> = ({
 
   useEffect(() => {
     const ref = container.current;
-
     const handleScroll = () => {
       if (ref) {
         setActiveHeader(ref.scrollTop > activeHeider);
-        // setActiveContent(ref.scrollTop > activeContentHeight);
       }
     };
     ref?.addEventListener('scroll', handleScroll);
-    setHeaderWidth(container.current?.clientWidth || 0);
-    window.onresize = () => {
-      if (container.current) {
-        setHeaderWidth(container.current.clientWidth);
-      }
-    };
     return () => {
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
@@ -56,6 +49,17 @@ export const PageHeader: FC<PageHeaderProps> = ({
     libraryCollapsed,
     detailsCollapsed,
   ]);
+
+  useEffect(() => {
+    const ref = sectionContainer?.current;
+    if (ref) {
+      const observer = new ResizeObserver((entries) => {
+        setHeaderWidth(entries[0].contentRect.width);
+      });
+      observer.observe(ref);
+      return () => ref && observer.unobserve(ref);
+    }
+  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
 
   return (
     <div

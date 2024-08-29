@@ -5,7 +5,7 @@ import { TopTracks } from './topTracks';
 import { NewReleases } from './newReleases';
 
 // Utils
-import { FC, RefObject, useEffect, useState } from 'react';
+import { FC, RefObject, useEffect, useRef, useState } from 'react';
 
 // Interfaces
 import { useAppDispatch } from '../../store/store';
@@ -21,6 +21,7 @@ const Home: FC<HomeProps> = (props) => {
   const [color, setColor] = useState('rgb(66, 32, 35)');
 
   const dispatch = useAppDispatch();
+  const sectionContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(homeActions.fetchTopTracks());
@@ -29,8 +30,8 @@ const Home: FC<HomeProps> = (props) => {
   }, [dispatch]);
 
   return (
-    <div>
-      <HomeHeader container={container} color={color} />
+    <div ref={sectionContainerRef}>
+      <HomeHeader color={color} container={container} sectionContainer={sectionContainerRef} />
       <div
         className='Home-seccion'
         style={{

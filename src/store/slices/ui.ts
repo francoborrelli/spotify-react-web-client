@@ -27,6 +27,9 @@ const uiSlice = createSlice({
     collapseLibrary(state) {
       state.libraryCollapsed = true;
     },
+    openLibrary(state) {
+      state.libraryCollapsed = false;
+    },
     toggleLibrary(state) {
       state.libraryCollapsed = !state.libraryCollapsed;
     },

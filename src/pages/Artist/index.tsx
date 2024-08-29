@@ -1,4 +1,4 @@
-import { FC, memo, RefObject, useEffect, useState } from 'react';
+import { FC, memo, RefObject, useEffect, useRef, useState } from 'react';
 
 // Utils
 import tinycolor from 'tinycolor2';
@@ -13,6 +13,7 @@ import ArtistContent from './container/content';
 import { ArtistHeader } from './container/header';
 import ArtistHoverableMenu from './container/scrollHoverable';
 import { ArtistControls } from './container/controls';
+import { use } from 'i18next';
 
 interface ArtistPageProps {
   container: RefObject<HTMLDivElement>;
@@ -23,6 +24,7 @@ export const ArtistPage: FC<ArtistPageProps> = memo((props) => {
 
   const [color, setColor] = useState<string>('#535353');
 
+  const ref = useRef<HTMLDivElement>(null);
   const params = useParams<{ artistId: string }>();
   const artist = useAppSelector((state) => state.artist.artist);
 
@@ -41,8 +43,8 @@ export const ArtistPage: FC<ArtistPageProps> = memo((props) => {
   if (!artist) return null;
 
   return (
-    <div className='artist-page'>
-      <ArtistHoverableMenu color={color} container={props.container} />
+    <div className='artist-page' ref={ref}>
+      <ArtistHoverableMenu color={color} container={props.container} sectionContainer={ref} />
 
       <ArtistHeader container={props.container} color={color} />
       <div style={{ marginTop: -20 }}>

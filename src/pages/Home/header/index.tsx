@@ -13,19 +13,25 @@ import { useAppDispatch, useAppSelector } from '../../../store/store';
 interface HomeHeaderProps {
   color: string;
   container: RefObject<HTMLDivElement>;
+  sectionContainer: RefObject<HTMLDivElement>;
 }
 
 const SECTIONS = ['ALL', 'MUSIC', 'PODCASTS'];
 
 export const HomeHeader: FC<HomeHeaderProps> = (props) => {
-  const { container, color } = props;
+  const { container, sectionContainer, color } = props;
 
   const dispatch = useAppDispatch();
   const [t] = useTranslation(['home']);
   const section = useAppSelector((state) => state.home.section);
 
   return (
-    <PageHeader color={color} container={container} activeHeider={20}>
+    <PageHeader
+      color={color}
+      activeHeider={20}
+      container={container}
+      sectionContainer={sectionContainer}
+    >
       <Space style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
         {SECTIONS.map((item) => (
           <Chip

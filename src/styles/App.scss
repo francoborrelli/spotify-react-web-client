@@ -324,7 +324,7 @@ h3 {
     visibility: hidden;
   }
 
-  z-index: 99999;
+  z-index: 1000;
   position: fixed;
   margin-top: -1px;
   padding: 10px 20px;
@@ -543,4 +543,21 @@ img {
   -moz-user-select: none; /* Firefox all */
   -ms-user-select: none; /* IE 10+ */
   user-select: none; /* Likely future */
+}
+
+.resize-handler {
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 1px;
+  // transition opacity
+  opacity: 0;
+  transition: opacity 0.3s;
+  cursor: grab !important;
+  &:hover,
+  &:active {
+    opacity: 1;
+    background-color: #626262;
+  }
 }
