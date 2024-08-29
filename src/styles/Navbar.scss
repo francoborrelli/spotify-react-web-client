@@ -143,3 +143,15 @@
   fill: white !important;
   cursor: pointer;
 }
+
+.addButton {
+  padding: 5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  &:hover {
+    background-color: rgba(95, 95, 95, 0.292);
+  }
+  &:active {
+    background-color: rgba(16, 16, 16, 0.645);
+  }
+}

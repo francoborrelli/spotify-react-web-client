@@ -77,9 +77,14 @@
     }
   }
 
-  .artist:hover {
-    cursor: pointer;
-    text-decoration: underline;
+  .artist {
+    .artists-block {
+      display: block;
+      a:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
   }
 
   p {
@@ -200,7 +205,7 @@
 
 @media (max-width: $desktop-small-breakpoint) {
   .tablet-hidden {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -262,7 +267,7 @@
   margin-bottom: -10px;
   background: #1f1f1f;
 
-  border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+  // border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
   -webkit-box-shadow: 0 -1px 0 0 #181818;
   box-shadow: 0 -1px 0 0 #181818;
 
@@ -360,5 +365,40 @@
   svg {
     margin-right: 10px;
     fill: #bababa;
+  }
+}
+
+.playlist-recommendations {
+  padding-bottom: 40px;
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0px;
+  }
+  > span {
+    font-size: 0.85rem;
+    color: #bababa;
+    margin-left: 15px;
+  }
+
+  .image {
+    &:hover {
+      .image-button {
+        opacity: 1;
+        visibility: visible;
+        svg {
+          fill: #fff !important;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .song-details .title {
+      font-size: 0.875rem;
+    }
+
+    .song-details p {
+      font-size: 0.8rem;
+    }
   }
 }

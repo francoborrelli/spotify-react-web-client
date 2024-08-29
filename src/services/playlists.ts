@@ -1,7 +1,9 @@
+import axios from '../axios';
+
 // Interfaces
+import type { Track } from '../interfaces/track';
 import type { Playlist, PlaylistItem } from '../interfaces/playlists';
 import type { Pagination, PaginationQueryParams } from '../interfaces/api';
-import axios from '../axios';
 
 /**
  * @description Get a playlist owned by a Spotify user.
@@ -113,11 +115,40 @@ const changePlaylistImage = async (playlistId: string, image: string, content: s
   });
 };
 
+/**
+ * @description Create a playlist for a Spotify user. (The playlist will be empty until you add tracks.) Each user is generally limited to a maximum of 11000 playlists.
+ */
+const createPlaylist = async (
+  userId: string,
+  data: {
+    name: string;
+    public?: boolean;
+    collaborative?: boolean;
+    description?: string;
+  }
+) => {
+  return axios.post<Playlist>(`/users/${userId}/playlists`, data);
+};
+
+/**
+ * @description Recommendations are generated based on the available information for a given seed entity and matched against similar artists and tracks. If there is sufficient information about the provided seeds, a list of tracks will be returned together with pool size details.
+ */
+const getRecommendations = async (params: {
+  seed_artists?: string;
+  seed_genres?: string;
+  limit?: number;
+  seed_tracks?: string;
+}) => {
+  return axios.get<{ tracks: Track[] }>('/recommendations', { params });
+};
+
 export const playlistService = {
   getPlaylist,
   getMyPlaylists,
+  createPlaylist,
   getPlaylistItems,
   addPlaylistItems,
+  getRecommendations,
   changePlaylistImage,
   removePlaylistItems,
   getFeaturedPlaylists,

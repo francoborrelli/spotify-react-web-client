@@ -7,11 +7,13 @@ import { playlistService } from '../../services/playlists';
 // Interfaces
 import type { RootState } from '../store';
 import type { User } from '../../interfaces/user';
+import type { Track } from '../../interfaces/track';
 import type { Pagination } from '../../interfaces/api';
 import type { Playlist, PlaylistItem, PlaylistItemWithSaved } from '../../interfaces/playlists';
 
 const initialState: {
   user: User | null;
+  recommedations: Track[];
   tracks: PlaylistItemWithSaved[];
   playlist: Playlist | null;
 
@@ -25,6 +27,7 @@ const initialState: {
   user: null,
   tracks: [],
   playlist: null,
+  recommedations: [],
 
   loading: true,
   canEdit: false,
@@ -35,7 +38,7 @@ const initialState: {
 };
 
 export const fetchPlaylist = createAsyncThunk<
-  [Playlist, PlaylistItemWithSaved[], boolean, boolean, User],
+  [Playlist, PlaylistItemWithSaved[], boolean, boolean, User, Track[]],
   string
 >('playlist/fetchPlaylist', async (id, { getState }) => {
   const { auth } = getState() as RootState;
@@ -52,33 +55,58 @@ export const fetchPlaylist = createAsyncThunk<
   const { items } = responses[1].data as Pagination<PlaylistItem>;
   const [following] = responses[2].data as boolean[];
 
+  const ids = items.map((item) => item.track.id);
+  const artistsIds = items.map((item) => item.track.artists[0].id);
+
+  const isMine = user?.id === playlist.owner?.id;
+  const canEdit = isMine || playlist.collaborative;
+
   const extraPromises = [
     userService.getUser(playlist.owner!.id),
-    userService.checkSavedTracks(items.map((item) => item.track.id)),
+    ids.length
+      ? userService.checkSavedTracks(items.map((item) => item.track.id))
+      : Promise.resolve({ data: [] }),
+    isMine
+      ? ids.length
+        ? playlistService
+            .getRecommendations({
+              seed_tracks: ids.slice(0, 5).join(',') || undefined,
+              seed_artists: artistsIds.slice(0, 5).join(',') || undefined,
+              limit: 25,
+            })
+            .then((res) => ({
+              data: res.data.tracks,
+            }))
+        : userService.fetchTopTracks({ limit: 25, timeRange: 'short_term' }).then((res) => ({
+            data: res.data.items,
+          }))
+      : Promise.resolve({ data: [] }),
   ];
 
   const extraResponses = await Promise.all(extraPromises);
 
   const owner = extraResponses[0].data as User;
   const saved = extraResponses[1].data as boolean[];
-
-  const canEdit = user?.id === owner?.id || playlist.collaborative;
+  const recommendations = extraResponses[2].data as Track[];
 
   const itemsWithSave: PlaylistItemWithSaved[] = items.map((item, index) => ({
     ...item,
     saved: saved[index],
   }));
 
-  return [playlist, itemsWithSave, following, canEdit, owner];
+  return [playlist, itemsWithSave, following, canEdit, owner, recommendations];
 });
 
 export const refreshTracks = createAsyncThunk<PlaylistItemWithSaved[], string>(
   'playlist/refreshTracks',
   async (id) => {
     const { data } = await playlistService.getPlaylistItems(id);
-    const { data: saved } = await userService.checkSavedTracks(
-      data.items.map((item) => item.track.id)
-    );
+    const ids = data.items.map((item) => item.track.id);
+
+    const { data: saved } = await (ids.length
+      ? userService.checkSavedTracks(ids)
+      : Promise.resolve({ data: [] }));
+
     const itemsWithSave: PlaylistItemWithSaved[] = data.items.map((item, index) => ({
       ...item,
       saved: saved[index],
@@ -126,6 +154,9 @@ const playlistSlice = createSlice({
     resetOrder(state, action: PayloadAction<{ order?: string }>) {
       state.order = action.payload.order || 'ALL';
     },
+    removeTrackFromRecommendations(state, action: PayloadAction<{ id: string }>) {
+      state.recommedations = state.recommedations.filter((track) => track.id !== action.payload.id);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPlaylist.pending, (state) => {
@@ -137,12 +168,13 @@ const playlistSlice = createSlice({
       state.following = action.payload[2];
       state.canEdit = action.payload[3];
       state.user = action.payload[4];
+      state.recommedations = action.payload[5];
       state.loading = false;
     });
     builder.addCase(refreshTracks.fulfilled, (state, action) => {
       state.tracks = action.payload;
     });
-    builder.addCase(refreshPlaylist.fulfilled, (state, action) => {
+    builder.addCase(refreshPlaylist.fulfilled, (state, action: PayloadAction<Playlist>) => {
       state.playlist = action.payload;
     });
   },

@@ -77,7 +77,6 @@ export const getImageAnalysis = async (src: string) => {
 export const getImageAnalysis2 = async (src: string) => {
   const img = await loadImage(src);
   var colorThief = new ColorThief();
-  console.log(colorThief.getColor(img));
   // @ts-ignore
   return rgbToHex(...colorThief.getColor(img));
 };

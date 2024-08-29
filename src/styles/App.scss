@@ -569,3 +569,59 @@ a {
     text-decoration: underline;
   }
 }
+
+.transparent-button {
+  --encore-spacing-tighter-5: 2px;
+  --encore-spacing-tighter-4: 4px;
+  --encore-spacing-tighter-3: 6px;
+  --encore-spacing-tighter-2: 8px;
+  --encore-spacing-base: 16px;
+  --encore-control-size-smaller: 32px;
+  --encore-control-size-base: 48px;
+  --encore-control-size-larger: 56px;
+
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  border-radius: var(--encore-button-corner-radius, 9999px);
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  touch-action: manipulation;
+  transition-duration: 33ms;
+  transition-property: background-color, border-color, color, box-shadow, filter, transform;
+  user-select: none;
+  vertical-align: middle;
+  transform: translate3d(0px, 0px, 0px);
+  padding-block-start: calc(var(--encore-spacing-tighter-4, 4px) - 1px);
+  padding-block-end: calc(var(--encore-spacing-tighter-4, 4px) - 1px);
+  padding-inline-start: calc(var(--encore-spacing-base, 16px) - 1px);
+  padding-inline-end: calc(var(--encore-spacing-base, 16px) - 1px);
+  border: 1px solid var(--essential-subdued, #818181);
+  color: var(--text-base, #000000);
+  min-inline-size: 0px;
+  min-block-size: var(--encore-control-size-smaller, 32px);
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 5px 20px;
+  color: #fff;
+
+  &:hover {
+    transform: scale(1.04);
+    border: 1px solid #fff;
+  }
+
+  &:active {
+    opacity: 0.7;
+    outline: none;
+    transform: scale(1);
+    border: 1px solid #7c7c7c;
+  }
+}
