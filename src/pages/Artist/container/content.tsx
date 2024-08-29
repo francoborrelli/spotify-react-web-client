@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { ArtistTopTracks } from '../components/topTracks';
 import { Discography } from '../components/discography';
-import { AppersOn } from '../components/otherArtists';
+import { AppearsOn } from '../components/otherArtists';
 import { ArtistControls } from './controls';
 
 export const ArtistContent: FC<{
@@ -22,7 +22,7 @@ export const ArtistContent: FC<{
 
         <Discography />
 
-        <AppersOn />
+        <AppearsOn />
       </div>
     </div>
   );
