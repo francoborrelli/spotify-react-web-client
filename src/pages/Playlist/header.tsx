@@ -17,9 +17,10 @@ import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
 interface PlaylistHeaderProps {
   color: string;
   container: RefObject<HTMLDivElement>;
+  sectionContainer: RefObject<HTMLDivElement>;
 }
 
-export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color }) => {
+export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sectionContainer }) => {
   const { t } = useTranslation(['playlist']);
 
   const dispatch = useAppDispatch();
@@ -34,32 +35,34 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color }) =>
   const [activeTable, setActiveTable] = useState(false);
 
   const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
-  const detailsCollaped = useAppSelector((state) => state.ui.detailsCollapsed);
+  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   useEffect(() => {
     const ref = container.current;
-
     const handleScroll = () => {
       if (ref) {
         setActiveHeader(ref.scrollTop > 260);
         setActiveTable(ref.scrollTop > 320);
       }
     };
-
     ref?.addEventListener('scroll', handleScroll);
-
-    setHeaderWidth(container.current?.clientWidth || 0);
-    window.onresize = () => {
-      if (container.current) {
-        setHeaderWidth(container.current.clientWidth);
-      }
-    };
     return () => {
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, detailsCollaped, libraryCollapsed]);
+  }, [container, queueCollapsed, detailsCollapsed, libraryCollapsed]);
+
+  useEffect(() => {
+    const ref = sectionContainer?.current;
+    if (ref) {
+      const observer = new ResizeObserver((entries) => {
+        setHeaderWidth(entries[0].contentRect.width);
+      });
+      observer.observe(ref);
+      return () => ref && observer.unobserve(ref);
+    }
+  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
 
   return (
     <div

@@ -20,6 +20,10 @@ import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { TrackWithSave } from '../../../interfaces/track';
+import { albumActions } from '../../../store/slices/album';
+import { Link } from 'react-router-dom';
+import { Space } from 'antd';
+import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
 
 interface SongViewProps {
   index: number;
@@ -60,13 +64,24 @@ const SongData = ({ song, index }: SongDataProps) => {
   const title = (
     <div className='flex flex-col' style={{ flex: 8 }}>
       <div className='flex flex-row items-center'>
-        <p className='title text-left'>{song.name}</p>
+        <p className='title text-left'>
+          {song.name} {song.explicit && !isList ? <span className='explicit'>E</span> : null}
+        </p>
       </div>
 
       {isList ? (
         <p className='text-left artist mobile-hidden'>
           {song.explicit ? <span className='explicit'>E</span> : null}
-          {song.artists.map((a) => a.name).join(', ')}
+          {song.artists.map((a, i) => (
+            <span>
+              <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+                <Link key={a.id} to={`/artist/${a.id}`}>
+                  {a.name}
+                </Link>
+              </ArtistActionsWrapper>
+              {i < song.artists.length - 1 ? ', ' : ''}
+            </span>
+          ))}
         </p>
       ) : null}
     </div>
@@ -74,13 +89,22 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   const artist = !isList ? (
     <p className='text-right tablet-hidden' style={{ flex: 4 }}>
-      {song.artists.map((a) => a.name).join(', ')}
+      {song.artists.map((a, i) => (
+        <span>
+          <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+            <Link key={a.id} to={`/artist/${a.id}`}>
+              {a.name}
+            </Link>
+          </ArtistActionsWrapper>
+          {i < song.artists.length - 1 ? ', ' : ''}
+        </span>
+      ))}
     </p>
   ) : null;
 
   const addToLiked = (
     <p
-      className='text-right actions tablet-hidden'
+      className='text-right tablet-hidden'
       style={{ flex: 1, display: 'flex', justifyContent: 'end' }}
     >
       <AddSongToLibraryButton
@@ -153,7 +177,11 @@ const SongData = ({ song, index }: SongDataProps) => {
 };
 
 const SongView = ({ song, index }: SongViewProps) => {
-  const toggleOpen = useCallback(() => {}, []);
+  const dispatch = useAppDispatch();
+
+  const toggleOpen = useCallback(() => {
+    dispatch(albumActions.updateTrackLikeState({ id: song.id, saved: !song.saved }));
+  }, [dispatch, song.id, song.saved]);
 
   return (
     <button

@@ -78,7 +78,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
               </Panel>
 
               {!queueCollapsed || !detailsCollapsed ? (
-                <PanelResizeHandle style={{ width: 5 }} className='resize-handler' />
+                <PanelResizeHandle className='resize-handler' />
               ) : null}
 
               {!queueCollapsed || !detailsCollapsed ? (

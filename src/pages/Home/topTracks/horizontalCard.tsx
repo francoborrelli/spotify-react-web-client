@@ -6,6 +6,7 @@ import type { Track } from '../../../interfaces/track';
 import { getImageAnalysis2 } from '../../../utils/imageAnyliser';
 import { useAppSelector } from '../../../store/store';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
+import { Link } from 'react-router-dom';
 
 interface HorizontalCardProps {
   item: Track;
@@ -39,9 +40,9 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
         <div className='text-container'>
           <div className='text-section'>
             <div>
-              <a draggable='false' title={item.name} href='/'>
+              <Link title={item.name} to={`/album/${item.album.id}`}>
                 <p>{item.name}</p>
-              </a>
+              </Link>
             </div>
           </div>
 

@@ -22,7 +22,7 @@ const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> 
 
   return (
     <Tooltip title={t('Add to Liked Songs')}>
-      <button onClick={handleAddToLibrary}>
+      <button className='actions' onClick={handleAddToLibrary}>
         <AddToLibrary height={size} width={size} />
       </button>
     </Tooltip>

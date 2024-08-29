@@ -31,6 +31,7 @@ export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
         <div
           className='playing-now-card-image'
           style={{
+            maxHeight: 200,
             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 50%), url("${props.image}")`,
           }}
         >
@@ -44,7 +45,7 @@ export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
 
       <div className='playing-now-card-text'>
         <Row align='middle' justify='space-between'>
-          <Col span={props.extra ? 14 : 24}>
+          <Col span={props.extra ? 20 : 24}>
             <div
               className='playing-now-card-title'
               style={props.image ? undefined : { marginTop: 10 }}

@@ -3,6 +3,9 @@ import { spotifyActions } from '../../../../store/slices/spotify';
 import { AddSongToLibraryButton } from '../../../AddSongToLibrary';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { uiActions } from '../../../../store/slices/ui';
+import { Link } from 'react-router-dom';
+import { TrackActionsWrapper } from '../../../Actions/TrackActions';
+import { ArtistActionsWrapper } from '../../../Actions/ArticleActions';
 
 const ArrowDown = (
   <svg
@@ -50,29 +53,44 @@ const SongDetails: FC<{ isMobile?: boolean }> = memo((props) => {
   return (
     <div className='flex flex-row items-center'>
       <div style={{ marginRight: 15 }}>
-        <div className='playing-cover-container'>
-          <img alt='Album Cover' className='album-cover' src={current_track?.album.images[0].url} />
-          <button
-            aria-label='Now playing view'
-            className='playing-cover-details-button'
-            onClick={() => {
-              dispatch(uiActions.toggleDetails());
-            }}
-          >
-            {detailsOpen ? ArrowDown : ArrowUp}
-          </button>
-        </div>
+        <TrackActionsWrapper track={current_track} trigger={['contextMenu']}>
+          <div className='playing-cover-container'>
+            <img
+              alt='Album Cover'
+              className='album-cover'
+              src={current_track?.album.images[0].url}
+            />
+            <button
+              aria-label='Now playing view'
+              className='playing-cover-details-button'
+              onClick={() => {
+                dispatch(uiActions.toggleDetails());
+              }}
+            >
+              {detailsOpen ? ArrowDown : ArrowUp}
+            </button>
+          </div>
+        </TrackActionsWrapper>
       </div>
       <div id='song-and-artist-name'>
-        <p className='text-white font-bold song-title' title={current_track?.name}>
-          {current_track?.name}
-        </p>
-        <p
+        <TrackActionsWrapper track={current_track} trigger={['contextMenu']}>
+          <p className='text-white font-bold song-title' title={current_track?.name}>
+            {current_track?.name}
+          </p>
+        </TrackActionsWrapper>
+        <span
           className='text-gray-200 song-artist'
           title={current_track?.artists.map((a) => a.name).join(', ')}
         >
-          {current_track?.artists.map((a) => a.name).join(', ')}
-        </p>
+          {current_track?.artists.map((a, i) => (
+            <span key={a.uri}>
+              <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+                <Link to={`/artist/${a.uri.split(':').reverse()[0]}`}>{a.name}</Link>
+              </ArtistActionsWrapper>
+              {i < current_track.artists.length - 1 && ', '}
+            </span>
+          ))}
+        </span>
       </div>
 
       {!props.isMobile ? (

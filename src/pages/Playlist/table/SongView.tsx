@@ -101,7 +101,7 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   const addToLiked = (
     <p
-      className='text-right actions tablet-hidden'
+      className='text-right tablet-hidden'
       style={{ flex: 1, display: 'flex', justifyContent: 'end' }}
     >
       <AddSongToLibraryButton

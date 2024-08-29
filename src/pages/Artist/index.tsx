@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 
 // Redux
-import { fetchArtist } from '../../store/slices/artist';
+import { artistActions, fetchArtist } from '../../store/slices/artist';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 import ArtistContent from './container/content';
@@ -30,6 +30,9 @@ export const ArtistPage: FC<ArtistPageProps> = memo((props) => {
 
   useEffect(() => {
     if (params.artistId) dispatch(fetchArtist(params.artistId));
+    return () => {
+      dispatch(artistActions.setArtist({ artist: null }));
+    };
   }, [dispatch, params.artistId]);
 
   useEffect(() => {

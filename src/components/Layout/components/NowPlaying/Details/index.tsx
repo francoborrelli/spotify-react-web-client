@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import type { FC } from 'react';
 import { NextInQueue } from './next';
 import { Artist } from './artist';
+import { TrackActionsWrapper } from '../../../../Actions/TrackActions';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
   const dispatch = useAppDispatch();
@@ -20,12 +22,30 @@ const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
   };
 
   return (
-    <NowPlayingCard
-      title={song.name}
-      image={song.album.images[0].url}
-      subtitle={song.artists.map((a) => a.name).join(',')}
-      extra={<AddSongToLibraryButton id={song.id!} isSaved={isLiked} onToggle={handleToggle} />}
-    ></NowPlayingCard>
+    <TrackActionsWrapper
+      // @ts-ignore
+      track={song}
+      trigger={['contextMenu']}
+    >
+      <div>
+        <NowPlayingCard
+          title={song.name}
+          albumId={song.album.uri.split(':').reverse()[0]}
+          image={song.album.images[0].url}
+          subtitle={
+            <span>
+              {song.artists.map((a, i) => (
+                <span key={a.uri}>
+                  <Link to={`/artist/${a.uri.split(':').reverse()[0]}`}>{a.name}</Link>
+                  {i < song.artists.length - 1 && ', '}
+                </span>
+              ))}
+            </span>
+          }
+          extra={<AddSongToLibraryButton id={song.id!} isSaved={isLiked} onToggle={handleToggle} />}
+        />
+      </div>
+    </TrackActionsWrapper>
   );
 };
 

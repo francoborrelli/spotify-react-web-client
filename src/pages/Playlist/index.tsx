@@ -4,15 +4,16 @@ import { PlaylistHeader } from './header';
 
 // Utils
 import { useParams } from 'react-router-dom';
-import { FC, RefObject, useEffect, useState } from 'react';
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
+import { FC, RefObject, useEffect, useRef, useState } from 'react';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../store/store';
 import { playlistActions } from '../../store/slices/playlist';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   const dispatch = useAppDispatch();
+  const containerRef = useRef<HTMLDivElement>(null);
   const { playlistId } = useParams<{ playlistId: string }>();
 
   const [color, setColor] = useState<string>('#121212');
@@ -37,8 +38,8 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
 
   if (!playlist) return null;
   return (
-    <div className='Playlist-section'>
-      <PlaylistHeader container={props.container} color={color} />
+    <div className='Playlist-section' ref={containerRef}>
+      <PlaylistHeader color={color} container={props.container} sectionContainer={containerRef} />
       <PlaylistList color={color} />
     </div>
   );

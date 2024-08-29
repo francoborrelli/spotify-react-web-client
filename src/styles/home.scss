@@ -1,6 +1,7 @@
 @use './variables.scss' as *;
 
 .horizontal-playlist {
+  cursor: pointer;
   --item-height: 48px;
 
   @media (min-width: 1000px) {
@@ -202,10 +203,10 @@
   }
 }
 
-.song-title:hover,
-.song-artist:hover {
-  text-decoration: underline;
-}
+// .song-title:hover,
+// .song-artist:hover {
+//   text-decoration: underline;
+// }
 
 .playlist-card {
   .circle-play-div {

@@ -561,3 +561,11 @@ img {
     background-color: #626262;
   }
 }
+
+a {
+  text-decoration: none;
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}

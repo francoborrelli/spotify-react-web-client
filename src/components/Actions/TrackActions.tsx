@@ -29,7 +29,7 @@ import { Track } from '../../interfaces/track';
 import { useNavigate } from 'react-router-dom';
 
 interface TrackActionsWrapperProps {
-  track: Track;
+  track: Track | Spotify.Track;
   album?: Album;
   canEdit?: boolean;
   playlist?: Playlist;
@@ -116,7 +116,10 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         key: '5',
         icon: <ArtistIcon />,
         onClick: () => {
-          navigate(`/artist/${track.artists[0]?.id}`);
+          navigate(
+            // @ts-ignore
+            `/artist/${track.artists[0]?.id || track.artists[0].uri.split(':').reverse()[0]}`
+          );
         },
       }
     );
@@ -127,7 +130,8 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         key: '6',
         icon: <AlbumIcon />,
         onClick: () => {
-          navigate(`/album/${track.album?.id}`);
+          // @ts-ignore
+          navigate(`/album/${track.album?.id || track.album.uri.split(':').reverse()[0]}`);
         },
       });
     }
@@ -141,7 +145,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
     album,
     track.uri,
     track.artists,
-    track.album?.id,
+    track.album,
     dispatch,
     navigate,
   ]);

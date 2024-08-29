@@ -7,13 +7,13 @@ import { FollowIcon, UnfollowIcon } from '../Icons';
 import { useTranslation } from 'react-i18next';
 
 // Interface
-import type { Artist } from '../../interfaces/artist';
+import type { Artist, SimpleArtist } from '../../interfaces/artist';
 
 // Redux
 import { useAppSelector } from '../../store/store';
 
 interface ArtistActionsWrapperProps {
-  artist: Artist;
+  artist: Artist | Spotify.Track['artists'][0] | SimpleArtist;
   onRefresh?: () => void;
   trigger?: ('contextMenu' | 'click')[];
   children: React.ReactNode | React.ReactNode[];
@@ -27,8 +27,10 @@ export const ArtistActionsWrapper: FC<ArtistActionsWrapperProps> = memo((props) 
   const myArtists = useAppSelector((state) => state.yourLibrary.myArtists);
 
   const inLibrary = useMemo(() => {
-    return myArtists.some((p) => p.id === artist.id);
-  }, [myArtists, artist.id]);
+    // @ts-ignore
+    const id = artist.id || artist.uri.split(':').reverse()[0];
+    return myArtists.some((p) => p.id === id);
+  }, [myArtists, artist]);
 
   const items = useMemo(() => {
     const items: MenuProps['items'] = [];

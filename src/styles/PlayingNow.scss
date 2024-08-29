@@ -48,6 +48,11 @@
     color: $text-primary-color;
     font-weight: 700;
     font-size: 1.5rem;
+    &:hover {
+      text-decoration: underline;
+      color: #fff;
+      cursor: pointer;
+    }
   }
 
   .playing-now-card-subtitle {
@@ -68,7 +73,6 @@
   }
 
   .playing-now-card-image {
-    min-height: 350px;
     height: 50%;
     background-position: 50% 50%;
     background-size: cover;
@@ -76,6 +80,7 @@
     padding-bottom: 50%;
     position: relative;
     width: 100%;
+    aspect-ratio: 1 / 1;
 
     .playing-now-card-image-text {
       left: 0;
@@ -216,6 +221,7 @@
   }
 
   #song-and-artist-name {
+    overflow: hidden;
     h3,
     p {
       width: 100%;

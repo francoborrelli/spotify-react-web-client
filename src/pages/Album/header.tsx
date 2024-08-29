@@ -16,10 +16,12 @@ import { useAppSelector } from '../../store/store';
 // Utils
 import dayjs from 'dayjs';
 import tinycolor from 'tinycolor2';
+import { ArtistActionsWrapper } from '../../components/Actions/ArticleActions';
 
 interface AlbumHeaderProps {
   color: string;
   container: RefObject<HTMLDivElement>;
+  sectionContainer?: RefObject<HTMLDivElement>;
 }
 
 // function that sums tracks length and return duration in minutes and seconds
@@ -30,7 +32,7 @@ export const sumTracksLength = (tracks: Track[]): string => {
   return `${minutes} min ${seconds} sec`;
 };
 
-export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
+export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer, color }) => {
   const { t } = useTranslation(['album']);
 
   const album = useAppSelector((state) => state.album.album);
@@ -40,35 +42,35 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
   const [activeTable, setActiveTable] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
 
-  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
-  const detailsCollaped = useAppSelector((state) => state.ui.detailsCollapsed);
-  const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
-
   const tracks = useAppSelector((state) => state.album.tracks);
+  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
+  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
+  const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   useEffect(() => {
     const ref = container.current;
-
     const handleScroll = () => {
       if (ref) {
         setActiveHeader(ref.scrollTop > 260);
         setActiveTable(ref.scrollTop > 320);
       }
     };
-
     ref?.addEventListener('scroll', handleScroll);
-
-    setHeaderWidth(container.current?.clientWidth || 0);
-    window.onresize = () => {
-      if (container.current) {
-        setHeaderWidth(container.current.clientWidth);
-      }
-    };
     return () => {
-      window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, detailsCollaped, libraryCollapsed]);
+  }, [container, queueCollapsed, detailsCollapsed, libraryCollapsed]);
+
+  useEffect(() => {
+    const ref = sectionContainer?.current;
+    if (ref) {
+      const observer = new ResizeObserver((entries) => {
+        setHeaderWidth(entries[0].contentRect.width);
+      });
+      observer.observe(ref);
+      return () => ref && observer.unobserve(ref);
+    }
+  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
 
   return (
     <div
@@ -128,9 +130,11 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, color }) => {
 
                   <h3 className='text-sm font-semibold text-white'>
                     {artist ? (
-                      <Link to='/' className='link-text'>
-                        {artist?.name}
-                      </Link>
+                      <ArtistActionsWrapper artist={artist} trigger={['contextMenu']}>
+                        <Link to={`/artist/${artist.id}`} className='link-text'>
+                          {artist?.name}
+                        </Link>
+                      </ArtistActionsWrapper>
                     ) : (
                       ''
                     )}{' '}
