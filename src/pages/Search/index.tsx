@@ -8,36 +8,16 @@ import { SearchedSongs } from './songs';
 import NoSearchResults from './noResults';
 
 // Constants
-import { playlists } from '../../constants/cv';
-
-const data = playlists
-  .map((playlist) => playlist.songs.map((s) => ({ ...s, playlist: playlist.name })))
-  .flat();
-
-export type SearchResult = (typeof data)[number];
-
-const searchableKeys: (keyof SearchResult)[] = ['name', 'artist', 'playlist', 'description'];
 
 export const SearchPage = () => {
   const { t } = useTranslation(['cv']);
 
   const params = useParams<{ search: string }>();
-  const [items, searchItems] = useState<SearchResult[]>([]);
+  const [items, searchItems] = useState<any[]>([]);
 
   useEffect(() => {
     if (params.search) {
-      const search = params.search.toLowerCase();
-      const results = data.filter((item) =>
-        searchableKeys.some(
-          (key) =>
-            t(item[key] || '')
-              .toLowerCase()
-              .includes(search) ||
-            item.skills.some((skill) => skill.text.toLowerCase().includes(search))
-        )
-      );
-
-      searchItems(results);
+      searchItems([]);
     }
   }, [params.search, t]);
 

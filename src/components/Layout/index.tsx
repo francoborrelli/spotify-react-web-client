@@ -1,21 +1,21 @@
+import { useEffect, useState, type FC, type ReactElement } from 'react';
+
 // Components
-import { Col, Flex, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { Navbar } from './components/Navbar';
 import { Library } from './components/Library';
 import PlayingBar from './components/PlayingBar';
 import { LanguageModal } from '../LanguageModal';
 import { PlayingNow } from './components/NowPlaying';
 import { PlayingNowDrawer } from '../PlayingNowDrawer';
-
-// Constants
-import { playlists } from '../../constants/cv';
-
-// Interfaces
-import { useEffect, useState, type FC, type ReactElement } from 'react';
 import { EditPlaylistModal } from '../EditPlaylistModal';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+
+// Interfaces
+
+// Redux
 import { uiActions } from '../../store/slices/ui';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
@@ -67,7 +67,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
                   maxWidth: libraryCollapsed ? 85 : undefined,
                 }}
               >
-                <Library playlists={playlists} />
+                <Library />
               </Panel>
 
               <PanelResizeHandle className='resize-handler' />

@@ -1,9 +1,8 @@
 import { FC } from 'react';
-import { SearchResult } from '.';
 import SongView from './song';
 import { useTranslation } from 'react-i18next';
 
-export const SearchedSongs: FC<{ songs: SearchResult[] }> = (props) => {
+export const SearchedSongs: FC<{ songs: any[] }> = (props) => {
   const { songs } = props;
   const { t } = useTranslation(['search']);
 

@@ -8,13 +8,10 @@ import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 // Interfaces
 import { useEffect, type FC } from 'react';
-import type { Playlist } from '../../../../interfaces/types';
 
-interface LibraryProps {
-  playlists: Playlist[];
-}
+interface LibraryProps {}
 
-export const Library: FC<LibraryProps> = ({ playlists = [] }) => {
+export const Library: FC<LibraryProps> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

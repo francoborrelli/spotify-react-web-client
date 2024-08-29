@@ -3,7 +3,6 @@
 import { useCallback, useState } from 'react';
 
 // Interfaces
-import type { SearchResult } from '.';
 
 // Redux
 import { useAppDispatch } from '../../store/store';
@@ -13,7 +12,7 @@ import { libraryActions } from '../../store/slices/library';
 import { useTranslation } from 'react-i18next';
 
 interface SongViewProps {
-  song: SearchResult;
+  song: any;
   index: number;
   hasSkills: boolean;
 }

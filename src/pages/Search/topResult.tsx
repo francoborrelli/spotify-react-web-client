@@ -5,10 +5,9 @@ import { PlayCircle } from '../Home/components/PlayCircle';
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
-import type { SearchResult } from '.';
 import { useNavigate } from 'react-router-dom';
 
-export const TopResult = ({ item }: { item: SearchResult }) => {
+export const TopResult = ({ item }: { item: any }) => {
   const { t } = useTranslation(['search']);
   return (
     <div className='top-result-container'>
@@ -18,7 +17,7 @@ export const TopResult = ({ item }: { item: SearchResult }) => {
   );
 };
 
-export const TopResultSong = ({ item, onClick }: { item: SearchResult; onClick?: () => void }) => {
+export const TopResultSong = ({ item, onClick }: { item: any; onClick?: () => void }) => {
   const [t] = useTranslation(['cv']);
 
   const navigate = useNavigate();
