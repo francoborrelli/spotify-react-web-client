@@ -9,14 +9,14 @@ import { useAppSelector } from '../../../../store/store';
 // Utils
 import { useTranslation } from 'react-i18next';
 
-export const OtherArtists = memo(() => {
+export const AppearsOn = memo(() => {
   const [t] = useTranslation(['artist']);
-  const artists = useAppSelector((state) => state.artist.otherArtists);
+  const tracks = useAppSelector((state) => state.artist.appearsOn);
 
   return (
     <div>
       <div>
-        <ItemsList items={artists} title={t('Fans also like')} />
+        <ItemsList items={tracks} title={t('Appears on')} />
       </div>
     </div>
   );

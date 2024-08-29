@@ -6,7 +6,9 @@ import Chip from '../../../../components/Chip';
 import { ItemsList } from '../../../Home/components/list';
 
 // Utils
+import { orderBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { getAlbumDescription } from '../../../../utils/getDescription';
 
 // Redux
 import { useAppSelector } from '../../../../store/store';
@@ -63,6 +65,7 @@ const ChipsSection: FC<{ activeKey: string; setActiveKey: (str: string) => void 
 
 export const Discography = memo(() => {
   const [t] = useTranslation(['artist']);
+  const artist = useAppSelector((state) => state.artist.artist);
   const albums = useAppSelector((state) => state.artist.albums);
   const singles = useAppSelector((state) => state.artist.singles);
   const compilations = useAppSelector((state) => state.artist.compilations);
@@ -78,7 +81,7 @@ export const Discography = memo(() => {
       case 'Compilations':
         return compilations;
       default:
-        return [...albums, ...singles, ...compilations];
+        return orderBy([...albums, ...singles, ...compilations], 'release_date', 'desc');
     }
   }, [activeKey, albums, singles, compilations]);
 
@@ -88,6 +91,8 @@ export const Discography = memo(() => {
         <ItemsList
           items={items}
           title={t('Discography')}
+          getDescription={getAlbumDescription}
+          moreUrl={`/artist/${artist!.id}/discography`}
           chips={<ChipsSection activeKey={activeKey} setActiveKey={setActiveKey} />}
         />
       </div>

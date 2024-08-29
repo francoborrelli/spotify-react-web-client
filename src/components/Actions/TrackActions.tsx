@@ -15,18 +15,18 @@ import { playlistService } from '../../services/playlists';
 
 // Utils
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 // Interface
+import type { Track } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
 import type { Playlist } from '../../interfaces/playlists';
 
 // Redux
 import { fetchQueue } from '../../store/slices/queue';
 import { playlistActions } from '../../store/slices/playlist';
-import { getUserPlaylists } from '../../store/slices/yourLibrary';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { Track } from '../../interfaces/track';
-import { useNavigate } from 'react-router-dom';
+import { fetchMyPlaylists, getUserPlaylists } from '../../store/slices/yourLibrary';
 
 interface TrackActionsWrapperProps {
   track: Track | Spotify.Track;
@@ -45,6 +45,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const myPlaylists = useAppSelector(getUserPlaylists);
+  const user = useAppSelector((state) => state.auth.user);
 
   const options = useMemo(() => {
     return myPlaylists
@@ -72,7 +73,25 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         label: t('Add to playlist'),
         icon: <AddToPlaylist />,
         key: '1',
-        children: options,
+        children: [
+          {
+            label: t('New playlist'),
+            key: 'new',
+            onClick: () => {
+              playlistService.createPlaylist(user?.id!, { name: track.name }).then((response) => {
+                const playlist = response.data;
+                playlistService
+                  .addPlaylistItems(playlist.id, [track.uri], playlist.snapshot_id!)
+                  .then(() => {
+                    dispatch(fetchMyPlaylists());
+                    message.success(t('Added to playlist'));
+                  });
+              });
+            },
+          },
+          { type: 'divider' },
+          ...options,
+        ],
       },
     ];
 
@@ -143,6 +162,8 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
     canEdit,
     playlist,
     album,
+    user?.id,
+    track.name,
     track.uri,
     track.artists,
     track.album,

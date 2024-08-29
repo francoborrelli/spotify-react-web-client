@@ -1,6 +1,6 @@
 import { Flex } from 'antd';
 import { Link } from 'react-router-dom';
-import { AlbumCard, PlaylistCard } from './VerticalCard';
+import { AlbumCard, ArtistCard, PlaylistCard } from './VerticalCard';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 // Interfaces
 import type { ReactNode } from 'react';
 import type { Album } from '../../../interfaces/albums';
+import type { Artist } from '../../../interfaces/artist';
 import type { Playlist } from '../../../interfaces/playlists';
 
-type Item = Album | Playlist;
+type Item = Album | Playlist | Artist;
 
 export function ItemsList(props: {
   title: string;
@@ -48,8 +49,13 @@ export function ItemsList(props: {
               {item.type === 'album' ? (
                 <AlbumCard item={item} getDescription={getDescription} />
               ) : null}
+
               {item.type === 'playlist' ? (
                 <PlaylistCard item={item} getDescription={getDescription} />
+              ) : null}
+
+              {item.type === 'artist' ? (
+                <ArtistCard item={item} getDescription={getDescription} />
               ) : null}
             </div>
           );

@@ -104,6 +104,20 @@ const followPlaylist = async (playlistId: string) => {
   return await axios.put(`/playlists/${playlistId}/followers`);
 };
 
+/**
+ * @description Add the current user as a follower of one or more artists or other Spotify users.
+ */
+const followArtists = async (ids: string[]) => {
+  return await axios.put('/me/following', { type: 'artist', ids });
+};
+
+/**
+ * @description Remove the current user as a follower of one or more artists or other Spotify users.
+ */
+const unfollowArtists = async (ids: string[]) => {
+  return await axios.delete('/me/following', { params: { type: 'artist', ids: ids.join(',') } });
+};
+
 export const userService = {
   getUser,
   saveTracks,
@@ -117,4 +131,6 @@ export const userService = {
   checkFollowedPlaylist,
   unfollowPlaylist,
   checkFollowingArtists,
+  followArtists,
+  unfollowArtists,
 };

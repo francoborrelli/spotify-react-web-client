@@ -16,6 +16,8 @@ const initialState: {
   appearsOn: Album[];
   compilations: Album[];
 
+  otherArtists: Artist[];
+
   artist: Artist | null;
   topTracks: TrackWithSave[];
 
@@ -25,6 +27,7 @@ const initialState: {
   topTracks: [],
   albums: [],
   artist: null,
+  otherArtists: [],
 
   loading: true,
   following: false,
@@ -72,6 +75,14 @@ export const fetchArtist = createAsyncThunk<[Artist, boolean, TrackWithSave[], A
   }
 );
 
+const fetchOtherArtists = createAsyncThunk<Artist[], string>(
+  'artist/fetchOtherArtists',
+  async (id) => {
+    const response = await artistService.fetchSimilarArtists(id);
+    return response.data.artists;
+  }
+);
+
 const artistSlice = createSlice({
   name: 'artist',
   initialState,
@@ -90,6 +101,7 @@ const artistSlice = createSlice({
         state.following = false;
         state.loading = true;
         state.artist = null;
+        state.otherArtists = [];
       }
     },
   },
@@ -107,11 +119,15 @@ const artistSlice = createSlice({
       state.compilations = action.payload[3][3];
       state.loading = false;
     });
+    builder.addCase(fetchOtherArtists.fulfilled, (state, action) => {
+      state.otherArtists = action.payload;
+    });
   },
 });
 
 export const artistActions = {
   fetchArtist,
+  fetchOtherArtists,
   ...artistSlice.actions,
 };
 

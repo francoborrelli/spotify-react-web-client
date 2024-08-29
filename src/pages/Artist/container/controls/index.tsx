@@ -1,6 +1,7 @@
 import { Col, Row, Space, Tooltip } from 'antd';
 
 import { PlayCircleButton } from './playCircle';
+import { FollowArtistButton } from './followButton';
 import { MenuDots } from '../../../../components/Icons';
 import { ArtistActionsWrapper } from '../../../../components/Actions/ArticleActions';
 
@@ -21,6 +22,10 @@ export const ArtistControls: FC = () => {
         <Col>
           <Space align='center'>
             <PlayCircleButton />
+
+            <div style={{ marginRight: 10 }}>
+              <FollowArtistButton id={artist!.id} />
+            </div>
 
             <ArtistActionsWrapper artist={artist!} trigger={['click']}>
               <Tooltip title={`${tor('More options for')} ${artist?.name}`}>

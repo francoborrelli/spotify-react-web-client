@@ -33,8 +33,15 @@ const fetchArtistAlbums = (
 const fetchArtistTopTracks = (id: string) =>
   axios.get<{ tracks: Track }>(`/artists/${id}/top-tracks`);
 
+/**
+ * @description Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.
+ */
+const fetchSimilarArtists = (id: string) =>
+  axios.get<{ artists: Artist[] }>(`/artists/${id}/related-artists`);
+
 export const artistService = {
   fetchArtist,
   fetchArtistAlbums,
   fetchArtistTopTracks,
+  fetchSimilarArtists,
 };

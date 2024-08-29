@@ -1,8 +1,10 @@
 import { FC, memo } from 'react';
-import { ArtistTopTracks } from '../components/topTracks';
-import { Discography } from '../components/discography';
-import { AppearsOn } from '../components/otherArtists';
+
 import { ArtistControls } from './controls';
+import { AppearsOn } from '../components/appearsOn';
+import { Discography } from '../components/discography';
+import { ArtistTopTracks } from '../components/topTracks';
+import { OtherArtists } from '../components/otherArtists';
 
 export const ArtistContent: FC<{
   color: string;
@@ -21,6 +23,8 @@ export const ArtistContent: FC<{
         <ArtistTopTracks />
 
         <Discography />
+
+        <OtherArtists />
 
         <AppearsOn />
       </div>

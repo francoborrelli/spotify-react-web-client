@@ -29,7 +29,7 @@ export const ArtistTopTracks = memo(() => {
     <div style={{ margin: 10 }}>
       <h1 className='playlist-header'>Popular</h1>
       <Row>
-        <Col span={24} xl={17}>
+        <Col span={24}>
           <div>
             {items.map((song, index) => (
               <TopSong key={song.uri} song={song} index={index} />

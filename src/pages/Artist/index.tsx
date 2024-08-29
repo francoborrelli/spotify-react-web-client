@@ -27,7 +27,10 @@ export const ArtistPage: FC<ArtistPageProps> = memo((props) => {
   const artist = useAppSelector((state) => state.artist.artist);
 
   useEffect(() => {
-    if (params.artistId) dispatch(fetchArtist(params.artistId));
+    if (params.artistId) {
+      dispatch(fetchArtist(params.artistId));
+      dispatch(artistActions.fetchOtherArtists(params.artistId));
+    }
     return () => {
       dispatch(artistActions.setArtist({ artist: null }));
     };

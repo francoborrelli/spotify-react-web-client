@@ -9,6 +9,9 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { yourLibraryActions } from '../store/slices/yourLibrary';
 import { editPlaylistModalActions } from '../store/slices/editPlaylistModal';
 
+// Utils
+import { useTranslation } from 'react-i18next';
+
 // Services
 import { playlistService } from '../services/playlists';
 
@@ -29,6 +32,7 @@ const toBase64 = (file: File): Promise<string> =>
 export const EditPlaylistModal = memo(() => {
   const dispatch = useAppDispatch();
   const formRef = useRef<FormInstance>();
+  const { t } = useTranslation(['playlist']);
   const currentPlaylist = useAppSelector((state) => state.playlist.playlist);
   const playlist = useAppSelector((state) => state.editPlaylistModal.playlist);
 
@@ -78,7 +82,7 @@ export const EditPlaylistModal = memo(() => {
               color: 'white',
             }}
           >
-            Edit details
+            {t('Edit details')}
           </h1>
         }
       >
