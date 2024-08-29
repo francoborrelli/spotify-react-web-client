@@ -1,9 +1,16 @@
-import { Col, Row } from 'antd';
 import { memo, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../store/store';
+
 import TopSong from './song';
+import { Col, Row } from 'antd';
+
+// Redux
+import { useAppSelector } from '../../../../store/store';
+
+// Utils
+import { useTranslation } from 'react-i18next';
 
 export const ArtistTopTracks = memo(() => {
+  const [t] = useTranslation(['artist']);
   const [showAll, setShowAll] = useState(false);
   const topSongs = useAppSelector((state) => state.artist.topTracks);
 
@@ -31,7 +38,7 @@ export const ArtistTopTracks = memo(() => {
         </Col>
       </Row>
       <button className='showMore' onClick={() => setShowAll((s) => !s)}>
-        <span>{showAll ? 'Show less' : 'Show more'}</span>
+        <span>{showAll ? t('Show less') : t('Show more')}</span>
       </button>
     </div>
   );

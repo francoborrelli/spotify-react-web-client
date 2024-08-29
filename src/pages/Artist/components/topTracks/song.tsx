@@ -32,6 +32,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   const dispatch = useAppDispatch();
   const [tor] = useTranslation(['order']);
 
+  const topTracks = useAppSelector((state) => state.artist.topTracks);
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
   const isCurrent = useMemo(() => currentSong?.uri === song.uri, [currentSong, song]);
@@ -44,9 +45,9 @@ const SongData = ({ song, index }: SongDataProps) => {
       return playerService.startPlayback();
     }
     return playerService.startPlayback({
-      // improve
+      uris: topTracks.slice(index).map((track) => track.uri),
     });
-  }, [isCurrent, isPlaying]);
+  }, [index, isCurrent, isPlaying, topTracks]);
 
   const image = (
     <img alt='song cover' src={song.album.images[0].url} className='w-10 h-10 mr-4 rounded-md' />

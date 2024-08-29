@@ -8,5 +8,6 @@ export const artist = {
   Singles: 'Sencillos',
   'Singles and EPs': 'Sencillos y EPs',
   'Appears on': 'Aparece en',
-  'Show More': 'Mostrar más',
+  'Show more': 'Mostrar más',
+  'Show less': 'Mostrar menos',
 };
