@@ -14,7 +14,7 @@ import type { Playlist } from '../../../interfaces/playlists';
 type Item = Album | Playlist | Artist;
 
 export function ItemsList(props: {
-  title: string;
+  title?: string;
   items: Item[];
   moreUrl?: string;
   chips?: ReactNode;
@@ -25,13 +25,16 @@ export function ItemsList(props: {
   return (
     <div>
       <Flex justify='space-between' align='center'>
-        {moreUrl ? (
-          <Link to={moreUrl} style={{ textDecoration: 'none' }}>
+        {title ? (
+          moreUrl ? (
+            <Link to={moreUrl} style={{ textDecoration: 'none' }}>
+              <h1 className='playlist-header'>{title}</h1>
+            </Link>
+          ) : (
             <h1 className='playlist-header'>{title}</h1>
-          </Link>
-        ) : (
-          <h1 className='playlist-header'>{title}</h1>
-        )}
+          )
+        ) : null}
+
         {moreUrl ? (
           <Link className='mobile-hidden' to={moreUrl}>
             <button className='showMore'>

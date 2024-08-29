@@ -7,6 +7,8 @@ export const artist = {
   Popular: 'Popular',
   Albums: 'Álbumes',
   Singles: 'Sencillos',
+  All: 'Todos',
+  Compilations: 'Compilaciones',
   'Singles and EPs': 'Sencillos y EPs',
   'Appears on': 'Aparece en',
   'Show more': 'Mostrar más',

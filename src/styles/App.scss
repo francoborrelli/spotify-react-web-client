@@ -220,9 +220,12 @@ h3 {
       color: hsla(0, 0%, 100%, 0.9);
     }
   }
+}
 
-  .ant-dropdown-menu-item-selected {
-    background: transparent !important;
+.ant-dropdown-menu-item-selected {
+  background-color: #282828 !important;
+
+  span {
     color: #1db954 !important;
   }
 }
