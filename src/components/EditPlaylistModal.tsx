@@ -1,18 +1,22 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Col, message, Modal, Row, Spin } from 'antd';
-
+import { Col, message, Modal, Row } from 'antd';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 
 // Redux
+import { refreshPlaylist } from '../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../store/store';
+import { yourLibraryActions } from '../store/slices/yourLibrary';
 import { editPlaylistModalActions } from '../store/slices/editPlaylistModal';
+
+// Services
+import { playlistService } from '../services/playlists';
+
+// Constants
+import { PLAYLIST_DEFAULT_IMAGE } from '../constants/spotify';
 
 // Interfaces
 import type { FormInstance } from 'antd/lib';
-import { playlistService } from '../services/playlists';
-import { refreshPlaylist } from '../store/slices/playlist';
-import { yourLibraryActions } from '../store/slices/yourLibrary';
 
 const toBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -154,7 +158,15 @@ export const EditPlaylistModal = memo(() => {
                     <input type='file' onChange={handleChange} accept='image/.jpg, image/.jpeg' />
                   </div>
                 </div>
-                <img src={fileUrl || playlist?.images[0].url} alt='' className='playlist-img' />
+                <img
+                  src={
+                    fileUrl || (playlist?.images && playlist?.images.length)
+                      ? playlist?.images[0].url
+                      : PLAYLIST_DEFAULT_IMAGE
+                  }
+                  alt=''
+                  className='playlist-img'
+                />
               </div>
             </Col>
             <Col span={16}>

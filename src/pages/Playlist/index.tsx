@@ -21,7 +21,7 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
 
   useEffect(() => {
     if (playlist && playlist.images?.length) {
-      getImageAnalysis2(playlist.images[0].url).then((color) => {
+      getImageAnalysis2(playlist?.images[0].url).then((color) => {
         setColor(color);
       });
     }

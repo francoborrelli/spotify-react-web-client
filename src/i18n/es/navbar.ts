@@ -8,4 +8,9 @@ export const navbar = {
   'Contact me': 'Contactame',
   'Source code': 'Código fuente',
   SearchPlaceholder: '¿Qué querés reproducir?',
+  'Create a new Playlist': 'Crear una nueva Playlist',
+  Playlists: 'Playlists',
+  Artists: 'Artistas',
+  Albums: 'Álbumes',
+  'Playlist created': 'Playlist creada',
 };

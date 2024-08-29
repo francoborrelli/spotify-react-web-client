@@ -1,17 +1,24 @@
+// Components
 import { Col, Row, Space } from 'antd';
+import { Link } from 'react-router-dom';
+import { PlaylistTableHeader } from './table/header';
+import { PlayCircleButton } from './controls/playCircle';
 
 // I18n
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import { RefObject, useEffect, useState, type FC } from 'react';
-import { Link } from 'react-router-dom';
+
+// Constants
+import { PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
 
 // Utils
 import tinycolor from 'tinycolor2';
+import { getPlaylistDescription } from '../../utils/getDescription';
+
+// Redux
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { PlayCircleButton } from './controls/playCircle';
-import { PlaylistTableHeader } from './table/header';
 import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
 
 interface PlaylistHeaderProps {
@@ -124,7 +131,15 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
                   </div>
                 </div>
               ) : null}
-              <img src={playlist?.images[0].url} alt='' className='playlist-img' />
+              <img
+                src={
+                  playlist?.images && playlist?.images.length
+                    ? playlist?.images[0].url
+                    : PLAYLIST_DEFAULT_IMAGE
+                }
+                alt=''
+                className='playlist-img'
+              />
             </div>
           </Col>
           <Col xs={24} sm={18} lg={19}>
@@ -140,7 +155,7 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
                   }}
                 >
                   <h1 className='playlist-title'>{playlist?.name}</h1>
-                  <p className='playlist-description'>{playlist?.description}</p>
+                  <p className='playlist-description'>{getPlaylistDescription(playlist!)}</p>
                 </div>
               </Col>
               <Col span={24}>
@@ -172,7 +187,9 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
                       {playlist?.followers?.total
                         ? ` • ${playlist?.followers?.total} ${t('saves')}`
                         : ' '}{' '}
-                      • {playlist?.tracks?.total} {t('songs')}
+                      {playlist?.tracks?.total
+                        ? ` • ${playlist?.tracks?.total} ${t('songs')}`
+                        : ' '}
                     </span>
                   </h3>
                 </Space>

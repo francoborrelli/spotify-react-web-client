@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import { Link } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
 import { useCallback, useMemo } from 'react';
 import { Tooltip } from '../../../components/Tooltip';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
 import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
+import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
 
 // Redux
 import { libraryActions } from '../../../store/slices/library';
@@ -66,13 +68,25 @@ const SongData = ({ song, index }: SongDataProps) => {
   const title = (
     <div className='flex flex-col' style={{ flex: 7 }}>
       <div className='flex flex-row items-center'>
-        <p className='title text-left'>{song.track.name}</p>
+        <p className='title text-left'>
+          {song.track.name}{' '}
+          {song.track.explicit && !isList ? <span className='explicit'>E</span> : null}
+        </p>
       </div>
 
       {isList ? (
         <p className='text-left artist mobile-hidden'>
           {song.track.explicit ? <span className='explicit'>E</span> : null}
-          {song.track.artists.map((a) => a.name).join(', ')}
+          {song.track.artists.map((a, i) => (
+            <span>
+              <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+                <Link key={a.id} to={`/artist/${a.id}`}>
+                  {a.name}
+                </Link>
+              </ArtistActionsWrapper>
+              {i < song.track.artists.length - 1 ? ', ' : ''}
+            </span>
+          ))}
         </p>
       ) : null}
     </div>
@@ -80,13 +94,22 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   const artist = !isList ? (
     <p className='text-left tablet-hidden' style={{ flex: 5 }}>
-      {song.track.artists.map((a) => a.name).join(', ')}
+      {song.track.artists.map((a, i) => (
+        <span>
+          <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+            <Link key={a.id} to={`/artist/${a.id}`}>
+              {a.name}
+            </Link>
+          </ArtistActionsWrapper>
+          {i < song.track.artists.length - 1 ? ', ' : ''}
+        </span>
+      ))}
     </p>
   ) : null;
 
   const album = (
     <p className='text-left tablet-hidden' style={{ flex: 5 }}>
-      {song.track.album.name}
+      <Link to={`/album/${song.track.album.id}`}>{song.track.album.name}</Link>
     </p>
   );
 

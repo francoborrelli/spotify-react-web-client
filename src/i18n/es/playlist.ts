@@ -3,7 +3,7 @@ export const playlist = {
   songs: 'canciones',
   Name: 'Nombre',
   Filter: 'Filtrar',
-
+  Add: 'Agregar',
   'Date Added': 'Fecha en que se agregó',
   'Add to playlist': 'Agregar a la lista de reproducción',
   'Remove from this playlist': 'Eliminar de esta lista de reproducción',

@@ -1,4 +1,9 @@
 import { FC, memo, useEffect, useState } from 'react';
+
+// Utils
+import { useTranslation } from 'react-i18next';
+
+// Redux
 import { useAppSelector } from '../../../store/store';
 
 const VerifiedIcon = () => (
@@ -17,6 +22,7 @@ export const ArtistHeader: FC<{
   color: string;
   container: React.RefObject<HTMLDivElement>;
 }> = memo((props) => {
+  const [t] = useTranslation(['artist']);
   const { container, color } = props;
 
   const [scroll, setScroll] = useState(0);
@@ -71,13 +77,15 @@ export const ArtistHeader: FC<{
             <span className='verifyContainer'>
               <div className='verifyDiv'></div>
               <VerifiedIcon />
-              <span>Verified Artist</span>
+              <span>{t('Verified Artist')}</span>
             </span>
 
             <span className='artistName'>
               <h1>{artist?.name}</h1>
             </span>
-            <span className='listeners'>{artist?.followers.total} followers</span>
+            <span className='listeners'>
+              {artist?.followers.total} {t('followers')}
+            </span>
           </div>
         </div>
       </div>

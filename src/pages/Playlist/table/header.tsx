@@ -7,6 +7,9 @@ export const PlaylistTableHeader = () => {
   const view = useAppSelector((state) => state.playlist.view);
   const isList = view === 'LIST';
 
+  const playlist = useAppSelector((state) => state.playlist.playlist);
+  if (!playlist || !playlist.tracks?.total) return null;
+
   return (
     <div className='mobile-hidden flex justify-between items-center py-2'>
       <div style={{ flex: 1 }}>

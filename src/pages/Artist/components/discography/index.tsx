@@ -1,13 +1,19 @@
+import { FC, memo, useEffect, useMemo, useState } from 'react';
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Space } from 'antd';
-import { FC, memo, useEffect, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../store/store';
-
 import Chip from '../../../../components/Chip';
 import { ItemsList } from '../../../Home/components/list';
 
+// Utils
+import { useTranslation } from 'react-i18next';
+
+// Redux
+import { useAppSelector } from '../../../../store/store';
+
 const ChipsSection: FC<{ activeKey: string; setActiveKey: (str: string) => void }> = memo(
   (props) => {
+    const [t] = useTranslation(['artist']);
     const { activeKey, setActiveKey } = props;
 
     const albums = useAppSelector((state) => state.artist.albums);
@@ -45,7 +51,7 @@ const ChipsSection: FC<{ activeKey: string; setActiveKey: (str: string) => void 
         {chips.map((chip) => (
           <Chip
             key={chip}
-            text={chip}
+            text={t(chip)}
             active={activeKey === chip}
             onClick={() => setActiveKey(chip)}
           />
@@ -56,6 +62,7 @@ const ChipsSection: FC<{ activeKey: string; setActiveKey: (str: string) => void 
 );
 
 export const Discography = memo(() => {
+  const [t] = useTranslation(['artist']);
   const albums = useAppSelector((state) => state.artist.albums);
   const singles = useAppSelector((state) => state.artist.singles);
   const compilations = useAppSelector((state) => state.artist.compilations);
@@ -80,7 +87,7 @@ export const Discography = memo(() => {
       <div>
         <ItemsList
           items={items}
-          title='Discography'
+          title={t('Discography')}
           chips={<ChipsSection activeKey={activeKey} setActiveKey={setActiveKey} />}
         />
       </div>

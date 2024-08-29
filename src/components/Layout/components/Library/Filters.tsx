@@ -4,12 +4,17 @@ import { Space } from 'antd';
 import Chip from '../../../Chip';
 import { CloseIcon2 } from '../../../Icons';
 
+// Utils
+import { useTranslation } from 'react-i18next';
+
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { yourLibraryActions, YourLibraryState } from '../../../../store/slices/yourLibrary';
 
 export const LibraryFilters = () => {
   const dispatch = useAppDispatch();
+
+  const [t] = useTranslation('navbar');
   const filter = useAppSelector((state) => state.yourLibrary.filter);
 
   const hasAlbums = useAppSelector((state) => state.yourLibrary.myAlbums.length > 0);
@@ -40,7 +45,12 @@ export const LibraryFilters = () => {
         {items.map(({ text, type }) => {
           if (filter === 'ALL' || type === filter) {
             return (
-              <Chip key={text} text={text} active={filter === type} onClick={() => onClick(type)} />
+              <Chip
+                key={text}
+                text={t(text)}
+                active={filter === type}
+                onClick={() => onClick(type)}
+              />
             );
           }
           return null;

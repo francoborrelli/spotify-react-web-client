@@ -1,6 +1,7 @@
 import { Tooltip } from '../../../Tooltip';
 import { SpeakerIcon } from '../../../Icons';
 import { AlbumActionsWrapper } from '../../../Actions/AlbumActions';
+import { ArtistActionsWrapper } from '../../../Actions/ArticleActions';
 import { PlayistActionsWrapper } from '../../../Actions/PlaylistActions';
 
 // Utils
@@ -13,11 +14,13 @@ import { playerService } from '../../../../services/player';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
+// Constants
+import { PLAYLIST_DEFAULT_IMAGE } from '../../../../constants/spotify';
+
 // Interface
 import type { Album } from '../../../../interfaces/albums';
 import type { Artist } from '../../../../interfaces/artist';
 import type { Playlist } from '../../../../interfaces/playlists';
-import { ArtistActionsWrapper } from '../../../Actions/ArticleActions';
 
 interface CardShortProps {
   uri: string;
@@ -240,9 +243,9 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
           onClick={onClick}
           uri={playlist.uri}
           title={playlist.name}
-          image={playlist.images[0].url}
           playing={state?.context?.uri === playlist.uri}
           subtitle={`Playlist • ${playlist.owner?.display_name}`}
+          image={playlist?.images?.length ? playlist?.images[0]?.url : PLAYLIST_DEFAULT_IMAGE}
         />
       </div>
     </PlayistActionsWrapper>

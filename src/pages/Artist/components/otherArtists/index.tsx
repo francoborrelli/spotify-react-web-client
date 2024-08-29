@@ -1,14 +1,22 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store/store';
+
+// Components
 import { ItemsList } from '../../../Home/components/list';
 
-export const AppersOn = memo(() => {
+// Redux
+import { useAppSelector } from '../../../../store/store';
+
+// Utils
+import { useTranslation } from 'react-i18next';
+
+export const AppearsOn = memo(() => {
+  const [t] = useTranslation(['artist']);
   const tracks = useAppSelector((state) => state.artist.appearsOn);
 
   return (
     <div>
       <div>
-        <ItemsList items={tracks} title='Appers on' />
+        <ItemsList items={tracks} title={t('Appears on')} />
       </div>
     </div>
   );

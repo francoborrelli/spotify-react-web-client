@@ -1,11 +1,12 @@
-// Icons
+// Components
+import { AddPlaylistButton } from './AddPlaylistButton';
 import { LibraryCollapsedIcon, LibraryIcon } from '../../../Icons';
 
 // Utils
 import { memo } from 'react';
 
 // Components
-import { Space } from 'antd';
+import { Flex, Space } from 'antd';
 import { Tooltip } from '../../../Tooltip';
 
 // I18n
@@ -37,13 +38,17 @@ export const LibraryTitle = memo(() => {
   }
 
   return (
-    <Space wrap>
-      <Tooltip placement='top' title={t('Collapse your library')}>
-        <button onClick={() => dispatch(uiActions.toggleLibrary())}>
-          <LibraryIcon />
-        </button>
-      </Tooltip>
-      <span className='Navigation-button'>{t('Your Library')}</span>
-    </Space>
+    <Flex align='center' justify='space-between'>
+      <Space wrap align='center'>
+        <Tooltip placement='top' title={t('Collapse your library')}>
+          <button onClick={() => dispatch(uiActions.toggleLibrary())}>
+            <LibraryIcon />
+          </button>
+        </Tooltip>
+        <span className='Navigation-button'>{t('Your Library')}</span>
+      </Space>
+
+      <AddPlaylistButton />
+    </Flex>
   );
 });
