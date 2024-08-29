@@ -17,6 +17,7 @@ import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 import type { Album } from '../../../../interfaces/albums';
 import type { Artist } from '../../../../interfaces/artist';
 import type { Playlist } from '../../../../interfaces/playlists';
+import { ArtistActionsWrapper } from '../../../Actions/ArticleActions';
 
 interface CardShortProps {
   uri: string;
@@ -162,23 +163,38 @@ const CardShort = (props: CardShortProps) => {
 };
 
 export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
+  const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
 
+  const onClick = () => {
+    navigate(`/artist/${artist.id}`);
+  };
+
   return (
-    <CardShort
-      rounded
-      subtitle='Artist'
-      uri={artist.uri}
-      title={artist.name}
-      image={artist.images[0].url}
-      playing={state?.context?.uri === artist.uri}
-    />
+    <ArtistActionsWrapper artist={artist} trigger={['contextMenu']}>
+      <div>
+        <CardShort
+          rounded
+          uri={artist.uri}
+          subtitle='Artist'
+          onClick={onClick}
+          title={artist.name}
+          image={artist.images[0].url}
+          playing={state?.context?.uri === artist.uri}
+        />
+      </div>
+    </ArtistActionsWrapper>
   );
 };
 
 export const AlbumCardShort = ({ album }: { album: Album }) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
+
+  const onClick = () => {
+    navigate(`/album/${album.id}`);
+  };
 
   return (
     <AlbumActionsWrapper
@@ -190,10 +206,11 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
     >
       <div>
         <CardShort
-          image={album.images[0].url}
-          title={album.name}
-          subtitle={album.artists[0].name}
           uri={album.uri}
+          onClick={onClick}
+          title={album.name}
+          image={album.images[0].url}
+          subtitle={album.artists[0].name}
           playing={state?.context?.uri === album.uri}
         />
       </div>

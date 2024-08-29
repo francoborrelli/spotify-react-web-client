@@ -72,6 +72,9 @@
   .title {
     font-size: 15px;
     color: $text-primary-color;
+    &.active {
+      color: #1db954;
+    }
   }
 
   .artist:hover {

@@ -26,4 +26,6 @@ export const playlist = {
   'Add to Liked Songs': 'Agregar a Canciones Me Gusta',
   'Remove from Liked Songs': 'Eliminar de Canciones Me Gusta',
   'Private Playlist': 'Playlist Privada',
+  Follow: 'Seguir',
+  Unfollow: 'Dejar de seguir',
 };

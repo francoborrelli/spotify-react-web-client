@@ -55,7 +55,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   const title = (
     <div className='flex flex-col' style={{ flex: 8 }}>
       <div className='flex flex-row items-center'>
-        <p className='title text-left'>{song.name}</p>
+        <p className={`title text-left ${isCurrent ? 'active' : ''}`}>{song.name}</p>
       </div>
     </div>
   );

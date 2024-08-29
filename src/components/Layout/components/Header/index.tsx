@@ -9,6 +9,7 @@ interface PageHeaderProps {
   children: any;
   color: string;
   activeHeider?: number;
+  activeContentHeight?: number;
   container: RefObject<HTMLDivElement>;
 }
 
@@ -17,9 +18,11 @@ export const PageHeader: FC<PageHeaderProps> = ({
   children,
   container,
   activeHeider = 260,
+  activeContentHeight = 260,
 }) => {
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeHeader, setActiveHeader] = useState(false);
+  // const [activeContent, setActiveContent] = useState(false);
 
   const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
@@ -31,11 +34,10 @@ export const PageHeader: FC<PageHeaderProps> = ({
     const handleScroll = () => {
       if (ref) {
         setActiveHeader(ref.scrollTop > activeHeider);
+        // setActiveContent(ref.scrollTop > activeContentHeight);
       }
     };
-
     ref?.addEventListener('scroll', handleScroll);
-
     setHeaderWidth(container.current?.clientWidth || 0);
     window.onresize = () => {
       if (container.current) {
@@ -46,7 +48,14 @@ export const PageHeader: FC<PageHeaderProps> = ({
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, libraryCollapsed, detailsCollapsed, activeHeider]);
+  }, [
+    container,
+    activeHeider,
+    activeContentHeight,
+    queueCollapsed,
+    libraryCollapsed,
+    detailsCollapsed,
+  ]);
 
   return (
     <div
@@ -66,7 +75,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
             : tinycolor(color).darken(10).toRgbString(),
         }}
       >
-        {children}
+        <div className='nav-header-content'>{children}</div>
       </div>
     </div>
   );

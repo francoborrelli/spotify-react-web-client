@@ -4,6 +4,23 @@ body {
   --background-noise: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
 }
 
+.artist-page {
+  .nav-header {
+    visibility: hidden;
+    &.active {
+      visibility: visible;
+    }
+
+    .circle-play {
+      margin-right: 5px;
+    }
+    h1 {
+      padding: 0px;
+      margin: 0px;
+    }
+  }
+}
+
 .artist-page-header {
   position: relative;
   -webkit-box-flex: 1;
@@ -11,6 +28,15 @@ body {
   flex: 1;
   min-height: 0;
   overflow: hidden;
+
+  .background {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 
   .background-image {
     display: block;
@@ -84,7 +110,7 @@ body {
       height: 40vh;
       left: 0;
       min-height: 340px;
-      opacity: calc(var(--scroll) * 0.7);
+      opacity: calc(var(--scroll) * 0.5);
       position: absolute;
       right: 0;
     }
