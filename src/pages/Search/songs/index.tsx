@@ -1,10 +1,12 @@
-import { FC } from 'react';
 import SongView from './song';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../../store/store';
 
-export const SearchedSongs: FC<{ songs: any[] }> = (props) => {
-  const { songs } = props;
+export const SearchedSongs = () => {
   const { t } = useTranslation(['search']);
+  const songs = useAppSelector((state) => state.search.songs);
+
+  if (!songs || songs.length === 0) return null;
 
   return (
     <div className='search-songs-container'>
@@ -12,7 +14,7 @@ export const SearchedSongs: FC<{ songs: any[] }> = (props) => {
 
       <div>
         {songs.map((song, index) => (
-          <SongView song={song} key={song.name} index={index} hasSkills={false} />
+          <SongView song={song} key={song.id} index={index} />
         ))}
       </div>
     </div>

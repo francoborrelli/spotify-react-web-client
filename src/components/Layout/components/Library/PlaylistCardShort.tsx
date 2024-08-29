@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 // Constants
-import { PLAYLIST_DEFAULT_IMAGE } from '../../../../constants/spotify';
+import { ARTISTS_DEFAULT_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
 // Interface
 import type { Album } from '../../../../interfaces/albums';
@@ -182,8 +182,8 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
           subtitle='Artist'
           onClick={onClick}
           title={artist.name}
-          image={artist.images[0].url}
           playing={state?.context?.uri === artist.uri}
+          image={artist?.images[0]?.url || ARTISTS_DEFAULT_IMAGE}
         />
       </div>
     </ArtistActionsWrapper>

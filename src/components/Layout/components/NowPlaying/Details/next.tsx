@@ -40,7 +40,10 @@ export const NextInQueue: FC = memo(() => {
               {item.name}
             </p>
             <p className='song-artist' title={item.artists.map((a) => a.name).join(', ')}>
-              {item.artists.map((a) => a.name).join(', ')}
+              {item.artists
+                .slice(0, 3)
+                .map((a) => a.name)
+                .join(', ')}
             </p>
           </div>
         </div>

@@ -89,7 +89,7 @@ export const ArtistCard = ({
           title={title}
           uri={item.uri}
           description={description}
-          image={item.images[0].url}
+          image={item.images[0]?.url}
           isCurrent={isCurrentArtist}
           onClick={() => navigate(`/artist/${item.id}`)}
         />
@@ -112,7 +112,10 @@ export const AlbumCard = ({
 
   const description = getDescription
     ? getDescription(item)
-    : item.artists.map((artist) => artist.name).join(', ');
+    : item.artists
+        .slice(0, 3)
+        .map((artist) => artist.name)
+        .join(', ');
 
   const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
@@ -124,7 +127,7 @@ export const AlbumCard = ({
           uri={item.uri}
           description={description}
           isCurrent={isCurrentAlbum}
-          image={item.images[0].url}
+          image={item.images[0]?.url}
           onClick={() => navigate(`/album/${item.id}`)}
         />
       </div>
@@ -155,7 +158,7 @@ export const PlaylistCard = ({
           uri={item.uri}
           description={description}
           isCurrent={isCurrentAlbum}
-          image={item.images[0].url}
+          image={item.images[0]?.url}
           onClick={() => navigate(`/playlist/${item.id}`)}
         />
       </div>

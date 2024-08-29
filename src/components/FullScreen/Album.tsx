@@ -16,9 +16,15 @@ const AlbumSongDetails = memo(() => {
         </p>
         <p
           className='text-gray-200 song-artist'
-          title={currentSong?.artists.map((a) => a.name).join(', ')}
+          title={currentSong?.artists
+            .slice(0, 3)
+            .map((a) => a.name)
+            .join(', ')}
         >
-          {currentSong?.artists.map((a) => a.name).join(', ')}
+          {currentSong?.artists
+            .slice(0, 3)
+            .map((a) => a.name)
+            .join(', ')}
         </p>
       </div>
     </div>

@@ -105,7 +105,7 @@ const RootComponent = () => {
     { path: '/profile', element: <Profile /> },
     { path: '/browse', element: <BrowsePage /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
-    { path: '/search/:search', element: <SearchPage /> },
+    { path: '/search/:search', element: <SearchPage container={container} /> },
     { path: '*', element: <Page404 /> },
   ] as const;
 

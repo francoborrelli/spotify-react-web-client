@@ -380,18 +380,6 @@
     margin-left: 15px;
   }
 
-  .image {
-    &:hover {
-      .image-button {
-        opacity: 1;
-        visibility: visible;
-        svg {
-          fill: #fff !important;
-        }
-      }
-    }
-  }
-
   @media (max-width: 768px) {
     .song-details .title {
       font-size: 0.875rem;
@@ -399,6 +387,18 @@
 
     .song-details p {
       font-size: 0.8rem;
+    }
+  }
+}
+
+.image {
+  &:hover {
+    .image-button {
+      opacity: 1;
+      visibility: visible;
+      svg {
+        fill: #fff !important;
+      }
     }
   }
 }

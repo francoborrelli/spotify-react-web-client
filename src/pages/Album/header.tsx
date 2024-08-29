@@ -17,6 +17,7 @@ import { useAppSelector } from '../../store/store';
 import dayjs from 'dayjs';
 import tinycolor from 'tinycolor2';
 import { ArtistActionsWrapper } from '../../components/Actions/ArticleActions';
+import { ARTISTS_DEFAULT_IMAGE } from '../../constants/spotify';
 
 interface AlbumHeaderProps {
   color: string;
@@ -122,8 +123,8 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
                       <img
                         id='user-avatar'
                         alt='User Avatar'
-                        src={artist.images[0].url}
                         className='playlist-avatar'
+                        src={artist.images[0]?.url || ARTISTS_DEFAULT_IMAGE}
                       />
                     </Link>
                   ) : null}

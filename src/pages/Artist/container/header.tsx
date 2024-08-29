@@ -52,12 +52,12 @@ export const ArtistHeader: FC<{
         >
           <div
             className='background'
-            style={{ backgroundImage: `url("${artist?.images[0].url}")` }}
+            style={{ backgroundImage: `url("${artist?.images[0]?.url}")` }}
           />
           <div
             className='background-image'
             style={{
-              backgroundImage: `url("${artist?.images[0].url}")`,
+              backgroundImage: `url("${artist?.images[0]?.url}")`,
             }}
           ></div>
           <div

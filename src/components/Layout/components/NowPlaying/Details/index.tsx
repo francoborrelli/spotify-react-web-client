@@ -34,10 +34,10 @@ const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
           image={song.album.images[0].url}
           subtitle={
             <span>
-              {song.artists.map((a, i) => (
+              {song.artists.slice(0, 3).map((a, i) => (
                 <span key={a.uri}>
                   <Link to={`/artist/${a.uri.split(':').reverse()[0]}`}>{a.name}</Link>
-                  {i < song.artists.length - 1 && ', '}
+                  {i < song.artists.slice(0, 3).length - 1 && ', '}
                 </span>
               ))}
             </span>

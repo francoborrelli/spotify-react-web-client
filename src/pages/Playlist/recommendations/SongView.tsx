@@ -81,14 +81,14 @@ const SongData = ({ song }: SongDataProps) => {
             E
           </span>
         ) : null}
-        {song.artists.map((a, i) => (
+        {song.artists.slice(0, 3).map((a, i) => (
           <span className='artists-block'>
             <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
               <Link key={a.id} to={`/artist/${a.id}`}>
                 {a.name}
               </Link>
             </ArtistActionsWrapper>
-            {i < song.artists.length - 1 ? ', ' : ''}
+            {i < song.artists.slice(0, 3).length - 1 ? ', ' : ''}
           </span>
         ))}
       </p>

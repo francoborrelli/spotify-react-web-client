@@ -19,6 +19,7 @@ import homeReducer from './slices/home';
 import albumReducer from './slices/album';
 import queueReducer from './slices/queue';
 import genreReducer from './slices/genre';
+import searchReducer from './slices/search';
 import browseReducer from './slices/browse';
 import artistReducer from './slices/artist';
 import spotifyReducer from './slices/spotify';
@@ -37,6 +38,7 @@ const appReducer = combineReducers({
   album: albumReducer,
   queue: queueReducer,
   genre: genreReducer,
+  search: searchReducer,
   artist: artistReducer,
   browse: browseReducer,
   spotify: spotifyReducer,

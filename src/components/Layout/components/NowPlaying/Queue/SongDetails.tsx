@@ -39,7 +39,10 @@ const QueueSongDetails: FC<QueueSongDetailsProps> = memo(({ song, isPlaying }) =
 
   const artists = useMemo(() => {
     if (song.type === 'track') {
-      return song.artists.map((a) => a.name).join(', ');
+      return song.artists
+        .slice(0, 3)
+        .map((a) => a.name)
+        .join(', ');
     }
 
     if (song.type === 'episode') {

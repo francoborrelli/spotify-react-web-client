@@ -1,43 +1,80 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { FC, useEffect, useRef } from 'react';
 
 import { Col, Row } from 'antd';
-import { TopResult } from './topResult';
 import { SearchedSongs } from './songs';
+import { TopResult } from './topResult';
 import NoSearchResults from './noResults';
+import { AlbumsSearchSection } from './albums';
+import { ArtistsSearchSection } from './artists';
+import { PlaylistsSearchSection } from './playlists';
+
+// Utils
+import { useParams } from 'react-router-dom';
+
+// Redux
+import { fetchSearch } from '../../store/slices/search';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { SearchHeader } from './header';
 
 // Constants
 
-export const SearchPage = () => {
-  const { t } = useTranslation(['cv']);
+const Container = () => {
+  return (
+    <Row gutter={[16, 16]}>
+      <Col span={24} lg={9}>
+        <TopResult />
+      </Col>
 
+      <Col span={24} lg={15}>
+        <SearchedSongs />
+      </Col>
+
+      <Col span={24}>
+        <ArtistsSearchSection />
+      </Col>
+
+      <Col span={24}>
+        <AlbumsSearchSection />
+      </Col>
+
+      <Col span={24}>
+        <PlaylistsSearchSection />
+      </Col>
+    </Row>
+  );
+};
+
+interface SearchPageProps {
+  container: React.RefObject<HTMLDivElement>;
+}
+
+export const SearchPage: FC<SearchPageProps> = (props) => {
+  const dispatch = useAppDispatch();
   const params = useParams<{ search: string }>();
-  const [items, searchItems] = useState<any[]>([]);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const topResult = useAppSelector((state) => state.search.top);
+  const loading = useAppSelector((state) => state.search.loading);
 
   useEffect(() => {
     if (params.search) {
-      searchItems([]);
+      dispatch(fetchSearch(params.search));
     }
-  }, [params.search, t]);
+  }, [dispatch, params.search]);
 
-  if (!items.length) {
+  if (loading) return null;
+
+  if (!topResult) {
     return <NoSearchResults searchValue={params.search || ''} />;
   }
 
   return (
-    <div className='Search-Page'>
-      <Row gutter={[16, 16]}>
-        <Col span={24} lg={9}>
-          <TopResult item={items[0]} />
-        </Col>
-
-        <Col span={24} lg={15}>
-          <SearchedSongs songs={items.slice(0, 4)} />
-        </Col>
-
-        <Col span={24}>{/* <PlaylistsSection title={searchT('Playlists')} /> */}</Col>
-      </Row>
+    <div ref={ref}>
+      <SearchHeader color='#121212' sectionContainer={ref} container={props.container} />
+      <div className='Search-Page'>
+        <Container />
+      </div>
     </div>
   );
 };

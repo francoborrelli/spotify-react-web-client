@@ -77,14 +77,14 @@ const SongData = ({ song, index }: SongDataProps) => {
       {isList ? (
         <p className='text-left artist mobile-hidden'>
           {song.track.explicit ? <span className='explicit'>E</span> : null}
-          {song.track.artists.map((a, i) => (
+          {song.track.artists.slice(0, 3).map((a, i) => (
             <span>
               <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
                 <Link key={a.id} to={`/artist/${a.id}`}>
                   {a.name}
                 </Link>
               </ArtistActionsWrapper>
-              {i < song.track.artists.length - 1 ? ', ' : ''}
+              {i < song.track.artists.slice(0, 3).length - 1 ? ', ' : ''}
             </span>
           ))}
         </p>
@@ -94,14 +94,14 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   const artist = !isList ? (
     <p className='text-left tablet-hidden' style={{ flex: 5 }}>
-      {song.track.artists.map((a, i) => (
+      {song.track.artists.slice(0, 3).map((a, i) => (
         <span>
           <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
             <Link key={a.id} to={`/artist/${a.id}`}>
               {a.name}
             </Link>
           </ArtistActionsWrapper>
-          {i < song.track.artists.length - 1 ? ', ' : ''}
+          {i < song.track.artists.slice(0, 3).length - 1 ? ', ' : ''}
         </span>
       ))}
     </p>

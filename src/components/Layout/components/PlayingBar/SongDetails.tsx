@@ -80,14 +80,17 @@ const SongDetails: FC<{ isMobile?: boolean }> = memo((props) => {
         </TrackActionsWrapper>
         <span
           className='text-gray-200 song-artist'
-          title={current_track?.artists.map((a) => a.name).join(', ')}
+          title={current_track?.artists
+            .slice(0, 3)
+            .map((a) => a.name)
+            .join(', ')}
         >
-          {current_track?.artists.map((a, i) => (
+          {current_track?.artists.slice(0, 3).map((a, i) => (
             <span key={a.uri}>
               <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
                 <Link to={`/artist/${a.uri.split(':').reverse()[0]}`}>{a.name}</Link>
               </ArtistActionsWrapper>
-              {i < current_track.artists.length - 1 && ', '}
+              {i < current_track.artists.slice(0, 3).length - 1 && ', '}
             </span>
           ))}
         </span>

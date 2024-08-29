@@ -2,12 +2,15 @@
 
 import { useCallback, useMemo } from 'react';
 
+import { Link } from 'react-router-dom';
 import { Tooltip } from '../../../components/Tooltip';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
 import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
+import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
 
 // Redux
+import { albumActions } from '../../../store/slices/album';
 import { libraryActions } from '../../../store/slices/library';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
@@ -20,10 +23,6 @@ import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { TrackWithSave } from '../../../interfaces/track';
-import { albumActions } from '../../../store/slices/album';
-import { Link } from 'react-router-dom';
-import { Space } from 'antd';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
 
 interface SongViewProps {
   index: number;
@@ -72,14 +71,14 @@ const SongData = ({ song, index }: SongDataProps) => {
       {isList ? (
         <p className='text-left artist mobile-hidden'>
           {song.explicit ? <span className='explicit'>E</span> : null}
-          {song.artists.map((a, i) => (
+          {song.artists.slice(0, 3).map((a, i) => (
             <span>
               <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
                 <Link key={a.id} to={`/artist/${a.id}`}>
                   {a.name}
                 </Link>
               </ArtistActionsWrapper>
-              {i < song.artists.length - 1 ? ', ' : ''}
+              {i < song.artists.slice(0, 3).length - 1 ? ', ' : ''}
             </span>
           ))}
         </p>
@@ -89,14 +88,14 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   const artist = !isList ? (
     <p className='text-right tablet-hidden' style={{ flex: 4 }}>
-      {song.artists.map((a, i) => (
+      {song.artists.slice(0, 3).map((a, i) => (
         <span>
           <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
             <Link key={a.id} to={`/artist/${a.id}`}>
               {a.name}
             </Link>
           </ArtistActionsWrapper>
-          {i < song.artists.length - 1 ? ', ' : ''}
+          {i < song.artists.slice(0, 3).length - 1 ? ', ' : ''}
         </span>
       ))}
     </p>
