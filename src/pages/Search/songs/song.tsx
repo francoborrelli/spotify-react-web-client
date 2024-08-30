@@ -17,7 +17,6 @@ import { playerService } from '../../../services/player';
 
 // Redux
 import { searchActions } from '../../../store/slices/search';
-import { libraryActions } from '../../../store/slices/library';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Interfaces
@@ -129,12 +128,7 @@ const SongData = ({ song, index }: SongViewProps) => {
   );
 
   return (
-    <div
-      className='song-details flex flex-row items-center w-full'
-      onClick={() => {
-        dispatch(libraryActions.setSongPlaying(song));
-      }}
-    >
+    <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
       <div className='flex flex-row items-center justify-between w-full'>
         <div style={{ position: 'relative' }} className={'mr-4'}>
           <div>{image}</div>

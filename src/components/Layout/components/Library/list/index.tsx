@@ -1,17 +1,13 @@
-// Utils
-// import { useCallback } from 'react';
-// import { useNavigate } from 'react-router-dom';
-
 // Components
 import { Col } from 'antd';
 import { LibraryTitle } from '../Title';
-import { LibraryFilters, SearchArea } from '../Filters';
 import { ListItemComponent } from './ListCards';
+import { CompactItemComponent } from './CompactCards';
+import { LibraryFilters, SearchArea } from '../Filters';
 
 // Redux
 import { useAppSelector } from '../../../../../store/store';
 import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
-import { CompactItemComponent } from './CompactCards';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',

@@ -9,7 +9,6 @@ import { AddSongToLibraryButton } from '../../../../components/AddSongToLibrary'
 import { TrackActionsWrapper } from '../../../../components/Actions/TrackActions';
 
 // Redux
-import { libraryActions } from '../../../../store/slices/library';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Service
@@ -21,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { TrackWithSave } from '../../../../interfaces/track';
+import { artistActions } from '../../../../store/slices/artist';
 
 interface SongViewProps {
   index: number;
@@ -71,7 +71,7 @@ const SongData = ({ song, index }: SongDataProps) => {
         id={song.id}
         isSaved={song.saved}
         onToggle={() => {
-          // dispatch(refreshTracks(playlist!.id));
+          dispatch(artistActions.setTopSongLikeState({ id: song.id, saved: !song.saved }));
         }}
       />
     </p>
@@ -100,12 +100,7 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   return (
     <TrackActionsWrapper track={song} trigger={['contextMenu']}>
-      <div
-        className='song-details flex flex-row items-center w-full '
-        onClick={() => {
-          dispatch(libraryActions.setSongPlaying(song));
-        }}
-      >
+      <div className='song-details flex flex-row items-center w-full ' onDoubleClick={onClick}>
         <div className='flex flex-row items-center justify-between w-full'>
           <div style={{ flex: 1 }} className='mobile-hidden'>
             <p className='song-details-index'>
@@ -135,12 +130,9 @@ const SongData = ({ song, index }: SongDataProps) => {
 };
 
 const TopSong = ({ song, index }: SongViewProps) => {
-  const toggleOpen = useCallback(() => {}, []);
-
   return (
     <button
       key={song.id}
-      onClick={toggleOpen}
       className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center p-2 rounded-lg`}
     >
       <SongData song={song} index={index} />

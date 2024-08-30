@@ -42,15 +42,15 @@ const CardCompact = (props: CardShortProps) => {
           justifyContent: 'space-between',
         }}
       >
-        <div style={{ display: 'flex', gap: 5, width: '100%' }}>
+        <div style={{ display: 'flex', gap: 5, width: '100%', alignItems: 'center' }}>
           <h3
             className='text-md font-semibold text-white'
             style={{
               fontSize: 15,
-              marginBottom: -5,
-              maxWidth: '60%',
-              color: playing ? '#1db954' : undefined,
               fontWeight: 100,
+              lineHeight: 2.1,
+              maxWidth: subtitle ? '60%' : undefined,
+              color: playing ? '#1db954' : undefined,
             }}
           >
             {title}
@@ -69,7 +69,7 @@ const CardCompact = (props: CardShortProps) => {
         </div>
 
         <div style={{ padding: 8 }}>
-          {playing ? <SpeakerIcon fill='#1db954' height={16} width={16} /> : null}
+          {playing ? <SpeakerIcon fill='#1db954' height={13} width={13} /> : null}
         </div>
       </div>
     </button>
@@ -92,6 +92,7 @@ const Card = memo((props: CardShortProps) => {
 const ArtistCardShort = ({ artist }: { artist: Artist }) => {
   const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
+  const filter = useAppSelector((state) => state.yourLibrary.filter);
 
   const onClick = () => {
     navigate(`/artist/${artist.id}`);
@@ -105,8 +106,8 @@ const ArtistCardShort = ({ artist }: { artist: Artist }) => {
           uri={artist.uri}
           onClick={onClick}
           title={artist.name}
-          subtitle={`• Artist`}
           playing={state?.context?.uri === artist.uri}
+          subtitle={filter === 'ALL' ? `• Artist` : ''}
           image={artist?.images[0]?.url || ARTISTS_DEFAULT_IMAGE}
         />
       </div>
@@ -118,6 +119,7 @@ const AlbumCardShort = ({ album }: { album: Album }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
+  const filter = useAppSelector((state) => state.yourLibrary.filter);
 
   const onClick = () => {
     navigate(`/album/${album.id}`);
@@ -137,8 +139,8 @@ const AlbumCardShort = ({ album }: { album: Album }) => {
           onClick={onClick}
           title={album.name}
           image={album.images[0].url}
-          subtitle={`• Album`}
           playing={state?.context?.uri === album.uri}
+          subtitle={filter === 'ALL' ? `• Album` : `• ${album.artists[0].name}`}
         />
       </div>
     </AlbumActionsWrapper>
@@ -149,6 +151,8 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
+
+  const filter = useAppSelector((state) => state.yourLibrary.filter);
 
   const onClick = () => {
     navigate(`/playlist/${playlist.id}`);
@@ -167,8 +171,8 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
           onClick={onClick}
           uri={playlist.uri}
           title={playlist.name}
-          subtitle={`• Playlist`}
           playing={state?.context?.uri === playlist.uri}
+          subtitle={filter === 'ALL' ? `• Playlist` : ''}
           image={playlist?.images?.length ? playlist?.images[0]?.url : PLAYLIST_DEFAULT_IMAGE}
         />
       </div>

@@ -32,4 +32,6 @@ export const playlist = {
   'Private Playlist': 'Playlist Privada',
   Follow: 'Seguir',
   Unfollow: 'Dejar de seguir',
+  'Artist unfollowed': 'Dejaste de seguir al artista',
+  'Artist followed': 'Empezaste a seguir al artista',
 };

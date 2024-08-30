@@ -104,6 +104,11 @@ const artistSlice = createSlice({
         state.otherArtists = [];
       }
     },
+    setTopSongLikeState(state, action: PayloadAction<{ id: string; saved: boolean }>) {
+      state.topTracks = state.topTracks.map((track) =>
+        track.id === action.payload.id ? { ...track, saved: action.payload.saved } : track
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchArtist.pending, (state) => {

@@ -18,6 +18,8 @@ import type { Track } from '../../../interfaces/track';
 import type { Album } from '../../../interfaces/albums';
 import type { Artist } from '../../../interfaces/artist';
 import type { Playlist } from '../../../interfaces/playlists';
+import { playerService } from '../../../services/player';
+import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
 
 const Card = ({
   link,
@@ -26,10 +28,12 @@ const Card = ({
   description,
   context,
   rounded,
+  uri,
 }: {
   link: string;
   image: string;
   title: string;
+  uri?: string;
   rounded?: boolean;
   context: {
     context_uri?: string;
@@ -39,13 +43,19 @@ const Card = ({
 }) => {
   const navigate = useNavigate();
 
+  const state = useAppSelector((state) => state.spotify.state);
+  const isCurrent = state?.context?.uri === uri;
+
   return (
     <div
       style={{ cursor: 'pointer' }}
-      className='playlist-card relative rounded-lg overflow-hidden  hover:bg-spotify-gray-lightest transition'
+      onDoubleClick={() => {
+        playerService.startPlayback(context);
+      }}
       onClick={() => {
         navigate(link);
       }}
+      className='playlist-card relative rounded-lg overflow-hidden  hover:bg-spotify-gray-lightest transition'
     >
       <div
         style={{ position: 'relative' }}
@@ -57,8 +67,12 @@ const Card = ({
         <h3 className='text-md font-semibold text-white'>{title}</h3>
         <p>{description}</p>
       </div>
-      <div className='circle-play-div transition translate-y-1/4'>
-        <PlayCircle context={context} />
+      <div
+        className={`circle-play-div transition translate-y-1/4 ${
+          isCurrent && !state?.paused ? 'active' : ''
+        }`}
+      >
+        <PlayCircle isCurrent={isCurrent} context={context} />
       </div>
     </div>
   );
@@ -71,6 +85,7 @@ const TrackCard = ({ item }: { item: Track }) => {
     <TrackActionsWrapper trigger={['contextMenu']} track={item}>
       <div>
         <Card
+          uri={item.uri}
           title={item.name}
           context={{ uris: [item.uri] }}
           link={`/album/${item.album.id}`}
@@ -104,13 +119,16 @@ const TrackCard = ({ item }: { item: Track }) => {
 const PlaylistCard = ({ item }: { item: Playlist }) => {
   return (
     <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>
-      <Card
-        title={item.name}
-        image={item.images[0]?.url}
-        link={`/playlist/${item.id}`}
-        context={{ context_uri: item.uri }}
-        description={getPlaylistDescription(item)}
-      />
+      <div>
+        <Card
+          uri={item.uri}
+          title={item.name}
+          image={item.images[0]?.url}
+          link={`/playlist/${item.id}`}
+          context={{ context_uri: item.uri }}
+          description={getPlaylistDescription(item)}
+        />
+      </div>
     </PlayistActionsWrapper>
   );
 };
@@ -122,6 +140,7 @@ const ArtistCard = ({ item }: { item: Artist }) => {
       <div>
         <Card
           rounded
+          uri={item.uri}
           title={item.name}
           description={t('Artist')}
           image={item.images[0]?.url}
@@ -137,33 +156,36 @@ const AlbumCard = ({ item }: { item: Album }) => {
   const { t } = useTranslation(['search']);
 
   return (
-    <div>
-      <Card
-        title={item.name}
-        link={`/album/${item.id}`}
-        image={item.images[0]?.url}
-        context={{ context_uri: item.uri }}
-        description={
-          <p
-            key={item.id}
-            style={{
-              gap: 4,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <span>{t('Album')}</span>
-            <span> • </span>
-            {item.artists.slice(0, 3).map((a, i) => (
-              <span>
-                <span style={{ color: '#fff' }}>{a.name}</span>
-                {i < item.artists.slice(0, 3).length - 1 ? ', ' : ''}
-              </span>
-            ))}
-          </p>
-        }
-      />
-    </div>
+    <AlbumActionsWrapper album={item} trigger={['contextMenu']}>
+      <div>
+        <Card
+          uri={item.uri}
+          title={item.name}
+          link={`/album/${item.id}`}
+          image={item.images[0]?.url}
+          context={{ context_uri: item.uri }}
+          description={
+            <p
+              key={item.id}
+              style={{
+                gap: 4,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <span>{t('Album')}</span>
+              <span> • </span>
+              {item.artists.slice(0, 3).map((a, i) => (
+                <span>
+                  <span style={{ color: '#fff' }}>{a.name}</span>
+                  {i < item.artists.slice(0, 3).length - 1 ? ', ' : ''}
+                </span>
+              ))}
+            </p>
+          }
+        />
+      </div>
+    </AlbumActionsWrapper>
   );
 };
 
