@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 // Components
-import { ItemsList } from '../../../Home/components/list';
+import { GridItemList } from '../../../../components/Lists/list';
 
 // Redux
 import { useAppSelector } from '../../../../store/store';
@@ -16,7 +16,7 @@ export const OtherArtists = memo(() => {
   return (
     <div>
       <div>
-        <ItemsList items={artists} title={t('Fans also like')} />
+        <GridItemList items={artists} title={t('Fans also like')} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { memo } from 'react';
 // Utils
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../store/store';
-import { ItemsList } from '../../Home/components/list';
+import { GridItemList } from '../../../components/Lists/list';
 
 export const PlaylistsSearchSection = memo(() => {
   const [t] = useTranslation(['search']);
@@ -16,7 +16,7 @@ export const PlaylistsSearchSection = memo(() => {
   return (
     <div>
       <div>
-        <ItemsList
+        <GridItemList
           items={playlists}
           title={t('Playlists')}
           getDescription={(item: any) => {

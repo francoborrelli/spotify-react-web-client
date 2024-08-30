@@ -1,19 +1,19 @@
 import { PlayCircle } from './PlayCircle';
-import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
-import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
+import { AlbumActionsWrapper } from '../Actions/AlbumActions';
+import { PlayistActionsWrapper } from '../Actions/PlaylistActions';
 
 // Interfaces
-import type { Album } from '../../../interfaces/albums';
-import type { Artist } from '../../../interfaces/artist';
-import type { Playlist } from '../../../interfaces/playlists';
+import type { Album } from '../../interfaces/albums';
+import type { Artist } from '../../interfaces/artist';
+import type { Playlist } from '../../interfaces/playlists';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../store/store';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
+import { useAppSelector } from '../../store/store';
+import { ArtistActionsWrapper } from '../Actions/ArticleActions';
 
 const Card = ({
   uri,

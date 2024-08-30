@@ -1,7 +1,7 @@
 // Interfaces
 import { memo, useMemo, type FC } from 'react';
 import { useAppSelector } from '../../../../store/store';
-import { PlayCircle } from '../../../Home/components/PlayCircle';
+import { PlayCircle } from '../../../../components/Lists/PlayCircle';
 
 export const PlayCircleButton: FC<{ size?: number }> = memo(({ size = 30 }) => {
   const artist = useAppSelector((state) => state.artist.artist);

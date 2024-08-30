@@ -3,7 +3,7 @@ import { FC, memo, useEffect, useMemo, useState } from 'react';
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Space } from 'antd';
 import Chip from '../../../../components/Chip';
-import { ItemsList } from '../../../Home/components/list';
+import { GridItemList } from '../../../../components/Lists/list';
 
 // Utils
 import { orderBy } from 'lodash';
@@ -88,7 +88,7 @@ export const Discography = memo(() => {
   return (
     <div>
       <div>
-        <ItemsList
+        <GridItemList
           items={items}
           title={t('Discography')}
           getDescription={getAlbumDescription}

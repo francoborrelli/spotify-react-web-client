@@ -1,19 +1,19 @@
 import { Flex } from 'antd';
 import { Link } from 'react-router-dom';
-import { AlbumCard, ArtistCard, PlaylistCard } from './VerticalCard';
+import { AlbumCard, ArtistCard, PlaylistCard } from './GridCards';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { ReactNode } from 'react';
-import type { Album } from '../../../interfaces/albums';
-import type { Artist } from '../../../interfaces/artist';
-import type { Playlist } from '../../../interfaces/playlists';
+import type { Album } from '../../interfaces/albums';
+import type { Artist } from '../../interfaces/artist';
+import type { Playlist } from '../../interfaces/playlists';
 
 type Item = Album | Playlist | Artist;
 
-export function ItemsList(props: {
+export function GridItemList(props: {
   title?: string;
   items: Item[];
   moreUrl?: string;

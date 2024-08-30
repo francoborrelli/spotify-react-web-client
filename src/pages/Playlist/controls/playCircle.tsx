@@ -1,5 +1,5 @@
 // Components
-import { PlayCircle } from '../../Home/components/PlayCircle';
+import { PlayCircle } from '../../../components/Lists/PlayCircle';
 
 // Redux
 import { useAppSelector } from '../../../store/store';

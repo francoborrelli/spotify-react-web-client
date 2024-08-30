@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { useAppSelector } from '../../../store/store';
-import { ItemsList } from '../../Home/components/list';
+import { GridItemList } from '../../../components/Lists/list';
 import { getAlbumDescription } from '../../../utils/getDescription';
 import { orderBy } from 'lodash';
 
@@ -24,7 +24,7 @@ export const DiscographyContent = memo(() => {
 
   return (
     <div style={{ margin: 20, marginTop: 120 }} className='genre-list'>
-      <ItemsList items={items} getDescription={getAlbumDescription} />
+      <GridItemList items={items} getDescription={getAlbumDescription} />
     </div>
   );
 });

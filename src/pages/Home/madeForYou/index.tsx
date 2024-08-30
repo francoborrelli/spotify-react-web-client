@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../store/store';
 
 import type { FC } from 'react';
 
-import { ItemsList } from '../components/list';
+import { GridItemList } from '../../../components/Lists/list';
 import { getPlaylistDescription } from '../../../utils/getDescription';
 import { MADE_FOR_YOU_URI } from '../../../constants/spotify';
 
@@ -19,7 +19,7 @@ export const MadeForYou: FC<NewReleasesProps> = () => {
 
   return (
     <div className='home'>
-      <ItemsList
+      <GridItemList
         items={madeForYou}
         moreUrl={`/genre/${MADE_FOR_YOU_URI}`}
         getDescription={getPlaylistDescription}

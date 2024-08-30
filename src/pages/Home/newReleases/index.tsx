@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../store/store';
 
 import type { FC } from 'react';
 
-import { ItemsList } from '../components/list';
+import { GridItemList } from '../../../components/Lists/list';
 
 interface NewReleasesProps {}
 
@@ -15,7 +15,7 @@ export const NewReleases: FC<NewReleasesProps> = () => {
 
   return (
     <div className='home'>
-      <ItemsList title={`${t('New releases')}`} items={newReleases} />
+      <GridItemList title={`${t('New releases')}`} items={newReleases} />
     </div>
   );
 };

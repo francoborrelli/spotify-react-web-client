@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PlayCircle } from '../components/PlayCircle';
+import { PlayCircle } from '../../../components/Lists/PlayCircle';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 // Redux

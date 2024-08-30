@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
-import { useAppSelector } from '../../../store/store';
-import { playerService } from '../../../services/player';
+import { useAppSelector } from '../../store/store';
+import { playerService } from '../../services/player';
 
 interface PlayCircleProps {
   size?: number;

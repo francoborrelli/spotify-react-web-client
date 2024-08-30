@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../store/store';
-import { ItemsList } from '../../Home/components/list';
+import { GridItemList } from '../../../components/Lists/list';
 import { getPlaylistDescription } from '../../../utils/getDescription';
 
 export const GenreContent = memo(() => {
@@ -10,7 +10,7 @@ export const GenreContent = memo(() => {
 
   return (
     <div style={{ margin: 20, marginTop: 30 }} className='genre-list'>
-      <ItemsList
+      <GridItemList
         title={t('Popular playlists')}
         items={playlists}
         getDescription={getPlaylistDescription}

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 // Components
-import { ItemsList } from '../../../Home/components/list';
+import { GridItemList } from '../../../../components/Lists/list';
 
 // Redux
 import { useAppSelector } from '../../../../store/store';
@@ -16,7 +16,7 @@ export const AppearsOn = memo(() => {
   return (
     <div>
       <div>
-        <ItemsList items={tracks} title={t('Appears on')} />
+        <GridItemList items={tracks} title={t('Appears on')} />
       </div>
     </div>
   );

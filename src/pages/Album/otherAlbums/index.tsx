@@ -1,5 +1,5 @@
 import { FC, memo, useMemo } from 'react';
-import { ItemsList } from '../../Home/components/list';
+import { GridItemList } from '../../../components/Lists/list';
 import { useAppSelector } from '../../../store/store';
 import { useTranslation } from 'react-i18next';
 
@@ -17,5 +17,5 @@ export const OtherAlbums: FC = memo(() => {
     return otherAlbums;
   }, [current, otherAlbums]);
 
-  return <ItemsList title={`${t('More by')} ${artist?.name}`} items={items} />;
+  return <GridItemList title={`${t('More by')} ${artist?.name}`} items={items} />;
 });

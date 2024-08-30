@@ -1,5 +1,5 @@
 // Components
-import { PlayCircle } from '../../Home/components/PlayCircle';
+import { PlayCircle } from '../../../components/Lists/PlayCircle';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
 import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
