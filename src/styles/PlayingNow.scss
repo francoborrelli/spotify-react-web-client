@@ -1,7 +1,19 @@
 @use './variables.scss' as *;
 
+@keyframes move {
+  25% {
+    transform: translate(0, 0);
+    left: 0%;
+  }
+  75%,
+  100% {
+    transform: translate(-100%, 0);
+    left: 100%;
+  }
+}
+
 .playing-section {
-  overflow: scroll;
+  overflow: hidden;
   border-radius: $container-border-radius;
   background-color: $background-color;
   height: calc(100vh - 150px);
@@ -9,11 +21,31 @@
   // min-width: 400px;
   // max-width: 400px;
 
+  .playlist-section-content {
+    -ms-overflow-style: none !important; /* for Internet Explorer, Edge */
+    scrollbar-width: none !important; /* for Firefox */
+    overflow-y: scroll !important;
+    padding-bottom: 70px;
+  }
+
   padding: 5px;
 
   @media (max-width: 900px) {
     min-width: 100%;
     max-width: 100%;
+  }
+
+  .playing-section-title-container {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    p {
+      // animation: move 14s linear infinite;
+      display: inline-block;
+      position: relative;
+    }
   }
 
   .playing-section-title {

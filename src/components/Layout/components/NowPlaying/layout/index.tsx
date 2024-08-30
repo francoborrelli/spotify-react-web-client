@@ -34,14 +34,20 @@ export const NowPlayingLayout: FC<NowPlayingLayoutProps> = (props) => {
     <div className='playing-section'>
       <Row align='middle'>
         <Col span={20}>
-          {props.title ? <p className='playing-section-title'>{props.title}</p> : null}
+          {props.title ? (
+            <div className='playing-section-title-container'>
+              <p className='playing-section-title'>{props.title}</p>
+            </div>
+          ) : null}
         </Col>
         <Col span={4}>
           <CloseButton />
         </Col>
       </Row>
 
-      {props.children}
+      <div className='playlist-section-content' style={{ height: '100%' }}>
+        {props.children}
+      </div>
     </div>
   );
 };

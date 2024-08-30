@@ -21,11 +21,9 @@ export const Library: FC<LibraryProps> = () => {
   }, [dispatch]);
 
   return (
-    <Row gutter={[8, 8]} style={{ height: '100%' }}>
-      <Col span={24}>
-        <YourLibrary />
-      </Col>
-    </Row>
+    <div style={{ height: '100%' }}>
+      <YourLibrary />
+    </div>
   );
 };
 
