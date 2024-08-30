@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react';
 import { Flex, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
-import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
+import { AddSongToLibraryButton } from '../../../components/Actions/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 
 // Utils

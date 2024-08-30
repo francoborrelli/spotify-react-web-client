@@ -5,7 +5,7 @@ import ReactTimeAgo from 'react-time-ago';
 import { useCallback, useMemo } from 'react';
 import { Tooltip } from '../../../components/Tooltip';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
-import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
+import { AddSongToLibraryButton } from '../../../components/Actions/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
 

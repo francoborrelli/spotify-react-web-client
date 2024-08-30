@@ -5,10 +5,10 @@ import { Col, Row } from 'antd';
 import { Navbar } from './components/Navbar';
 import { Library } from './components/Library';
 import PlayingBar from './components/PlayingBar';
-import { LanguageModal } from '../LanguageModal';
 import { PlayingNow } from './components/NowPlaying';
 import { PlayingNowDrawer } from '../PlayingNowDrawer';
-import { EditPlaylistModal } from '../EditPlaylistModal';
+import { LanguageModal } from '../Modals/LanguageModal';
+import { EditPlaylistModal } from '../Modals/EditPlaylistModal';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 // Interfaces

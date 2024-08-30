@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { spotifyActions } from '../../../../store/slices/spotify';
-import { AddSongToLibraryButton } from '../../../AddSongToLibrary';
+import { AddSongToLibraryButton } from '../../../Actions/AddSongToLibrary';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { uiActions } from '../../../../store/slices/ui';
 import { Link } from 'react-router-dom';

@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { Tooltip } from './Tooltip';
+import { Tooltip } from '../Tooltip';
 import { useTranslation } from 'react-i18next';
-import { userService } from '../services/users';
-import { AddedToLibrary, AddToLibrary } from './Icons';
+import { userService } from '../../services/users';
+import { AddedToLibrary, AddToLibrary } from '../Icons';
 import { message } from 'antd';
 
 const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> = ({

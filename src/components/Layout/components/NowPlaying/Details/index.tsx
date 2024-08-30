@@ -1,6 +1,6 @@
 import { NowPlayingCard } from './data';
 import { NowPlayingLayout } from '../layout';
-import { AddSongToLibraryButton } from '../../../../AddSongToLibrary';
+import { AddSongToLibraryButton } from '../../../../Actions/AddSongToLibrary';
 
 // Redux
 import { spotifyActions } from '../../../../../store/slices/spotify';

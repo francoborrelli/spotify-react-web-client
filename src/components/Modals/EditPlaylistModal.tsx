@@ -4,19 +4,19 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 
 // Redux
-import { refreshPlaylist } from '../store/slices/playlist';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { yourLibraryActions } from '../store/slices/yourLibrary';
-import { editPlaylistModalActions } from '../store/slices/editPlaylistModal';
+import { refreshPlaylist } from '../../store/slices/playlist';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { yourLibraryActions } from '../../store/slices/yourLibrary';
+import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Services
-import { playlistService } from '../services/playlists';
+import { playlistService } from '../../services/playlists';
 
 // Constants
-import { PLAYLIST_DEFAULT_IMAGE } from '../constants/spotify';
+import { PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
 
 // Interfaces
 import type { FormInstance } from 'antd/lib';
