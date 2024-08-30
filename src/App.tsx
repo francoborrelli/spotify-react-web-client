@@ -31,7 +31,7 @@ const GenrePage = lazy(() => import('./pages/Genre'));
 const BrowsePage = lazy(() => import('./pages/Browse'));
 const ArtistPage = lazy(() => import('./pages/Artist'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
-const SearchPage = lazy(() => import('./pages/Search'));
+const SearchPage = lazy(() => import('./pages/Search/Home'));
 const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
 
 window.addEventListener('resize', () => {

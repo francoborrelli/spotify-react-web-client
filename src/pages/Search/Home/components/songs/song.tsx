@@ -1,12 +1,14 @@
 import { useMemo } from 'react';
-import SongView, { SongViewComponents } from '../../../components/SongsTable/songView';
+
+// Components
+import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
 
 // Redux
-import { searchActions } from '../../../store/slices/search';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { searchActions } from '../../../../../store/slices/search';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 // Interface
-import type { TrackWithSave } from '../../../interfaces/track';
+import type { TrackWithSave } from '../../../../../interfaces/track';
 
 interface SongProps {
   index: number;

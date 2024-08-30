@@ -1,7 +1,5 @@
 import { FC, memo } from 'react';
 
-import '../404/styles.scss';
-
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 

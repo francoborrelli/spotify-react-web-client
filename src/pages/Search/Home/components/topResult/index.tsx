@@ -1,25 +1,27 @@
 // Components
-import { PlayCircle } from '../../../components/Lists/PlayCircle';
-import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
-import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
+import { PlayCircle } from '../../../../../components/Lists/PlayCircle';
+import { AlbumActionsWrapper } from '../../../../../components/Actions/AlbumActions';
+import { TrackActionsWrapper } from '../../../../../components/Actions/TrackActions';
+import { ArtistActionsWrapper } from '../../../../../components/Actions/ArtistActions';
+import { PlayistActionsWrapper } from '../../../../../components/Actions/PlaylistActions';
 
 // Utils
 import { useTranslation } from 'react-i18next';
-import { getPlaylistDescription } from '../../../utils/getDescription';
+import { getPlaylistDescription } from '../../../../../utils/getDescription';
+
+// Services
+import { playerService } from '../../../../../services/player';
 
 // Interfaces
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../../store/store';
 
 // Interfaces
 import type { ReactNode } from 'react';
-import type { Track } from '../../../interfaces/track';
-import type { Album } from '../../../interfaces/albums';
-import type { Artist } from '../../../interfaces/artist';
-import type { Playlist } from '../../../interfaces/playlists';
-import { playerService } from '../../../services/player';
-import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
+import type { Track } from '../../../../../interfaces/track';
+import type { Album } from '../../../../../interfaces/albums';
+import type { Artist } from '../../../../../interfaces/artist';
+import type { Playlist } from '../../../../../interfaces/playlists';
 
 const Card = ({
   link,

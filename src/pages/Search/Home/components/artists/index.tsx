@@ -2,8 +2,8 @@ import { memo } from 'react';
 
 // Utils
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/store';
-import { GridItemList } from '../../../components/Lists/list';
+import { useAppSelector } from '../../../../../store/store';
+import { GridItemList } from '../../../../../components/Lists/list';
 
 export const ArtistsSearchSection = memo(() => {
   const [t] = useTranslation(['search']);

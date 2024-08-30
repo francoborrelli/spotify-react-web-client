@@ -1,14 +1,14 @@
 import { Space } from 'antd';
 import { FC, RefObject } from 'react';
-import Chip from '../../../components/Chip';
-import { PageHeader } from '../../../components/Layout/components/Header';
+import Chip from '../../../../components/Chip';
+import { PageHeader } from '../../../../components/Layout/components/Header';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { homeActions } from '../../../store/slices/home';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { homeActions } from '../../../../store/slices/home';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 interface HomeHeaderProps {
   color: string;

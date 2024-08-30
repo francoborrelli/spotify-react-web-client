@@ -1,6 +1,6 @@
 import SongView from './song';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../../store/store';
 
 export const SearchedSongs = () => {
   const { t } = useTranslation(['search']);
