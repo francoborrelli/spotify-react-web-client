@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import { HorizontalCard } from './horizontalCard';
 
 // Redux
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../store/store';
 
 // Interfaces
 import type { FC } from 'react';

@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../store/store';
 
 import type { FC } from 'react';
 
-import { GridItemList } from '../../../components/Lists/list';
-import { getPlaylistDescription } from '../../../utils/getDescription';
+import { GridItemList } from '../../../../components/Lists/list';
+import { getPlaylistDescription } from '../../../../utils/getDescription';
 
 interface NewReleasesProps {}
 

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../store/store';
+import { GridItemList } from '../../../../components/Lists/list';
 
+// Interfaces
 import type { FC } from 'react';
-
-import { GridItemList } from '../../../components/Lists/list';
 
 interface NewReleasesProps {}
 

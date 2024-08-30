@@ -1,11 +1,16 @@
+// Components
+import { GridItemList } from '../../../../components/Lists/list';
+
+// Utils
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../store/store';
+import { getPlaylistDescription } from '../../../../utils/getDescription';
 
+// Components
+import { MADE_FOR_YOU_URI } from '../../../../constants/spotify';
+
+// Interfaces
 import type { FC } from 'react';
-
-import { GridItemList } from '../../../components/Lists/list';
-import { getPlaylistDescription } from '../../../utils/getDescription';
-import { MADE_FOR_YOU_URI } from '../../../constants/spotify';
 
 interface NewReleasesProps {}
 

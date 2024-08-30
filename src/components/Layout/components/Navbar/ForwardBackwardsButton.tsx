@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Tooltip } from '../../components/Tooltip';
+
+import { Tooltip } from '../../../Tooltip';
 import { useTranslation } from 'react-i18next';
 
 const ForwardBackwardsButton = ({ flip }: { flip: boolean }) => {

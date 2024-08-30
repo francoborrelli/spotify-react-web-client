@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
-import { PlayCircle } from '../../../components/Lists/PlayCircle';
-import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
+import { PlayCircle } from '../../../../components/Lists/PlayCircle';
+import { TrackActionsWrapper } from '../../../../components/Actions/TrackActions';
 
 // Redux
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../store/store';
 
 // Utils
-import { getImageAnalysis2 } from '../../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 
 // Interfaces
 import { memo, useEffect, type FC } from 'react';
-import type { Track } from '../../../interfaces/track';
+import type { Track } from '../../../../interfaces/track';
 
 // Services
-import { playerService } from '../../../services/player';
+import { playerService } from '../../../../services/player';
 
 interface HorizontalCardProps {
   item: Track;
@@ -22,6 +22,7 @@ interface HorizontalCardProps {
 
 export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor }) => {
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+  const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
   const isCurrent = currentSong?.id === item.id;
 
   useEffect(() => {
@@ -58,7 +59,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
           </div>
 
           <div className='button-container'>
-            {isCurrent ? (
+            {isCurrent && isPlaying ? (
               <img
                 height={20}
                 alt={item.name}

@@ -1,10 +1,14 @@
 import { Space } from 'antd';
-import ForwardBackwardsButton from '../../../../pages/Home/ForwardBackwardsButton';
-import NavigationButton from './NavigationButton';
-import { LiaLaptopCodeSolid } from 'react-icons/lia';
-import { useTranslation } from 'react-i18next';
 
-const HistoryNavigation = () => {
+import NavigationButton from './NavigationButton';
+import ForwardBackwardsButton from './ForwardBackwardsButton';
+
+import { LiaLaptopCodeSolid } from 'react-icons/lia';
+
+import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
+
+const HistoryNavigation = memo(() => {
   const { t } = useTranslation(['navbar']);
   return (
     <Space>
@@ -22,6 +26,6 @@ const HistoryNavigation = () => {
       </div>
     </Space>
   );
-};
+});
 
 export default HistoryNavigation;
