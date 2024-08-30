@@ -8,7 +8,7 @@ import { PlayCircleButton } from './controls/playCircle';
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
-import { RefObject, useEffect, useState, type FC } from 'react';
+import { RefObject, useEffect, useMemo, useState, type FC } from 'react';
 
 // Constants
 import { PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
@@ -20,6 +20,7 @@ import { getPlaylistDescription } from '../../utils/getDescription';
 // Redux
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
+import { sumTracksLength } from '../../utils/spotify/sumTracksLength';
 
 interface PlaylistHeaderProps {
   color: string;
@@ -34,6 +35,9 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
   const user = useAppSelector((state) => state.auth.user);
   const owner = useAppSelector((state) => state.playlist.user);
   const playlist = useAppSelector((state) => state.playlist.playlist);
+  const tracks = useAppSelector((state) => state.playlist.tracks);
+
+  const time = useMemo(() => sumTracksLength(tracks.map((t) => t.track)), [tracks]);
 
   const isMine = user?.id === owner?.id;
 
@@ -188,8 +192,11 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
                         ? ` • ${playlist?.followers?.total} ${t('saves')}`
                         : ' '}{' '}
                       {playlist?.tracks?.total
-                        ? ` • ${playlist?.tracks?.total} ${t('songs')}`
+                        ? ` • ${playlist?.tracks?.total} ${t(
+                            playlist?.tracks?.total === 1 ? 'song' : 'songs'
+                          )}`
                         : ' '}
+                      {playlist?.tracks?.total ? ` • ${time}` : ' '}
                     </span>
                   </h3>
                 </Space>

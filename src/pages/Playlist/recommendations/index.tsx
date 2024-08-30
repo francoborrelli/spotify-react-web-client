@@ -17,7 +17,7 @@ export const PlaylistRecommendations = memo(() => {
       </span>
 
       <div style={{ margin: 5, marginTop: 10 }}>
-        {recommendations.map((track) => (
+        {recommendations.slice(0, 10).map((track) => (
           <SongView key={track.id} song={track} />
         ))}
       </div>

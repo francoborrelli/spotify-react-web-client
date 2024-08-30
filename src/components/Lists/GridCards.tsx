@@ -139,7 +139,9 @@ export const PlaylistCard = ({
   const [t] = useTranslation(['playlist']);
 
   const title = item.name;
-  const description = getDescription ? getDescription(item) : item.tracks?.total + ' ' + t('songs');
+  const description = getDescription
+    ? getDescription(item)
+    : item.tracks?.total + ' ' + t(item.tracks?.total === 1 ? 'song' : 'songs');
 
   return (
     <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>

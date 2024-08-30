@@ -20,7 +20,11 @@ import type { Playlist } from '../../interfaces/playlists';
 import { fetchQueue } from '../../store/slices/queue';
 import { playlistActions } from '../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { fetchMyPlaylists, getUserPlaylists } from '../../store/slices/yourLibrary';
+import {
+  fetchMyPlaylists,
+  getUserPlaylists,
+  yourLibraryActions,
+} from '../../store/slices/yourLibrary';
 
 interface TrackActionsWrapperProps {
   canEdit?: boolean;
@@ -99,7 +103,9 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           playlistService
             .removePlaylistItems(playlist!.id, [track.uri], playlist?.snapshot_id!)
             .then(() => {
+              dispatch(playlistActions.refreshPlaylist(playlist!.id));
               dispatch(playlistActions.refreshTracks(playlist!.id));
+              dispatch(yourLibraryActions.fetchMyPlaylists());
               message.open({
                 type: 'success',
                 content: t('Removed from playlist'),

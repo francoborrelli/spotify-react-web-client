@@ -136,7 +136,7 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
                     <span className='songs-number'>
                       {' '}
                       • {dayjs(album?.release_date!).format('YYYY')} • {album?.total_tracks}{' '}
-                      {t('songs')},{'  '}
+                      {t(album?.total_tracks === 1 ? 'song' : 'songs')},{'  '}
                       {sumTracksLength(tracks)}
                     </span>
                   </h3>

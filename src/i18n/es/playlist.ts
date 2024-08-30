@@ -1,6 +1,7 @@
 export const playlist = {
   'Public playlist': 'Playlist',
   songs: 'canciones',
+  song: 'canción',
   Name: 'Nombre',
   Filter: 'Filtrar',
   Add: 'Agregar',

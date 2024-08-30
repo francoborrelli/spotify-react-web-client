@@ -12,6 +12,7 @@ import { playlistService } from '../../../services/playlists';
 // Redux
 import { playlistActions } from '../../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { yourLibraryActions } from '../../../store/slices/yourLibrary';
 
 export const AddRecommendation: FC<{ song: Track }> = memo(({ song }) => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ export const AddRecommendation: FC<{ song: Track }> = memo(({ song }) => {
       .addPlaylistItems(playlist.id, [song.uri], playlist.snapshot_id)
       .then(() => {
         message.success(t('Added to playlist'));
+        dispatch(yourLibraryActions.fetchMyPlaylists());
         dispatch(playlistActions.refreshPlaylist(playlist.id));
         dispatch(playlistActions.refreshTracks(playlist.id));
         dispatch(playlistActions.removeTrackFromRecommendations({ id: song.id }));

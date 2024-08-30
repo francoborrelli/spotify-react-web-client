@@ -25,11 +25,12 @@ import type { Album as AlbumType } from '../../interfaces/albums';
 interface DefaultProps {
   song: Track;
   index?: number;
-  saved: boolean;
+  saved?: boolean;
   canEdit?: boolean;
   addedAt?: string;
+  size?: 'small' | 'normal';
   album?: AlbumType | null;
-  playlist?: Playlist;
+  playlist?: Playlist | null;
 
   view: 'LIST' | 'COMPACT';
   context: {
@@ -43,7 +44,9 @@ interface DefaultProps {
 
 interface ComponentProps extends DefaultProps {
   isList: boolean;
-  showCover?: boolean;
+  isCurrent: boolean;
+  isPlaying: boolean;
+  onPlay?: () => void;
 }
 
 interface SongViewProps extends DefaultProps {
@@ -63,19 +66,47 @@ const getArtists = (artists: Track['artists']) => {
   ));
 };
 
-const Title = (props: ComponentProps & { showCover?: boolean }) => {
-  const { song, isList, showCover } = props;
+const ClickeableCover = (props: ComponentProps) => {
+  const { song, onPlay, isCurrent, isPlaying } = props;
+
+  const button = (
+    <button className='image-button' onClick={onPlay}>
+      {isPlaying && isCurrent ? <Pause /> : <Play />}
+    </button>
+  );
+
+  const imageUrl = (song?.album?.images || [])[0]?.url;
+  if (!imageUrl) return null;
+
+  return (
+    <div className={`image p-2 h-full items-center`}>
+      <div style={{ position: 'relative' }}>
+        <div>
+          <img
+            src={imageUrl}
+            alt={song.album.name}
+            className='rounded-md'
+            style={{ width: 40, height: 40 }}
+          />
+        </div>
+        {button}
+      </div>
+    </div>
+  );
+};
+
+const Title = (props: ComponentProps) => {
+  const { song, isList, isCurrent } = props;
 
   return (
     <>
       <div className='flex flex-col' style={{ flex: 8 }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {showCover ? <Cover {...props} /> : null}
-
           <div>
             <div className='flex flex-row items-center'>
-              <p className='title text-left' style={{ cursor: 'pointer' }}>
-                {song.name} {song.explicit && !isList ? <span className='explicit'>E</span> : null}
+              <p className={`title text-left ${isCurrent ? 'active' : ''}`}>
+                <span>{song.name}</span>{' '}
+                {song.explicit && !isList ? <span className='explicit'>E</span> : null}
               </p>
             </div>
 
@@ -92,19 +123,52 @@ const Title = (props: ComponentProps & { showCover?: boolean }) => {
   );
 };
 
+const Cover = ({ song, isList }: ComponentProps) => {
+  if (!isList) return null;
+
+  const imageUrl = (song?.album?.images || [])[0]?.url;
+  if (!imageUrl) return null;
+
+  return (
+    <img alt='song cover' src={song.album?.images[0].url} className='w-10 h-10 mr-4 rounded-md' />
+  );
+};
+
+const TitleWithCover = (props: ComponentProps) => {
+  const { song, isList, isCurrent } = props;
+  return (
+    <>
+      <div className='flex flex-col' style={{ flex: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <Cover {...props} />
+
+          <div>
+            <div className='flex flex-row items-center'>
+              <p className={`title text-left ${isCurrent ? 'active' : ''}`}>
+                <span>{song.name}</span>{' '}
+                {song.explicit && !isList ? <span className='explicit'>E</span> : null}
+              </p>
+            </div>
+
+            {isList ? (
+              <p className='text-left artist mobile-hidden'>
+                {song.explicit ? <span className='explicit'>E</span> : null}
+                <div>{getArtists(song.artists)}</div>
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const Artists = ({ song, isList }: ComponentProps) => {
   if (isList) return null;
   return (
     <p className='text-left tablet-hidden' style={{ flex: 5 }}>
       {getArtists(song.artists)}
     </p>
-  );
-};
-
-const Cover = ({ song, isList }: ComponentProps) => {
-  if (!isList) return null;
-  return (
-    <img alt='song cover' src={song.album.images[0].url} className='w-10 h-10 mr-4 rounded-md' />
   );
 };
 
@@ -141,7 +205,7 @@ const AddToLiked = ({
       <AddSongToLibraryButton
         size={18}
         id={song.id}
-        isSaved={saved}
+        isSaved={!!saved}
         onToggle={() => {
           if (onLikeRefresh) onLikeRefresh(song.id);
         }}
@@ -208,6 +272,7 @@ const Index = ({
 };
 
 export const SongView = (props: SongViewProps) => {
+  const { size = 'normal' } = props;
   const { view, song, index, context, playlist, canEdit, fields, saved, album } = props;
 
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
@@ -238,7 +303,9 @@ export const SongView = (props: SongViewProps) => {
       trigger={['contextMenu']}
     >
       <button
-        className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center p-2 rounded-lg`}
+        className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center ${
+          size === 'normal' ? 'p-2' : ''
+        } rounded-lg`}
       >
         <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
           <div className='flex flex-row items-center justify-between w-full'>
@@ -246,7 +313,14 @@ export const SongView = (props: SongViewProps) => {
               <Index index={index} isCurrent={isCurrent} isPlaying={isPlaying} onClick={onClick} />
             ) : null}
             {fields.map((Field, i) => (
-              <Field key={i} isList={isList} showCover={!album} {...props} />
+              <Field
+                key={i}
+                isList={isList}
+                onPlay={onClick}
+                isCurrent={isCurrent}
+                isPlaying={isPlaying}
+                {...props}
+              />
             ))}
           </div>
         </div>
@@ -259,6 +333,8 @@ export default SongView;
 
 export const SongViewComponents = {
   Title,
+  ClickeableCover,
+  TitleWithCover,
   Artists,
   Cover,
   Album,

@@ -55,6 +55,8 @@
 }
 
 .song-details {
+  cursor: pointer !important;
+
   .drawer-icon {
     visibility: hidden;
   }
@@ -75,6 +77,16 @@
     &.active {
       color: #1db954;
     }
+
+    span {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      white-space: unset;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .artist {
@@ -84,6 +96,16 @@
         cursor: pointer;
         text-decoration: underline;
       }
+    }
+
+    > div {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      white-space: unset;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
