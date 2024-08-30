@@ -2,7 +2,7 @@
 import { Col, Row } from 'antd';
 import VolumeControls from './Volume';
 import { Tooltip } from '../../../Tooltip';
-
+import { FullScreenPlayer } from '../../../FullScreen';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 // Icons
@@ -10,10 +10,11 @@ import { DetailsIcon, DeviceIcon, ExpandIcon, ListIcon, MicrophoneIcon } from '.
 
 // I18n
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
-import { languageActions } from '../../../../store/slices/language';
-import { FullScreenPlayer } from '../../../FullScreen';
+
+// Redux
 import { uiActions } from '../../../../store/slices/ui';
+import { languageActions } from '../../../../store/slices/language';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 const LyricsButton = () => {
   const dispatch = useAppDispatch();
@@ -81,7 +82,7 @@ const ExpandButton = () => {
   const { t } = useTranslation(['playingBar']);
 
   const handle = useFullScreenHandle();
-  const isQueueOpen = useAppSelector((state) => state.library.queue);
+  const isQueueOpen = useAppSelector((state) => !state.ui.queueCollapsed);
 
   return (
     <>

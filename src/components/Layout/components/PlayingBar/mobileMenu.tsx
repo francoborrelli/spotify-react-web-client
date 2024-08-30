@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { HomeIcon, LibraryIcon, SearchIcon } from '../../../Icons';
+
+// I18n
 import { useTranslation } from 'react-i18next';
+
+// Redux
 import { useDispatch } from 'react-redux';
-import { libraryActions } from '../../../../store/slices/library';
+import { uiActions } from '../../../../store/slices/ui';
 
 export const MobileMenu = () => {
   const navigate = useNavigate();
@@ -24,7 +28,7 @@ export const MobileMenu = () => {
         <SearchIcon />
         <p>{t('Source code')}</p>
       </a>
-      <button onClick={() => dispatch(libraryActions.toggleLibrary())}>
+      <button onClick={() => dispatch(uiActions.toggleLibrary())}>
         <LibraryIcon />
         <p>{t('Your Library')}</p>
       </button>

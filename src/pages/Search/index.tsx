@@ -78,3 +78,5 @@ export const SearchPage: FC<SearchPageProps> = (props) => {
     </div>
   );
 };
+
+export default SearchPage;

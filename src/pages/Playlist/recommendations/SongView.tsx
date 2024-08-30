@@ -10,7 +10,6 @@ import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
 
 // Redux
-import { libraryActions } from '../../../store/slices/library';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Service
@@ -25,8 +24,6 @@ interface SongViewProps {
 interface SongDataProps extends SongViewProps {}
 
 const SongData = ({ song }: SongDataProps) => {
-  const dispatch = useAppDispatch();
-
   const canEdit = useAppSelector((state) => state.playlist.canEdit);
   const playlist = useAppSelector((state) => state.playlist.playlist);
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
@@ -41,7 +38,6 @@ const SongData = ({ song }: SongDataProps) => {
     if (isCurrent) {
       return playerService.startPlayback();
     }
-    // recommendations startign  by song.uri
     const index = recommendations.findIndex((r) => r.uri === song.uri);
     const uris = recommendations.slice(index).map((r) => r.uri);
     return playerService.startPlayback({ uris });
@@ -114,12 +110,7 @@ const SongData = ({ song }: SongDataProps) => {
       playlist={playlist!}
       trigger={['contextMenu']}
     >
-      <div
-        className='song-details flex flex-row items-center w-full '
-        onClick={() => {
-          dispatch(libraryActions.setSongPlaying(song));
-        }}
-      >
+      <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
         <div className='flex flex-row items-center justify-between w-full'>
           {image}
           {title}

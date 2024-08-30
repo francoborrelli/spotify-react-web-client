@@ -4,22 +4,22 @@ import './styles/App.scss';
 // Utils
 import i18next from 'i18next';
 import { FC, Suspense, lazy, memo, useEffect, useRef } from 'react';
+import { getFromLocalStorageWithExpiry } from './utils/localstorage';
 
 // Components
 import { ConfigProvider } from 'antd';
 import { AppLayout } from './components/Layout';
+import { Spinner } from './components/spinner/spinner';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 // Redux
 import { Provider } from 'react-redux';
-import { libraryActions } from './store/slices/library';
+import { uiActions } from './store/slices/ui';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store, useAppDispatch, useAppSelector } from './store/store';
-import { SearchPage } from './pages/Search';
 import { authActions, fetchUser, loginToSpotify } from './store/slices/auth';
-import { Spinner } from './components/spinner/spinner';
+import { persistor, store, useAppDispatch, useAppSelector } from './store/store';
 
-import { getFromLocalStorageWithExpiry } from './utils/localstorage';
+// Spotify
 import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
 
 // Pages
@@ -31,12 +31,13 @@ const GenrePage = lazy(() => import('./pages/Genre'));
 const BrowsePage = lazy(() => import('./pages/Browse'));
 const ArtistPage = lazy(() => import('./pages/Artist'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
+const SearchPage = lazy(() => import('./pages/Search'));
 const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
 
 window.addEventListener('resize', () => {
   const vh = window.innerWidth;
   if (vh < 950) {
-    store.dispatch(libraryActions.collapseLibrary());
+    store.dispatch(uiActions.collapseLibrary());
   }
 });
 
