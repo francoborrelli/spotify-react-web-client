@@ -11,7 +11,6 @@ import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions
 
 // Redux
 import { albumActions } from '../../../store/slices/album';
-import { libraryActions } from '../../../store/slices/library';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Service
@@ -31,9 +30,9 @@ interface SongViewProps {
 interface SongDataProps extends SongViewProps {}
 
 const SongData = ({ song, index }: SongDataProps) => {
-  const dispatch = useAppDispatch();
   const [tor] = useTranslation(['order']);
 
+  const dispatch = useAppDispatch();
   const view = useAppSelector((state) => state.playlist.view);
   const isList = useMemo(() => view === 'LIST', [view]);
 
@@ -111,7 +110,7 @@ const SongData = ({ song, index }: SongDataProps) => {
         id={song.id}
         isSaved={song.saved}
         onToggle={() => {
-          // dispatch(refreshTracks(playlist!.id));
+          dispatch(albumActions.updateTrackLikeState({ id: song.id, saved: !song.saved }));
         }}
       />
     </p>
@@ -140,12 +139,7 @@ const SongData = ({ song, index }: SongDataProps) => {
 
   return (
     <TrackActionsWrapper track={song} trigger={['contextMenu']}>
-      <div
-        className='song-details flex flex-row items-center w-full '
-        onClick={() => {
-          dispatch(libraryActions.setSongPlaying(song));
-        }}
-      >
+      <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
         <div className='flex flex-row items-center justify-between w-full'>
           <div style={{ flex: 1 }} className='mobile-hidden'>
             <p className='song-details-index'>

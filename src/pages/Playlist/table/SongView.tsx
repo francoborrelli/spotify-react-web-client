@@ -10,7 +10,6 @@ import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
 
 // Redux
-import { libraryActions } from '../../../store/slices/library';
 import { refreshTracks } from '../../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
@@ -171,12 +170,7 @@ const SongData = ({ song, index }: SongDataProps) => {
       playlist={playlist!}
       trigger={['contextMenu']}
     >
-      <div
-        className='song-details flex flex-row items-center w-full '
-        onClick={() => {
-          dispatch(libraryActions.setSongPlaying(song));
-        }}
-      >
+      <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
         <div className='flex flex-row items-center justify-between w-full'>
           <div style={{ flex: 1 }} className='mobile-hidden'>
             <p className='song-details-index'>

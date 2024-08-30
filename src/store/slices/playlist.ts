@@ -77,6 +77,9 @@ export const fetchPlaylist = createAsyncThunk<
             .then((res) => ({
               data: res.data.tracks,
             }))
+            .catch(() => ({
+              data: [],
+            }))
         : userService.fetchTopTracks({ limit: 25, timeRange: 'short_term' }).then((res) => ({
             data: res.data.items,
           }))
