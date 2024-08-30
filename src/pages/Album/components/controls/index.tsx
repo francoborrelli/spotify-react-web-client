@@ -1,20 +1,20 @@
 import { Col, Dropdown, Row, Space } from 'antd';
 
 import { PlayCircleButton } from './playCircle';
-import { Tooltip } from '../../../components/Tooltip';
-import { MenuDots, OrderListIcon } from '../../../components/Icons';
+import { Tooltip } from '../../../../components/Tooltip';
 import { AddAlbumToLibraryButton } from './AddAlbumToLibrary';
+import { MenuDots, OrderListIcon } from '../../../../components/Icons';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { playlistActions } from '../../../store/slices/playlist';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { playlistActions } from '../../../../store/slices/playlist';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Interfaces
 import type { FC } from 'react';
-import { AlbumActionsWrapper } from '../../../components/Actions/AlbumActions';
+import { AlbumActionsWrapper } from '../../../../components/Actions/AlbumActions';
 
 const filters = ['LIST', 'COMPACT'] as const;
 
@@ -42,13 +42,7 @@ export const AlbumControls: FC = () => {
               <AddAlbumToLibraryButton id={album!.id} />
             </div>
 
-            <AlbumActionsWrapper
-              album={album!}
-              trigger={['click']}
-              onRefresh={() => {
-                // dispatch(refreshPlaylist(playlist!.id));
-              }}
-            >
+            <AlbumActionsWrapper album={album!} trigger={['click']}>
               <Tooltip title={`${tor('More options for')} ${album?.name}`}>
                 <div className='scale'>
                   <MenuDots />

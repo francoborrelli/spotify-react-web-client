@@ -1,5 +1,5 @@
-import { useAppSelector } from '../../../store/store';
-import { PlayCircle } from '../../../components/Lists/PlayCircle';
+import { useAppSelector } from '../../../../store/store';
+import { PlayCircle } from '../../../../components/Lists/PlayCircle';
 
 // Interfaces
 import { memo, useMemo, type FC } from 'react';

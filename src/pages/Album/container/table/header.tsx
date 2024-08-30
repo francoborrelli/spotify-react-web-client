@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { Clock } from '../../../components/Icons';
-import { useAppSelector } from '../../../store/store';
+import { Clock } from '../../../../components/Icons';
+import { useAppSelector } from '../../../../store/store';
+import { memo } from 'react';
 
-export const PlaylistTableHeader = () => {
+export const PlaylistTableHeader = memo(() => {
   const { t } = useTranslation(['playlist']);
   const view = useAppSelector((state) => state.playlist.view);
 
@@ -36,4 +37,4 @@ export const PlaylistTableHeader = () => {
       <div style={{ flex: 1 }} className='tablet-hidden'></div>
     </div>
   );
-};
+});

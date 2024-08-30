@@ -1,37 +1,31 @@
 import { Col, Row, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { PlaylistTableHeader } from './table/header';
-import { PlayCircleButton } from './controls/playCircle';
+import { PlaylistTableHeader } from '../table/header';
+import { PlayCircleButton } from '../../components/controls/playCircle';
+import { ArtistActionsWrapper } from '../../../../components/Actions/ArtistActions';
 
 // I18n
 import { useTranslation } from 'react-i18next';
 
-// Interfaces
-import type { Track } from '../../interfaces/track';
-import { RefObject, useEffect, useState, type FC } from 'react';
-
 // Redux
-import { useAppSelector } from '../../store/store';
+import { useAppSelector } from '../../../../store/store';
 
 // Utils
 import dayjs from 'dayjs';
 import tinycolor from 'tinycolor2';
-import { ArtistActionsWrapper } from '../../components/Actions/ArtistActions';
-import { ARTISTS_DEFAULT_IMAGE } from '../../constants/spotify';
+
+// Constants
+import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
+
+// Interfaces
+import { RefObject, useEffect, useState, type FC } from 'react';
+import { sumTracksLength } from '../../../../utils/spotify/sumTracksLength';
 
 interface AlbumHeaderProps {
   color: string;
   container: RefObject<HTMLDivElement>;
   sectionContainer?: RefObject<HTMLDivElement>;
 }
-
-// function that sums tracks length and return duration in minutes and seconds
-export const sumTracksLength = (tracks: Track[]): string => {
-  const totalDuration = tracks.reduce((acc, track) => acc + track.duration_ms, 0);
-  const minutes = Math.floor(totalDuration / 60000);
-  const seconds = Math.floor((totalDuration % 60000) / 1000);
-  return `${minutes} min ${seconds} sec`;
-};
 
 export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer, color }) => {
   const { t } = useTranslation(['album']);

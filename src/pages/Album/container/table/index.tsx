@@ -1,17 +1,22 @@
+// Components
 import SongView from './SongView';
-import { AlbumControls } from '../controls';
+import { PlaylistTableHeader } from './header';
+import { AlbumIcon } from '../../../../components/Icons';
+import { AlbumControls } from '../../components/controls';
+import { OtherAlbums } from '../../components/otherAlbums';
 
 // Interfaces
 import { memo, useMemo, type FC } from 'react';
-import { PlaylistTableHeader } from './header';
-import { useAppSelector } from '../../../store/store';
-import { OtherAlbums } from '../otherAlbums';
+
+// Utils
 import { groupBy } from 'lodash';
-import { AlbumIcon } from '../../../components/Icons';
 import { useTranslation } from 'react-i18next';
 
+// Redux
+import { useAppSelector } from '../../../../store/store';
+
 // Constants
-import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
+import { DEFAULT_PAGE_COLOR } from '../../../../constants/spotify';
 
 interface PlaylistListProps {
   color: string;

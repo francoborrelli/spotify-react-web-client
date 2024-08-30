@@ -1,7 +1,11 @@
 import { FC, memo, useMemo } from 'react';
-import { GridItemList } from '../../../components/Lists/list';
-import { useAppSelector } from '../../../store/store';
 import { useTranslation } from 'react-i18next';
+
+// Components
+import { GridItemList } from '../../../../components/Lists/list';
+
+// Redux
+import { useAppSelector } from '../../../../store/store';
 
 export const OtherAlbums: FC = memo(() => {
   const { t } = useTranslation(['album']);

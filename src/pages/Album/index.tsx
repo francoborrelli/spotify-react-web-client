@@ -1,34 +1,18 @@
-// Components
-import { AlbumList } from './table';
-import { AlbumHeader } from './header';
-
 // Utils
 import { useParams } from 'react-router-dom';
-import { FC, RefObject, useEffect, useRef, useState } from 'react';
-import { getImageAnalysis2 } from '../../utils/imageAnyliser';
+import { FC, RefObject, useEffect } from 'react';
 
 // Redux
+import { useAppDispatch } from '../../store/store';
 import { albumActions } from '../../store/slices/album';
-import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Constants
-import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
+import AlbumPageContainer from './container';
 
-const AlbumView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
+const AlbumPage: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   const dispatch = useAppDispatch();
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const { albumId } = useParams<{ albumId: string }>();
-  const [color, setColor] = useState<string>(DEFAULT_PAGE_COLOR);
-  const album = useAppSelector((state) => state.album.album);
-
-  useEffect(() => {
-    if (album && album.images?.length) {
-      getImageAnalysis2(album.images[0].url).then((color) => {
-        setColor(color);
-      });
-    }
-  }, [album]);
 
   useEffect(() => {
     if (albumId) dispatch(albumActions.fetchAlbum(albumId));
@@ -37,15 +21,9 @@ const AlbumView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
     };
   }, [dispatch, albumId]);
 
-  if (!album) return null;
-  return (
-    <div className='Playlist-section' ref={containerRef}>
-      <AlbumHeader color={color} container={props.container} sectionContainer={containerRef} />
-      <AlbumList color={color} />
-    </div>
-  );
+  return <AlbumPageContainer container={props.container} />;
 };
 
-AlbumView.displayName = 'AlbumView';
+AlbumPage.displayName = 'AlbumPage';
 
-export default AlbumView;
+export default AlbumPage;

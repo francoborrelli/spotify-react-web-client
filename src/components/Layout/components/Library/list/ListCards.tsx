@@ -213,7 +213,6 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
 
 export const AlbumCardShort = ({ album }: { album: Album }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
 
   const onClick = () => {
@@ -221,13 +220,7 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
   };
 
   return (
-    <AlbumActionsWrapper
-      album={album}
-      trigger={['contextMenu']}
-      onRefresh={() => {
-        dispatch(yourLibraryActions.fetchMyAlbums());
-      }}
-    >
+    <AlbumActionsWrapper album={album} trigger={['contextMenu']}>
       <div>
         <Card
           uri={album.uri}

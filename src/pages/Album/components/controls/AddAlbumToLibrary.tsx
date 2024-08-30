@@ -1,16 +1,16 @@
-import { FC, useCallback, useMemo } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import { Tooltip } from '../../../components/Tooltip';
-import { AddedToLibrary, AddToLibrary } from '../../../components/Icons';
+import { Tooltip } from '../../../../components/Tooltip';
+import { AddedToLibrary, AddToLibrary } from '../../../../components/Icons';
 
 // Services
-import { albumsService } from '../../../services/albums';
+import { albumsService } from '../../../../services/albums';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { yourLibraryActions } from '../../../store/slices/yourLibrary';
-import { albumActions } from '../../../store/slices/album';
+import { albumActions } from '../../../../store/slices/album';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 const FollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
@@ -59,7 +59,7 @@ const UnfollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = (
   );
 };
 
-export const AddAlbumToLibraryButton = ({ id }: { id: string }) => {
+export const AddAlbumToLibraryButton = memo(({ id }: { id: string }) => {
   const dispatch = useAppDispatch();
   const isSaved = useAppSelector((state) => state.album.following);
 
@@ -72,4 +72,4 @@ export const AddAlbumToLibraryButton = ({ id }: { id: string }) => {
   ) : (
     <FollowAlbum size={32} id={id} onToggle={onToggle} />
   );
-};
+});

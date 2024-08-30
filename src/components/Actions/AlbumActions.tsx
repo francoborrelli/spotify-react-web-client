@@ -5,6 +5,8 @@ import { AddToQueueIcon, AddedToLibrary, AddToLibrary, AddToPlaylist } from '../
 
 // Services
 import { playerService } from '../../services/player';
+import { albumsService } from '../../services/albums';
+import { playlistService } from '../../services/playlists';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -16,13 +18,10 @@ import type { Album } from '../../interfaces/albums';
 import { fetchQueue } from '../../store/slices/queue';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { yourLibraryActions } from '../../store/slices/yourLibrary';
-import { albumsService } from '../../services/albums';
-import { playlistService } from '../../services/playlists';
 
 interface AlbumActionsWrapperProps {
   album: Album;
   isCurrent?: boolean;
-  onRefresh?: () => void;
   trigger?: ('contextMenu' | 'click')[];
   children: React.ReactNode | React.ReactNode[];
 }

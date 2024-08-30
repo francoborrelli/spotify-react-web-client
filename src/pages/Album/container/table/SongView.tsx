@@ -3,25 +3,25 @@
 import { useCallback, useMemo } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Tooltip } from '../../../components/Tooltip';
-import { MenuIcon, Pause, Play } from '../../../components/Icons';
-import { AddSongToLibraryButton } from '../../../components/Actions/AddSongToLibrary';
-import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
+import { Tooltip } from '../../../../components/Tooltip';
+import { MenuIcon, Pause, Play } from '../../../../components/Icons';
+import { TrackActionsWrapper } from '../../../../components/Actions/TrackActions';
+import { ArtistActionsWrapper } from '../../../../components/Actions/ArtistActions';
+import { AddSongToLibraryButton } from '../../../../components/Actions/AddSongToLibrary';
 
 // Redux
-import { albumActions } from '../../../store/slices/album';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { albumActions } from '../../../../store/slices/album';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Service
-import { playerService } from '../../../services/player';
+import { playerService } from '../../../../services/player';
 
 // Utils
-import { msToTime } from '../../../utils';
+import { msToTime } from '../../../../utils';
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
-import type { TrackWithSave } from '../../../interfaces/track';
+import type { TrackWithSave } from '../../../../interfaces/track';
 
 interface SongViewProps {
   index: number;
