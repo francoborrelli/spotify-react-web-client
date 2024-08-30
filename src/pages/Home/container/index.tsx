@@ -8,6 +8,7 @@ import { FeaturePlaylists } from '../components/featurePlaylists';
 
 // Utils
 import { FC, memo, RefObject, useRef, useState } from 'react';
+import { RecentlyPlayed } from '../components/recentlyPlayed';
 
 interface HomePageContainerProps {
   container: RefObject<HTMLDivElement>;
@@ -37,6 +38,10 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
 
           <Col span={24}>
             <MadeForYou />
+          </Col>
+
+          <Col span={24}>
+            <RecentlyPlayed />
           </Col>
 
           <Col span={24}>

@@ -13,6 +13,12 @@ const fetchNewRelases = (params: PaginationQueryParams = {}) =>
 const fetchAlbum = (id: string) => axios.get<AlbumFullObject>(`/albums/${id}`);
 
 /**
+ * @description Get Spotify catalog information for multiple albums identified by their Spotify IDs.
+ */
+const fetchAlbums = (ids: string[]) =>
+  axios.get<{ albums: Album[] }>(`/albums`, { params: { ids: ids.join(',') } });
+
+/**
  * @description Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
  */
 const fetchAlbumTracks = (id: string, params: PaginationQueryParams = {}) =>
@@ -36,6 +42,7 @@ const deleteAlbums = (ids: string[]) => axios.delete('/me/albums', { data: { ids
 
 export const albumsService = {
   fetchAlbum,
+  fetchAlbums,
   fetchNewRelases,
   fetchSavedAlbums,
   fetchAlbumTracks,

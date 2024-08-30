@@ -21,6 +21,7 @@ const Home: FC<HomeProps> = (props) => {
     dispatch(homeActions.fetchTopTracks());
     dispatch(homeActions.fetchMadeForYou());
     dispatch(homeActions.fetchNewReleases());
+    dispatch(homeActions.fetchRecentlyPlayed());
     dispatch(homeActions.fecthFeaturedPlaylists());
   }, [dispatch]);
 

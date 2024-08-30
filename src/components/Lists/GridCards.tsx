@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/store';
 import { ArtistActionsWrapper } from '../Actions/ArtistActions';
+import { TrackActionsWrapper } from '../Actions/TrackActions';
+import { Track } from '../../interfaces/track';
 
 const Card = ({
   uri,
@@ -22,6 +24,7 @@ const Card = ({
   rounded,
   description,
   onClick,
+  context,
 }: {
   uri: string;
   image: string;
@@ -29,6 +32,7 @@ const Card = ({
   rounded?: boolean;
   description: string;
   onClick: () => void;
+  context: { context_uri?: string; uris?: string[] };
 }) => {
   const state = useAppSelector((state) => state.spotify.state);
 
@@ -55,7 +59,7 @@ const Card = ({
             isCurrent && !state?.paused ? 'active' : ''
           }`}
         >
-          <PlayCircle isCurrent={isCurrent} context={{ context_uri: uri }} />
+          <PlayCircle isCurrent={isCurrent} context={context} />
         </div>
       </div>
       <div className='playlist-card-info'>
@@ -88,6 +92,7 @@ export const ArtistCard = ({
           uri={item.uri}
           description={description}
           image={item.images[0]?.url}
+          context={{ context_uri: item.uri }}
           onClick={() => navigate(`/artist/${item.id}`)}
         />
       </div>
@@ -121,6 +126,7 @@ export const AlbumCard = ({
           uri={item.uri}
           description={description}
           image={item.images[0]?.url}
+          context={{ context_uri: item.uri }}
           onClick={() => navigate(`/album/${item.id}`)}
         />
       </div>
@@ -151,9 +157,36 @@ export const PlaylistCard = ({
           uri={item.uri}
           description={description}
           image={item.images[0]?.url}
+          context={{ context_uri: item.uri }}
           onClick={() => navigate(`/playlist/${item.id}`)}
         />
       </div>
     </PlayistActionsWrapper>
+  );
+};
+
+export const TrackCard = ({
+  item,
+  getDescription,
+}: {
+  item: Track;
+  getDescription?: (track: Track) => string;
+}) => {
+  const navigate = useNavigate();
+  const description = getDescription ? getDescription(item) : item.album.name;
+
+  return (
+    <TrackActionsWrapper track={item} trigger={['contextMenu']}>
+      <div>
+        <Card
+          uri={item.uri}
+          title={item.name}
+          description={description}
+          context={{ uris: [item.uri] }}
+          image={item.album.images[0]?.url}
+          onClick={() => navigate(`/album/${item.album.id}`)}
+        />
+      </div>
+    </TrackActionsWrapper>
   );
 };

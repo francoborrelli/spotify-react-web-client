@@ -1,20 +1,26 @@
 import { Flex } from 'antd';
 import { Link } from 'react-router-dom';
-import { AlbumCard, ArtistCard, PlaylistCard } from './GridCards';
+import { AlbumCard, ArtistCard, PlaylistCard, TrackCard } from './GridCards';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Interfaces
 import type { ReactNode } from 'react';
+import type { Track } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
 
-type Item = Album | Playlist | Artist;
+type Item = Album | Playlist | Artist | Track;
 
 export function GridItemComponent(props: { item: Item; getDescription?: (item: Item) => string }) {
   const { item, getDescription } = props;
+
+  if (item.type === 'track') {
+    return <TrackCard item={item} />;
+  }
+
   if (item.type === 'album') {
     return <AlbumCard item={item} getDescription={getDescription} />;
   }
@@ -65,7 +71,7 @@ export function GridItemList(props: {
       <div className='playlist-grid'>
         {items.map((item) => {
           return (
-            <div key={item.id}>
+            <div key={item.uri}>
               <GridItemComponent item={item} getDescription={getDescription} />
             </div>
           );

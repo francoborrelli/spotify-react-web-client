@@ -3,14 +3,20 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Services
 import { userService } from '../../services/users';
 import { albumsService } from '../../services/albums';
+import { artistService } from '../../services/artist';
+import { playerService } from '../../services/player';
 import { playlistService } from '../../services/playlists';
 
 // Interfaces
 import type { RootState } from '../store';
 import type { Track } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
+import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
 import { categoriesService } from '../../services/categories';
+
+// Utils
+import { groupBy, uniq, uniqBy } from 'lodash';
 
 // Constants
 import { MADE_FOR_YOU_URI } from '../../constants/spotify';
@@ -20,12 +26,14 @@ const initialState: {
   newReleases: Album[];
   madeForYou: Playlist[];
   featurePlaylists: Playlist[];
+  recentlyPlayed: (Track | Artist | Album)[];
   section: 'ALL' | 'MUSIC' | 'PODCAST';
 } = {
   topTracks: [],
   section: 'ALL',
   madeForYou: [],
   newReleases: [],
+  recentlyPlayed: [],
   featurePlaylists: [],
 };
 
@@ -42,6 +50,59 @@ export const fetchNewReleases = createAsyncThunk('home/fetchNewReleases', async 
 export const fetchTopTracks = createAsyncThunk('home/fetchTopTracks', async () => {
   const response = await userService.fetchTopTracks({ limit: 8, timeRange: 'short_term' });
   return response.data.items;
+});
+
+export const fetchRecentlyPlayed = createAsyncThunk('home/fetchRecentlyPlayed', async () => {
+  try {
+    const response = await playerService.getRecentlyPlayed({ limit: 50 });
+
+    const items = response.items;
+
+    const groupedItems = groupBy(
+      items.filter((item) => ['artist', 'playlist', 'album'].includes(item.context?.type)),
+      (item) => item.context.type
+    );
+
+    const artistsTracks = groupedItems['artist'] || [];
+    const albumsTracks = groupedItems['album'] || [];
+
+    const artistsIds = uniq(artistsTracks.map((item) => item.context.uri.split(':')[2]));
+    const albumsIds = uniq(albumsTracks.map((item) => item.context.uri.split(':')[2]));
+
+    const promises = [
+      artistsIds.length
+        ? artistService.fetchArtists(artistsIds)
+        : Promise.resolve({ data: { artists: [] } }),
+      albumsIds.length
+        ? albumsService.fetchAlbums(albumsIds)
+        : Promise.resolve({ data: { albums: [] } }),
+    ];
+
+    const [artistsResponse, albumsResponse] = await Promise.all(promises);
+
+    // @ts-ignore
+    const artists: Artist[] = artistsResponse.data.artists;
+
+    // @ts-ignore
+    const albums: Album[] = albumsResponse.data.albums;
+
+    const tracks = items.map((item) => {
+      if (item.context?.type === 'artist') {
+        return artists.find((artist) => artist.id === item.context.uri.split(':')[2])!;
+      }
+
+      if (item.context?.type === 'album') {
+        return albums.find((album) => album.id === item.context.uri.split(':')[2])!;
+      }
+
+      return item.track;
+    });
+
+    return uniqBy(tracks, 'id');
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 });
 
 export const fecthFeaturedPlaylists = createAsyncThunk(
@@ -77,6 +138,9 @@ const homeSlice = createSlice({
     builder.addCase(fetchMadeForYou.fulfilled, (state, action) => {
       state.madeForYou = action.payload;
     });
+    builder.addCase(fetchRecentlyPlayed.fulfilled, (state, action) => {
+      state.recentlyPlayed = action.payload;
+    });
   },
 });
 
@@ -85,6 +149,7 @@ export const homeActions = {
   fetchTopTracks,
   fetchMadeForYou,
   fetchNewReleases,
+  fetchRecentlyPlayed,
   fecthFeaturedPlaylists,
 };
 

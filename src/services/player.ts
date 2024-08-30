@@ -1,4 +1,6 @@
 import axios from '../axios';
+import type { Pagination } from '../interfaces/api';
+import type { PlayHistoryObject } from '../interfaces/player';
 
 /**
  * @description Get information about the user’s current playback state, including track or episode, progress, and active device.
@@ -84,6 +86,16 @@ const addToQueue = async (uri: string) => {
   await axios.post('/me/player/queue', {}, { params: { uri } });
 };
 
+/**
+ * @description Get tracks from the current user's recently played tracks. Note: Currently doesn't support podcast episodes.
+ */
+const getRecentlyPlayed = async (params: { limit?: number; after?: number; before?: number }) => {
+  const response = await axios.get<Pagination<PlayHistoryObject>>('/me/player/recently-played', {
+    params,
+  });
+  return response.data;
+};
+
 export const playerService = {
   addToQueue,
   fetchPlaybackState,
@@ -96,4 +108,5 @@ export const playerService = {
   setVolume,
   toggleShuffle,
   seekToPosition,
+  getRecentlyPlayed,
 };

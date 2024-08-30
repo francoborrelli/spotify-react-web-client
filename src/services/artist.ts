@@ -11,6 +11,12 @@ import type { Pagination } from '../interfaces/api';
 const fetchArtist = (id: string) => axios.get<Artist>(`/artists/${id}`);
 
 /**
+ * @description Get Spotify catalog information for several artists based on their Spotify IDs.
+ */
+const fetchArtists = (ids: string[]) =>
+  axios.get<{ artists: Artist[] }>(`/artists`, { params: { ids: ids.join(',') } });
+
+/**
  * @description Get Spotify catalog information about an artist's albums.
  */
 const fetchArtistAlbums = (
@@ -41,6 +47,7 @@ const fetchSimilarArtists = (id: string) =>
 
 export const artistService = {
   fetchArtist,
+  fetchArtists,
   fetchArtistAlbums,
   fetchArtistTopTracks,
   fetchSimilarArtists,
