@@ -1,5 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import GenreContent from './container/content';
 import { GenreHeader } from './container/header';
 
 // Redux
@@ -8,7 +10,6 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Utils
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
-import GenreContent from './container/content';
 
 export const GenrePage = memo(() => {
   const dispatch = useAppDispatch();

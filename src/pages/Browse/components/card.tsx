@@ -1,8 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { FC, memo, useEffect, useState } from 'react';
-import { Category } from '../../interfaces/categories';
-import { getImageAnalysis } from '../../utils/imageAnyliser';
+
 import { Link } from 'react-router-dom';
+
+// Utils
+import { getImageAnalysis } from '../../../utils/imageAnyliser';
+
+// Interfaces
+import type { Category } from '../../../interfaces/categories';
 
 export const BrowseCard: FC<{ category: Category }> = memo(({ category }) => {
   const [color, setColor] = useState('rgb(220, 20, 60)');
