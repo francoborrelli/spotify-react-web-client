@@ -11,12 +11,15 @@ import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 import { albumActions } from '../../store/slices/album';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
+// Constants
+import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
+
 const AlbumView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { albumId } = useParams<{ albumId: string }>();
-  const [color, setColor] = useState<string>('#121212');
+  const [color, setColor] = useState<string>(DEFAULT_PAGE_COLOR);
   const album = useAppSelector((state) => state.album.album);
 
   useEffect(() => {

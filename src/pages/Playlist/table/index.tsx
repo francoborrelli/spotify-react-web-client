@@ -13,6 +13,9 @@ import { playlistService } from '../../../services/playlists';
 import { playlistActions } from '../../../store/slices/playlist';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
+// Constants
+import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
+
 // Interfaces
 import { memo, type FC } from 'react';
 
@@ -33,7 +36,7 @@ export const PlaylistList: FC<PlaylistListProps> = memo(({ color }) => {
       className='playlist-list'
       style={{
         maxHeight: 323,
-        background: `linear-gradient(${color} -50%, #121212 90%)`,
+        background: `linear-gradient(${color} -50%, ${DEFAULT_PAGE_COLOR} 90%)`,
       }}
     >
       <PlaylistControls />

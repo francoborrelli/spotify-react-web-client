@@ -5,3 +5,5 @@ export const INITIAL_VOLUME = 0.2;
 export const PLAYLIST_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/playlist.png`;
 
 export const ARTISTS_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/artist.png`;
+
+export const DEFAULT_PAGE_COLOR = '#121212';

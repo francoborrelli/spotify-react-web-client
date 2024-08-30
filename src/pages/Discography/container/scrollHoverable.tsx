@@ -1,13 +1,16 @@
-import { Dropdown, Flex, Space } from 'antd';
-import { useTranslation } from 'react-i18next';
 import { FC, memo, RefObject, useMemo, useState } from 'react';
+
+// Components
+import { Dropdown, Flex, Space } from 'antd';
+import { ArrowDownIcon, ArrowUpIcon } from '../../../components/Icons';
+import { PageHeader } from '../../../components/Layout/components/Header';
+
+// Utils
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { artistDiscographyActions } from '../../../store/slices/discography';
-
-import { ArrowDownIcon, ArrowUpIcon, GridIcon } from '../../../components/Icons';
-import { PageHeader } from '../../../components/Layout/components/Header';
 
 interface ArtistPageProps {
   color: string;
@@ -15,7 +18,7 @@ interface ArtistPageProps {
   sectionContainer: RefObject<HTMLDivElement>;
 }
 
-const FilterSection = () => {
+const FilterSection = memo(() => {
   const [t] = useTranslation(['artist']);
 
   const dispatch = useAppDispatch();
@@ -61,7 +64,7 @@ const FilterSection = () => {
       </button>
     </Dropdown>
   );
-};
+});
 
 // const ViewSection = () => {
 //   return (

@@ -104,7 +104,8 @@ body {
           to(rgba(0, 0, 0, 0.6))
         ),
         -webkit-gradient(linear, left top, left bottom, from(var(--bgColor)), to(var(--bgColor)));
-      background-image: linear-gradient(#121212 0, var(--bgColor) 90%), var(--background-noise);
+      background-image: linear-gradient($background-color 0, var(--bgColor) 90%),
+        var(--background-noise);
 
       content: '';
       height: 40vh;
@@ -291,10 +292,11 @@ body {
 }
 
 .artist-page-content {
-  --background-base: #121212;
+  --background-base: $background-color;
   height: 150px;
   width: 100%;
-  background-image: linear-gradient(var(--background-base) 0, #121212 100%), var(--background-noise);
+  background-image: linear-gradient(var(--background-base) 0, $background-color 100%),
+    var(--background-noise);
 }
 
 .showMore {

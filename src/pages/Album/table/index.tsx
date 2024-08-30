@@ -10,6 +10,9 @@ import { groupBy } from 'lodash';
 import { AlbumIcon } from '../../../components/Icons';
 import { useTranslation } from 'react-i18next';
 
+// Constants
+import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
+
 interface PlaylistListProps {
   color: string;
 }
@@ -27,7 +30,7 @@ export const AlbumList: FC<PlaylistListProps> = memo(({ color }) => {
       className='playlist-list'
       style={{
         maxHeight: 323,
-        background: `linear-gradient(${color} -50%, #121212 90%)`,
+        background: `linear-gradient(${color} -50%, ${DEFAULT_PAGE_COLOR} 90%)`,
       }}
     >
       <AlbumControls />

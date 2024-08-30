@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 
 import { Col, Row } from 'antd';
+import { SearchHeader } from './header';
 import { SearchedSongs } from './songs';
 import { TopResult } from './topResult';
 import NoSearchResults from './noResults';
@@ -14,7 +15,9 @@ import { useParams } from 'react-router-dom';
 // Redux
 import { fetchSearch } from '../../store/slices/search';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { SearchHeader } from './header';
+
+// Constants
+import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
 
 // Constants
 
@@ -71,7 +74,7 @@ export const SearchPage: FC<SearchPageProps> = (props) => {
 
   return (
     <div ref={ref}>
-      <SearchHeader color='#121212' sectionContainer={ref} container={props.container} />
+      <SearchHeader color={DEFAULT_PAGE_COLOR} sectionContainer={ref} container={props.container} />
       <div className='Search-Page'>
         <Container />
       </div>
