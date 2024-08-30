@@ -3,6 +3,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { Flex, Tooltip } from 'antd';
+import { Link } from 'react-router-dom';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
 import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
@@ -11,14 +12,16 @@ import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 import { msToTime } from '../../../utils';
 import { useTranslation } from 'react-i18next';
 
+// Services
+import { playerService } from '../../../services/player';
+
 // Redux
+import { searchActions } from '../../../store/slices/search';
 import { libraryActions } from '../../../store/slices/library';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 // Interfaces
 import type { TrackWithSave } from '../../../interfaces/track';
-import { searchActions } from '../../../store/slices/search';
-import { playerService } from '../../../services/player';
 
 interface SongViewProps {
   song: TrackWithSave;
@@ -78,7 +81,7 @@ const SongData = ({ song, index }: SongViewProps) => {
             {song.explicit ? <span className='explicit'>E</span> : null}
             {song.artists.slice(0, 3).map((a, i) => (
               <span>
-                {a.name}
+                <Link to={`/artist/${a.id}`}>{a.name}</Link>
                 {i < song.artists.length - 1 ? ', ' : ''}
               </span>
             ))}

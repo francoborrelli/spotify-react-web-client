@@ -35,7 +35,7 @@ export const fetchSearch = createAsyncThunk<
   const promises = [
     querySearch({ q: query, type: 'album,track,artist,playlist', limit: 1 }),
     querySearch({ q: query, type: 'track', limit: 5 }),
-    querySearch({ q: query, type: 'album', limit: 50 }),
+    querySearch({ q: query, type: 'album', limit: 10 }),
     querySearch({ q: query, type: 'artist', limit: 10 }),
     querySearch({ q: query, type: 'playlist', limit: 10 }),
   ];

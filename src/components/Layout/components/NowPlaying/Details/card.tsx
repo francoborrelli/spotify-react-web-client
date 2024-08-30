@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd';
 
 import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 export const DetailsCard: FC<{ title: string; children: any; extra?: any }> = (props) => {
   const { title, children, extra } = props;
@@ -16,6 +17,7 @@ export const DetailsCard: FC<{ title: string; children: any; extra?: any }> = (p
 };
 
 interface NowPlayingCardProps {
+  id: string;
   title: string;
   extra?: any;
   children?: any;
@@ -50,7 +52,7 @@ export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
               className='playing-now-card-title'
               style={props.image ? undefined : { marginTop: 10 }}
             >
-              {props.title}
+              <Link to={`/artist/${props.id}`}>{props.title}</Link>
             </div>
             <div className='playing-now-card-subtitle'>{props.subtitle}</div>
           </Col>

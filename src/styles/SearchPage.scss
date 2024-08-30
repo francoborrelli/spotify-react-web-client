@@ -25,7 +25,10 @@
         width: 90px;
         height: 90px;
         object-fit: cover;
-        border-radius: 50%;
+        border-radius: 0.375rem;
+        &.rounded {
+          border-radius: 50%;
+        }
       }
 
       h3 {

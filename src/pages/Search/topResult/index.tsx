@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../store/store';
 
 // Interfaces
+import type { ReactNode } from 'react';
 import type { Track } from '../../../interfaces/track';
 import type { Album } from '../../../interfaces/albums';
 import type { Artist } from '../../../interfaces/artist';
@@ -24,15 +25,17 @@ const Card = ({
   title,
   description,
   context,
+  rounded,
 }: {
   link: string;
   image: string;
   title: string;
+  rounded?: boolean;
   context: {
     context_uri?: string;
     uris?: string[];
   };
-  description: string;
+  description: string | ReactNode;
 }) => {
   const navigate = useNavigate();
 
@@ -48,7 +51,7 @@ const Card = ({
         style={{ position: 'relative' }}
         className='md:aspect-w-1 md:aspect-h-1/2 lg:aspect-w-1 lg:aspect-h-3/4 xl:aspect-w-1 xl:aspect-h-4/5 p-4'
       >
-        <img alt={title} src={image} />
+        <img alt={title} src={image} className={`${rounded ? 'rounded' : ''}`} />
       </div>
       <div className='playlist-card-info'>
         <h3 className='text-md font-semibold text-white'>{title}</h3>
@@ -62,6 +65,8 @@ const Card = ({
 };
 
 const TrackCard = ({ item }: { item: Track }) => {
+  const { t } = useTranslation(['search']);
+
   return (
     <TrackActionsWrapper trigger={['contextMenu']} track={item}>
       <div>
@@ -70,10 +75,26 @@ const TrackCard = ({ item }: { item: Track }) => {
           context={{ uris: [item.uri] }}
           link={`/album/${item.album.id}`}
           image={item.album.images[0].url}
-          description={item.artists
-            .slice(0, 3)
-            .map((artist) => artist.name)
-            .join(', ')}
+          description={
+            <p
+              key={item.id}
+              style={{
+                gap: 4,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              {item.explicit ? <span className='explicit'>E</span> : null}
+              <span>{t('Song')}</span>
+              <span> • </span>
+              {item.artists.slice(0, 3).map((a, i) => (
+                <span>
+                  <span style={{ color: '#fff' }}>{a.name}</span>
+                  {i < item.artists.slice(0, 3).length - 1 ? ', ' : ''}
+                </span>
+              ))}
+            </p>
+          }
         />
       </div>
     </TrackActionsWrapper>
@@ -100,6 +121,7 @@ const ArtistCard = ({ item }: { item: Artist }) => {
     <ArtistActionsWrapper artist={item} trigger={['contextMenu']}>
       <div>
         <Card
+          rounded
           title={item.name}
           description={t('Artist')}
           image={item.images[0]?.url}
@@ -112,6 +134,8 @@ const ArtistCard = ({ item }: { item: Artist }) => {
 };
 
 const AlbumCard = ({ item }: { item: Album }) => {
+  const { t } = useTranslation(['search']);
+
   return (
     <div>
       <Card
@@ -119,10 +143,25 @@ const AlbumCard = ({ item }: { item: Album }) => {
         link={`/album/${item.id}`}
         image={item.images[0]?.url}
         context={{ context_uri: item.uri }}
-        description={item.artists
-          .slice(0, 3)
-          .map((artist) => artist.name)
-          .join(', ')}
+        description={
+          <p
+            key={item.id}
+            style={{
+              gap: 4,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <span>{t('Album')}</span>
+            <span> • </span>
+            {item.artists.slice(0, 3).map((a, i) => (
+              <span>
+                <span style={{ color: '#fff' }}>{a.name}</span>
+                {i < item.artists.slice(0, 3).length - 1 ? ', ' : ''}
+              </span>
+            ))}
+          </p>
+        }
       />
     </div>
   );
