@@ -8,13 +8,14 @@ import { LibraryFilters, SearchArea } from '../Filters';
 // Redux
 import { useAppSelector } from '../../../../../store/store';
 import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
+import { GridItemComponent } from '../../../../Lists/list';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',
   height: '100%',
-  marginLeft: -20,
-  maxWidth: 340,
-  marginRight: -20,
+  // marginLeft: -20,
+  // maxWidth: 340,
+  // marginRight: -20,
 } as const;
 
 const YourLibrary = () => {
@@ -40,12 +41,23 @@ const YourLibrary = () => {
           >
             {!collapsed ? <SearchArea /> : null}
 
-            {items.map((item) => (
-              <div key={item.id}>
-                {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
-                {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
-              </div>
-            ))}
+            <div
+              className={`${collapsed ? 'collapsed' : ''} ${
+                !collapsed && view === 'GRID' ? 'grid-view' : ''
+              }`}
+            >
+              {items.map((item) => {
+                if (collapsed) return <ListItemComponent key={item.id} item={item} />;
+
+                return (
+                  <div key={item.id}>
+                    {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
+                    {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
+                    {view === 'GRID' ? <GridItemComponent key={item.id} item={item} /> : ''}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Col>
       </div>

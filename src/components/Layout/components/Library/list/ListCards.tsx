@@ -84,7 +84,9 @@ export const CollapsedCard = (props: CardShortProps) => {
         className='library-card collapsed'
       >
         <div className={`image h-full items-center ${props.rounded ? 'rounded' : ''}`}>
-          <img src={image} alt='' style={{ width: 52, height: 52 }} />
+          <div className='image-container'>
+            <img src={image} alt='' style={{ width: 52, height: 52 }} />
+          </div>
         </div>
       </button>
     </Tooltip>

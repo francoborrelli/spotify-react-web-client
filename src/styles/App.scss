@@ -132,11 +132,27 @@ h3 {
   transition: background-color 0.2s ease-in-out;
 
   &.collapsed {
-    margin-bottom: 10px;
+    width: 100%;
+
+    &:hover {
+      .image-container {
+        border-radius: 10%;
+        background-color: #ffffff0d;
+      }
+    }
+    .image-container {
+      padding: 8px;
+    }
   }
 
   img {
     border-radius: 4px;
+  }
+
+  &:not(.collapsed) {
+    &:hover {
+      background-color: #ffffff1a;
+    }
   }
 
   .rounded {
@@ -149,10 +165,6 @@ h3 {
     opacity: 0.7;
     font-weight: 400;
     font-size: 0.93em;
-  }
-
-  &:hover {
-    background-color: #ffffff0d;
   }
 
   &[data-active='true'] {
@@ -636,5 +648,19 @@ a {
       fill: #fff !important;
     }
     transform: scale(1.04);
+  }
+}
+
+.library-list {
+  .collapsed {
+    padding-left: 6px;
+  }
+  .grid-view {
+    display: grid;
+    grid-gap: var(--grid-gap);
+    grid-auto-rows: 3;
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width), 1fr));
+    grid-auto-rows: 1fr;
+    --min-column-width: 120px;
   }
 }

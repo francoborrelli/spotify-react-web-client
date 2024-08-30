@@ -13,6 +13,23 @@ import type { Playlist } from '../../interfaces/playlists';
 
 type Item = Album | Playlist | Artist;
 
+export function GridItemComponent(props: { item: Item; getDescription?: (item: Item) => string }) {
+  const { item, getDescription } = props;
+  if (item.type === 'album') {
+    return <AlbumCard item={item} getDescription={getDescription} />;
+  }
+
+  if (item.type === 'playlist') {
+    return <PlaylistCard item={item} getDescription={getDescription} />;
+  }
+
+  if (item.type === 'artist') {
+    return <ArtistCard item={item} getDescription={getDescription} />;
+  }
+
+  return null;
+}
+
 export function GridItemList(props: {
   title?: string;
   items: Item[];
@@ -49,17 +66,7 @@ export function GridItemList(props: {
         {items.map((item) => {
           return (
             <div key={item.id}>
-              {item.type === 'album' ? (
-                <AlbumCard item={item} getDescription={getDescription} />
-              ) : null}
-
-              {item.type === 'playlist' ? (
-                <PlaylistCard item={item} getDescription={getDescription} />
-              ) : null}
-
-              {item.type === 'artist' ? (
-                <ArtistCard item={item} getDescription={getDescription} />
-              ) : null}
+              <GridItemComponent item={item} getDescription={getDescription} />
             </div>
           );
         })}

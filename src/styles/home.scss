@@ -326,7 +326,6 @@
   }
 
   margin-inline: -12px;
-  display: grid;
   grid-gap: var(--grid-gap);
   content-visibility: auto;
   grid-template-rows: repeat(var(1), minmax(0, 1fr));
@@ -336,7 +335,6 @@
   padding: 0;
   vertical-align: baseline;
   display: grid;
-  grid-gap: var(--grid-gap);
   grid-auto-rows: -webkit-min-content;
   grid-auto-rows: min-content;
   grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width), 1fr));
