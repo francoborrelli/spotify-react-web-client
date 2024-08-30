@@ -1,12 +1,19 @@
+import { Link } from 'react-router-dom';
 import { PlayCircle } from '../components/PlayCircle';
+import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
+
+// Redux
+import { useAppSelector } from '../../../store/store';
+
+// Utils
+import { getImageAnalysis2 } from '../../../utils/imageAnyliser';
 
 // Interfaces
 import { memo, useEffect, type FC } from 'react';
 import type { Track } from '../../../interfaces/track';
-import { getImageAnalysis2 } from '../../../utils/imageAnyliser';
-import { useAppSelector } from '../../../store/store';
-import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
-import { Link } from 'react-router-dom';
+
+// Services
+import { playerService } from '../../../services/player';
 
 interface HorizontalCardProps {
   item: Track;
@@ -25,6 +32,10 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
     <TrackActionsWrapper track={item} trigger={['contextMenu']}>
       <div
         className='horizontal-playlist'
+        onDoubleClick={() => {
+          if (isCurrent) return;
+          playerService.startPlayback({ uris: [item.uri] });
+        }}
         onMouseEnter={() => {
           getImageAnalysis2(item.album.images[0].url).then((r) => setColor(r));
         }}
@@ -50,8 +61,8 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
             {isCurrent ? (
               <img
                 height={20}
-                src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
                 alt={item.name}
+                src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
               />
             ) : null}
             <PlayCircle size={15} isCurrent={isCurrent} context={{ uris: [item.uri] }} />

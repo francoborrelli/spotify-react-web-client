@@ -20,7 +20,6 @@ const Card = ({
   title,
   image,
   rounded,
-  isCurrent,
   description,
   onClick,
 }: {
@@ -28,11 +27,12 @@ const Card = ({
   image: string;
   title: string;
   rounded?: boolean;
-  isCurrent: boolean;
   description: string;
   onClick: () => void;
 }) => {
   const state = useAppSelector((state) => state.spotify.state);
+
+  const isCurrent = state?.context?.uri === uri;
 
   return (
     <div
@@ -75,11 +75,9 @@ export const ArtistCard = ({
 }) => {
   const navigate = useNavigate();
   const [t] = useTranslation(['artist']);
-  const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
   const description = getDescription ? getDescription(item) : t('Artist');
-  const isCurrentArtist = state?.context.uri === item.uri;
 
   return (
     <ArtistActionsWrapper artist={item} trigger={['contextMenu']}>
@@ -90,7 +88,6 @@ export const ArtistCard = ({
           uri={item.uri}
           description={description}
           image={item.images[0]?.url}
-          isCurrent={isCurrentArtist}
           onClick={() => navigate(`/artist/${item.id}`)}
         />
       </div>
@@ -106,7 +103,6 @@ export const AlbumCard = ({
   getDescription?: (playlist: Album) => string;
 }) => {
   const navigate = useNavigate();
-  const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
 
@@ -117,8 +113,6 @@ export const AlbumCard = ({
         .map((artist) => artist.name)
         .join(', ');
 
-  const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
-
   return (
     <AlbumActionsWrapper album={item} trigger={['contextMenu']}>
       <div>
@@ -126,7 +120,6 @@ export const AlbumCard = ({
           title={title}
           uri={item.uri}
           description={description}
-          isCurrent={isCurrentAlbum}
           image={item.images[0]?.url}
           onClick={() => navigate(`/album/${item.id}`)}
         />
@@ -144,11 +137,9 @@ export const PlaylistCard = ({
 }) => {
   const navigate = useNavigate();
   const [t] = useTranslation(['playlist']);
-  const state = useAppSelector((state) => state.spotify.state);
 
   const title = item.name;
   const description = getDescription ? getDescription(item) : item.tracks?.total + ' ' + t('songs');
-  const isCurrentAlbum = state?.track_window?.current_track.album.uri === item.uri;
 
   return (
     <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>
@@ -157,7 +148,6 @@ export const PlaylistCard = ({
           title={title}
           uri={item.uri}
           description={description}
-          isCurrent={isCurrentAlbum}
           image={item.images[0]?.url}
           onClick={() => navigate(`/playlist/${item.id}`)}
         />
