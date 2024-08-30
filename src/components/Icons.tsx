@@ -63,7 +63,7 @@ export const BrowseIcon = () => (
   </svg>
 );
 
-export const SearchIcon = () => (
+export const SearchIcon = (props: any) => (
   <svg
     data-encore-id='icon'
     role='img'
@@ -74,6 +74,7 @@ export const SearchIcon = () => (
     stroke='#b3b3b3'
     fill='#b3b3b3'
     strokeWidth='0'
+    {...props}
   >
     <path d='M10.533 1.27893C5.35215 1.27893 1.12598 5.41887 1.12598 10.5579C1.12598 15.697 5.35215 19.8369 10.533 19.8369C12.767 19.8369 14.8235 19.0671 16.4402 17.7794L20.7929 22.132C21.1834 22.5226 21.8166 22.5226 22.2071 22.132C22.5976 21.7415 22.5976 21.1083 22.2071 20.7178L17.8634 16.3741C19.1616 14.7849 19.94 12.7634 19.94 10.5579C19.94 5.41887 15.7138 1.27893 10.533 1.27893ZM3.12598 10.5579C3.12598 6.55226 6.42768 3.27893 10.533 3.27893C14.6383 3.27893 17.94 6.55226 17.94 10.5579C17.94 14.5636 14.6383 17.8369 10.533 17.8369C6.42768 17.8369 3.12598 14.5636 3.12598 10.5579Z'></path>
   </svg>
@@ -503,16 +504,29 @@ export const WorldIcon = () => (
   </svg>
 );
 
-export const OrderListIcon = () => (
+export const OrderListIcon = (props: any) => (
   <svg
     data-encore-id='icon'
     role='img'
     aria-hidden='true'
     viewBox='0 0 16 16'
     className='hoverable-icon'
-    style={{ ...ControlStyle, height: '1.2rem' }}
+    style={{ ...ControlStyle, height: '1.2rem', ...(props.style || {}) }}
   >
     <path d='M15 14.5H5V13h10v1.5zm0-5.75H5v-1.5h10v1.5zM15 3H5V1.5h10V3zM3 3H1V1.5h2V3zm0 11.5H1V13h2v1.5zm0-5.75H1v-1.5h2v1.5z'></path>
+  </svg>
+);
+
+export const OrderCompactIcon = (props: any) => (
+  <svg
+    data-encore-id='icon'
+    role='img'
+    aria-hidden='true'
+    viewBox='0 0 16 16'
+    className='hoverable-icon'
+    style={{ ...ControlStyle, height: '1.2rem', ...(props.style || {}) }}
+  >
+    <path d='M15.5 13.5H.5V12h15v1.5zm0-4.75H.5v-1.5h15v1.5zm0-4.75H.5V2.5h15V4z'></path>
   </svg>
 );
 
@@ -802,7 +816,7 @@ export const ArrowUpIcon = () => (
   </svg>
 );
 
-export const GridIcon = () => (
+export const GridIcon = (props: any) => (
   <svg
     data-encore-id='icon'
     role='img'
@@ -810,7 +824,7 @@ export const GridIcon = () => (
     viewBox='0 0 16 16'
     fill='#1ed760'
     className='hoverable-icon expand-icon'
-    style={SongExtraControlStyle}
+    style={{ ...SongExtraControlStyle, ...(props.style || {}) }}
   >
     <path d='M1 1h6v6H1V1zm1.5 1.5v3h3v-3h-3zM1 9h6v6H1V9zm1.5 1.5v3h3v-3h-3zM9 1h6v6H9V1zm1.5 1.5v3h3v-3h-3zM9 9h6v6H9V9zm1.5 1.5v3h3v-3h-3z'></path>
   </svg>

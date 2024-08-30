@@ -4,13 +4,14 @@
 
 // Components
 import { Col } from 'antd';
-import { LibraryTitle } from './Title';
-import { LibraryFilters } from './Filters';
-import PlaylistCardShort, { AlbumCardShort, ArtistCardShort } from './PlaylistCardShort';
+import { LibraryTitle } from '../Title';
+import { LibraryFilters, SearchArea } from '../Filters';
+import { ListItemComponent } from './ListCards';
 
 // Redux
-import { useAppSelector } from '../../../../store/store';
-import { getLibraryItems } from '../../../../store/slices/yourLibrary';
+import { useAppSelector } from '../../../../../store/store';
+import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
+import { CompactItemComponent } from './CompactCards';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',
@@ -21,16 +22,9 @@ const COLLAPSED_STYLE = {
 } as const;
 
 const YourLibrary = () => {
-  // const navigate = useNavigate();
   const items = useAppSelector(getLibraryItems);
+  const view = useAppSelector((state) => state.yourLibrary.view);
   const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
-
-  // const onClick = useCallback(
-  //   (url: string) => {
-  //     navigate(`/playlist/${url}`);
-  //   },
-  //   [navigate]
-  // );
 
   return (
     <div className={`Navigation-section library ${!collapsed ? 'open' : ''}`}>
@@ -45,14 +39,17 @@ const YourLibrary = () => {
             style={{
               overflowY: 'scroll',
               overflowX: 'hidden',
-              height: collapsed ? 'calc(100vh - 220px)' : 'calc(100vh - 290px)',
+              height: collapsed ? 'calc(100vh - 220px)' : 'calc(100vh - 275px)',
             }}
           >
-            {items.map((item) => {
-              if (item.type === 'artist') return <ArtistCardShort key={item.id} artist={item} />;
-              if (item.type === 'album') return <AlbumCardShort key={item.id} album={item} />;
-              return <PlaylistCardShort key={item.id} playlist={item} />;
-            })}
+            {!collapsed ? <SearchArea /> : null}
+
+            {items.map((item) => (
+              <div key={item.id}>
+                {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
+                {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
+              </div>
+            ))}
           </div>
         </Col>
       </div>

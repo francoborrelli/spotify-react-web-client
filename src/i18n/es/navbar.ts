@@ -13,4 +13,7 @@ export const navbar = {
   Artists: 'Artistas',
   Albums: 'Álbumes',
   'Playlist created': 'Playlist creada',
+  COMPACT: 'Compacto',
+  GRID: 'Grilla',
+  LIST: 'Lista',
 };

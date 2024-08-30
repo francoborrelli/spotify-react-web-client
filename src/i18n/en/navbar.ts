@@ -7,4 +7,7 @@ export const navbar = {
   'Expand your library': 'Expand your library',
   Language: 'Language',
   'Contact me': 'Contact me',
+  COMPACT: 'Compact',
+  GRID: 'Grid',
+  LIST: 'List',
 };

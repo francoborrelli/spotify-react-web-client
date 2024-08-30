@@ -1,28 +1,29 @@
-import { Tooltip } from '../../../Tooltip';
-import { SpeakerIcon } from '../../../Icons';
-import { AlbumActionsWrapper } from '../../../Actions/AlbumActions';
-import { ArtistActionsWrapper } from '../../../Actions/ArticleActions';
-import { PlayistActionsWrapper } from '../../../Actions/PlaylistActions';
+import { Tooltip } from '../../../../Tooltip';
+import { SpeakerIcon } from '../../../../Icons';
+import { AlbumActionsWrapper } from '../../../../Actions/AlbumActions';
+import { ArtistActionsWrapper } from '../../../../Actions/ArticleActions';
+import { PlayistActionsWrapper } from '../../../../Actions/PlaylistActions';
 
 // Utils
 import { useNavigate } from 'react-router-dom';
 
 // Services
-import { playerService } from '../../../../services/player';
+import { playerService } from '../../../../../services/player';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
-import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
+import { yourLibraryActions } from '../../../../../store/slices/yourLibrary';
 
 // Constants
-import { ARTISTS_DEFAULT_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../../../constants/spotify';
+import { ARTISTS_DEFAULT_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../../../../constants/spotify';
 
 // Interface
-import type { Album } from '../../../../interfaces/albums';
-import type { Artist } from '../../../../interfaces/artist';
-import type { Playlist } from '../../../../interfaces/playlists';
+import type { Album } from '../../../../../interfaces/albums';
+import type { Artist } from '../../../../../interfaces/artist';
+import type { Playlist } from '../../../../../interfaces/playlists';
+import { memo } from 'react';
 
-interface CardShortProps {
+export interface CardShortProps {
   uri: string;
   image: string;
   title: string;
@@ -30,6 +31,7 @@ interface CardShortProps {
   rounded?: boolean;
   playing?: boolean;
   onClick?: () => void;
+  onDoubleClick?: () => void;
 }
 
 const Play = (
@@ -62,34 +64,35 @@ const Pause = (
   </svg>
 );
 
-const CardShort = (props: CardShortProps) => {
-  const { image, title, subtitle, playing, onClick } = props;
+export const CollapsedCard = (props: CardShortProps) => {
+  const { image, title, subtitle, onClick } = props;
 
-  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
-
-  if (collapsed) {
-    return (
-      <Tooltip
-        placement='right'
-        title={
-          <div>
-            <p>{title}</p>
-            <p style={{ fontSize: 13, color: 'gray', fontWeight: 400 }}>{subtitle}</p>
-          </div>
-        }
+  return (
+    <Tooltip
+      placement='right'
+      title={
+        <div>
+          <p>{title}</p>
+          <p style={{ fontSize: 13, color: 'gray', fontWeight: 400 }}>{subtitle}</p>
+        </div>
+      }
+    >
+      <button
+        onClick={onClick}
+        onDoubleClick={props.onDoubleClick}
+        style={{ borderRadius: 10, display: 'flex', justifyContent: 'center' }}
+        className='library-card collapsed'
       >
-        <button
-          onClick={onClick}
-          style={{ borderRadius: 10, display: 'flex', justifyContent: 'center' }}
-          className='library-card collapsed'
-        >
-          <div className={`image h-full items-center ${props.rounded ? 'rounded' : ''}`}>
-            <img src={image} alt='' style={{ width: 52, height: 52 }} />
-          </div>
-        </button>
-      </Tooltip>
-    );
-  }
+        <div className={`image h-full items-center ${props.rounded ? 'rounded' : ''}`}>
+          <img src={image} alt='' style={{ width: 52, height: 52 }} />
+        </div>
+      </button>
+    </Tooltip>
+  );
+};
+
+const CardList = (props: CardShortProps) => {
+  const { image, title, subtitle, playing, onClick } = props;
 
   const button = (
     <button
@@ -109,7 +112,12 @@ const CardShort = (props: CardShortProps) => {
   );
 
   return (
-    <button style={{ borderRadius: 10 }} className='library-card' onClick={onClick}>
+    <button
+      onClick={onClick}
+      className='library-card'
+      style={{ borderRadius: 10 }}
+      onDoubleClick={props.onDoubleClick}
+    >
       <div className={`image p-2 h-full items-center ${props.rounded ? 'rounded' : ''}`}>
         <div style={{ position: 'relative' }}>
           <div>
@@ -165,6 +173,19 @@ const CardShort = (props: CardShortProps) => {
   );
 };
 
+const Card = memo((props: CardShortProps) => {
+  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+
+  const onDoubleClick = () => {
+    playerService.startPlayback({ context_uri: props.uri });
+  };
+
+  if (collapsed) {
+    return <CollapsedCard {...props} onDoubleClick={onDoubleClick} />;
+  }
+  return <CardList {...props} onDoubleClick={onDoubleClick} />;
+});
+
 export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
   const navigate = useNavigate();
   const state = useAppSelector((state) => state.spotify.state);
@@ -176,7 +197,7 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
   return (
     <ArtistActionsWrapper artist={artist} trigger={['contextMenu']}>
       <div>
-        <CardShort
+        <Card
           rounded
           uri={artist.uri}
           subtitle='Artist'
@@ -208,7 +229,7 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
       }}
     >
       <div>
-        <CardShort
+        <Card
           uri={album.uri}
           onClick={onClick}
           title={album.name}
@@ -239,7 +260,7 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
       }}
     >
       <div>
-        <CardShort
+        <Card
           onClick={onClick}
           uri={playlist.uri}
           title={playlist.name}
@@ -252,4 +273,8 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
   );
 };
 
-export default PlaylistCardShort;
+export const ListItemComponent = ({ item }: { item: Artist | Playlist | Album }) => {
+  if (item.type === 'artist') return <ArtistCardShort key={item.id} artist={item} />;
+  if (item.type === 'album') return <AlbumCardShort key={item.id} album={item} />;
+  return <PlaylistCardShort key={item.id} playlist={item} />;
+};

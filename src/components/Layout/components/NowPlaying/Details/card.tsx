@@ -47,7 +47,7 @@ export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
 
       <div className='playing-now-card-text'>
         <Row align='middle' justify='space-between'>
-          <Col span={props.extra ? 20 : 24}>
+          <Col span={props.extra ? 17 : 24}>
             <div
               className='playing-now-card-title'
               style={props.image ? undefined : { marginTop: 10 }}
@@ -57,7 +57,7 @@ export const ArtistsCard: FC<NowPlayingCardProps> = (props) => {
             <div className='playing-now-card-subtitle'>{props.subtitle}</div>
           </Col>
           {props.extra ? (
-            <Col span={2} style={{ textAlign: 'right' }}>
+            <Col span={7} style={{ textAlign: 'right' }}>
               {props.extra}
             </Col>
           ) : null}

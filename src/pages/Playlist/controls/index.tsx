@@ -2,7 +2,7 @@ import { Col, Dropdown, Row, Space } from 'antd';
 
 import { PlayCircleButton } from './playCircle';
 import { Tooltip } from '../../../components/Tooltip';
-import { MenuDots, OrderListIcon } from '../../../components/Icons';
+import { MenuDots, OrderCompactIcon, OrderListIcon } from '../../../components/Icons';
 import { AddPlaylistToLibraryButton } from './AddPlaylistToLibrary';
 import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
 
@@ -69,7 +69,7 @@ export const PlaylistControls: FC = () => {
                 <button className='order-button'>
                   <Space align='center'>
                     <span>{tor(view)}</span>
-                    <OrderListIcon />
+                    {view === 'LIST' ? <OrderListIcon /> : <OrderCompactIcon />}
                   </Space>
                 </button>
               </Dropdown>

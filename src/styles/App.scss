@@ -120,6 +120,7 @@ h3 {
 
 .library-card {
   all: unset;
+  overflow: hidden;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -626,5 +627,15 @@ a {
     outline: none;
     transform: scale(1);
     border: 1px solid #7c7c7c;
+  }
+}
+
+.viewSelector {
+  &:hover {
+    color: #fff;
+    svg {
+      fill: #fff !important;
+    }
+    transform: scale(1.04);
   }
 }

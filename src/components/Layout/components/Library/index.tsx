@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 
-import YourLibrary from './YourLibrary';
+import YourLibrary from './list';
 
 // Redux
 import { useAppDispatch } from '../../../../store/store';

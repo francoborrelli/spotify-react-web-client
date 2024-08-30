@@ -17,6 +17,7 @@ export interface YourLibraryState {
   myPlaylists: Playlist[];
 
   search: string;
+  view: 'GRID' | 'LIST' | 'COMPACT';
   orderBy: 'name' | 'added_at' | 'default';
   filter: 'ALL' | 'ALBUMS' | 'ARTISTS' | 'PLAYLISTS';
 }
@@ -24,6 +25,7 @@ export interface YourLibraryState {
 const initialState: YourLibraryState = {
   search: '',
   myAlbums: [],
+  view: 'LIST',
   filter: 'ALL',
   myArtists: [],
   myPlaylists: [],
@@ -54,6 +56,9 @@ const yourLibrarySlice = createSlice({
     },
     setSearch(state, action: PayloadAction<{ search: string }>) {
       state.search = action.payload.search;
+    },
+    setView(state, action: PayloadAction<{ view: YourLibraryState['view'] }>) {
+      state.view = action.payload.view;
     },
     setOrderBy(state, action: PayloadAction<{ orderBy: YourLibraryState['orderBy'] }>) {
       state.orderBy = action.payload.orderBy;
