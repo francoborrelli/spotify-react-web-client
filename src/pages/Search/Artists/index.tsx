@@ -1,6 +1,6 @@
 import { FC, memo, useEffect } from 'react';
 
-import SearchPageContainer from './container';
+import SearchArtistsPageContainer from './container';
 import NoSearchResults from '../NoResults';
 
 // Utils
@@ -14,30 +14,30 @@ interface SearchPageProps {
   container: React.RefObject<HTMLDivElement>;
 }
 
-export const SearchPage: FC<SearchPageProps> = memo((props) => {
+export const SearchArtistsPage: FC<SearchPageProps> = memo((props) => {
   const dispatch = useAppDispatch();
   const params = useParams<{ search: string }>();
 
-  const topResult = useAppSelector((state) => state.search.top);
   const loading = useAppSelector((state) => state.search.loading);
+  const artists = useAppSelector((state) => state.search.artists);
 
   useEffect(() => {
-    dispatch(searchActions.setSection('ALL'));
+    dispatch(searchActions.setSection('ARTISTS'));
   }, [dispatch]);
 
   useEffect(() => {
     if (params.search) {
-      dispatch(searchActions.fetchSearch(params.search));
+      dispatch(searchActions.fetchArtists(params.search));
     }
   }, [dispatch, params.search]);
 
   if (loading) return null;
 
-  if (!topResult) {
+  if (!artists) {
     return <NoSearchResults searchValue={params.search || ''} />;
   }
 
-  return <SearchPageContainer {...props} />;
+  return <SearchArtistsPageContainer {...props} />;
 });
 
-export default SearchPage;
+export default SearchArtistsPage;

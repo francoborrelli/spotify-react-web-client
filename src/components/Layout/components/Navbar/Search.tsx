@@ -5,12 +5,20 @@ import { ActiveHomeIcon, BrowseIcon, HomeIcon, SearchIcon } from '../../../Icons
 // Utils
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 const INITIAL_VALUE = window.location.href.includes('/search/')
   ? window.location.href.split('/').reverse()[0]
   : '';
+
+function usePrevious(value: any) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 export const Search = memo(() => {
   const navigate = useNavigate();
@@ -19,12 +27,13 @@ export const Search = memo(() => {
 
   const [inputValue, setInputValue] = useState<string>('');
   const [debouncedValue] = useDebounce(inputValue, 600);
+  const prevValue = usePrevious(debouncedValue);
 
   useEffect(() => {
-    if (debouncedValue !== '') {
+    if (debouncedValue !== '' && debouncedValue !== prevValue) {
       navigate(`/search/${debouncedValue}`);
     }
-  }, [debouncedValue, navigate]);
+  }, [debouncedValue, prevValue, navigate]);
 
   const isHome = useMemo(() => location.pathname === '/', [location.pathname]);
 

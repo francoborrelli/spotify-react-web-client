@@ -7,8 +7,8 @@ import { PageHeader } from '../../../../components/Layout/components/Header';
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { homeActions } from '../../../../store/slices/home';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { useAppSelector } from '../../../../store/store';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface HomeHeaderProps {
   color: string;
@@ -16,14 +16,16 @@ interface HomeHeaderProps {
   sectionContainer: RefObject<HTMLDivElement>;
 }
 
-const SECTIONS = ['ALL', 'MUSIC', 'PODCASTS'];
+const SECTIONS = ['ALL', 'ARTISTS', 'SONGS', 'ALBUMS', 'PLAYLISTS'];
 
 export const SearchHeader: FC<HomeHeaderProps> = (props) => {
   const { container, sectionContainer, color } = props;
 
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [t] = useTranslation(['home']);
-  const section = useAppSelector((state) => state.home.section);
+
+  const params = useParams<{ search: string }>();
+  const section = useAppSelector((state) => state.search.section);
 
   return (
     <PageHeader
@@ -32,13 +34,15 @@ export const SearchHeader: FC<HomeHeaderProps> = (props) => {
       container={container}
       sectionContainer={sectionContainer}
     >
-      <Space style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
+      <Space size={10} style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
         {SECTIONS.map((item) => (
           <Chip
             key={item}
             text={t(item)}
             active={section === item}
-            onClick={() => dispatch(homeActions.setSection(item as any))}
+            onClick={() =>
+              navigate(`/search/${params.search}/${item === 'ALL' ? '' : item.toLowerCase()}`)
+            }
           />
         ))}
       </Space>

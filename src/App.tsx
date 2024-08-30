@@ -23,6 +23,8 @@ import { persistor, store, useAppDispatch, useAppSelector } from './store/store'
 import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
 
 // Pages
+import SearchContainer from './pages/Search/Container';
+
 const Home = lazy(() => import('./pages/Home'));
 const Page404 = lazy(() => import('./pages/404'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -31,8 +33,10 @@ const GenrePage = lazy(() => import('./pages/Genre'));
 const BrowsePage = lazy(() => import('./pages/Browse'));
 const ArtistPage = lazy(() => import('./pages/Artist'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
-const SearchPage = lazy(() => import('./pages/Search/Home'));
 const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
+
+const SearchPage = lazy(() => import('./pages/Search/Home'));
+const SearchPageArtists = lazy(() => import('./pages/Search/Artists'));
 
 window.addEventListener('resize', () => {
   const vh = window.innerWidth;
@@ -106,9 +110,22 @@ const RootComponent = () => {
     { path: '/profile', element: <Profile /> },
     { path: '/browse', element: <BrowsePage /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
-    { path: '/search/:search', element: <SearchPage container={container} /> },
+    {
+      path: '/search/:search',
+      element: <SearchContainer container={container} />,
+      children: [
+        {
+          path: 'artists',
+          element: <SearchPageArtists container={container} />,
+        },
+        {
+          path: '',
+          element: <SearchPage container={container} />,
+        },
+      ],
+    },
     { path: '*', element: <Page404 /> },
-  ] as const;
+  ];
 
   return (
     <Spinner loading={!user}>
@@ -122,7 +139,17 @@ const RootComponent = () => {
                     key={route.path}
                     path={route.path}
                     element={<Suspense>{route.element}</Suspense>}
-                  />
+                  >
+                    {route?.children
+                      ? route.children.map((child) => (
+                          <Route
+                            key={child.path}
+                            path={child.path}
+                            element={<Suspense>{child.element}</Suspense>}
+                          />
+                        ))
+                      : undefined}
+                  </Route>
                 ))}
               </Routes>
             </div>

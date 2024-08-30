@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Services
+import { userService } from '../../services/users';
 import { querySearch } from '../../services/search';
 
 // Interfaces
-import type { Track, TrackWithSave } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
-import { userService } from '../../services/users';
+import type { Track, TrackWithSave } from '../../interfaces/track';
 
 type Item = Playlist | Album | Track | Artist;
+
+export type SearchSection = 'ALL' | 'ARTISTS' | 'SONGS' | 'ALBUMS' | 'PLAYLISTS';
 
 const initialState: {
   top: Item | null;
@@ -19,6 +21,7 @@ const initialState: {
   albums: Album[];
   playlists: Playlist[];
   loading: boolean;
+  section: SearchSection;
 } = {
   playlists: [],
   songs: [],
@@ -26,7 +29,16 @@ const initialState: {
   albums: [],
   top: null,
   loading: true,
+  section: 'ALL',
 };
+
+export const fetchArtists = createAsyncThunk<Artist[], string>(
+  'search/fetchArtists',
+  async (query) => {
+    const response = await querySearch({ q: query, type: 'artist', limit: 50 });
+    return response.data.artists.items;
+  }
+);
 
 export const fetchSearch = createAsyncThunk<
   [Item, TrackWithSave[], Artist[], Album[], Playlist[]],
@@ -78,6 +90,9 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
+    setSection(state, action: PayloadAction<SearchSection>) {
+      state.section = action.payload;
+    },
     setSavedStateForTrack(
       state,
       action: PayloadAction<{
@@ -103,11 +118,18 @@ const searchSlice = createSlice({
       state.playlists = action.payload[4];
       state.loading = false;
     });
+    builder.addCase(fetchSearch.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(fetchArtists.fulfilled, (state, action) => {
+      state.artists = action.payload;
+    });
   },
 });
 
 export const searchActions = {
   fetchSearch,
+  fetchArtists,
   ...searchSlice.actions,
 };
 
