@@ -10,7 +10,7 @@ import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
 import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../store/store';
 
 // Service
 import { playerService } from '../../../services/player';

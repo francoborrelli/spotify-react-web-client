@@ -11,7 +11,7 @@ import type { FC } from 'react';
 import { NextInQueue } from './next';
 import { Artist } from './artist';
 import { TrackActionsWrapper } from '../../../../Actions/TrackActions';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
   const dispatch = useAppDispatch();

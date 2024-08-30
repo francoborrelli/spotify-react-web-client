@@ -1,14 +1,14 @@
+import { useState } from 'react';
+
 // Components
 import { Space } from 'antd';
-import { Tooltip } from '../../../Tooltip';
 import { Slider } from '../../../Slider';
+import { Tooltip } from '../../../Tooltip';
 import { VolumeIcon, VolumeMuteIcon, VolumeOneIcon, VolumeTwoIcon } from '../../../Icons';
 
 // I18n
 import { useTranslation } from 'react-i18next';
 import { playerService } from '../../../../services/player';
-import { useAppSelector } from '../../../../store/store';
-import { useEffect, useState } from 'react';
 
 const getIcon = (volume: number) => {
   if (volume === 0) {
