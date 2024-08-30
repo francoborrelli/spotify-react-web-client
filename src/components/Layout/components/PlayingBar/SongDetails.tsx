@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { uiActions } from '../../../../store/slices/ui';
 import { Link } from 'react-router-dom';
 import { TrackActionsWrapper } from '../../../Actions/TrackActions';
-import { ArtistActionsWrapper } from '../../../Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../Actions/ArtistActions';
 
 const ArrowDown = (
   <svg

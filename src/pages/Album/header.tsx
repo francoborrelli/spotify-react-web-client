@@ -16,7 +16,7 @@ import { useAppSelector } from '../../store/store';
 // Utils
 import dayjs from 'dayjs';
 import tinycolor from 'tinycolor2';
-import { ArtistActionsWrapper } from '../../components/Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../components/Actions/ArtistActions';
 import { ARTISTS_DEFAULT_IMAGE } from '../../constants/spotify';
 
 interface AlbumHeaderProps {

@@ -1,7 +1,7 @@
 import { SpeakerIcon } from '../../../../Icons';
 import { CardShortProps, CollapsedCard } from './ListCards';
 import { AlbumActionsWrapper } from '../../../../Actions/AlbumActions';
-import { ArtistActionsWrapper } from '../../../../Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../../Actions/ArtistActions';
 import { PlayistActionsWrapper } from '../../../../Actions/PlaylistActions';
 
 // Utils

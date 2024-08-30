@@ -1,7 +1,7 @@
 // Components
 import { PlayCircle } from '../../../components/Lists/PlayCircle';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
 import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
 
 // Utils

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 // Redux
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/store';
-import { ArtistActionsWrapper } from '../Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../Actions/ArtistActions';
 
 const Card = ({
   uri,

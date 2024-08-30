@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AddRecommendation } from './add';
 import { Pause, Play } from '../../../components/Icons';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
 
 // Redux
 import { libraryActions } from '../../../store/slices/library';

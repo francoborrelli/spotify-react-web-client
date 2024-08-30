@@ -1,12 +1,6 @@
 import { FC, memo, useMemo } from 'react';
 
-import {
-  AlbumIcon,
-  ArtistIcon,
-  DeleteIcon,
-  AddToPlaylist,
-  AddToQueueIcon,
-} from '../../components/Icons';
+import { AlbumIcon, ArtistIcon, DeleteIcon, AddToPlaylist, AddToQueueIcon } from '../Icons';
 import { Dropdown, MenuProps, message } from 'antd';
 
 // Services

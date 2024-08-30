@@ -7,7 +7,7 @@ import { Tooltip } from '../../../components/Tooltip';
 import { MenuIcon, Pause, Play } from '../../../components/Icons';
 import { AddSongToLibraryButton } from '../../../components/AddSongToLibrary';
 import { TrackActionsWrapper } from '../../../components/Actions/TrackActions';
-import { ArtistActionsWrapper } from '../../../components/Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../components/Actions/ArtistActions';
 
 // Redux
 import { albumActions } from '../../../store/slices/album';

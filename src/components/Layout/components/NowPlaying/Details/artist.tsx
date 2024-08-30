@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ArtistsCard } from './card';
 import { useAppSelector } from '../../../../../store/store';
-import { ArtistActionsWrapper } from '../../../../Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../../Actions/ArtistActions';
 import { FollowArtistButton } from '../../../../../pages/Artist/container/controls/followButton';
 
 export const Artist: FC = () => {

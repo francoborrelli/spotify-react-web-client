@@ -3,7 +3,7 @@ import { Col, Row, Space, Tooltip } from 'antd';
 import { PlayCircleButton } from './playCircle';
 import { FollowArtistButton } from './followButton';
 import { MenuDots } from '../../../../components/Icons';
-import { ArtistActionsWrapper } from '../../../../components/Actions/ArticleActions';
+import { ArtistActionsWrapper } from '../../../../components/Actions/ArtistActions';
 
 // Utils
 import { useTranslation } from 'react-i18next';
