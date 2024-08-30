@@ -1,0 +1,269 @@
+import { Tooltip } from 'antd';
+import ReactTimeAgo from 'react-time-ago';
+import { useCallback, useMemo } from 'react';
+import { MenuIcon, Pause, Play } from '../Icons';
+import { TrackActionsWrapper } from '../Actions/TrackActions';
+
+// Utils
+import { msToTime } from '../../utils';
+import { useTranslation } from 'react-i18next';
+
+// Redux
+import { useAppSelector } from '../../store/store';
+
+// Services
+import { Link } from 'react-router-dom';
+import { playerService } from '../../services/player';
+import { ArtistActionsWrapper } from '../Actions/ArtistActions';
+import { AddSongToLibraryButton } from '../Actions/AddSongToLibrary';
+
+// Interfaces
+import type { Track } from '../../interfaces/track';
+import type { Playlist } from '../../interfaces/playlists';
+import type { Album as AlbumType } from '../../interfaces/albums';
+
+interface DefaultProps {
+  song: Track;
+  index?: number;
+  saved: boolean;
+  canEdit?: boolean;
+  addedAt?: string;
+  album?: AlbumType | null;
+  playlist?: Playlist;
+
+  view: 'LIST' | 'COMPACT';
+  context: {
+    context_uri?: string;
+    uris?: string[];
+    offset?: {
+      position: number;
+    };
+  };
+}
+
+interface ComponentProps extends DefaultProps {
+  isList: boolean;
+  showCover?: boolean;
+}
+
+interface SongViewProps extends DefaultProps {
+  fields: ((props: ComponentProps) => JSX.Element | null)[];
+}
+
+const getArtists = (artists: Track['artists']) => {
+  return artists.slice(0, 3).map((a, i) => (
+    <span key={a.id}>
+      <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+        <Link key={a.id} to={`/artist/${a.id}`} style={{ cursor: 'pointer' }}>
+          {a.name}
+        </Link>
+      </ArtistActionsWrapper>
+      {i < artists.slice(0, 3).length - 1 ? ', ' : ''}
+    </span>
+  ));
+};
+
+const Title = (props: ComponentProps & { showCover?: boolean }) => {
+  const { song, isList, showCover } = props;
+
+  return (
+    <>
+      <div className='flex flex-col' style={{ flex: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {showCover ? <Cover {...props} /> : null}
+
+          <div>
+            <div className='flex flex-row items-center'>
+              <p className='title text-left' style={{ cursor: 'pointer' }}>
+                {song.name} {song.explicit && !isList ? <span className='explicit'>E</span> : null}
+              </p>
+            </div>
+
+            {isList ? (
+              <p className='text-left artist mobile-hidden'>
+                {song.explicit ? <span className='explicit'>E</span> : null}
+                {getArtists(song.artists)}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Artists = ({ song, isList }: ComponentProps) => {
+  if (isList) return null;
+  return (
+    <p className='text-left tablet-hidden' style={{ flex: 5 }}>
+      {getArtists(song.artists)}
+    </p>
+  );
+};
+
+const Cover = ({ song, isList }: ComponentProps) => {
+  if (!isList) return null;
+  return (
+    <img alt='song cover' src={song.album.images[0].url} className='w-10 h-10 mr-4 rounded-md' />
+  );
+};
+
+const Album = ({ song }: ComponentProps) => {
+  return (
+    <p className='text-left tablet-hidden' style={{ flex: 5 }}>
+      <Link to={`/album/${song.album.id}`}>{song.album.name}</Link>
+    </p>
+  );
+};
+
+const AddedAt = ({ addedAt }: ComponentProps) => {
+  const language = useAppSelector((state) => state.language.language);
+  if (!addedAt) return null;
+  return (
+    <p className='text-left tablet-hidden' style={{ flex: 3 }}>
+      <ReactTimeAgo date={new Date(addedAt)} locale={language === 'es' ? 'es-AR' : undefined} />
+    </p>
+  );
+};
+
+const AddToLiked = ({
+  song,
+  saved,
+  onLikeRefresh,
+}: ComponentProps & {
+  onLikeRefresh: (id: string) => void;
+}) => {
+  return (
+    <p
+      className='text-right tablet-hidden'
+      style={{ flex: 1, display: 'flex', justifyContent: 'end' }}
+    >
+      <AddSongToLibraryButton
+        size={18}
+        id={song.id}
+        isSaved={saved}
+        onToggle={() => {
+          if (onLikeRefresh) onLikeRefresh(song.id);
+        }}
+      />
+    </p>
+  );
+};
+
+const Actions = ({ song }: ComponentProps) => {
+  const [t] = useTranslation(['order']);
+  return (
+    <p
+      className='text-right actions tablet-hidden'
+      style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
+    >
+      <TrackActionsWrapper track={song} trigger={['click']}>
+        <Tooltip title={`${t('More options for')} ${song.name}`}>
+          <div>
+            <MenuIcon />
+          </div>
+        </Tooltip>
+      </TrackActionsWrapper>
+    </p>
+  );
+};
+
+const Time = ({ song }: ComponentProps) => {
+  return (
+    <p className='text-right ' style={{ flex: 1, display: 'flex', justifyContent: 'end' }}>
+      {msToTime(song.duration_ms)}
+    </p>
+  );
+};
+
+const Index = ({
+  index,
+  isCurrent,
+  isPlaying,
+  onClick,
+}: {
+  index: number;
+  isCurrent: boolean;
+  isPlaying: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <div style={{ flex: 1 }}>
+      <p className='song-details-index'>
+        {isCurrent && isPlaying ? (
+          <img
+            alt={'equaliser'}
+            style={{ height: 10, margin: '0 auto' }}
+            src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
+          />
+        ) : (
+          <span style={{ margin: '0 auto' }}>{index + 1}</span>
+        )}
+      </p>
+      <button className='song-details-play' onClick={onClick}>
+        {isCurrent && isPlaying ? <Pause /> : <Play />}
+      </button>
+    </div>
+  );
+};
+
+export const SongView = (props: SongViewProps) => {
+  const { view, song, index, context, playlist, canEdit, fields, saved, album } = props;
+
+  const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
+  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+
+  const isCurrent = useMemo(() => currentSong?.uri === song.uri, [currentSong, song]);
+
+  const isList = view === 'LIST';
+
+  const onClick = useCallback(() => {
+    if (isCurrent && isPlaying) {
+      return playerService.pausePlayback();
+    }
+    if (isCurrent) {
+      return playerService.startPlayback();
+    }
+    return playerService.startPlayback(context);
+  }, [context, isCurrent, isPlaying]);
+
+  return (
+    <TrackActionsWrapper
+      track={song}
+      album={album}
+      key={song.id}
+      saved={saved}
+      canEdit={canEdit}
+      playlist={playlist}
+      trigger={['contextMenu']}
+    >
+      <button
+        className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center p-2 rounded-lg`}
+      >
+        <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
+          <div className='flex flex-row items-center justify-between w-full'>
+            {index !== undefined ? (
+              <Index index={index} isCurrent={isCurrent} isPlaying={isPlaying} onClick={onClick} />
+            ) : null}
+            {fields.map((Field, i) => (
+              <Field key={i} isList={isList} showCover={!album} {...props} />
+            ))}
+          </div>
+        </div>
+      </button>
+    </TrackActionsWrapper>
+  );
+};
+
+export default SongView;
+
+export const SongViewComponents = {
+  Title,
+  Artists,
+  Cover,
+  Album,
+  AddedAt,
+  AddToLiked,
+  Actions,
+  Time,
+};

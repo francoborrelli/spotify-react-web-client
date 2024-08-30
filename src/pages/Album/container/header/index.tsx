@@ -1,6 +1,6 @@
 import { Col, Row, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { PlaylistTableHeader } from '../table/header';
+import { AlbumTableHeader } from '../table/header';
 import { PlayCircleButton } from '../../components/controls/playCircle';
 import { ArtistActionsWrapper } from '../../../../components/Actions/ArtistActions';
 
@@ -93,7 +93,7 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
           style={{ padding: '0px 20px', opacity: !activeTable ? 0 : 1 }}
           className={`nav-bar-header-table-container ${activeTable ? 'active' : ''}`}
         >
-          <PlaylistTableHeader />
+          <AlbumTableHeader />
         </div>
       </div>
 
@@ -101,7 +101,7 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
         <Row gutter={[24, 24]} align={'middle'}>
           <Col xs={24} sm={6} lg={5}>
             <div>
-              <img src={album?.images[0].url} alt='' className='playlist-img' />
+              <img src={album?.images[0].url} alt={album!.name} className='playlist-img' />
             </div>
           </Col>
           <Col xs={24} sm={18} lg={19}>

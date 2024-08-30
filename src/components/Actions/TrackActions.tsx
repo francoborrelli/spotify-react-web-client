@@ -23,10 +23,11 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchMyPlaylists, getUserPlaylists } from '../../store/slices/yourLibrary';
 
 interface TrackActionsWrapperProps {
-  track: Track | Spotify.Track;
-  album?: Album;
   canEdit?: boolean;
-  playlist?: Playlist;
+  saved?: boolean;
+  album?: Album | null;
+  playlist?: Playlist | null;
+  track: Track | Spotify.Track;
   trigger?: ('contextMenu' | 'click')[];
   children: React.ReactNode | React.ReactNode[];
 }

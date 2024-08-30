@@ -1,6 +1,6 @@
 // Components
-import SongView from './SongView';
-import { PlaylistTableHeader } from './header';
+import SongView from './Song';
+import { AlbumTableHeader } from './header';
 import { AlbumIcon } from '../../../../components/Icons';
 import { AlbumControls } from '../../components/controls';
 import { OtherAlbums } from '../../components/otherAlbums';
@@ -39,8 +39,9 @@ export const AlbumList: FC<PlaylistListProps> = memo(({ color }) => {
       }}
     >
       <AlbumControls />
+
       <div className='playlist-table'>
-        <PlaylistTableHeader />
+        <AlbumTableHeader />
       </div>
 
       <div style={{ paddingBottom: 30 }}>

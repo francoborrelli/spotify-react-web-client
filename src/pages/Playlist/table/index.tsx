@@ -1,6 +1,6 @@
 // Components
 import { Divider } from 'antd';
-import SongView from './SongView';
+import SongView from './Song';
 import { PlaylistTableHeader } from './header';
 import { PlaylistControls } from '../controls';
 import ReactDragListView from 'react-drag-listview';
