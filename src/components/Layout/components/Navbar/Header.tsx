@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useAppSelector } from '../../../../store/store';
+import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
 const Header = ({ opacity }: { opacity: number; title?: string }) => {
   const { t } = useTranslation(['navbar']);
@@ -39,7 +40,9 @@ const Header = ({ opacity }: { opacity: number; title?: string }) => {
                 id='user-avatar'
                 alt='User Avatar'
                 style={{ marginTop: -1 }}
-                src={user?.images[0].url}
+                src={
+                  user?.images && user.images.length ? user.images[0].url : ARTISTS_DEFAULT_IMAGE
+                }
               />
             </Link>
           </div>

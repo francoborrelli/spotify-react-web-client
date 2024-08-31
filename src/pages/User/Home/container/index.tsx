@@ -34,7 +34,13 @@ export const ProfileContainer: FC<ProfilePageProps> = (props) => {
       <UserHoverableMenu color={color} container={props.container} sectionContainer={ref} />
       <UserHeader color={color} />
 
-      <div style={{ margin: '20px 15px' }}>
+      <div
+        style={{
+          maxHeight: 323,
+          padding: '20px 15px',
+          background: `linear-gradient(${color} -50%, ${DEFAULT_PAGE_COLOR} 90%)`,
+        }}
+      >
         <MyArtistsSection />
 
         <Songs />

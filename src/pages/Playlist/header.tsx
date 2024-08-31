@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { RefObject, useEffect, useMemo, useState, type FC } from 'react';
 
 // Constants
-import { PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
+import { ARTISTS_DEFAULT_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
 
 // Utils
 import tinycolor from 'tinycolor2';
@@ -172,13 +172,17 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
               <Col span={24}>
                 <Space className='owner'>
                   {owner?.images?.length ? (
-                    <Link to='/profile'>
+                    <Link to={`/users/${owner.id}`}>
                       <img
                         className='playlist-avatar'
                         id='user-avatar'
                         alt='User Avatar'
-                        src={owner?.images[0].url}
-                      />{' '}
+                        src={
+                          owner?.images && owner.images.length
+                            ? owner.images[0].url
+                            : ARTISTS_DEFAULT_IMAGE
+                        }
+                      />
                     </Link>
                   ) : null}
 

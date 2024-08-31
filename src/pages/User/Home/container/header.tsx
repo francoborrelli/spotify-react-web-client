@@ -2,6 +2,7 @@
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store/store';
 import { FC, memo } from 'react';
+import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
 export const UserHeader: FC<{ color: string }> = memo((props) => {
   const { t } = useTranslation(['profile']);
@@ -29,7 +30,12 @@ export const UserHeader: FC<{ color: string }> = memo((props) => {
                 width: '100%',
               }}
             >
-              <img src={user?.images[0].url} alt={user?.display_name} />
+              <img
+                src={
+                  user?.images && user.images.length ? user.images[0].url : ARTISTS_DEFAULT_IMAGE
+                }
+                alt={user?.display_name}
+              />
             </div>
           </div>
         </div>
