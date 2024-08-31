@@ -28,6 +28,7 @@ interface DefaultProps {
   saved?: boolean;
   canEdit?: boolean;
   addedAt?: string;
+  activable?: boolean;
   size?: 'small' | 'normal';
   album?: AlbumType | null;
   playlist?: Playlist | null;
@@ -305,7 +306,7 @@ export const SongView = (props: SongViewProps) => {
       <button
         className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center ${
           size === 'normal' ? 'p-2' : ''
-        } rounded-lg`}
+        } rounded-lg ${props.activable ? 'activable-song' : ''}`}
       >
         <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
           <div className='flex flex-row items-center justify-between w-full'>

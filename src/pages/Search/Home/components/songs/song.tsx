@@ -28,6 +28,7 @@ export const Song = (props: SongProps) => {
 
   return (
     <SongView
+      activable
       view='LIST'
       song={song}
       size='small'

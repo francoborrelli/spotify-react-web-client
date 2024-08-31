@@ -7,6 +7,7 @@ export const home = {
   ARTISTS: 'Artists',
   SONGS: 'Songs',
   ALBUMS: 'Albums',
+  TRACKS: 'Songs',
   PLAYLISTS: 'Playlists',
   'Made for you': 'Made for you',
 };

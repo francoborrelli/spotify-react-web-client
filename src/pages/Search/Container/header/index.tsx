@@ -16,7 +16,7 @@ interface HomeHeaderProps {
   sectionContainer: RefObject<HTMLDivElement>;
 }
 
-const SECTIONS = ['ALL', 'ARTISTS', 'SONGS', 'ALBUMS', 'PLAYLISTS'];
+const SECTIONS = ['ALL', 'ARTISTS', 'TRACKS', 'ALBUMS', 'PLAYLISTS'];
 
 export const SearchHeader: FC<HomeHeaderProps> = (props) => {
   const { container, sectionContainer, color } = props;

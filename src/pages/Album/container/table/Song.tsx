@@ -26,6 +26,7 @@ export const Song = (props: SongProps) => {
 
   return (
     <SongView
+      activable
       view={view}
       song={song}
       index={index}

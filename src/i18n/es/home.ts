@@ -11,6 +11,7 @@ export const home = {
   ALBUMS: 'Álbumes',
   PLAYLISTS: 'Playlists',
   ARTISTS: 'Artistas',
+  TRACKS: 'Canciones',
   'Recently played': 'Reproducido recientemente',
   'Featured playlists': '¡En tendencia!',
   'Popular playlists': 'Playlists populares',

@@ -664,3 +664,7 @@ a {
     --min-column-width: 120px;
   }
 }
+
+.activable-song:focus {
+  background-color: hsla(0, 0%, 100%, 0.3) !important;
+}
