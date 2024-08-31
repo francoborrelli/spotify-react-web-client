@@ -668,3 +668,13 @@ a {
 .activable-song:focus {
   background-color: hsla(0, 0%, 100%, 0.3) !important;
 }
+
+.ant-skeleton-title {
+  min-height: 30px !important;
+  background: linear-gradient(
+    90deg,
+    rgb(206 206 206 / 6%) 25%,
+    rgb(79 79 79 / 15%) 37%,
+    rgba(0, 0, 0, 0.06) 63%
+  ) !important;
+}

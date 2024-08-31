@@ -37,7 +37,7 @@ export const SearchSongsPage: FC<SearchPageProps> = memo((props) => {
     return <NoSearchResults searchValue={params.search || ''} />;
   }
 
-  return <SearchSongsPageContainer {...props} />;
+  return <SearchSongsPageContainer {...props} query={params.search!} />;
 });
 
 export default SearchSongsPage;

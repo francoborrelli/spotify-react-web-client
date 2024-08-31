@@ -5,6 +5,7 @@ import { Col, Row } from 'antd';
 import { SongsSearchSection } from '../components/songs';
 
 interface SearchSongsPageContainerProps {
+  query: string;
   container: React.RefObject<HTMLDivElement>;
 }
 
@@ -12,7 +13,7 @@ export const SearchSongsPageContainer: FC<SearchSongsPageContainerProps> = (prop
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
-        <SongsSearchSection />
+        <SongsSearchSection query={props.query} />
       </Col>
     </Row>
   );
