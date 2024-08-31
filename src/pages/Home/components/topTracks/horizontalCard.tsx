@@ -14,6 +14,7 @@ import type { Track } from '../../../../interfaces/track';
 
 // Services
 import { playerService } from '../../../../services/player';
+import tinycolor from 'tinycolor2';
 
 interface HorizontalCardProps {
   item: Track;
@@ -38,7 +39,13 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
           playerService.startPlayback({ uris: [item.uri] });
         }}
         onMouseEnter={() => {
-          getImageAnalysis2(item.album.images[0].url).then((r) => setColor(r));
+          getImageAnalysis2(item.album.images[0].url).then((r) => {
+            let color = tinycolor(r);
+            while (color.isLight()) {
+              color = color.darken(10);
+            }
+            setColor(color.toHexString());
+          });
         }}
       >
         <div style={{ display: 'flex' }}>

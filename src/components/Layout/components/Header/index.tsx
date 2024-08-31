@@ -74,9 +74,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
         style={{
           width: headerWidth,
           opacity: !headerWidth ? 0 : 1,
-          backgroundColor: !activeHeader
-            ? 'transparent'
-            : tinycolor(color).darken(10).toRgbString(),
+          backgroundColor: !activeHeader ? 'transparent' : tinycolor(color).darken(2).toRgbString(),
         }}
       >
         <div className='nav-header-content'>{children}</div>

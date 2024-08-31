@@ -28,7 +28,7 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
         style={{
           paddingTop: 50,
           transition: 'background: 5s',
-          background: `linear-gradient(180deg, ${color} -20%, rgb(18, 18, 18) 50%)`,
+          background: `linear-gradient(180deg, ${color} 2%, rgb(18, 18, 18) 18%)`,
         }}
       >
         <Row gutter={[16, 16]}>

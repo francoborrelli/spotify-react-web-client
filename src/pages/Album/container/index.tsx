@@ -22,9 +22,12 @@ const AlbumPageContainer: FC<{ container: RefObject<HTMLDivElement> }> = (props)
 
   useEffect(() => {
     if (album && album.images?.length) {
-      getImageAnalysis2(album.images[0].url).then((color) => {
-        const item = tinycolor(color);
-        setColor(item.isLight() ? item.darken(25).toHexString() : item.toHexString());
+      getImageAnalysis2(album.images[0].url).then((r) => {
+        let color = tinycolor(r);
+        while (color.isLight()) {
+          color = color.darken(10);
+        }
+        setColor(color.toHexString());
       });
     }
   }, [album]);
