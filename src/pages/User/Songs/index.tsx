@@ -1,17 +1,17 @@
 import { FC, memo, useEffect } from 'react';
 
-import ProfileArtistsPageContainer from './container';
+import ProfileSongsPageContainer from './container';
 
 // Redux
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { profileActions } from '../../../store/slices/profile';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
-interface ProfileArtistsPageProps {
+interface ProfileSongsPageProps {
   container: React.RefObject<HTMLDivElement>;
 }
 
-export const ProfileArtistsPage: FC<ProfileArtistsPageProps> = memo((props) => {
+export const ProfileSongsPage: FC<ProfileSongsPageProps> = memo((props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -20,10 +20,10 @@ export const ProfileArtistsPage: FC<ProfileArtistsPageProps> = memo((props) => {
 
   useEffect(() => {
     if (user!.id !== params.userId) return navigate(`/users/${params.userId}`);
-    dispatch(profileActions.fetchMyArtists());
+    dispatch(profileActions.fetchMyTracks());
   }, [user, params.userId, dispatch, navigate]);
 
-  return <ProfileArtistsPageContainer {...props} />;
+  return <ProfileSongsPageContainer {...props} />;
 });
 
-export default ProfileArtistsPage;
+export default ProfileSongsPage;
