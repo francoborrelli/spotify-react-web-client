@@ -20,8 +20,8 @@ export const Song = (props: SongProps) => {
   const playlist = useAppSelector((state) => state.playlist.playlist);
 
   const toggleOpen = useCallback(() => {
-    dispatch(playlistActions.refreshTracks(playlist!.id));
-  }, [dispatch, playlist]);
+    dispatch(playlistActions.setTrackLikeState({ id: song.track.id, saved: !song.saved }));
+  }, [dispatch, song.saved, song.track.id]);
 
   return (
     <SongView

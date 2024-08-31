@@ -104,7 +104,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
             .removePlaylistItems(playlist!.id, [track.uri], playlist?.snapshot_id!)
             .then(() => {
               dispatch(playlistActions.refreshPlaylist(playlist!.id));
-              dispatch(playlistActions.refreshTracks(playlist!.id));
+              dispatch(playlistActions.removeTrack({ id: track.uri }));
               dispatch(yourLibraryActions.fetchMyPlaylists());
               message.open({
                 type: 'success',

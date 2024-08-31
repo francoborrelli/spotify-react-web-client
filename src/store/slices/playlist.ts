@@ -103,11 +103,41 @@ export const fetchPlaylist = createAsyncThunk<
 export const refreshTracks = createAsyncThunk<PlaylistItemWithSaved[], string>(
   'playlist/refreshTracks',
   async (id) => {
-    const { data } = await playlistService.getPlaylistItems(id);
+    try {
+      const { data } = await playlistService.getPlaylistItems(id);
+      const ids = data.items.map((item) => item.track.id);
+
+      const { data: saved } = await (ids.length
+        ? userService.checkSavedTracks(ids).catch(() => ({ data: [] }))
+        : Promise.resolve({ data: [] }));
+
+      const itemsWithSave: PlaylistItemWithSaved[] = data.items.map((item, index) => ({
+        ...item,
+        saved: saved[index],
+      }));
+
+      return itemsWithSave;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+);
+
+export const getNextTracks = createAsyncThunk<PlaylistItemWithSaved[]>(
+  'playlist/getNextTracks',
+  async (_params, { getState }) => {
+    const { playlist, tracks } = (getState() as RootState).playlist;
+
+    const { data } = await playlistService.getPlaylistItems(playlist!.id, {
+      offset: tracks.length,
+      limit: 50,
+    });
+
     const ids = data.items.map((item) => item.track.id);
 
     const { data: saved } = await (ids.length
-      ? userService.checkSavedTracks(ids)
+      ? userService.checkSavedTracks(ids).catch(() => ({ data: [] }))
       : Promise.resolve({ data: [] }));
 
     const itemsWithSave: PlaylistItemWithSaved[] = data.items.map((item, index) => ({
@@ -141,6 +171,14 @@ const playlistSlice = createSlice({
         state.loading = true;
         state.view = 'LIST';
       }
+    },
+    removeTrack(state, action: PayloadAction<{ id: string }>) {
+      state.tracks = state.tracks.filter((track) => track.track.id !== action.payload.id);
+    },
+    setTrackLikeState(state, action: PayloadAction<{ id: string; saved: boolean }>) {
+      state.tracks = state.tracks.map((track) =>
+        track.track.id === action.payload.id ? { ...track, saved: action.payload.saved } : track
+      );
     },
     setView(state, action: PayloadAction<{ view: 'LIST' | 'COMPACT' }>) {
       state.view = action.payload.view;
@@ -180,12 +218,16 @@ const playlistSlice = createSlice({
     builder.addCase(refreshPlaylist.fulfilled, (state, action: PayloadAction<Playlist>) => {
       state.playlist = action.payload;
     });
+    builder.addCase(getNextTracks.fulfilled, (state, action) => {
+      state.tracks = [...state.tracks, ...action.payload];
+    });
   },
 });
 
 export const playlistActions = {
   fetchPlaylist,
   refreshTracks,
+  getNextTracks,
   refreshPlaylist,
   ...playlistSlice.actions,
 };
