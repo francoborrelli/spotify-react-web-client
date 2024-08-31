@@ -4,14 +4,17 @@ import { FC, memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Utils
+import tinycolor from 'tinycolor2';
 import { getImageAnalysis } from '../../../utils/imageAnyliser';
 
 // Interfaces
 import type { Category } from '../../../interfaces/categories';
-import tinycolor from 'tinycolor2';
+
+// Constants
+import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
 
 export const BrowseCard: FC<{ category: Category }> = memo(({ category }) => {
-  const [color, setColor] = useState('rgb(220, 20, 60)');
+  const [color, setColor] = useState(DEFAULT_PAGE_COLOR);
 
   useEffect(() => {
     if (category.icons.length) {
