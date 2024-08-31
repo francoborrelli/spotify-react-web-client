@@ -23,6 +23,7 @@ import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
 import type { Playlist } from '../../../../../interfaces/playlists';
 import { searchHistoryActions } from '../../../../../store/slices/searchHistory';
+import { PLAYLIST_DEFAULT_IMAGE } from '../../../../../constants/spotify';
 
 const Card = ({
   link,
@@ -130,11 +131,11 @@ const PlaylistCard = ({ item }: { item: Playlist }) => {
         <Card
           uri={item.uri}
           title={item.name}
-          image={item.images[0]?.url}
           link={`/playlist/${item.id}`}
           context={{ context_uri: item.uri }}
           description={getPlaylistDescription(item)}
           onClick={() => dispatch(searchHistoryActions.setItem(item))}
+          image={item.images && item.images.length ? item.images[0].url : PLAYLIST_DEFAULT_IMAGE}
         />
       </div>
     </PlayistActionsWrapper>

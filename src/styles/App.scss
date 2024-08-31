@@ -364,6 +364,10 @@ h3 {
     }
   }
 
+  .nav-header-content {
+    transition: opacity 0.3s ease-in-out;
+  }
+
   &.active {
     visibility: visible;
 

@@ -1,57 +1,184 @@
 @use './variables.scss' as *;
 
 .Profile-section {
+  .playlist-grid {
+    --min-column-width: 190px;
+
+    @media (max-width: $desktop-breakpoint) {
+      --min-column-width: 150px;
+    }
+  }
+
+  .playlist-header {
+    font-size: 1.5rem;
+    @media (max-width: $desktop-breakpoint) {
+      margin-left: 0px;
+      margin-top: 20px;
+    }
+  }
+
   .profile-header {
-    background: linear-gradient(180deg, transparent 0px, #222833 80%),
-      url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+    min-height: 340px;
+    max-height: 400px;
 
-    .profile-title {
-      visibility: visible;
-      width: 100%;
-      font-size: 4.5rem;
-      white-space: nowrap;
-      margin-block: 0px;
-      color: $text-primary-color;
-      font-weight: 900;
-
-      @media (max-width: $desktop-small-breakpoint) {
-        font-size: 3.5rem;
-      }
-
-      @media (max-width: $desktop-breakpoint) {
-        font-size: 3rem;
-      }
-
-      @media (max-width: 600px) {
-        font-size: 2rem;
-      }
+    @media (max-width: $desktop-breakpoint) {
+      min-height: 230px;
     }
 
-    @media (max-width: 600px) {
-      .owner span {
-        display: none;
-      }
-      .songs-number {
-        margin-bottom: 5px;
-        display: block !important;
-      }
-    }
+    color: #fff;
+    display: -webkit-box;
+    display: flex;
+    position: relative;
+    width: 100%;
 
-    .profile-img {
-      border-radius: 50%;
-      -webkit-box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
-      box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
-      -o-object-fit: cover;
-      object-fit: cover;
-      -o-object-position: center center;
-      object-position: center center;
+    .profile-header-cover {
+      display: block;
       height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    .profile-header-background {
+      background: linear-gradient(transparent 0, rgba(0, 0, 0, 0.5) 100%), var(--background-noise);
+      display: block;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    .profile-header-content {
+      margin-inline: auto;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
       width: 100%;
 
-      @media (max-width: 575px) {
-        height: 50%;
-        width: 50%;
-        margin: 0 auto;
+      align-items: end;
+      margin-bottom: 30px;
+
+      gap: 24px;
+
+      .profile-img-container {
+        border-radius: 4px;
+        height: clamp(
+          128px,
+          128px + (100vw - var(--left-sidebar-width, 0) * 1px - var(--panel-width, 0) * 1px - 600px) /
+            424 * 104,
+          232px
+        );
+        width: clamp(
+          128px,
+          128px + (100vw - var(--left-sidebar-width, 0) * 1px - var(--panel-width, 0) * 1px - 600px) /
+            424 * 104,
+          232px
+        );
+
+        .profile-img {
+          display: flex;
+          height: inherit;
+          position: relative;
+          width: inherit;
+
+          img {
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center center;
+            object-position: center center;
+            border-radius: 50%;
+            -webkit-box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+            height: 100%;
+            width: 100%;
+            user-select: none;
+          }
+        }
+      }
+
+      .profile-header-text {
+        -ms-flex-line-pack: justify;
+        align-content: space-between;
+        -webkit-box-flex: 1;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex: 1;
+        flex: 1;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+        flex-flow: column;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        z-index: 0;
+
+        .type {
+          font-weight: 400;
+          font-size: 0.875rem;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          -webkit-tap-highlight-color: transparent;
+          -webkit-margin-before: 0;
+          margin-block-start: 0;
+          -webkit-margin-after: 0;
+          color: inherit;
+          margin-block-end: 0;
+        }
+
+        .profile-header-name-container {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          line-height: normal;
+          overflow: hidden;
+          text-align: left;
+          width: 100%;
+          word-break: break-word;
+
+          h1 {
+            visibility: visible;
+            width: 100%;
+            font-size: 6rem;
+            white-space: nowrap;
+            color: #fff;
+            font-weight: 800;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-margin-before: 0;
+            margin-block-start: 0;
+            -webkit-margin-after: 0;
+            color: inherit;
+            margin-block-end: 0;
+
+            @media (max-width: 1100px) {
+              font-size: 4rem;
+            }
+
+            @media (max-width: $desktop-small-breakpoint) {
+              font-size: 3rem;
+            }
+            @media (max-width: $desktop-breakpoint) {
+              font-size: 2rem;
+            }
+          }
+        }
+
+        .profile-header-details-container {
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+          margin-top: 8px;
+        }
       }
     }
   }

@@ -306,6 +306,20 @@
   }
 }
 
+.playlist-subheader {
+  color: #b3b3b3;
+  font-size: 0.875rem;
+  margin-left: 15px;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  @media (max-width: $desktop-breakpoint) {
+    font-size: 0.75rem;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    margin-left: 0px;
+  }
+}
+
 .artist-discrography-page {
   .playlist-header {
     margin-top: 0px;

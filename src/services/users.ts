@@ -85,6 +85,15 @@ const checkFollowingArtists = async (ids: string[]) => {
 };
 
 /**
+ * @description Check to see if the current user is following one or more other Spotify users.
+ */
+const checkFollowingUsers = async (ids: string[]) => {
+  return await axios.get<boolean[]>('/me/following/contains', {
+    params: { type: 'user', ids: ids.join(',') },
+  });
+};
+
+/**
  * @description Get public profile information about a Spotify user.
  */
 const getUser = async (id: string) => {
@@ -120,6 +129,20 @@ const unfollowArtists = async (ids: string[]) => {
 };
 
 /**
+ * @description Add the current user as a follower of one or more users or other Spotify users.
+ */
+const followUsers = async (ids: string[]) => {
+  return await axios.put('/me/following', { type: 'user', ids });
+};
+
+/**
+ * @description Remove the current user as a follower of one or more other Spotify users.
+ */
+const unfollowUsers = async (ids: string[]) => {
+  return await axios.delete('/me/following', { params: { type: 'user', ids: ids.join(',') } });
+};
+
+/**
  * @description Get a list of the songs saved in the current Spotify user's 'Your Music' library.
  */
 const getSavedTracks = async (params: PaginationQueryParams = {}) => {
@@ -136,6 +159,9 @@ export const userService = {
   fetchTopTracks,
   checkSavedTracks,
   followPlaylist,
+  checkFollowingUsers,
+  followUsers,
+  unfollowUsers,
   fetchFollowedArtists,
   checkFollowedPlaylist,
   unfollowPlaylist,

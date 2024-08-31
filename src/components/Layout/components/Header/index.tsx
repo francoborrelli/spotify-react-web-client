@@ -9,6 +9,7 @@ interface PageHeaderProps {
   children: any;
   color: string;
   activeHeider?: number;
+  hiddenContent?: boolean;
   activeContentHeight?: number;
   container: RefObject<HTMLDivElement>;
   sectionContainer?: RefObject<HTMLDivElement>;
@@ -18,6 +19,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
   color,
   children,
   container,
+  hiddenContent,
   sectionContainer,
   activeHeider = 260,
   activeContentHeight = 260,
@@ -77,7 +79,9 @@ export const PageHeader: FC<PageHeaderProps> = ({
           backgroundColor: !activeHeader ? 'transparent' : tinycolor(color).darken(2).toRgbString(),
         }}
       >
-        <div className='nav-header-content'>{children}</div>
+        <div className='nav-header-content' style={{ minHeight: 36 }}>
+          <div>{!hiddenContent || activeHeader ? children : null}</div>
+        </div>
       </div>
     </div>
   );

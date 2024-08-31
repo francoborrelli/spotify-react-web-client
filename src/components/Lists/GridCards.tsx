@@ -16,6 +16,7 @@ import { useAppSelector } from '../../store/store';
 import { ArtistActionsWrapper } from '../Actions/ArtistActions';
 import { TrackActionsWrapper } from '../Actions/TrackActions';
 import { Track } from '../../interfaces/track';
+import { PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
 
 const Card = ({
   uri,
@@ -162,9 +163,9 @@ export const PlaylistCard = ({
           title={title}
           uri={item.uri}
           description={description}
-          image={item.images[0]?.url}
           context={{ context_uri: item.uri }}
           onClick={() => navigate(`/playlist/${item.id}`)}
+          image={item.images && item.images.length ? item.images[0].url : PLAYLIST_DEFAULT_IMAGE}
         />
       </div>
     </PlayistActionsWrapper>

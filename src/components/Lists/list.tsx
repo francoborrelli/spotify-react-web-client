@@ -67,6 +67,7 @@ export function GridItemList(props: {
   moreUrl?: string;
   extra?: ReactNode;
   chips?: ReactNode;
+  subtitle?: string;
   multipleRows?: boolean;
   onItemClick?: (item: Item) => void;
   onItemDelete?: (item: Item) => void;
@@ -74,19 +75,23 @@ export function GridItemList(props: {
 }) {
   const [t] = useTranslation(['artist']);
   const { onItemDelete, onItemClick, getDescription } = props;
-  const { items, chips, title, moreUrl, extra } = props;
+  const { items, chips, title, moreUrl, extra, subtitle } = props;
   return (
     <div>
       <Flex justify='space-between' align='center'>
-        {title ? (
-          moreUrl ? (
-            <Link to={moreUrl} style={{ textDecoration: 'none' }}>
+        <div>
+          {title ? (
+            moreUrl ? (
+              <Link to={moreUrl} style={{ textDecoration: 'none' }}>
+                <h1 className='playlist-header'>{title}</h1>
+              </Link>
+            ) : (
               <h1 className='playlist-header'>{title}</h1>
-            </Link>
-          ) : (
-            <h1 className='playlist-header'>{title}</h1>
-          )
-        ) : null}
+            )
+          ) : null}
+
+          {subtitle ? <h2 className='playlist-subheader'>{subtitle}</h2> : null}
+        </div>
 
         {extra ? (
           extra

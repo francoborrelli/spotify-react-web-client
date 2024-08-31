@@ -142,8 +142,22 @@ const getRecommendations = async (params: {
   return axios.get<{ tracks: Track[] }>('/recommendations', { params });
 };
 
+/**
+ * @description Get a list of the playlists owned or followed by a Spotify user.
+ */
+const getPlaylists = async (
+  userId: string,
+  params: {
+    limit?: number;
+    offset?: number;
+  }
+) => {
+  return axios.get<Pagination<Playlist>>(`/users/${userId}/playlists`, { params });
+};
+
 export const playlistService = {
   getPlaylist,
+  getPlaylists,
   getMyPlaylists,
   createPlaylist,
   getPlaylistItems,

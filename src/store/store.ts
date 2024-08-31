@@ -22,6 +22,7 @@ import genreReducer from './slices/genre';
 import searchReducer from './slices/search';
 import browseReducer from './slices/browse';
 import artistReducer from './slices/artist';
+import profileReducer from './slices/profile';
 import spotifyReducer from './slices/spotify';
 import languageReducer from './slices/language';
 import playlistReducer from './slices/playlist';
@@ -43,6 +44,7 @@ const appReducer = combineReducers({
   search: searchReducer,
   artist: artistReducer,
   browse: browseReducer,
+  profile: profileReducer,
   spotify: spotifyReducer,
   language: languageReducer,
   playlist: playlistReducer,

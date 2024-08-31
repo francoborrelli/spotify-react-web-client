@@ -86,22 +86,29 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
       <div
         className={`nav-header ${activeHeader ? 'active' : ''}`}
         style={{
+          minHeight: 36,
           width: headerWidth,
-          opacity: !activeHeader ? 0 : 1,
           backgroundColor: !activeHeader
             ? 'transparent'
             : tinycolor(color).darken(10).toRgbString(),
         }}
       >
-        <Space>
-          <PlayCircleButton size={20} />
-          <h1 className='nav-header-playlist-title'>{playlist?.name}</h1>
-        </Space>
         <div
-          style={{ padding: '0px 20px', opacity: !activeTable ? 0 : 1 }}
-          className={`nav-bar-header-table-container ${activeTable ? 'active' : ''}`}
+          className='nav-header-content'
+          style={{
+            opacity: !activeHeader ? 0 : 1,
+          }}
         >
-          <PlaylistTableHeader />
+          <Space>
+            <PlayCircleButton size={20} />
+            <h1 className='nav-header-playlist-title'>{playlist?.name}</h1>
+          </Space>
+          <div
+            style={{ padding: '0px 20px' }}
+            className={`nav-bar-header-table-container ${activeTable ? 'active' : ''}`}
+          >
+            <PlaylistTableHeader />
+          </div>
         </div>
       </div>
 

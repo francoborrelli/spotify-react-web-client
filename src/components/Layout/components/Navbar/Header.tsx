@@ -33,7 +33,7 @@ const Header = ({ opacity }: { opacity: number; title?: string }) => {
           </div> */}
 
           <div className='avatar-container'>
-            <Link to='/profile'>
+            <Link to={`/users/${user!.id}`}>
               <img
                 className='avatar'
                 id='user-avatar'

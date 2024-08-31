@@ -253,7 +253,7 @@ const Index = ({
   onClick: () => void;
 }) => {
   return (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1 }} className='mobile-hidden'>
       <p className='song-details-index'>
         {isCurrent && isPlaying ? (
           <img
