@@ -6,8 +6,8 @@ import { Navbar } from './components/Navbar';
 import { Library } from './components/Library';
 import PlayingBar from './components/PlayingBar';
 import { PlayingNow } from './components/NowPlaying';
-import { PlayingNowDrawer } from '../PlayingNowDrawer';
 import { LanguageModal } from '../Modals/LanguageModal';
+import { PlayingNowDrawer } from '../Drawers/PlayingNowDrawer';
 import { EditPlaylistModal } from '../Modals/EditPlaylistModal';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
@@ -16,6 +16,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 // Redux
 import { uiActions } from '../../store/slices/ui';
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { LibraryDrawer } from '../Drawers/LibraryDrawer';
 
 export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
     <>
       {/* Modals & Drawers */}
       <LanguageModal />
+      <LibraryDrawer />
       <PlayingNowDrawer />
       <EditPlaylistModal />
 

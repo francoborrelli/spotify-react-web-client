@@ -2,10 +2,10 @@ import { memo, useLayoutEffect, useState } from 'react';
 
 // Components
 import { Drawer } from 'antd';
-import { PlayingNow } from './Layout/components/NowPlaying';
 
 // Redux
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../../store/store';
+import YourLibrary from '../Layout/components/Library/list';
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -20,20 +20,20 @@ function useWindowSize() {
   return size;
 }
 
-export const PlayingNowDrawer = memo(() => {
+export const LibraryDrawer = memo(() => {
   const [width] = useWindowSize();
 
-  const open = useAppSelector((state) => !state.ui.queueCollapsed || !state.ui.detailsCollapsed);
+  const open = useAppSelector((state) => !state.ui.libraryCollapsed);
 
   if (width > 900) return null;
 
   return (
     <div className='playing-now-drawer'>
       <Drawer open={open}>
-        <PlayingNow />
+        <YourLibrary />
       </Drawer>
     </div>
   );
 });
 
-PlayingNowDrawer.displayName = 'PlayingNowDrawer';
+LibraryDrawer.displayName = 'LibraryDrawer';

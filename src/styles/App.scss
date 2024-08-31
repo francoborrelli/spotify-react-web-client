@@ -682,3 +682,14 @@ a {
     rgba(0, 0, 0, 0.06) 63%
   ) !important;
 }
+
+.ant-drawer-body {
+  .library {
+    border-radius: 0px;
+
+    .library-list {
+      height: 100% !important;
+      margin-right: 25px;
+    }
+  }
+}

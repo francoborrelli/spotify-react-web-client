@@ -1,6 +1,6 @@
 // Components
 import { AddPlaylistButton } from './AddPlaylistButton';
-import { LibraryCollapsedIcon, LibraryIcon } from '../../../Icons';
+import { CloseIcon, LibraryCollapsedIcon, LibraryIcon } from '../../../Icons';
 
 // Utils
 import { memo } from 'react';
@@ -15,6 +15,24 @@ import { useTranslation } from 'react-i18next';
 // Redux
 import { uiActions } from '../../../../store/slices/ui';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
+
+const isMobile = window.innerWidth < 900;
+
+const CloseButton = () => {
+  const dispatch = useAppDispatch();
+
+  return (
+    <div className='playing-section-close-button'>
+      <button
+        onClick={() => {
+          dispatch(uiActions.collapseLibrary());
+        }}
+      >
+        <CloseIcon />
+      </button>
+    </div>
+  );
+};
 
 export const LibraryTitle = memo(() => {
   const dispatch = useAppDispatch();
@@ -48,7 +66,7 @@ export const LibraryTitle = memo(() => {
         <span className='Navigation-button'>{t('Your Library')}</span>
       </Space>
 
-      <AddPlaylistButton />
+      {isMobile ? <CloseButton /> : <AddPlaylistButton />}
     </Flex>
   );
 });

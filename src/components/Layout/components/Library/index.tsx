@@ -1,5 +1,3 @@
-import { Col, Row } from 'antd';
-
 import YourLibrary from './list';
 
 // Redux
