@@ -7,6 +7,7 @@ export const search = {
   Artists: 'Artistas',
   Artist: 'Artista',
   By: 'Por',
+  'Browse all': 'Explorar todo',
   Playlists: 'Playlists',
   'Clear recent searches': 'Borrar búsquedas recientes',
   'Recent Searches': 'Búsquedas recientes',

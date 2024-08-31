@@ -14,6 +14,7 @@ export const playingBar = {
   Skills: 'Habilidades',
   Experience: 'Experiencia',
   Description: 'Descripción',
+  Search: 'Buscar',
   Images: 'Imágenes',
   'Related projects': 'Proyectos relacionados',
   'Exit full screen': 'Salir de pantalla completa',

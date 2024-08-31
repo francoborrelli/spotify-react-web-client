@@ -24,10 +24,16 @@ export const MobileMenu = () => {
         <HomeIcon />
         <p>{t('Home')}</p>
       </button>
-      <a href='https://github.com/francoborrelli/portfolio' target='_blank' rel='noreferrer'>
+
+      <button
+        onClick={() => {
+          navigate('/search');
+        }}
+      >
         <SearchIcon />
-        <p>{t('Source code')}</p>
-      </a>
+        <p>{t('Search')}</p>
+      </button>
+
       <button onClick={() => dispatch(uiActions.toggleLibrary())}>
         <LibraryIcon />
         <p>{t('Your Library')}</p>

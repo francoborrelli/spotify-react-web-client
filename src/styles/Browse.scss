@@ -3,6 +3,11 @@
 .browse-page {
   .playlist-header {
     font-size: 1.5rem;
+
+    @media (max-width: $desktop-breakpoint) {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
   }
 }
 .browse-card {
