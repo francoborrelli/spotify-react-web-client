@@ -19,6 +19,7 @@ export const playlist = {
   'Go to album': 'Ir al álbum',
   'Go to artist': 'Ir al artista',
   'Delete playlist': 'Eliminar playlist',
+  'Liked Songs': 'Canciones guardadas',
   Title: 'Título',
   Album: 'Álbum',
   Artist: 'Artista',

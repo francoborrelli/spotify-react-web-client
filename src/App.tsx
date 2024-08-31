@@ -37,6 +37,7 @@ const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
 
 const SearchPage = lazy(() => import('./pages/Search/Home'));
 const SearchTracks = lazy(() => import('./pages/Search/Songs'));
+const LikedSongsPage = lazy(() => import('./pages/LikedSongs'));
 const SearchAlbums = lazy(() => import('./pages/Search/Albums'));
 const SearchPlaylist = lazy(() => import('./pages/Search/Playlists'));
 const SearchPageArtists = lazy(() => import('./pages/Search/Artists'));
@@ -104,6 +105,7 @@ const RootComponent = () => {
 
   const routes = [
     { path: '', element: <Home container={container} /> },
+    { path: '/collection/tracks', element: <LikedSongsPage container={container} /> },
     { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
     { path: '/album/:albumId', element: <AlbumView container={container} /> },
     {

@@ -6,4 +6,6 @@ export const PLAYLIST_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/playlist
 
 export const ARTISTS_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/artist.png`;
 
+export const LIKED_SONGS_IMAGE = `${process.env.PUBLIC_URL}/images/liked-songs.png`;
+
 export const DEFAULT_PAGE_COLOR = '#121212';

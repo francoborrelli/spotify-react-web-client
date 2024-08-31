@@ -1,6 +1,14 @@
 import { FC, memo, useMemo } from 'react';
 
-import { AlbumIcon, ArtistIcon, DeleteIcon, AddToPlaylist, AddToQueueIcon } from '../Icons';
+import {
+  AlbumIcon,
+  ArtistIcon,
+  DeleteIcon,
+  AddToPlaylist,
+  AddToQueueIcon,
+  AddToLibrary,
+  AddedToLibrary,
+} from '../Icons';
 import { Dropdown, MenuProps, message } from 'antd';
 
 // Services
@@ -25,6 +33,9 @@ import {
   getUserPlaylists,
   yourLibraryActions,
 } from '../../store/slices/yourLibrary';
+import { userService } from '../../services/users';
+import { likedSongsActions } from '../../store/slices/likedSongs';
+import { AddSongToLibraryButton } from './AddSongToLibrary';
 
 interface TrackActionsWrapperProps {
   canEdit?: boolean;
@@ -37,7 +48,7 @@ interface TrackActionsWrapperProps {
 }
 
 export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) => {
-  const { children, track, playlist, canEdit, album } = props;
+  const { children, track, playlist, canEdit, album, saved } = props;
 
   const { t } = useTranslation(['playlist']);
 
@@ -93,6 +104,36 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         ],
       },
     ];
+
+    if (saved !== undefined) {
+      items.push({
+        label: saved ? t('Remove from Liked Songs') : t('Save to Liked Songs'),
+        key: '4',
+        icon: saved ? (
+          <AddedToLibrary style={{ height: 18, width: 18, marginInlineEnd: 0 }} />
+        ) : (
+          <AddToLibrary style={{ height: 18, width: 18, marginInlineEnd: 0 }} />
+        ),
+        onClick: () => {
+          if (saved) {
+            userService.deleteTracks([track.id!]).then(() => {
+              dispatch(likedSongsActions.removeSong({ id: track.id! }));
+              message.open({
+                type: 'success',
+                content: t('Removed from Liked Songs'),
+              });
+            });
+          } else {
+            userService.saveTracks([track.id!]).then(() => {
+              message.open({
+                type: 'success',
+                content: t('Saved to Liked Songs'),
+              });
+            });
+          }
+        },
+      });
+    }
 
     if (canEdit && playlist) {
       items.push({
