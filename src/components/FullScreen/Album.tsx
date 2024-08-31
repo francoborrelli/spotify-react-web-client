@@ -1,5 +1,7 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../store/store';
+import { ArtistActionsWrapper } from '../Actions/ArtistActions';
+import { Link } from 'react-router-dom';
 
 const AlbumSongDetails = memo(() => {
   const state = useAppSelector((state) => state.spotify.state);
@@ -16,15 +18,18 @@ const AlbumSongDetails = memo(() => {
         </p>
         <p
           className='text-gray-200 song-artist'
-          title={currentSong?.artists
-            .slice(0, 3)
-            .map((a) => a.name)
-            .join(', ')}
+          title={currentSong?.artists.map((a) => a.name).join(', ')}
         >
-          {currentSong?.artists
-            .slice(0, 3)
-            .map((a) => a.name)
-            .join(', ')}
+          {currentSong?.artists.slice(0, 3).map((a, i) => (
+            <span key={a.uri}>
+              <ArtistActionsWrapper artist={a} trigger={['contextMenu']}>
+                <Link target='_blank' to={`/artist/${a.uri.split(':').reverse()[0]}`}>
+                  {a.name}
+                </Link>
+              </ArtistActionsWrapper>
+              {i < currentSong.artists.slice(0, 3).length - 1 && ', '}
+            </span>
+          ))}
         </p>
       </div>
     </div>

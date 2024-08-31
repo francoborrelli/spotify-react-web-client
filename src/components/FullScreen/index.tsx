@@ -8,6 +8,9 @@ import SongProgressBar from '../Layout/components/PlayingBar/SongProgressBar';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from '../Tooltip';
+import { AddSongToLibraryButton } from '../Actions/AddSongToLibrary';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { spotifyActions } from '../../store/slices/spotify';
 
 interface FullScreenPlayerProps {
   onExit: () => Promise<void>;
@@ -24,6 +27,28 @@ const ExpandOutButton: FC<FullScreenPlayerProps> = (props) => {
   );
 };
 
+const AddToLibrary = () => {
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.spotify.state);
+  const isLiked = useAppSelector((state) => state.spotify.liked);
+
+  const handleToggle = () => {
+    dispatch(spotifyActions.setLiked({ liked: !isLiked }));
+  };
+
+  const { track_window } = state || {};
+  const { current_track } = track_window || {};
+
+  return (
+    <AddSongToLibraryButton
+      size={20}
+      isSaved={isLiked}
+      id={current_track?.id!}
+      onToggle={handleToggle}
+    />
+  );
+};
+
 export const FullScreenPlayer: FC<FullScreenPlayerProps> = (props) => {
   return (
     <div className='Full-screen-page'>
@@ -36,7 +61,9 @@ export const FullScreenPlayer: FC<FullScreenPlayerProps> = (props) => {
           <Col span={24}>
             <SongProgressBar />
           </Col>
-          <Col span={8}></Col>
+          <Col span={8}>
+            <AddToLibrary />
+          </Col>
           <Col span={8}>
             <ControlButtons />
           </Col>
