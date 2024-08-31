@@ -10,6 +10,7 @@ import type { RootState } from '../store';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
+import { LIKED_SONGS_IMAGE } from '../../constants/spotify';
 
 export interface YourLibraryState {
   myAlbums: Album[];
@@ -79,18 +80,40 @@ const yourLibrarySlice = createSlice({
 
 export const getLibraryItems = createSelector(
   [
+    (state: RootState) => state.auth.user,
     (state: RootState) => state.yourLibrary.filter,
     (state: RootState) => state.yourLibrary.myAlbums,
     (state: RootState) => state.yourLibrary.myArtists,
     (state: RootState) => state.yourLibrary.myPlaylists,
   ],
-  (filter, myAlbums, myArtists, myPlaylists) => {
+  (user, filter, myAlbums, myArtists, myPlaylists) => {
     if (filter === 'ALBUMS') return myAlbums;
     if (filter === 'ARTISTS') return myArtists;
     if (filter === 'PLAYLISTS') return myPlaylists;
 
+    if (!user) return [];
+    if (!myAlbums.length && !myArtists.length && !myPlaylists.length) return [];
+
+    const likedSongs: Playlist = {
+      id: 'liked-songs',
+      name: 'Liked Songs',
+      snapshot_id: '',
+      collaborative: false,
+      public: false,
+      description: '',
+      href: '',
+      type: 'playlist',
+      tracks: { href: '', total: 0 },
+      external_urls: { spotify: '' },
+      followers: { href: '', total: 0 },
+      uri: `spotify:user:${user?.id}:collection`,
+      images: [{ url: LIKED_SONGS_IMAGE, width: 300, height: 300 }],
+      owner: user!,
+    };
+
     return [
       myPlaylists.slice(0, 3),
+      likedSongs,
       myAlbums.slice(0, 2),
       myPlaylists.slice(3, 6),
       myArtists.slice(0, 1),

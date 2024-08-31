@@ -24,7 +24,7 @@ import type { Playlist } from '../../../../../interfaces/playlists';
 import { memo } from 'react';
 
 const CardCompact = (props: CardShortProps) => {
-  const { title, subtitle, playing, onClick, onDoubleClick } = props;
+  const { title, subtitle, isCurrent, onClick, onDoubleClick } = props;
 
   return (
     <button
@@ -50,7 +50,7 @@ const CardCompact = (props: CardShortProps) => {
               fontWeight: 100,
               lineHeight: 2.1,
               maxWidth: subtitle ? '60%' : undefined,
-              color: playing ? '#1db954' : undefined,
+              color: isCurrent ? '#1db954' : undefined,
             }}
           >
             {title}
@@ -69,7 +69,7 @@ const CardCompact = (props: CardShortProps) => {
         </div>
 
         <div style={{ padding: 8 }}>
-          {playing ? <SpeakerIcon fill='#1db954' height={13} width={13} /> : null}
+          {isCurrent ? <SpeakerIcon fill='#1db954' height={13} width={13} /> : null}
         </div>
       </div>
     </button>
@@ -106,7 +106,7 @@ const ArtistCardShort = ({ artist }: { artist: Artist }) => {
           uri={artist.uri}
           onClick={onClick}
           title={artist.name}
-          playing={state?.context?.uri === artist.uri}
+          isCurrent={state?.context?.uri === artist.uri}
           subtitle={filter === 'ALL' ? `• Artist` : ''}
           image={artist?.images[0]?.url || ARTISTS_DEFAULT_IMAGE}
         />
@@ -132,7 +132,7 @@ const AlbumCardShort = ({ album }: { album: Album }) => {
           onClick={onClick}
           title={album.name}
           image={album.images[0].url}
-          playing={state?.context?.uri === album.uri}
+          isCurrent={state?.context?.uri === album.uri}
           subtitle={filter === 'ALL' ? `• Album` : `• ${album.artists[0].name}`}
         />
       </div>
@@ -164,7 +164,7 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
           onClick={onClick}
           uri={playlist.uri}
           title={playlist.name}
-          playing={state?.context?.uri === playlist.uri}
+          isCurrent={state?.context?.uri === playlist.uri}
           subtitle={filter === 'ALL' ? `• Playlist` : ''}
           image={playlist?.images?.length ? playlist?.images[0]?.url : PLAYLIST_DEFAULT_IMAGE}
         />

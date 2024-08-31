@@ -29,7 +29,7 @@ export interface CardShortProps {
   title: string;
   subtitle: string;
   rounded?: boolean;
-  playing?: boolean;
+  isCurrent?: boolean;
   onClick?: () => void;
   onDoubleClick?: () => void;
 }
@@ -79,9 +79,9 @@ export const CollapsedCard = (props: CardShortProps) => {
     >
       <button
         onClick={onClick}
+        className='library-card collapsed'
         onDoubleClick={props.onDoubleClick}
         style={{ borderRadius: 10, display: 'flex', justifyContent: 'center' }}
-        className='library-card collapsed'
       >
         <div className={`image h-full items-center ${props.rounded ? 'rounded' : ''}`}>
           <div className='image-container'>
@@ -94,7 +94,9 @@ export const CollapsedCard = (props: CardShortProps) => {
 };
 
 const CardList = (props: CardShortProps) => {
-  const { image, title, subtitle, playing, onClick } = props;
+  const { image, title, subtitle, isCurrent, onClick } = props;
+
+  const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
 
   const button = (
     <button
@@ -103,13 +105,13 @@ const CardList = (props: CardShortProps) => {
         if (e && e.stopPropagation) {
           e.stopPropagation();
         }
-        if (playing) {
+        if (isCurrent && isPlaying) {
           return playerService.pausePlayback();
         }
-        return playerService.startPlayback(!playing ? { context_uri: props.uri } : undefined);
+        return playerService.startPlayback(!isCurrent ? { context_uri: props.uri } : undefined);
       }}
     >
-      {playing ? Pause : Play}
+      {isCurrent && isPlaying ? Pause : Play}
     </button>
   );
 
@@ -148,7 +150,7 @@ const CardList = (props: CardShortProps) => {
             style={{
               fontSize: 15,
               marginBottom: -5,
-              color: playing ? '#1db954' : undefined,
+              color: isCurrent ? '#1db954' : undefined,
               fontWeight: 100,
             }}
           >
@@ -168,7 +170,7 @@ const CardList = (props: CardShortProps) => {
         </div>
 
         <div style={{ padding: 8 }}>
-          {playing ? <SpeakerIcon fill='#1db954' height={16} width={16} /> : null}
+          {isCurrent ? <SpeakerIcon fill='#1db954' height={16} width={16} /> : null}
         </div>
       </div>
     </button>
@@ -205,7 +207,7 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
           subtitle='Artist'
           onClick={onClick}
           title={artist.name}
-          playing={state?.context?.uri === artist.uri}
+          isCurrent={state?.context?.uri === artist.uri}
           image={artist?.images[0]?.url || ARTISTS_DEFAULT_IMAGE}
         />
       </div>
@@ -230,7 +232,7 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
           title={album.name}
           image={album.images[0].url}
           subtitle={album.artists[0].name}
-          playing={state?.context?.uri === album.uri}
+          isCurrent={state?.context?.uri === album.uri}
         />
       </div>
     </AlbumActionsWrapper>
@@ -243,6 +245,10 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
   const state = useAppSelector((state) => state.spotify.state);
 
   const onClick = () => {
+    if (playlist.id === 'liked-songs') {
+      navigate('/collection/tracks');
+      return;
+    }
     navigate(`/playlist/${playlist.id}`);
   };
 
@@ -259,7 +265,7 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
           onClick={onClick}
           uri={playlist.uri}
           title={playlist.name}
-          playing={state?.context?.uri === playlist.uri}
+          isCurrent={state?.context?.uri === playlist.uri}
           subtitle={`Playlist • ${playlist.owner?.display_name}`}
           image={playlist?.images?.length ? playlist?.images[0]?.url : PLAYLIST_DEFAULT_IMAGE}
         />
