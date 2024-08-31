@@ -81,14 +81,14 @@ export const PlaylistList: FC<PlaylistListProps> = memo(({ color }) => {
                   }}
                 >
                   {tracks.map((song, index) => (
-                    <SongView song={song} key={song.track.id} index={index} />
+                    <SongView song={song} key={`${song.added_at}-${song.track.id}`} index={index} />
                   ))}
                 </ReactDragListView>
               </div>
             ) : (
               <div>
                 {tracks.map((song, index) => (
-                  <SongView song={song} key={song.track.id} index={index} />
+                  <SongView song={song} key={`${song.added_at}-${song.track.id}`} index={index} />
                 ))}
               </div>
             )}
