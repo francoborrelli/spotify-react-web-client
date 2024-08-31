@@ -88,7 +88,7 @@ const SongData = ({ song, index }: SongDataProps) => {
       className='text-right actions tablet-hidden'
       style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
     >
-      <TrackActionsWrapper track={song} trigger={['click']}>
+      <TrackActionsWrapper saved={song.saved} track={song} trigger={['click']}>
         <Tooltip title={`${tor('More options for')} ${song?.name}`}>
           <div>
             <MenuIcon />
@@ -99,7 +99,7 @@ const SongData = ({ song, index }: SongDataProps) => {
   );
 
   return (
-    <TrackActionsWrapper track={song} trigger={['contextMenu']}>
+    <TrackActionsWrapper saved={song.saved} track={song} trigger={['contextMenu']}>
       <div className='song-details flex flex-row items-center w-full ' onDoubleClick={onClick}>
         <div className='flex flex-row items-center justify-between w-full'>
           <div style={{ flex: 1 }} className='mobile-hidden'>
