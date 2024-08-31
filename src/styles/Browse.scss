@@ -4,30 +4,6 @@
   .playlist-header {
     font-size: 1.5rem;
   }
-
-  .delete-button {
-    &:hover {
-      transform: scale(1.1);
-    }
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 0px;
-    border-radius: 500px;
-    color: rgb(255, 255, 255);
-    height: 28px;
-    justify-content: center;
-    transform: scale(1);
-    transform-origin: center center;
-    width: 28px;
-
-    svg {
-      fill: #fff;
-      height: 14px;
-    }
-  }
 }
 .browse-card {
   width: 100%;
@@ -85,5 +61,29 @@
         padding-inline-end: 20%;
       }
     }
+  }
+}
+
+.item-delete-button {
+  &:hover {
+    transform: scale(1.1);
+  }
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0px;
+  border-radius: 500px;
+  color: rgb(255, 255, 255);
+  height: 28px;
+  justify-content: center;
+  transform: scale(1);
+  transform-origin: center center;
+  width: 28px;
+
+  svg {
+    fill: #fff;
+    height: 14px;
   }
 }

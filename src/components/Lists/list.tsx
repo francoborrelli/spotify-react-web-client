@@ -46,7 +46,7 @@ export const DeleteButton: FC<{
   return (
     <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 10 }}>
       <button
-        className='delete-button'
+        className='item-delete-button'
         aria-label='Remove'
         onClick={(e) => {
           e.stopPropagation();
@@ -65,6 +65,7 @@ export function GridItemList(props: {
   title?: string;
   items: Item[];
   moreUrl?: string;
+  extra?: ReactNode;
   chips?: ReactNode;
   multipleRows?: boolean;
   onItemClick?: (item: Item) => void;
@@ -73,7 +74,7 @@ export function GridItemList(props: {
 }) {
   const [t] = useTranslation(['artist']);
   const { onItemDelete, onItemClick, getDescription } = props;
-  const { items, chips, title, moreUrl } = props;
+  const { items, chips, title, moreUrl, extra } = props;
   return (
     <div>
       <Flex justify='space-between' align='center'>
@@ -87,7 +88,9 @@ export function GridItemList(props: {
           )
         ) : null}
 
-        {moreUrl ? (
+        {extra ? (
+          extra
+        ) : moreUrl ? (
           <Link className='mobile-hidden' to={moreUrl}>
             <button className='showMore'>
               <span>{t('Show more')}</span>

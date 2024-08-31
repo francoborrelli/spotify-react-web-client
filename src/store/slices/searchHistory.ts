@@ -21,6 +21,9 @@ const searchHistoryActionsSlice = createSlice({
     setItem(state, action: PayloadAction<Item>) {
       state.items.unshift(action.payload);
     },
+    clearItems(state) {
+      state.items = [];
+    },
     removeItem(state, action: PayloadAction<Item>) {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
     },

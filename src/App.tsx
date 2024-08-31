@@ -40,6 +40,7 @@ const SearchTracks = lazy(() => import('./pages/Search/Songs'));
 const SearchAlbums = lazy(() => import('./pages/Search/Albums'));
 const SearchPlaylist = lazy(() => import('./pages/Search/Playlists'));
 const SearchPageArtists = lazy(() => import('./pages/Search/Artists'));
+const RecentlySearched = lazy(() => import('./pages/Search/RecentlySearched'));
 
 window.addEventListener('resize', () => {
   const vh = window.innerWidth;
@@ -113,6 +114,7 @@ const RootComponent = () => {
     { path: '/profile', element: <Profile /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
     { path: '/search', element: <BrowsePage /> },
+    { path: '/recent-searches', element: <RecentlySearched /> },
     {
       path: '/search/:search',
       element: <SearchContainer container={container} />,

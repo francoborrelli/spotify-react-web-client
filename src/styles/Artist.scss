@@ -314,3 +314,23 @@ body {
     color: #fff;
   }
 }
+
+.clearRecentSearches {
+  background: none;
+  border: none;
+  text-decoration: none !important;
+
+  color: hsla(0, 0%, 100%, 0.7);
+  padding: 16px;
+
+  span {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    color: #fff;
+
+    transform: scale(1.04);
+  }
+}
