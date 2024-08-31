@@ -1,10 +1,14 @@
 import { memo } from 'react';
 
-// Utils
-import { useAppSelector } from '../../../../../store/store';
+// Components
 import { GridItemList } from '../../../../../components/Lists/list';
 
+// Redux
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
+import { searchHistoryActions } from '../../../../../store/slices/searchHistory';
+
 export const ArtistsSearchSection = memo(() => {
+  const dispatch = useAppDispatch();
   const artists = useAppSelector((state) => state.search.artists);
 
   if (!artists || !artists.length) {
@@ -14,7 +18,13 @@ export const ArtistsSearchSection = memo(() => {
   return (
     <div>
       <div>
-        <GridItemList multipleRows items={artists} />
+        <GridItemList
+          multipleRows
+          items={artists}
+          onItemClick={(item) => {
+            dispatch(searchHistoryActions.setItem(item));
+          }}
+        />
       </div>
     </div>
   );

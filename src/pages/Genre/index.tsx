@@ -10,12 +10,16 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Utils
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
+import tinycolor from 'tinycolor2';
+
+// Constants
+import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
 
 export const GenrePage = memo(() => {
   const dispatch = useAppDispatch();
 
   const params = useParams<{ genreId: string }>();
-  const [color, setColor] = useState('rgb(220, 20, 60)');
+  const [color, setColor] = useState(DEFAULT_PAGE_COLOR);
   const category = useAppSelector((state) => state.genre.category);
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export const GenrePage = memo(() => {
     if (category && category.icons.length) {
       const { url } = category.icons[0];
       getImageAnalysis2(url).then((color) => {
-        setColor(color);
+        setColor(tinycolor(color).saturate(60).lighten(10).toHexString());
       });
     }
   }, [category]);
@@ -41,7 +45,7 @@ export const GenrePage = memo(() => {
   return (
     <>
       <GenreHeader color={color} category={category} />
-      <GenreContent />
+      <GenreContent color={color} />
     </>
   );
 });

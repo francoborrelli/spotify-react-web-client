@@ -14,7 +14,7 @@ import { playerService } from '../../../../../services/player';
 
 // Interfaces
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 // Interfaces
 import type { ReactNode } from 'react';
@@ -22,6 +22,7 @@ import type { Track } from '../../../../../interfaces/track';
 import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
 import type { Playlist } from '../../../../../interfaces/playlists';
+import { searchHistoryActions } from '../../../../../store/slices/searchHistory';
 
 const Card = ({
   link,
@@ -30,6 +31,7 @@ const Card = ({
   description,
   context,
   rounded,
+  onClick,
   uri,
 }: {
   link: string;
@@ -37,6 +39,7 @@ const Card = ({
   title: string;
   uri?: string;
   rounded?: boolean;
+  onClick?: () => void;
   context: {
     context_uri?: string;
     uris?: string[];
@@ -55,6 +58,7 @@ const Card = ({
         playerService.startPlayback(context);
       }}
       onClick={() => {
+        if (onClick) onClick();
         navigate(link);
       }}
       className='playlist-card relative rounded-lg overflow-hidden  hover:bg-spotify-gray-lightest transition'
@@ -119,6 +123,7 @@ const TrackCard = ({ item }: { item: Track }) => {
 };
 
 const PlaylistCard = ({ item }: { item: Playlist }) => {
+  const dispatch = useAppDispatch();
   return (
     <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>
       <div>
@@ -129,6 +134,7 @@ const PlaylistCard = ({ item }: { item: Playlist }) => {
           link={`/playlist/${item.id}`}
           context={{ context_uri: item.uri }}
           description={getPlaylistDescription(item)}
+          onClick={() => dispatch(searchHistoryActions.setItem(item))}
         />
       </div>
     </PlayistActionsWrapper>
@@ -136,7 +142,9 @@ const PlaylistCard = ({ item }: { item: Playlist }) => {
 };
 
 const ArtistCard = ({ item }: { item: Artist }) => {
+  const dispatch = useAppDispatch();
   const [t] = useTranslation(['artist']);
+
   return (
     <ArtistActionsWrapper artist={item} trigger={['contextMenu']}>
       <div>
@@ -148,6 +156,7 @@ const ArtistCard = ({ item }: { item: Artist }) => {
           image={item.images[0]?.url}
           link={`/artist/${item.id}`}
           context={{ context_uri: item.uri }}
+          onClick={() => dispatch(searchHistoryActions.setItem(item))}
         />
       </div>
     </ArtistActionsWrapper>
@@ -155,6 +164,7 @@ const ArtistCard = ({ item }: { item: Artist }) => {
 };
 
 const AlbumCard = ({ item }: { item: Album }) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['search']);
 
   return (
@@ -166,6 +176,7 @@ const AlbumCard = ({ item }: { item: Album }) => {
           link={`/album/${item.id}`}
           image={item.images[0]?.url}
           context={{ context_uri: item.uri }}
+          onClick={() => dispatch(searchHistoryActions.setItem(item))}
           description={
             <p
               key={item.id}

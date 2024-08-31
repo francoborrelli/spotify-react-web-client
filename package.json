@@ -27,6 +27,7 @@
     "react-scripts": "5.0.1",
     "react-time-ago": "^7.3.3",
     "redux-persist": "^6.0.0",
+    "redux-persist-expire": "^1.1.1",
     "tinycolor2": "^1.6.0",
     "use-debounce": "^10.0.3"
   },

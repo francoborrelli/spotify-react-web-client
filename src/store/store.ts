@@ -27,8 +27,10 @@ import languageReducer from './slices/language';
 import playlistReducer from './slices/playlist';
 import playingNowReducer from './slices/playingNow';
 import yourLibraryReducer from './slices/yourLibrary';
+import searchHistoryReducer from './slices/searchHistory';
 import artistDiscographyReducer from './slices/discography';
 import editPlaylistModalReducer from './slices/editPlaylistModal';
+import expireReducer from 'redux-persist-expire';
 
 const appReducer = combineReducers({
   ui: uiReducer,
@@ -45,6 +47,7 @@ const appReducer = combineReducers({
   playlist: playlistReducer,
   playingNow: playingNowReducer,
   yourLibrary: yourLibraryReducer,
+  searchHistory: searchHistoryReducer,
   artistDiscography: artistDiscographyReducer,
   editPlaylistModal: editPlaylistModalReducer,
 });
@@ -57,13 +60,14 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 };
 
-const whitelist = ['language'] as string[];
+const whitelist = ['language', 'ui', 'searchHistory'] as string[];
 
 const persistedReducer = persistReducer(
   {
     storage,
     whitelist,
     key: 'root',
+    transforms: [expireReducer('searchHistory', { expireSeconds: 60 * 60 * 24 })],
   },
   rootReducer
 );

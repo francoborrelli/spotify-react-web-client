@@ -12,6 +12,7 @@ import { useAppSelector } from '../../../store/store';
 
 // Constants
 import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
+import tinycolor from 'tinycolor2';
 
 const AlbumPageContainer: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,8 @@ const AlbumPageContainer: FC<{ container: RefObject<HTMLDivElement> }> = (props)
   useEffect(() => {
     if (album && album.images?.length) {
       getImageAnalysis2(album.images[0].url).then((color) => {
-        setColor(color);
+        const item = tinycolor(color);
+        setColor(item.isLight() ? item.darken(25).toHexString() : item.toHexString());
       });
     }
   }, [album]);

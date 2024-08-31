@@ -111,8 +111,8 @@ const RootComponent = () => {
     },
     { path: '/artist/:artistId', element: <ArtistPage container={container} /> },
     { path: '/profile', element: <Profile /> },
-    { path: '/browse', element: <BrowsePage /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
+    { path: '/search', element: <BrowsePage /> },
     {
       path: '/search/:search',
       element: <SearchContainer container={container} />,

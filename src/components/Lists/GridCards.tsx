@@ -72,9 +72,11 @@ const Card = ({
 
 export const ArtistCard = ({
   item,
+  onClick,
   getDescription,
 }: {
   item: Artist;
+  onClick?: () => void;
   getDescription?: (item: Artist) => string;
 }) => {
   const navigate = useNavigate();
@@ -85,7 +87,7 @@ export const ArtistCard = ({
 
   return (
     <ArtistActionsWrapper artist={item} trigger={['contextMenu']}>
-      <div>
+      <div onClick={onClick}>
         <Card
           rounded
           title={title}
@@ -102,9 +104,11 @@ export const ArtistCard = ({
 
 export const AlbumCard = ({
   item,
+  onClick,
   getDescription,
 }: {
   item: Album;
+  onClick?: () => void;
   getDescription?: (playlist: Album) => string;
 }) => {
   const navigate = useNavigate();
@@ -120,7 +124,7 @@ export const AlbumCard = ({
 
   return (
     <AlbumActionsWrapper album={item} trigger={['contextMenu']}>
-      <div>
+      <div onClick={onClick}>
         <Card
           title={title}
           uri={item.uri}
@@ -136,9 +140,11 @@ export const AlbumCard = ({
 
 export const PlaylistCard = ({
   item,
+  onClick,
   getDescription,
 }: {
   item: Playlist;
+  onClick?: () => void;
   getDescription?: (playlist: Playlist) => string;
 }) => {
   const navigate = useNavigate();
@@ -151,7 +157,7 @@ export const PlaylistCard = ({
 
   return (
     <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>
-      <div>
+      <div onClick={onClick}>
         <Card
           title={title}
           uri={item.uri}
@@ -168,8 +174,10 @@ export const PlaylistCard = ({
 export const TrackCard = ({
   item,
   getDescription,
+  onClick,
 }: {
   item: Track;
+  onClick?: () => void;
   getDescription?: (track: Track) => string;
 }) => {
   const navigate = useNavigate();
@@ -177,7 +185,7 @@ export const TrackCard = ({
 
   return (
     <TrackActionsWrapper track={item} trigger={['contextMenu']}>
-      <div>
+      <div onClick={onClick}>
         <Card
           uri={item.uri}
           title={item.name}

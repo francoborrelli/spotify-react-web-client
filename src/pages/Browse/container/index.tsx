@@ -3,6 +3,7 @@ import { memo } from 'react';
 
 import { BrowseCard } from '../components/card';
 import { useAppSelector } from '../../../store/store';
+import { RecentSearchesActions } from '../components/recent-search';
 
 export const BrowsePageContainer = memo(() => {
   const categories = useAppSelector((state) => state.browse.categories);
@@ -10,8 +11,10 @@ export const BrowsePageContainer = memo(() => {
   if (!categories) return null;
 
   return (
-    <div style={{ margin: 20, marginTop: 30 }}>
+    <div className='browse-page' style={{ margin: 20, marginTop: 30 }}>
       <div>
+        <RecentSearchesActions />
+
         <h1 className='playlist-header'>Browse all</h1>
 
         <Row gutter={[16, 16]} style={{ marginLeft: 5, marginRight: 5 }}>

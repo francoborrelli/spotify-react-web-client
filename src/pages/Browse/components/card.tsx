@@ -8,6 +8,7 @@ import { getImageAnalysis } from '../../../utils/imageAnyliser';
 
 // Interfaces
 import type { Category } from '../../../interfaces/categories';
+import tinycolor from 'tinycolor2';
 
 export const BrowseCard: FC<{ category: Category }> = memo(({ category }) => {
   const [color, setColor] = useState('rgb(220, 20, 60)');
@@ -16,7 +17,7 @@ export const BrowseCard: FC<{ category: Category }> = memo(({ category }) => {
     if (category.icons.length) {
       const { url } = category.icons[0];
       getImageAnalysis(url).then((color) => {
-        setColor(color);
+        setColor(tinycolor(color).saturate(60).lighten(30).toHexString());
       });
     }
   }, [category.icons]);

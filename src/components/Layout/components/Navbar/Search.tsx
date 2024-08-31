@@ -52,7 +52,7 @@ export const Search = memo(() => {
         suffix={
           <button
             onClick={() => {
-              navigate('/browse');
+              navigate('/search');
             }}
           >
             <BrowseIcon />

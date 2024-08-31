@@ -8,6 +8,7 @@ export const search = {
   Artist: 'Artista',
   By: 'Por',
   Playlists: 'Playlists',
+  'Recent Searches': 'Búsquedas recientes',
   // 'No results': 'No results',
   // 'No results where found for': 'No results where found for',
   'No results': 'No se encontraron resultados',

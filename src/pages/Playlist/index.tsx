@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Constants
 import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
+import tinycolor from 'tinycolor2';
 
 const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,8 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   useEffect(() => {
     if (playlist && playlist.images?.length) {
       getImageAnalysis2(playlist?.images[0].url).then((color) => {
-        setColor(color);
+        const item = tinycolor(color);
+        setColor(item.isLight() ? item.darken(10).toHexString() : item.toHexString());
       });
     }
   }, [playlist]);
