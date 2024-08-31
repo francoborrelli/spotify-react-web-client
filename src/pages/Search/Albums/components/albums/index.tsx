@@ -4,17 +4,17 @@ import { memo } from 'react';
 import { useAppSelector } from '../../../../../store/store';
 import { GridItemList } from '../../../../../components/Lists/list';
 
-export const ArtistsSearchSection = memo(() => {
-  const artists = useAppSelector((state) => state.search.artists);
+export const AlbumsSearchSection = memo(() => {
+  const albums = useAppSelector((state) => state.search.albums);
 
-  if (!artists || !artists.length) {
+  if (!albums || !albums.length) {
     return null;
   }
 
   return (
     <div>
       <div>
-        <GridItemList multipleRows items={artists} />
+        <GridItemList multipleRows items={albums} />
       </div>
     </div>
   );

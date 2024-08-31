@@ -36,6 +36,9 @@ const PlaylistView = lazy(() => import('./pages/Playlist'));
 const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
 
 const SearchPage = lazy(() => import('./pages/Search/Home'));
+const SearchTracks = lazy(() => import('./pages/Search/Songs'));
+const SearchAlbums = lazy(() => import('./pages/Search/Albums'));
+const SearchPlaylist = lazy(() => import('./pages/Search/Playlists'));
 const SearchPageArtists = lazy(() => import('./pages/Search/Artists'));
 
 window.addEventListener('resize', () => {
@@ -117,6 +120,18 @@ const RootComponent = () => {
         {
           path: 'artists',
           element: <SearchPageArtists container={container} />,
+        },
+        {
+          path: 'albums',
+          element: <SearchAlbums container={container} />,
+        },
+        {
+          path: 'playlists',
+          element: <SearchPlaylist container={container} />,
+        },
+        {
+          path: 'tracks',
+          element: <SearchTracks container={container} />,
         },
         {
           path: '',

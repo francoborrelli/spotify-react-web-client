@@ -34,18 +34,20 @@ export const SearchHeader: FC<HomeHeaderProps> = (props) => {
       container={container}
       sectionContainer={sectionContainer}
     >
-      <Space size={10} style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
-        {SECTIONS.map((item) => (
-          <Chip
-            key={item}
-            text={t(item)}
-            active={section === item}
-            onClick={() =>
-              navigate(`/search/${params.search}/${item === 'ALL' ? '' : item.toLowerCase()}`)
-            }
-          />
-        ))}
-      </Space>
+      <div>
+        <Space size={10} style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
+          {SECTIONS.map((item) => (
+            <Chip
+              key={item}
+              text={t(item)}
+              active={section === item}
+              onClick={() =>
+                navigate(`/search/${params.search}/${item === 'ALL' ? '' : item.toLowerCase()}`)
+              }
+            />
+          ))}
+        </Space>
+      </div>
     </PageHeader>
   );
 };

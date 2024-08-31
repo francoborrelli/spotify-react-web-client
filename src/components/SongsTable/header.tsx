@@ -79,7 +79,10 @@ export const TableHeader: FC<TableHeaderProps> = memo((props) => {
   const isList = view === 'LIST';
 
   return (
-    <div className='mobile-hidden flex justify-between items-center py-2'>
+    <div
+      style={{ color: '#bababa' }}
+      className='mobile-hidden flex justify-between items-center py-2'
+    >
       {fields.map((Field, index) => (
         <Field key={index} isList={isList} />
       ))}

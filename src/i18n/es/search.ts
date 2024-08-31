@@ -6,6 +6,7 @@ export const search = {
   Album: 'Álbum',
   Artists: 'Artistas',
   Artist: 'Artista',
+  By: 'Por',
   Playlists: 'Playlists',
   // 'No results': 'No results',
   // 'No results where found for': 'No results where found for',

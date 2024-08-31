@@ -41,6 +41,7 @@ export function GridItemList(props: {
   items: Item[];
   moreUrl?: string;
   chips?: ReactNode;
+  multipleRows?: boolean;
   getDescription?: (item: Item) => string;
 }) {
   const [t] = useTranslation(['artist']);
@@ -68,7 +69,16 @@ export function GridItemList(props: {
       </Flex>
 
       {chips}
-      <div className='playlist-grid'>
+      <div
+        className='playlist-grid'
+        style={
+          props.multipleRows
+            ? {
+                gridTemplateRows: 'unset',
+              }
+            : undefined
+        }
+      >
         {items.map((item) => {
           return (
             <div key={item.uri}>

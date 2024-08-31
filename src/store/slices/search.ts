@@ -12,7 +12,7 @@ import type { Track, TrackWithSave } from '../../interfaces/track';
 
 type Item = Playlist | Album | Track | Artist;
 
-export type SearchSection = 'ALL' | 'ARTISTS' | 'SONGS' | 'ALBUMS' | 'PLAYLISTS';
+export type SearchSection = 'ALL' | 'ARTISTS' | 'TRACKS' | 'ALBUMS' | 'PLAYLISTS';
 
 const initialState: {
   top: Item | null;
@@ -32,13 +32,39 @@ const initialState: {
   section: 'ALL',
 };
 
-export const fetchArtists = createAsyncThunk<Artist[], string>(
-  'search/fetchArtists',
+const fetchArtists = createAsyncThunk<Artist[], string>('search/fetchArtists', async (query) => {
+  const response = await querySearch({ q: query, type: 'artist', limit: 50 });
+  return response.data.artists.items;
+});
+
+const fetchAlbums = createAsyncThunk<Album[], string>('search/fetchAlbums', async (query) => {
+  const response = await querySearch({ q: query, type: 'album', limit: 50 });
+  return response.data.albums.items;
+});
+
+const fetchPlaylists = createAsyncThunk<Playlist[], string>(
+  'search/fetchPlaylists',
   async (query) => {
-    const response = await querySearch({ q: query, type: 'artist', limit: 50 });
-    return response.data.artists.items;
+    const response = await querySearch({ q: query, type: 'playlist', limit: 50 });
+    return response.data.playlists.items;
   }
 );
+
+const fetchSongs = createAsyncThunk<TrackWithSave[], string>('search/fetchSongs', async (query) => {
+  const response = await querySearch({ q: query, type: 'track', limit: 50 });
+  const tracks = response.data.tracks.items;
+
+  const extraRequests = [userService.checkSavedTracks(tracks.map((t) => t.id))];
+
+  await Promise.all(extraRequests);
+
+  const saves = (await extraRequests[0]).data;
+
+  return tracks.map((track, index) => ({
+    ...track,
+    saved: saves[index],
+  }));
+});
 
 export const fetchSearch = createAsyncThunk<
   [Item, TrackWithSave[], Artist[], Album[], Playlist[]],
@@ -120,9 +146,23 @@ const searchSlice = createSlice({
     });
     builder.addCase(fetchSearch.rejected, (state) => {
       state.loading = false;
+      state.loading = false;
     });
     builder.addCase(fetchArtists.fulfilled, (state, action) => {
       state.artists = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchAlbums.fulfilled, (state, action) => {
+      state.albums = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchPlaylists.fulfilled, (state, action) => {
+      state.playlists = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchSongs.fulfilled, (state, action) => {
+      state.songs = action.payload;
+      state.loading = false;
     });
   },
 });
@@ -130,6 +170,9 @@ const searchSlice = createSlice({
 export const searchActions = {
   fetchSearch,
   fetchArtists,
+  fetchAlbums,
+  fetchPlaylists,
+  fetchSongs,
   ...searchSlice.actions,
 };
 
