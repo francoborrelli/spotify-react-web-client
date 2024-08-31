@@ -31,14 +31,14 @@ export const ArtistActionsWrapper: FC<ArtistActionsWrapperProps> = memo((props) 
 
   const inLibrary = useMemo(() => {
     // @ts-ignore
-    const id = artist.id || artist.uri.split(':').reverse()[0];
+    const id = artist.id || artist.uri?.split(':').reverse()[0];
     return myArtists.some((p) => p.id === id);
   }, [myArtists, artist]);
 
   const items = useMemo(() => {
     const items: MenuProps['items'] = [];
     // @ts-ignore
-    const id = artist.id || artist.uri.split(':').reverse()[0];
+    const id = artist.id || artist.uri?.split(':').reverse()[0];
 
     if (inLibrary) {
       items.push({
