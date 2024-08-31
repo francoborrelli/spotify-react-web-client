@@ -1,6 +1,6 @@
 // I18n
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/store';
+import { useAppSelector } from '../../../../store/store';
 import { FC, memo } from 'react';
 
 export const UserHeader: FC<{ color: string }> = memo((props) => {

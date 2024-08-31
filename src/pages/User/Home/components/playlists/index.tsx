@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store/store';
-import { GridItemList } from '../../../../components/Lists/list';
+import { useAppSelector } from '../../../../../store/store';
+import { GridItemList } from '../../../../../components/Lists/list';
 import { useTranslation } from 'react-i18next';
 
 export const MyPlaylistsSection = memo(() => {

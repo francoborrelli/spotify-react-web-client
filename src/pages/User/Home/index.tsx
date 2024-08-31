@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { FC, RefObject, useEffect } from 'react';
-import { profileActions } from '../../store/slices/profile';
+import { profileActions } from '../../../store/slices/profile';
 import ProfileContainer from './container';
 
 interface ProfilePageProps {

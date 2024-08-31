@@ -30,7 +30,7 @@ const Queueing = () => {
       <div style={{ margin: 5 }}>
         {queue.map((q) => (
           // @ts-ignore
-          <QueueSongDetailsProps song={q} />
+          <QueueSongDetailsProps key={q.id} song={q} />
         ))}
       </div>
     </div>

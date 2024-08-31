@@ -27,13 +27,15 @@ import SearchContainer from './pages/Search/Container';
 
 const Home = lazy(() => import('./pages/Home'));
 const Page404 = lazy(() => import('./pages/404'));
-const Profile = lazy(() => import('./pages/User'));
 const AlbumView = lazy(() => import('./pages/Album'));
 const GenrePage = lazy(() => import('./pages/Genre'));
 const BrowsePage = lazy(() => import('./pages/Browse'));
 const ArtistPage = lazy(() => import('./pages/Artist'));
 const PlaylistView = lazy(() => import('./pages/Playlist'));
 const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
+
+const Profile = lazy(() => import('./pages/User/Home'));
+const ProfileArtists = lazy(() => import('./pages/User/Artists'));
 
 const SearchPage = lazy(() => import('./pages/Search/Home'));
 const SearchTracks = lazy(() => import('./pages/Search/Songs'));
@@ -113,6 +115,7 @@ const RootComponent = () => {
       element: <ArtistDiscographyPage container={container} />,
     },
     { path: '/artist/:artistId', element: <ArtistPage container={container} /> },
+    { path: '/users/:userId/artists', element: <ProfileArtists container={container} /> },
     { path: '/users/:userId', element: <Profile container={container} /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
     { path: '/search', element: <BrowsePage /> },

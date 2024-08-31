@@ -1,8 +1,8 @@
 import { FC, RefObject, useEffect, useRef, useState } from 'react';
-import { useAppSelector } from '../../../store/store';
-import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
+import { useAppSelector } from '../../../../store/store';
+import { DEFAULT_PAGE_COLOR } from '../../../../constants/spotify';
 import UserHoverableMenu from './scrollHoverable';
-import { getImageAnalysis2 } from '../../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 import tinycolor from 'tinycolor2';
 import { UserHeader } from './header';
 import { MyArtistsSection } from '../components/artists';

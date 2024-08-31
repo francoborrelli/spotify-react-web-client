@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../store/store';
-import { TrackWithSave } from '../../../../interfaces/track';
-import SongView, { SongViewComponents } from '../../../../components/SongsTable/songView';
-import { profileActions } from '../../../../store/slices/profile';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
+import { TrackWithSave } from '../../../../../interfaces/track';
+import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
+import { profileActions } from '../../../../../store/slices/profile';
 
 interface SongProps {
   index: number;

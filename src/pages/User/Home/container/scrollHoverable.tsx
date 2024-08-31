@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import { FC, memo, RefObject } from 'react';
-import { useAppSelector } from '../../../store/store';
-import { PageHeader } from '../../../components/Layout/components/Header';
+import { useAppSelector } from '../../../../store/store';
+import { PageHeader } from '../../../../components/Layout/components/Header';
 
 interface ArtistPageProps {
   color: string;

@@ -26,6 +26,14 @@ const initialState: {
   following: false,
 };
 
+const fetchMyArtists = createAsyncThunk<Artist[], void>(
+  'profile/fetchMyArtists',
+  async (_, api) => {
+    const response = await userService.fetchFollowedArtists({ limit: 50 });
+    return response.data.artists.items;
+  }
+);
+
 const fetchCurrentUserData = createAsyncThunk<[Artist[], TrackWithSave[]], void>(
   'profile/fetchCurrentUserData',
   async (_, api) => {
@@ -122,6 +130,9 @@ const profileSlice = createSlice({
       state.playlists = action.payload[1];
       state.following = action.payload[2];
     });
+    builder.addCase(fetchMyArtists.fulfilled, (state, action) => {
+      state.artists = action.payload;
+    });
     builder.addCase(fetchCurrentUserData.fulfilled, (state, action) => {
       state.artists = action.payload[0];
       state.songs = action.payload[1];
@@ -131,6 +142,7 @@ const profileSlice = createSlice({
 
 export const profileActions = {
   fetchUser,
+  fetchMyArtists,
   ...profileSlice.actions,
 };
 

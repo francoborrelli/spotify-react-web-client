@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../../../store/store';
+import { useAppSelector } from '../../../../../store/store';
 import SongView from './song';
 import { useTranslation } from 'react-i18next';
 
