@@ -9,7 +9,7 @@ export const Songs = () => {
   if (!songs || songs.length === 0) return null;
 
   return (
-    <div className='search-songs-container'>
+    <div className='search-songs-container' style={{ marginTop: 10 }}>
       <h1 className='playlist-header'>{t('Top tracks this month')}</h1>
       <h2 className='playlist-subheader'>{t('Only visible to you')}</h2>
 

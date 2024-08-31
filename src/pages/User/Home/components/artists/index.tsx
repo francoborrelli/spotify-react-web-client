@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export const MyArtistsSection = memo(() => {
   const [t] = useTranslation(['profile']);
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.profile.user);
   const artists = useAppSelector((state) => state.profile.artists);
 
   if (!artists || !artists.length) {
@@ -18,7 +18,7 @@ export const MyArtistsSection = memo(() => {
         items={artists}
         title={t('Top artists this month')}
         subtitle={t('Only visible to you')}
-        moreUrl={`/users/${user?.id}/artists`}
+        moreUrl={artists.length > 5 ? `/users/${user?.id}/artists` : undefined}
       />
     </div>
   );

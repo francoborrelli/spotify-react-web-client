@@ -34,6 +34,36 @@ const fetchMyArtists = createAsyncThunk<Artist[], void>(
   }
 );
 
+const fetchPlaylists = createAsyncThunk<Playlist[], string>(
+  'profile/fetchMyPlaylists',
+  async (id, api) => {
+    const response = await playlistService.getPlaylists(id, { limit: 50 });
+    return response.data.items;
+  }
+);
+
+const fetchMyTracks = createAsyncThunk<TrackWithSave[], void>(
+  'profile/fetchMyTracks',
+  async (_, api) => {
+    const response = await userService.fetchTopTracks({
+      limit: 50,
+      timeRange: 'short_term',
+    });
+    const tracks = response.data.items;
+
+    const saved = await userService
+      .checkSavedTracks(tracks.map((t) => t.id))
+      .then((res) => res.data);
+
+    return tracks.map((track, i) => {
+      return {
+        ...track,
+        saved: saved[i],
+      };
+    });
+  }
+);
+
 const fetchCurrentUserData = createAsyncThunk<[Artist[], TrackWithSave[]], void>(
   'profile/fetchCurrentUserData',
   async (_, api) => {
@@ -137,12 +167,20 @@ const profileSlice = createSlice({
       state.artists = action.payload[0];
       state.songs = action.payload[1];
     });
+    builder.addCase(fetchPlaylists.fulfilled, (state, action) => {
+      state.playlists = action.payload.filter((p) => p.public);
+    });
+    builder.addCase(fetchMyTracks.fulfilled, (state, action) => {
+      state.songs = action.payload;
+    });
   },
 });
 
 export const profileActions = {
   fetchUser,
+  fetchPlaylists,
   fetchMyArtists,
+  fetchMyTracks,
   ...profileSlice.actions,
 };
 

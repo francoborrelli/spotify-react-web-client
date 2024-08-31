@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 export const MyPlaylistsSection = memo(() => {
   const [t] = useTranslation(['profile']);
+
+  const user = useAppSelector((state) => state.profile.user);
   const playlists = useAppSelector((state) => state.profile.playlists);
 
   if (!playlists || !playlists.length) {
@@ -12,8 +14,12 @@ export const MyPlaylistsSection = memo(() => {
   }
 
   return (
-    <div>
-      <GridItemList title={t('Public playlists')} items={playlists} />
+    <div style={{ marginTop: 10 }}>
+      <GridItemList
+        items={playlists}
+        title={t('Public playlists')}
+        moreUrl={playlists.length > 6 ? `/users/${user!.id}/playlists` : undefined}
+      />
     </div>
   );
 });

@@ -36,6 +36,7 @@ const ArtistDiscographyPage = lazy(() => import('./pages/Discography'));
 
 const Profile = lazy(() => import('./pages/User/Home'));
 const ProfileArtists = lazy(() => import('./pages/User/Artists'));
+const ProfilePlaylists = lazy(() => import('./pages/User/Playlists'));
 
 const SearchPage = lazy(() => import('./pages/Search/Home'));
 const SearchTracks = lazy(() => import('./pages/Search/Songs'));
@@ -116,6 +117,7 @@ const RootComponent = () => {
     },
     { path: '/artist/:artistId', element: <ArtistPage container={container} /> },
     { path: '/users/:userId/artists', element: <ProfileArtists container={container} /> },
+    { path: '/users/:userId/playlists', element: <ProfilePlaylists container={container} /> },
     { path: '/users/:userId', element: <Profile container={container} /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
     { path: '/search', element: <BrowsePage /> },
