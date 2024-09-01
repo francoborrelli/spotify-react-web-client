@@ -6,7 +6,7 @@
 
 # Spotify React Web Client
 
-![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Typescript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)  ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 
 > [!IMPORTANT]  
 > Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
@@ -20,6 +20,7 @@
   ⚡ This project was bootstrapped with <a href="https://github.com/facebookincubator/create-react-app">Create React App<a/>.
 </p>
 
+
 ## 🎹 Features
 
 🎵 Play full audio tracks.
@@ -32,7 +33,7 @@
 
 🎵 Follow and unfollow playlists and artists.
 
-🎵 Add or remove tracks from your library.
+🎵 Add or remove tracks from playlists and your library.
 
 🎵 Change the device in which you are currently playing.
 
@@ -40,26 +41,27 @@
 
 ## 🖥️ Screenshots
 
-More in images folder.
 
 <div align="center">
     <table >
      <tr>
        <td>
-         <img src="images/browse.png?raw=true 'Playlist'"/>
-         <img src="images/devices.png?raw=true 'Playlist'"/>
+         <img src="images/Home.png?raw=true 'Playlist'"/>
+         <img src="images/CurrentDevices.png?raw=true 'Playlist'"/>
        </td>
-             <td>
+        <td>
          <img src="images/playlist.png?raw=true 'Playlist'"/>
-          <img src="images/newPlaylist.png?raw=true 'Playlist'"/>
+          <img src="images/browse.png?raw=true 'Playlist'"/>
        </td>
                  <td>
-         <img src="images/artist.png?raw=true 'Playlist'"/>
-          <img src="images/artists.png?raw=true 'Playlist'"/>
+         <img src="images/Profile.png?raw=true 'Playlist'"/>
+          <img src="images/artist.png?raw=true 'Playlist'"/>
        </td>
      </tr>
     </table>
     </div>
+
+More in images folder.
 
 ## 👨‍💻 How to Run locally
 
