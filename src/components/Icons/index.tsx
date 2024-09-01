@@ -831,3 +831,36 @@ export const GridIcon = (props: any) => (
     <path d='M1 1h6v6H1V1zm1.5 1.5v3h3v-3h-3zM1 9h6v6H1V9zm1.5 1.5v3h3v-3h-3zM9 1h6v6H9V1zm1.5 1.5v3h3v-3h-3zM9 9h6v6H9V9zm1.5 1.5v3h3v-3h-3z'></path>
   </svg>
 );
+
+export const MobileIcon = (props: any) => {
+  return (
+    <svg
+      data-encore-id='icon'
+      role='presentation'
+      aria-hidden='true'
+      style={SongExtraControlStyle}
+      viewBox='0 0 16 16'
+      className={`hoverable-icon replay ${props.active ? 'active' : ''}`}
+      {...props}
+    >
+      <path d='M5 5a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V5zm3-1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H8z'></path>
+      <path d='M13.25 16.75a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0z'></path>
+    </svg>
+  );
+};
+
+export const LaptopIcon = (props: any) => {
+  return (
+    <svg
+      data-encore-id='icon'
+      role='presentation'
+      aria-hidden='true'
+      style={SongExtraControlStyle}
+      viewBox='0 0 16 16'
+      className={`hoverable-icon replay ${props.active ? 'active' : ''}`}
+      {...props}
+    >
+      <path d='M0 21a1 1 0 0 1 1-1h22a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1zM3 5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V5zm3-1a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H6z'></path>
+    </svg>
+  );
+};
