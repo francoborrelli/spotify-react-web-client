@@ -39,8 +39,10 @@
 
   #song-and-artist-name {
     margin-left: 20px;
-    p {
-      width: 100%;
+    p,
+    h1 {
+      width: 100% !important;
+      max-width: none !important;
       text-decoration: none;
     }
 
