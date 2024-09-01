@@ -81,6 +81,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
                 className='mobile-hidden'
                 minSize={isMobile ? 10 : libraryCollapsed ? 7 : 22}
                 maxSize={isMobile ? 10 : libraryCollapsed ? 8 : 28}
+                defaultSize={isMobile ? 10 : libraryCollapsed ? 7 : 22}
                 style={{
                   borderRadius: 5,
                   minWidth: libraryCollapsed ? 85 : 280,
@@ -106,6 +107,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
                   order={3}
                   minSize={23}
                   maxSize={30}
+                  defaultSize={25}
                   id='details-section'
                   style={{ borderRadius: 5 }}
                 >
