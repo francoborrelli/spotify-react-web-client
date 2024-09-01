@@ -16,6 +16,7 @@ export const playingBar = {
   Description: 'Descripción',
   Search: 'Buscar',
   Images: 'Imágenes',
+  Devices: 'Dispositivos',
   'Related projects': 'Proyectos relacionados',
   'Exit full screen': 'Salir de pantalla completa',
 };

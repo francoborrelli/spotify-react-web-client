@@ -9,17 +9,18 @@ import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useAppSelector } from '../../../../store/store';
+import { isRightLayoutOpen } from '../../../../store/slices/ui';
 
 // Utils
 import dayjs from 'dayjs';
 import tinycolor from 'tinycolor2';
+import { sumTracksLength } from '../../../../utils/spotify/sumTracksLength';
 
 // Constants
 import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
 // Interfaces
 import { RefObject, useEffect, useState, type FC } from 'react';
-import { sumTracksLength } from '../../../../utils/spotify/sumTracksLength';
 
 interface AlbumHeaderProps {
   color: string;
@@ -37,9 +38,8 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
   const [activeTable, setActiveTable] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
 
+  const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const tracks = useAppSelector((state) => state.album.tracks);
-  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
-  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
     return () => {
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, detailsCollapsed, libraryCollapsed]);
+  }, [container]);
 
   useEffect(() => {
     const ref = sectionContainer?.current;
@@ -65,7 +65,7 @@ export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer,
       observer.observe(ref);
       return () => ref && observer.unobserve(ref);
     }
-  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
+  }, [sectionContainer, rightLayoutOpen, libraryCollapsed]);
 
   return (
     <div

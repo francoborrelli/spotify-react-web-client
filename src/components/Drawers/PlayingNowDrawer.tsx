@@ -6,6 +6,7 @@ import { PlayingNow } from '../Layout/components/NowPlaying';
 
 // Redux
 import { useAppSelector } from '../../store/store';
+import { isRightLayoutOpen } from '../../store/slices/ui';
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -23,7 +24,7 @@ function useWindowSize() {
 export const PlayingNowDrawer = memo(() => {
   const [width] = useWindowSize();
 
-  const open = useAppSelector((state) => !state.ui.queueCollapsed || !state.ui.detailsCollapsed);
+  const open = useAppSelector(isRightLayoutOpen);
 
   if (width > 900) return null;
 

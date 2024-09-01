@@ -4,6 +4,7 @@ import { RefObject, useEffect, useState, type FC } from 'react';
 // Utils
 import tinycolor from 'tinycolor2';
 import { useAppSelector } from '../../../../store/store';
+import { isRightLayoutOpen } from '../../../../store/slices/ui';
 
 interface PageHeaderProps {
   children: any;
@@ -27,9 +28,8 @@ export const PageHeader: FC<PageHeaderProps> = ({
   const [headerWidth, setHeaderWidth] = useState(0);
   const [activeHeader, setActiveHeader] = useState(false);
 
-  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
+  const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
-  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
 
   useEffect(() => {
     const ref = container.current;
@@ -43,14 +43,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [
-    container,
-    activeHeider,
-    activeContentHeight,
-    queueCollapsed,
-    libraryCollapsed,
-    detailsCollapsed,
-  ]);
+  }, [container, activeHeider, activeContentHeight]);
 
   useEffect(() => {
     const ref = sectionContainer?.current;
@@ -61,7 +54,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
       observer.observe(ref);
       return () => ref && observer.unobserve(ref);
     }
-  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
+  }, [sectionContainer, libraryCollapsed, rightLayoutOpen]);
 
   return (
     <div

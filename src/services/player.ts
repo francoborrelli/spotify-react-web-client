@@ -1,5 +1,6 @@
 import axios from '../axios';
 import type { Pagination } from '../interfaces/api';
+import { Device } from '../interfaces/devices';
 import type { PlayHistoryObject } from '../interfaces/player';
 
 /**
@@ -17,6 +18,14 @@ const fetchPlaybackState = async () => {
  */
 const transferPlayback = async (deviceId: string) => {
   await axios.put('/me/player', { device_ids: [deviceId] });
+};
+
+/**
+ * @description Get information about a user’s available Spotify Connect devices. Some device models are not supported and will not be listed in the API response.
+ */
+const getAvailableDevices = async () => {
+  const response = await axios.get<{ devices: Device[] }>('/me/player/devices');
+  return response.data;
 };
 
 /**
@@ -109,4 +118,5 @@ export const playerService = {
   toggleShuffle,
   seekToPosition,
   getRecentlyPlayed,
+  getAvailableDevices,
 };

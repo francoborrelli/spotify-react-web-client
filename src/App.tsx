@@ -102,10 +102,18 @@ const RootComponent = () => {
   const user = useAppSelector((state) => state.auth.user);
   const language = useAppSelector((state) => state.language.language);
 
+  const playing = useAppSelector((state) => !state.spotify.state?.paused);
+  const song = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+
   useEffect(() => {
     document.documentElement.setAttribute('lang', language);
     i18next.changeLanguage(language);
   }, [language]);
+
+  useEffect(() => {
+    document.title =
+      song && playing ? `${song.name} • ${song.artists[0].name}` : 'Spotify Web Player';
+  }, [song, playing]);
 
   const routes = [
     { path: '', element: <Home container={container} /> },

@@ -18,6 +18,7 @@ import tinycolor from 'tinycolor2';
 
 // Redux
 import { useAppSelector } from '../../store/store';
+import { isRightLayoutOpen } from '../../store/slices/ui';
 
 interface LikedSongsHeaderProps {
   color: string;
@@ -39,8 +40,7 @@ export const LikedSongsHeader: FC<LikedSongsHeaderProps> = ({
   const [activeHeader, setActiveHeader] = useState(false);
   const [activeTable, setActiveTable] = useState(false);
 
-  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
-  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
+  const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const LikedSongsHeader: FC<LikedSongsHeaderProps> = ({
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, detailsCollapsed, libraryCollapsed]);
+  }, [container]);
 
   useEffect(() => {
     const ref = sectionContainer?.current;
@@ -67,7 +67,7 @@ export const LikedSongsHeader: FC<LikedSongsHeaderProps> = ({
       observer.observe(ref);
       return () => ref && observer.unobserve(ref);
     }
-  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
+  }, [sectionContainer, rightLayoutOpen, libraryCollapsed]);
 
   return (
     <div

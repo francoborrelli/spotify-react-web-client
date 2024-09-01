@@ -106,9 +106,25 @@ const ExpandButton = () => {
   );
 };
 
-const ExtraControlButtons = () => {
+const DeviceButton = () => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['playingBar']);
+  const isDeviceOpen = useAppSelector((state) => !state.ui.devicesCollapsed);
 
+  return (
+    <Tooltip title={t('Connect to a device')}>
+      <button
+        onClick={() => dispatch(uiActions.toggleDevices())}
+        className={isDeviceOpen ? 'active-icon-button' : ''}
+        style={{ marginTop: 4, cursor: isDeviceOpen ? 'pointer' : 'not-allowed' }}
+      >
+        <DeviceIcon active={isDeviceOpen} />
+      </button>
+    </Tooltip>
+  );
+};
+
+const ExtraControlButtons = () => {
   return (
     <div>
       <Row gutter={18} align='middle'>
@@ -118,11 +134,9 @@ const ExtraControlButtons = () => {
 
         <QueueButton />
 
-        <Tooltip title={t('Connect to a device')}>
-          <Col className='hiddable-icon'>
-            <DeviceIcon />
-          </Col>
-        </Tooltip>
+        <Col className='hiddable-icon'>
+          <DeviceButton />
+        </Col>
 
         <Col>
           <VolumeControls />

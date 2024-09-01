@@ -14,7 +14,7 @@ interface SearchPageProps {
 
 export const SearchPageContainer: FC<SearchPageProps> = (props) => {
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 16]} style={{ paddingBottom: 20 }}>
       <Col span={24} lg={9}>
         <TopResult />
       </Col>

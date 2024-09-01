@@ -7,6 +7,7 @@ import { Library } from './components/Library';
 import PlayingBar from './components/PlayingBar';
 import { PlayingNow } from './components/NowPlaying';
 import { LanguageModal } from '../Modals/LanguageModal';
+import { LibraryDrawer } from '../Drawers/LibraryDrawer';
 import { PlayingNowDrawer } from '../Drawers/PlayingNowDrawer';
 import { EditPlaylistModal } from '../Modals/EditPlaylistModal';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
@@ -14,15 +15,15 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 // Interfaces
 
 // Redux
-import { uiActions } from '../../store/slices/ui';
+import { spotifyActions } from '../../store/slices/spotify';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { LibraryDrawer } from '../Drawers/LibraryDrawer';
+import { isRightLayoutOpen, uiActions } from '../../store/slices/ui';
 
 export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
-  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
+
+  const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
-  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -39,6 +40,10 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
     return () => {
       window.onresize = null;
     };
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(spotifyActions.fetchDevices());
   }, [dispatch]);
 
   return (
@@ -79,11 +84,9 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
                 {props.children}
               </Panel>
 
-              {!queueCollapsed || !detailsCollapsed ? (
-                <PanelResizeHandle className='resize-handler' />
-              ) : null}
+              {rightLayoutOpen ? <PanelResizeHandle className='resize-handler' /> : null}
 
-              {!queueCollapsed || !detailsCollapsed ? (
+              {rightLayoutOpen ? (
                 <Panel minSize={23} maxSize={30} id='details-section' order={3}>
                   <PlayingNow />
                 </Panel>

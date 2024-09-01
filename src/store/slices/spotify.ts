@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Services
 import { userService } from '../../services/users';
 import { playerService } from '../../services/player';
+import { Device } from '../../interfaces/devices';
 
 const initialState: {
   liked: boolean;
@@ -12,12 +13,14 @@ const initialState: {
   activeDevice: string | null;
   state: Spotify.PlaybackState | null;
   player: Spotify.Player | null;
+  devices: Device[];
 } = {
   state: null,
   deviceId: null,
   activeDevice: null,
   liked: false,
   player: null,
+  devices: [],
 };
 
 export const setState = createAsyncThunk<
@@ -38,16 +41,14 @@ export const setState = createAsyncThunk<
   return [spotifyState, response.data[0]];
 });
 
-export const setDeviceId = createAsyncThunk<string, string>(
-  'spotify/setDeviceId',
-  async (id, { getState }) => {
-    const state = getState() as RootState;
-    if (!state.spotify.deviceId) {
-      await playerService.transferPlayback(id);
-    }
-    return id;
-  }
-);
+export const setDeviceId = createAsyncThunk<string, string>('spotify/setDeviceId', async (id) => {
+  return id;
+});
+
+export const fetchDevices = createAsyncThunk<Device[]>('spotify/fetchDevices', async () => {
+  const response = await playerService.getAvailableDevices();
+  return response.devices;
+});
 
 const spotifySlice = createSlice({
   name: 'spotify',
@@ -68,9 +69,12 @@ const spotifySlice = createSlice({
       state.liked = action.payload[1];
       state.state = action.payload[0];
     });
+    builder.addCase(fetchDevices.fulfilled, (state, action) => {
+      state.devices = action.payload;
+    });
   },
 });
 
-export const spotifyActions = { ...spotifySlice.actions, setState, setDeviceId };
+export const spotifyActions = { ...spotifySlice.actions, setState, fetchDevices, setDeviceId };
 
 export default spotifySlice.reducer;

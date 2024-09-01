@@ -3,6 +3,7 @@ import { Col, Row, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { PlaylistTableHeader } from './table/header';
 import { PlayCircleButton } from './controls/playCircle';
+import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
 
 // I18n
 import { useTranslation } from 'react-i18next';
@@ -16,11 +17,11 @@ import { ARTISTS_DEFAULT_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../constants/s
 // Utils
 import tinycolor from 'tinycolor2';
 import { getPlaylistDescription } from '../../utils/getDescription';
+import { sumTracksLength } from '../../utils/spotify/sumTracksLength';
 
 // Redux
+import { isRightLayoutOpen } from '../../store/slices/ui';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { editPlaylistModalActions } from '../../store/slices/editPlaylistModal';
-import { sumTracksLength } from '../../utils/spotify/sumTracksLength';
 
 interface PlaylistHeaderProps {
   color: string;
@@ -45,8 +46,7 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
   const [activeHeader, setActiveHeader] = useState(false);
   const [activeTable, setActiveTable] = useState(false);
 
-  const queueCollapsed = useAppSelector((state) => state.ui.queueCollapsed);
-  const detailsCollapsed = useAppSelector((state) => state.ui.detailsCollapsed);
+  const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
       window.onresize = null;
       ref?.removeEventListener('scroll', handleScroll);
     };
-  }, [container, queueCollapsed, detailsCollapsed, libraryCollapsed]);
+  }, [container]);
 
   useEffect(() => {
     const ref = sectionContainer?.current;
@@ -73,7 +73,7 @@ export const PlaylistHeader: FC<PlaylistHeaderProps> = ({ container, color, sect
       observer.observe(ref);
       return () => ref && observer.unobserve(ref);
     }
-  }, [sectionContainer, queueCollapsed, libraryCollapsed, detailsCollapsed]);
+  }, [sectionContainer, libraryCollapsed, rightLayoutOpen]);
 
   return (
     <div
