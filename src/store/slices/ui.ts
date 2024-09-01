@@ -12,7 +12,7 @@ const initialState: UiState = {
   queueCollapsed: true,
   devicesCollapsed: true,
   detailsCollapsed: true,
-  libraryCollapsed: window.innerWidth < 973,
+  libraryCollapsed: true,
 };
 
 const uiSlice = createSlice({

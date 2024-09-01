@@ -1,5 +1,9 @@
 @use './variables.scss' as *;
 
+.mobile-visible {
+  display: none;
+}
+
 .playlist-img {
   box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
@@ -216,6 +220,10 @@
   .mobile-hidden {
     display: none;
     overflow: hidden;
+  }
+
+  .mobile-visible {
+    display: block;
   }
 }
 

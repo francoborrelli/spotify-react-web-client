@@ -697,3 +697,27 @@ a {
   -webkit-box-shadow: 0 -1px 0 0 #181818;
   box-shadow: 0 -1px 0 0 #181818;
 }
+
+.playing-container {
+  min-width: 295px;
+
+  @media (max-width: 1000px) {
+    #song-and-artist-name {
+      max-width: 250px;
+    }
+  }
+
+  @media (max-width: $desktop-small-breakpoint) {
+    min-width: 200px;
+    #song-and-artist-name {
+      max-width: 140px;
+    }
+  }
+
+  @media (max-width: $desktop-breakpoint) {
+    min-width: 140px;
+    #song-and-artist-name {
+      max-width: 120px;
+    }
+  }
+}
