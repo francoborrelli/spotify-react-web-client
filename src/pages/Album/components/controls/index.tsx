@@ -31,7 +31,7 @@ const ViewSection = memo(() => {
   }));
 
   return (
-    <Space>
+    <Space className='mobile-hidden'>
       <Tooltip title={tor('VIEW')}>
         <Dropdown placement='bottomRight' menu={{ items, selectedKeys: [view] }}>
           <button className='order-button'>

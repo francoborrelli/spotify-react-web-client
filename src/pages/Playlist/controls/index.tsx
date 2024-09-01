@@ -63,7 +63,7 @@ export const PlaylistControls: FC = () => {
           </Space>
         </Col>
         <Col>
-          <Space>
+          <Space className='mobile-hidden'>
             <Tooltip title={tor('VIEW')}>
               <Dropdown placement='bottomRight' menu={{ items, selectedKeys: [view] }}>
                 <button className='order-button'>
