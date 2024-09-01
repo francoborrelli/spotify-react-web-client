@@ -44,15 +44,19 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
         className='horizontal-playlist'
         onClick={isMobile ? onClick : undefined}
         onDoubleClick={isMobile ? undefined : onClick}
-        onMouseEnter={() => {
-          getImageAnalysis2(item.album.images[0].url).then((r) => {
-            let color = tinycolor(r);
-            while (color.isLight()) {
-              color = color.darken(10);
-            }
-            setColor(color.toHexString());
-          });
-        }}
+        onMouseEnter={
+          !isMobile
+            ? () => {
+                getImageAnalysis2(item.album.images[0].url).then((r) => {
+                  let color = tinycolor(r);
+                  while (color.isLight()) {
+                    color = color.darken(10);
+                  }
+                  setColor(color.toHexString());
+                });
+              }
+            : undefined
+        }
       >
         <div style={{ display: 'flex' }}>
           <div className='img-container'>
