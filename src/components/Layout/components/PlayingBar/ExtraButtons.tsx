@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next';
 import { uiActions } from '../../../../store/slices/ui';
 import { languageActions } from '../../../../store/slices/language';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
-import { getCurrentDevice } from '../../../../store/slices/spotify';
 
 const LyricsButton = () => {
   const dispatch = useAppDispatch();

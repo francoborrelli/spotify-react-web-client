@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from 'react';
 
-import { Col, Row, Space } from 'antd';
+import { Col, Flex, Row } from 'antd';
 import { CloseIcon } from '../../../../Icons';
 
 // Redux
@@ -43,7 +43,7 @@ export const NowPlayingLayout: FC<NowPlayingLayoutProps> = (props) => {
   return (
     <div className='playing-section'>
       <Row align='middle'>
-        <Col span={20}>
+        <Col span={props.extra ? 19 : 20}>
           {props.link ? (
             <Link className='title-link' to={props.link}>
               {title}
@@ -52,11 +52,11 @@ export const NowPlayingLayout: FC<NowPlayingLayoutProps> = (props) => {
             title
           )}
         </Col>
-        <Col span={4}>
-          <Space>
+        <Col span={props.extra ? 5 : 4}>
+          <Flex justify='space-between' gap={5} align='center'>
             {props.extra}
             <CloseButton />
-          </Space>
+          </Flex>
         </Col>
       </Row>
 

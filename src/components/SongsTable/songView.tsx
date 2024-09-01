@@ -274,7 +274,7 @@ const Index = ({
 
 export const SongView = (props: SongViewProps) => {
   const { size = 'normal' } = props;
-  const { view, song, index, context, playlist, canEdit, fields, saved, album } = props;
+  const { view, song, index, context, playlist, canEdit, fields, album } = props;
 
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
