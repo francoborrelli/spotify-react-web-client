@@ -40,6 +40,7 @@ interface TrackActionsWrapperProps {
   canEdit?: boolean;
   saved?: boolean;
   album?: Album | null;
+  onSavedToggle?: () => void;
   playlist?: Playlist | null;
   track: Track | Spotify.Track;
   trigger?: ('contextMenu' | 'click')[];
@@ -47,7 +48,7 @@ interface TrackActionsWrapperProps {
 }
 
 export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) => {
-  const { children, track, playlist, canEdit, album, saved } = props;
+  const { children, track, playlist, canEdit, album, saved, onSavedToggle } = props;
 
   const { t } = useTranslation(['playlist']);
 
@@ -117,6 +118,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           if (saved) {
             userService.deleteTracks([track.id!]).then(() => {
               dispatch(likedSongsActions.removeSong({ id: track.id! }));
+              if (onSavedToggle) onSavedToggle();
               message.open({
                 type: 'success',
                 content: t('Removed from Liked Songs'),
@@ -124,6 +126,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
             });
           } else {
             userService.saveTracks([track.id!]).then(() => {
+              if (onSavedToggle) onSavedToggle();
               message.open({
                 type: 'success',
                 content: t('Saved to Liked Songs'),
@@ -212,6 +215,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
     track.album,
     dispatch,
     navigate,
+    onSavedToggle,
   ]);
 
   return (

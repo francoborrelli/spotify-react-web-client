@@ -22,6 +22,8 @@ import { useTranslation } from 'react-i18next';
 import type { TrackWithSave } from '../../../../interfaces/track';
 import { artistActions } from '../../../../store/slices/artist';
 
+// TODO: REFACTOR
+
 interface SongViewProps {
   index: number;
   song: TrackWithSave;

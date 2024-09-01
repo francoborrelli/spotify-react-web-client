@@ -1,12 +1,28 @@
-import { useTranslation } from 'react-i18next';
-import { NowPlayingLayout } from '../layout';
+import { memo } from 'react';
 
-export const Devices = () => {
+// Components
+import { Col, Row } from 'antd';
+import { NowPlayingLayout } from '../layout';
+import { useTranslation } from 'react-i18next';
+import { CurrentDevice } from './currentDevice';
+import { DevicesList } from './list/deviceList';
+
+export const Devices = memo(() => {
   const [t] = useTranslation(['playingBar']);
 
   return (
     <NowPlayingLayout title={t('Connect to a device')}>
-      <div style={{ marginTop: 20 }}></div>
+      <div style={{ margin: '20px 10px' }}>
+        <Row gutter={[24, 24]}>
+          <Col span={24}>
+            <CurrentDevice />
+          </Col>
+
+          <Col span={24}>
+            <DevicesList />
+          </Col>
+        </Row>
+      </div>
     </NowPlayingLayout>
   );
-};
+});

@@ -98,12 +98,6 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
   return <WebPlayback {...webPlaybackSdkProps}>{children}</WebPlayback>;
 });
 
-const handleSpaceBar = (e: KeyboardEvent) => {
-  if (e.key === ' ' && e.target === document.body) {
-    e.preventDefault();
-  }
-};
-
 const RootComponent = () => {
   const container = useRef<HTMLDivElement>(null);
   const user = useAppSelector((state) => state.auth.user);

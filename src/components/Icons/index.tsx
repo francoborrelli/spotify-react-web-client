@@ -864,3 +864,19 @@ export const LaptopIcon = (props: any) => {
     </svg>
   );
 };
+
+export const PhoneIcon = (props: any) => {
+  return (
+    <svg
+      data-encore-id='icon'
+      role='img'
+      aria-hidden='true'
+      viewBox='0 0 16 16'
+      style={SongExtraControlStyle}
+      className={`hoverable-icon replay ${props.active ? 'active' : ''}`}
+    >
+      <path d='M8 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'></path>
+      <path d='M4.75 0A1.75 1.75 0 0 0 3 1.75v12.5c0 .966.784 1.75 1.75 1.75h6.5A1.75 1.75 0 0 0 13 14.25V1.75A1.75 1.75 0 0 0 11.25 0h-6.5zM4.5 1.75a.25.25 0 0 1 .25-.25h6.5a.25.25 0 0 1 .25.25v12.5a.25.25 0 0 1-.25.25h-6.5a.25.25 0 0 1-.25-.25V1.75z'></path>
+    </svg>
+  );
+};

@@ -3,6 +3,7 @@ import { NextInQueue } from './next';
 import { NowPlayingCard } from './data';
 import { Link } from 'react-router-dom';
 import { NowPlayingLayout } from '../layout';
+import { MenuIcon } from '../../../../Icons';
 import { TrackActionsWrapper } from '../../../../Actions/TrackActions';
 import { AddSongToLibraryButton } from '../../../../Actions/AddSongToLibrary';
 
@@ -20,7 +21,7 @@ import { memo, ReactNode, useEffect, useMemo, type FC } from 'react';
 // Redux
 import { fetchArtist, playingNowActions } from '../../../../../store/slices/playingNow';
 
-const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
+const Container: FC<{ song: Spotify.Track }> = memo(({ song }) => {
   const dispatch = useAppDispatch();
   const isLiked = useAppSelector((state) => state.spotify.liked);
 
@@ -29,12 +30,19 @@ const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
   };
 
   return (
-    <TrackActionsWrapper track={song} trigger={['contextMenu']}>
+    <TrackActionsWrapper
+      track={song}
+      saved={isLiked}
+      trigger={['contextMenu']}
+      onSavedToggle={() => {
+        dispatch(spotifyActions.setLiked({ liked: !isLiked }));
+      }}
+    >
       <div>
         <NowPlayingCard
           title={song.name}
-          albumId={song.album.uri.split(':').reverse()[0]}
           image={song.album.images[0].url}
+          albumId={song.album.uri.split(':').reverse()[0]}
           subtitle={
             <span>
               {song.artists.slice(0, 3).map((a, i) => (
@@ -50,7 +58,7 @@ const Container: FC<{ song: Spotify.Track }> = ({ song }) => {
       </div>
     </TrackActionsWrapper>
   );
-};
+});
 
 const getContextDetails = (
   context: string,
@@ -71,11 +79,14 @@ const getContextDetails = (
 };
 
 const DetailsContainer: FC<{ children: ReactNode | ReactNode[] }> = memo((props) => {
+  const dispatch = useAppDispatch();
+
+  const isLiked = useAppSelector((state) => state.spotify.liked);
+  const album = useAppSelector((state) => state.playingNow.album);
+  const artist = useAppSelector((state) => state.playingNow.artist);
+  const playlist = useAppSelector((state) => state.playingNow.playlist);
   const context = useAppSelector((state) => state.spotify.state?.context.uri);
   const song = useAppSelector((state) => state.spotify.state?.track_window.current_track!);
-  const artist = useAppSelector((state) => state.playingNow.artist);
-  const album = useAppSelector((state) => state.playingNow.album);
-  const playlist = useAppSelector((state) => state.playingNow.playlist);
 
   const contextDetails = useMemo(
     () => getContextDetails(context!, song, album, artist, playlist),
@@ -83,7 +94,24 @@ const DetailsContainer: FC<{ children: ReactNode | ReactNode[] }> = memo((props)
   );
 
   return (
-    <NowPlayingLayout title={contextDetails.title} link={contextDetails.link}>
+    <NowPlayingLayout
+      title={contextDetails.title}
+      link={contextDetails.link}
+      extra={
+        <TrackActionsWrapper
+          track={song}
+          saved={isLiked}
+          trigger={['click']}
+          onSavedToggle={() => {
+            dispatch(spotifyActions.setLiked({ liked: !isLiked }));
+          }}
+        >
+          <button>
+            <MenuIcon />
+          </button>
+        </TrackActionsWrapper>
+      }
+    >
       {props.children}
     </NowPlayingLayout>
   );

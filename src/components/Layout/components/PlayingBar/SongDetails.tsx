@@ -53,7 +53,12 @@ const SongDetails: FC<{ isMobile?: boolean }> = memo((props) => {
   return (
     <div className='flex flex-row items-center'>
       <div style={{ marginRight: 15 }}>
-        <TrackActionsWrapper track={current_track} trigger={['contextMenu']}>
+        <TrackActionsWrapper
+          saved={isLiked}
+          track={current_track}
+          trigger={['contextMenu']}
+          onSavedToggle={handleToggle}
+        >
           <div className='playing-cover-container'>
             <img
               alt='Album Cover'
@@ -73,7 +78,12 @@ const SongDetails: FC<{ isMobile?: boolean }> = memo((props) => {
         </TrackActionsWrapper>
       </div>
       <div id='song-and-artist-name'>
-        <TrackActionsWrapper track={current_track} trigger={['contextMenu']}>
+        <TrackActionsWrapper
+          saved={isLiked}
+          track={current_track}
+          trigger={['contextMenu']}
+          onSavedToggle={handleToggle}
+        >
           <p className='text-white font-bold song-title' title={current_track?.name}>
             {current_track?.name}
           </p>

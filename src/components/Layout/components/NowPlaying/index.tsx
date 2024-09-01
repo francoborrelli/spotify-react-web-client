@@ -21,6 +21,7 @@ export const PlayingNow = memo(() => {
       dispatch(fetchQueue());
       dispatch(fetchDevices());
     }, 1000);
+
     return () => clearTimeout(interval);
   }, [currentSong?.id, dispatch]);
 

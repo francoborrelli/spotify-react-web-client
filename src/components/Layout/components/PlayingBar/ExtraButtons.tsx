@@ -6,7 +6,14 @@ import { FullScreenPlayer } from '../../../FullScreen';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 // Icons
-import { DetailsIcon, DeviceIcon, ExpandIcon, ListIcon, MicrophoneIcon } from '../../../Icons';
+import {
+  DetailsIcon,
+  DeviceIcon,
+  ExpandIcon,
+  ListIcon,
+  MicrophoneIcon,
+  PhoneIcon,
+} from '../../../Icons';
 
 // I18n
 import { useTranslation } from 'react-i18next';
@@ -15,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { uiActions } from '../../../../store/slices/ui';
 import { languageActions } from '../../../../store/slices/language';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { getCurrentDevice } from '../../../../store/slices/spotify';
 
 const LyricsButton = () => {
   const dispatch = useAppDispatch();
@@ -111,6 +119,8 @@ const DeviceButton = () => {
   const { t } = useTranslation(['playingBar']);
   const isDeviceOpen = useAppSelector((state) => !state.ui.devicesCollapsed);
 
+  const currentDevice = useAppSelector((state) => state.spotify.activeDeviceType);
+
   return (
     <Tooltip title={t('Connect to a device')}>
       <button
@@ -118,7 +128,11 @@ const DeviceButton = () => {
         className={isDeviceOpen ? 'active-icon-button' : ''}
         style={{ marginTop: 4, cursor: isDeviceOpen ? 'pointer' : 'not-allowed' }}
       >
-        <DeviceIcon active={isDeviceOpen} />
+        {currentDevice === 'Smartphone' ? (
+          <PhoneIcon active={isDeviceOpen} />
+        ) : (
+          <DeviceIcon active={isDeviceOpen} />
+        )}
       </button>
     </Tooltip>
   );

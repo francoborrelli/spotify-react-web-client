@@ -15,7 +15,9 @@ export const playingBar = {
   Search: 'Buscar',
   Images: 'Imágenes',
   Devices: 'Dispositivos',
+  'Select another device': 'Seleccionar otro dispositivo',
   'Current device': 'Dispositivo actual',
   'Related projects': 'Proyectos relacionados',
   'Exit full screen': 'Salir de pantalla completa',
+  'Failed to transfer playback': 'Error al transferir la reproducción',
 };

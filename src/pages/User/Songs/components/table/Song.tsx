@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
 
 // Redux
-import { searchActions } from '../../../../../store/slices/search';
+import { profileActions } from '../../../../../store/slices/profile';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 // Interfaces
 import type { TrackWithSave } from '../../../../../interfaces/track';
-import { profileActions } from '../../../../../store/slices/profile';
 
 interface SongProps {
   index: number;

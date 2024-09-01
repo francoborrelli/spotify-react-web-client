@@ -298,7 +298,6 @@ export const SongView = (props: SongViewProps) => {
       track={song}
       album={album}
       key={song.id}
-      saved={saved}
       canEdit={canEdit}
       playlist={playlist}
       trigger={['contextMenu']}
