@@ -35,7 +35,6 @@ import {
 } from '../../store/slices/yourLibrary';
 import { userService } from '../../services/users';
 import { likedSongsActions } from '../../store/slices/likedSongs';
-import { AddSongToLibraryButton } from './AddSongToLibrary';
 
 interface TrackActionsWrapperProps {
   canEdit?: boolean;
@@ -200,6 +199,8 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
     return items;
   }, [
     t,
+    saved,
+    track.id,
     options,
     canEdit,
     playlist,
