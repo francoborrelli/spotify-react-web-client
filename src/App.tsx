@@ -3,7 +3,7 @@ import './styles/App.scss';
 
 // Utils
 import i18next from 'i18next';
-import { FC, Suspense, lazy, memo, useEffect, useRef } from 'react';
+import { FC, Suspense, lazy, memo, useCallback, useEffect, useRef } from 'react';
 import { getFromLocalStorageWithExpiry } from './utils/localstorage';
 
 // Components
@@ -24,6 +24,7 @@ import WebPlayback, { WebPlaybackProps } from './utils/spotify/webPlayback';
 
 // Pages
 import SearchContainer from './pages/Search/Container';
+import { playerService } from './services/player';
 
 const Home = lazy(() => import('./pages/Home'));
 const Page404 = lazy(() => import('./pages/404'));
@@ -97,6 +98,12 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
   return <WebPlayback {...webPlaybackSdkProps}>{children}</WebPlayback>;
 });
 
+const handleSpaceBar = (e: KeyboardEvent) => {
+  if (e.key === ' ' && e.target === document.body) {
+    e.preventDefault();
+  }
+};
+
 const RootComponent = () => {
   const container = useRef<HTMLDivElement>(null);
   const user = useAppSelector((state) => state.auth.user);
@@ -114,6 +121,25 @@ const RootComponent = () => {
     document.title =
       song && playing ? `${song.name} • ${song.artists[0].name}` : 'Spotify Web Player';
   }, [song, playing]);
+
+  const handleSpaceBar = useCallback(
+    (e: KeyboardEvent) => {
+      if (playing === undefined) return;
+      e.stopPropagation();
+      if (e.key === ' ' || e.code === 'Space' || e.keyCode === 32) {
+        const request = !playing ? playerService.startPlayback() : playerService.pausePlayback();
+        request.then().catch(() => {});
+      }
+    },
+    [playing]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleSpaceBar);
+    return () => {
+      document.removeEventListener('keydown', handleSpaceBar);
+    };
+  }, [handleSpaceBar]);
 
   const routes = [
     { path: '', element: <Home container={container} /> },
