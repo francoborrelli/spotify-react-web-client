@@ -127,6 +127,7 @@ const RootComponent = () => {
       if (playing === undefined) return;
       e.stopPropagation();
       if (e.key === ' ' || e.code === 'Space' || e.keyCode === 32) {
+        e.preventDefault();
         const request = !playing ? playerService.startPlayback() : playerService.pausePlayback();
         request.then().catch(() => {});
       }
