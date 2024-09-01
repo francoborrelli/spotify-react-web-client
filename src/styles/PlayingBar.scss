@@ -413,3 +413,55 @@ button.disabled {
     cursor: not-allowed !important;
   }
 }
+
+.other-device-alert-container {
+  background-color: #1ed760;
+  color: rgb(0, 0, 0);
+  height: 24px;
+
+  background-color: #1ed760;
+  color: rgb(0, 0, 0);
+  height: 24px;
+  border-radius: 5px;
+  margin: 10px;
+  margin-top: 0px;
+
+  button {
+    gap: 8px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    line-height: 1;
+    letter-spacing: inherit;
+    padding: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    -webkit-box-align: center;
+    align-items: center;
+    text-decoration: none;
+
+    float: right;
+    margin-top: 3px;
+    margin-right: 10px;
+
+    span {
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+  }
+
+  svg {
+    fill: #000000;
+    width: 16px;
+    height: 16px;
+  }
+}

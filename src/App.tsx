@@ -136,6 +136,16 @@ const RootComponent = () => {
     };
   }, [handleSpaceBar]);
 
+  useEffect(() => {
+    const handleContextMenu = (e: any) => {
+      e.preventDefault();
+    };
+    document.addEventListener('contextmenu', handleContextMenu);
+    return () => {
+      document.removeEventListener('keydown', handleContextMenu);
+    };
+  }, []);
+
   const routes = [
     { path: '', element: <Home container={container} /> },
     { path: '/collection/tracks', element: <LikedSongsPage container={container} /> },

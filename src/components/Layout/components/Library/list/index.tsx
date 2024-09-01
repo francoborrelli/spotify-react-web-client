@@ -9,19 +9,26 @@ import { LibraryFilters, SearchArea } from '../Filters';
 import { useAppSelector } from '../../../../../store/store';
 import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
 import { GridItemComponent } from '../../../../Lists/list';
+import { useMemo } from 'react';
+import { isActiveOnOtherDevice } from '../../../../../store/slices/spotify';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',
   height: '100%',
-  // marginLeft: -20,
-  // maxWidth: 340,
-  // marginRight: -20,
 } as const;
 
 const YourLibrary = () => {
   const items = useAppSelector(getLibraryItems);
   const view = useAppSelector((state) => state.yourLibrary.view);
+  const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
   const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+
+  const heightValue = useMemo(() => {
+    let value = 275;
+    if (collapsed) value = 210;
+    if (activeOnOtherDevice) value += 50;
+    return value;
+  }, [collapsed, activeOnOtherDevice]);
 
   return (
     <div className={`Navigation-section library ${!collapsed ? 'open' : ''}`}>
@@ -36,7 +43,7 @@ const YourLibrary = () => {
             style={{
               overflowY: 'scroll',
               overflowX: 'hidden',
-              height: collapsed ? 'calc(100vh - 220px)' : 'calc(100vh - 275px)',
+              height: `calc(100vh - ${heightValue}px`,
             }}
           >
             {!collapsed ? <SearchArea /> : null}

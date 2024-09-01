@@ -43,10 +43,6 @@ export const setState = createAsyncThunk<
   return [spotifyState, response.data[0]];
 });
 
-export const setDeviceId = createAsyncThunk<string, string>('spotify/setDeviceId', async (id) => {
-  return id;
-});
-
 export const fetchDevices = createAsyncThunk<Device[]>('spotify/fetchDevices', async () => {
   const response = await playerService.getAvailableDevices();
   return response.devices;
@@ -58,6 +54,9 @@ const spotifySlice = createSlice({
   reducers: {
     setLiked(state, action: PayloadAction<{ liked: boolean }>) {
       state.liked = action.payload.liked;
+    },
+    setDeviceId(state, action: PayloadAction<{ deviceId: string | null }>) {
+      state.deviceId = action.payload.deviceId;
     },
     setPlayer(state, action: PayloadAction<{ player: Spotify.Player | null }>) {
       state.player = action.payload.player;
@@ -88,6 +87,13 @@ export const getCurrentDevice = createSelector(
   }
 );
 
+export const isActiveOnOtherDevice = createSelector(
+  [(state: RootState) => state.spotify.deviceId, (state: RootState) => state.spotify.activeDevice],
+  (deviceId, activeDeviceId) => {
+    return deviceId && activeDeviceId && deviceId !== activeDeviceId;
+  }
+);
+
 export const getOtherDevices = createSelector(
   [(state: RootState) => state.spotify.devices],
   (devices) => {
@@ -95,6 +101,6 @@ export const getOtherDevices = createSelector(
   }
 );
 
-export const spotifyActions = { ...spotifySlice.actions, setState, fetchDevices, setDeviceId };
+export const spotifyActions = { ...spotifySlice.actions, setState, fetchDevices };
 
 export default spotifySlice.reducer;

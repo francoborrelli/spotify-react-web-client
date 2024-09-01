@@ -15,7 +15,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 // Interfaces
 
 // Redux
-import { spotifyActions } from '../../store/slices/spotify';
+import { isActiveOnOtherDevice, spotifyActions } from '../../store/slices/spotify';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { isRightLayoutOpen, uiActions } from '../../store/slices/ui';
 
@@ -23,6 +23,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
 
   const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
+  const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -56,12 +57,22 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
 
       {/* Main Component */}
       <div className='main-container'>
-        <Row justify='end' gutter={[8, 8]} wrap style={{ height: 'calc(100vh - 106px)' }}>
+        <Row
+          wrap
+          justify='end'
+          gutter={[8, 8]}
+          style={{ height: `calc(100vh - ${activeOnOtherDevice ? '141' : '107'}px)` }}
+        >
           <Col span={24}>
             <Navbar />
           </Col>
 
-          <Col span={24}>
+          <Col
+            span={24}
+            style={{
+              maxHeight: activeOnOtherDevice ? `calc(100vh - 185px)` : undefined,
+            }}
+          >
             <PanelGroup direction='horizontal' autoSaveId='persistence'>
               <Panel
                 id='left'
@@ -70,6 +81,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
                 minSize={isMobile ? 10 : libraryCollapsed ? 7 : 22}
                 maxSize={isMobile ? 10 : libraryCollapsed ? 8 : 28}
                 style={{
+                  borderRadius: 5,
                   minWidth: libraryCollapsed ? 85 : 280,
                   maxWidth: libraryCollapsed ? 85 : undefined,
                 }}
@@ -79,7 +91,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
 
               <PanelResizeHandle className='resize-handler' />
 
-              <Panel id='center' order={2}>
+              <Panel id='center' order={2} style={{ borderRadius: 5 }}>
                 {/* Home | Playlists */}
                 {props.children}
               </Panel>
@@ -87,7 +99,13 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
               {rightLayoutOpen ? <PanelResizeHandle className='resize-handler' /> : null}
 
               {rightLayoutOpen ? (
-                <Panel minSize={23} maxSize={30} id='details-section' order={3}>
+                <Panel
+                  order={3}
+                  minSize={23}
+                  maxSize={30}
+                  id='details-section'
+                  style={{ borderRadius: 5 }}
+                >
                   <PlayingNow />
                 </Panel>
               ) : null}

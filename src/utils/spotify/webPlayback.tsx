@@ -116,7 +116,7 @@ const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
     });
 
     webPlaybackInstance.current.on('ready', async (data) => {
-      dispatch(spotifyActions.setDeviceId(data.device_id));
+      dispatch(spotifyActions.setDeviceId({ deviceId: data.device_id }));
       dispatch(spotifyActions.setActiveDevice({ activeDevice: data.device_id }));
       await playerService.transferPlayback(data.device_id);
     });
