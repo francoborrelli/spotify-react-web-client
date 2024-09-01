@@ -4,8 +4,11 @@ import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import { Track } from '../../../../../interfaces/track';
 import { DetailsCard } from './card';
 import { uiActions } from '../../../../../store/slices/ui';
+import { useTranslation } from 'react-i18next';
+import { playerService } from '../../../../../services/player';
 
 export const NextInQueue: FC = memo(() => {
+  const [t] = useTranslation(['playingBar']);
   const dispatch = useAppDispatch();
   const queue = useAppSelector((state) => state.queue.queue);
 
@@ -14,7 +17,7 @@ export const NextInQueue: FC = memo(() => {
 
   return (
     <DetailsCard
-      title='Next in queue'
+      title={t('Next in queue')}
       extra={
         <button
           onClick={() => {
@@ -22,17 +25,22 @@ export const NextInQueue: FC = memo(() => {
           }}
           className='link-button'
         >
-          Open Queue
+          {t('Open Queue')}
         </button>
       }
     >
       <div className='queue-song'>
         <div className=' flex flex-row items-center'>
           <div className='queue-song-image-container'>
-            <div className='queue-song-overlay'>
+            <div
+              className='queue-song-overlay'
+              onClick={() => {
+                playerService.nextTrack();
+              }}
+            >
               <Play />
             </div>
-            <img alt='Album Cover' className='album-cover' src={item.album.images[0].url} />
+            <img alt={item.album.name} className='album-cover' src={item.album.images[0].url} />
           </div>
 
           <div id='song-and-artist-name'>

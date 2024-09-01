@@ -3,8 +3,10 @@ import { ArtistsCard } from './card';
 import { useAppSelector } from '../../../../../store/store';
 import { ArtistActionsWrapper } from '../../../../Actions/ArtistActions';
 import { FollowArtistButton } from '../../../../../pages/Artist/container/controls/followButton';
+import { useTranslation } from 'react-i18next';
 
 export const Artist: FC = () => {
+  const [t] = useTranslation(['playingBar']);
   const artist = useAppSelector((state) => state.playingNow.artist);
   if (!artist) return null;
 
@@ -15,9 +17,9 @@ export const Artist: FC = () => {
           id={artist.id}
           title={artist?.name}
           image={artist.images[0].url}
-          imageTitle={'About the artist'}
+          imageTitle={t('About the artist')}
           extra={<FollowArtistButton id={artist.id} />}
-          subtitle={`${artist.followers.total} followers`}
+          subtitle={`${artist.followers.total} ${t('followers')}`}
         />
       </div>
     </ArtistActionsWrapper>
