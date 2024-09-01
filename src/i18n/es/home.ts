@@ -12,7 +12,8 @@ export const home = {
   PLAYLISTS: 'Playlists',
   ARTISTS: 'Artistas',
   TRACKS: 'Canciones',
-  'Recently played': 'Reproducido recientemente',
+  'Your top mixes': 'Tus mixes más escuchados',
+  'Recently played': 'Escuchado recientemente',
   'Featured playlists': '¡En tendencia!',
   'Popular playlists': 'Playlists populares',
 };

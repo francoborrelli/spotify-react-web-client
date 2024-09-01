@@ -38,7 +38,7 @@ const initialState: {
 };
 
 export const fetchMadeForYou = createAsyncThunk('home/fetchMadeForYou', async () => {
-  const response = await categoriesService.fetchCategoryPlaylists(MADE_FOR_YOU_URI, { limit: 10 });
+  const response = await categoriesService.fetchCategoryPlaylists(MADE_FOR_YOU_URI, { limit: 50 });
   return response.data.playlists.items;
 });
 
