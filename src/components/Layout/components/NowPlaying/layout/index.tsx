@@ -6,9 +6,11 @@ import { CloseIcon } from '../../../../Icons';
 // Redux
 import { useAppDispatch } from '../../../../../store/store';
 import { uiActions } from '../../../../../store/slices/ui';
+import { Link } from 'react-router-dom';
 
 interface NowPlayingLayoutProps {
   children: any;
+  link?: string;
   title?: string;
 }
 
@@ -21,6 +23,7 @@ const CloseButton = () => {
         onClick={() => {
           dispatch(uiActions.collapseQueue());
           dispatch(uiActions.collapseDetails());
+          dispatch(uiActions.collapseDevices());
         }}
       >
         <CloseIcon />
@@ -30,15 +33,23 @@ const CloseButton = () => {
 };
 
 export const NowPlayingLayout: FC<NowPlayingLayoutProps> = (props) => {
+  const title = props.title ? (
+    <div className='playing-section-title-container'>
+      <span className='playing-section-title'>{props.title}</span>
+    </div>
+  ) : null;
+
   return (
     <div className='playing-section'>
       <Row align='middle'>
         <Col span={20}>
-          {props.title ? (
-            <div className='playing-section-title-container'>
-              <p className='playing-section-title'>{props.title}</p>
-            </div>
-          ) : null}
+          {props.link ? (
+            <Link className='title-link' to={props.link}>
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
         </Col>
         <Col span={4}>
           <CloseButton />
