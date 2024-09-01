@@ -292,6 +292,7 @@
 .mobile-bar {
   position: fixed;
   bottom: 5px;
+  width: 100%;
 
   background: linear-gradient(transparent 0%, rgb(0, 0, 0) 40%);
 
@@ -463,5 +464,11 @@ button.disabled {
     fill: #000000;
     width: 16px;
     height: 16px;
+  }
+}
+
+#root {
+  @media (max-width: $desktop-breakpoint) {
+    overflow: hidden;
   }
 }

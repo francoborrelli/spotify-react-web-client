@@ -6,8 +6,9 @@ import { ListIcon, Pause, Play } from '../../../Icons';
 // Redux
 import { playerService } from '../../../../services/player';
 import { useEffect, useState } from 'react';
-import { getImageAnalysis } from '../../../../utils/imageAnyliser';
+import { getImageAnalysis, getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 import { uiActions } from '../../../../store/slices/ui';
+import tinycolor from 'tinycolor2';
 
 const PlayButton = () => {
   const state = useAppSelector((state) => state.spotify.state);
@@ -37,7 +38,13 @@ const NowPlayingBarMobile = () => {
 
   useEffect(() => {
     if (currentSong) {
-      getImageAnalysis(currentSong.album.images[0].url).then((r) => setColor(r));
+      getImageAnalysis2(currentSong.album.images[0].url).then((r) => {
+        let color = tinycolor(r);
+        while (color.isLight()) {
+          color = color.darken(10);
+        }
+        setColor(color.toHexString());
+      });
     }
   }, [currentSong]);
 
