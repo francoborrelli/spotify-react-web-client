@@ -6,7 +6,7 @@ import { ListIcon, Pause, Play } from '../../../Icons';
 // Redux
 import { playerService } from '../../../../services/player';
 import { useEffect, useState } from 'react';
-import { getImageAnalysis, getImageAnalysis2 } from '../../../../utils/imageAnyliser';
+import { getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 import { uiActions } from '../../../../store/slices/ui';
 import tinycolor from 'tinycolor2';
 

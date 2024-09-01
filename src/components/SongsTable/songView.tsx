@@ -22,6 +22,7 @@ import type { Track } from '../../interfaces/track';
 import type { Playlist } from '../../interfaces/playlists';
 import type { Album as AlbumType } from '../../interfaces/albums';
 import { spotifyActions } from '../../store/slices/spotify';
+import useIsMobile from '../../utils/isMobile';
 
 interface DefaultProps {
   song: Track;
@@ -282,12 +283,15 @@ export const SongView = (props: SongViewProps) => {
   const { size = 'normal' } = props;
   const { view, song, index, context, playlist, canEdit, fields, album } = props;
 
+  const isMobile = useIsMobile();
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
 
   const isCurrent = useMemo(() => currentSong?.uri === song.uri, [currentSong, song]);
 
-  const isList = view === 'LIST';
+  const selectedView = isMobile ? 'LIST' : view;
+
+  const isList = selectedView === 'LIST';
 
   const onClick = useCallback(() => {
     if (isCurrent && isPlaying) {
@@ -311,11 +315,13 @@ export const SongView = (props: SongViewProps) => {
       onSavedToggle={props.onToggleLike ? props.onToggleLike : undefined}
     >
       <button
+        onClick={isMobile ? onClick : undefined}
+        onDoubleClick={!isMobile ? onClick : undefined}
         className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center ${
           size === 'normal' ? 'p-2' : ''
         } rounded-lg ${props.activable ? 'activable-song' : ''}`}
       >
-        <div className='song-details flex flex-row items-center w-full' onDoubleClick={onClick}>
+        <div className='song-details flex flex-row items-center w-full'>
           <div className='flex flex-row items-center justify-between w-full'>
             {index !== undefined ? (
               <Index index={index} isCurrent={isCurrent} isPlaying={isPlaying} onClick={onClick} />

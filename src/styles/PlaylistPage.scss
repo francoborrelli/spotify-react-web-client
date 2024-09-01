@@ -186,6 +186,10 @@
 
 .owner {
   margin-top: 20px;
+  overflow: hidden;
+  width: 100%;
+  word-wrap: normal;
+  text-overflow: ellipsis;
 }
 
 .playlist-title {

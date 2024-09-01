@@ -30,9 +30,9 @@ export const TopMixes: FC<NewReleasesProps> = () => {
     <div className='home'>
       <GridItemList
         items={items}
+        title={t('Your top mixes')}
         moreUrl={`/genre/${MADE_FOR_YOU_URI}`}
         getDescription={getPlaylistDescription}
-        title={t('Your top mixes')}
       />
     </div>
   );

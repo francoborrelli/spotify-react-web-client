@@ -6,11 +6,13 @@ import { CompactItemComponent } from './CompactCards';
 import { LibraryFilters, SearchArea } from '../Filters';
 
 // Redux
-import { useAppSelector } from '../../../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
 import { GridItemComponent } from '../../../../Lists/list';
 import { useMemo } from 'react';
 import { isActiveOnOtherDevice } from '../../../../../store/slices/spotify';
+import useIsMobile from '../../../../../utils/isMobile';
+import { uiActions } from '../../../../../store/slices/ui';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',
@@ -18,6 +20,8 @@ const COLLAPSED_STYLE = {
 } as const;
 
 const YourLibrary = () => {
+  const isMobile = useIsMobile();
+  const dispatch = useAppDispatch();
   const items = useAppSelector(getLibraryItems);
   const view = useAppSelector((state) => state.yourLibrary.view);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
@@ -57,7 +61,10 @@ const YourLibrary = () => {
                 if (collapsed) return <ListItemComponent key={item.id} item={item} />;
 
                 return (
-                  <div key={item.id}>
+                  <div
+                    key={item.id}
+                    onClick={isMobile ? () => dispatch(uiActions.collapseLibrary()) : undefined}
+                  >
                     {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
                     {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
                     {view === 'GRID' ? <GridItemComponent key={item.id} item={item} /> : ''}

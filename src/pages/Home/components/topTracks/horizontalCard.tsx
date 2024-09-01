@@ -9,12 +9,13 @@ import { useAppSelector } from '../../../../store/store';
 import { getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 
 // Interfaces
-import { memo, useEffect, type FC } from 'react';
+import { memo, useCallback, useEffect, type FC } from 'react';
 import type { Track } from '../../../../interfaces/track';
 
 // Services
 import { playerService } from '../../../../services/player';
 import tinycolor from 'tinycolor2';
+import useIsMobile from '../../../../utils/isMobile';
 
 interface HorizontalCardProps {
   item: Track;
@@ -26,6 +27,13 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
   const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
   const isCurrent = currentSong?.id === item.id;
 
+  const isMobile = useIsMobile();
+
+  const onClick = useCallback(() => {
+    if (isCurrent) return;
+    playerService.startPlayback({ uris: [item.uri] });
+  }, [isCurrent, item.uri]);
+
   useEffect(() => {
     if (item) getImageAnalysis2(item.album.images[0].url).then();
   }, [item]);
@@ -34,10 +42,8 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
     <TrackActionsWrapper track={item} trigger={['contextMenu']}>
       <div
         className='horizontal-playlist'
-        onDoubleClick={() => {
-          if (isCurrent) return;
-          playerService.startPlayback({ uris: [item.uri] });
-        }}
+        onClick={isMobile ? onClick : undefined}
+        onDoubleClick={isMobile ? undefined : onClick}
         onMouseEnter={() => {
           getImageAnalysis2(item.album.images[0].url).then((r) => {
             let color = tinycolor(r);
@@ -59,9 +65,13 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
         <div className='text-container'>
           <div className='text-section'>
             <div>
-              <Link title={item.name} to={`/album/${item.album.id}`}>
+              {isMobile ? (
                 <p>{item.name}</p>
-              </Link>
+              ) : (
+                <Link title={item.name} to={`/album/${item.album.id}`}>
+                  <p>{item.name}</p>
+                </Link>
+              )}
             </div>
           </div>
 

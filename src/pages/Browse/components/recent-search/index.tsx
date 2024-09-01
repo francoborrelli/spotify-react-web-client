@@ -5,8 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { GridItemList } from '../../../../components/Lists/list';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { searchHistoryActions } from '../../../../store/slices/searchHistory';
+import useIsMobile from '../../../../utils/isMobile';
 
 export const RecentSearchesActions = memo(() => {
+  const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
   const [t] = useTranslation(['search']);
   const items = useAppSelector((state) => state.searchHistory.items);
@@ -23,7 +25,7 @@ export const RecentSearchesActions = memo(() => {
         onItemDelete={(item) => {
           dispatch(searchHistoryActions.removeItem(item));
         }}
-        moreUrl={items.length > 7 ? '/recent-searches' : undefined}
+        moreUrl={items.length > (isMobile ? 2 : 7) ? '/recent-searches' : undefined}
       />
     </div>
   );

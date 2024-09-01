@@ -87,6 +87,12 @@ h3 {
   height: calc(100vh - 150px);
   width: 100%;
   overflow: scroll;
+
+  .infinite-scroll-component {
+    @media (max-width: $desktop-breakpoint) {
+      padding-bottom: 30px;
+    }
+  }
 }
 
 .Playlist-section,
