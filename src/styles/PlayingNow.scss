@@ -28,6 +28,13 @@
     padding-bottom: 70px;
   }
 
+  .title-link:hover {
+    &,
+    p {
+      text-decoration: underline !important;
+    }
+  }
+
   padding: 5px;
 
   @media (max-width: 900px) {
@@ -40,6 +47,8 @@
     white-space: nowrap;
     overflow: hidden;
     box-sizing: border-box;
+
+    display: inline;
 
     p {
       // animation: move 14s linear infinite;
