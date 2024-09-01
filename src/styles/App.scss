@@ -18,6 +18,10 @@
 @use './Artist.scss';
 @use './Devices.scss';
 
+.ant-drawer-body {
+  background-color: $background-color;
+}
+
 body {
   overscroll-behavior: none !important;
 }
