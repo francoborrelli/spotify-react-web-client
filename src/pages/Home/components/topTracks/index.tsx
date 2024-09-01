@@ -16,7 +16,7 @@ export const TopTracks: FC<{ setColor: (str: string) => void }> = (props) => {
     <Row gutter={[16, 16]} style={{ margin: '20px 0px' }} justify='space-between'>
       {topTracks.map((item) => {
         return (
-          <Col key={item.name} xs={12} md={12} xl={6}>
+          <Col key={item.name} xs={12} md={12} lg={6}>
             <HorizontalCard item={item} setColor={props.setColor} />
           </Col>
         );
