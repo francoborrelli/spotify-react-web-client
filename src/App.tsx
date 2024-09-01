@@ -118,6 +118,8 @@ const RootComponent = () => {
 
   const handleSpaceBar = useCallback(
     (e: KeyboardEvent) => {
+      // @ts-ignore
+      if (e.target?.tagName?.toUpperCase() === 'INPUT') return;
       if (playing === undefined) return;
       e.stopPropagation();
       if (e.key === ' ' || e.code === 'Space' || e.keyCode === 32) {
