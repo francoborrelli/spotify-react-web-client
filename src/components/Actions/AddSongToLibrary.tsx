@@ -5,6 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { userService } from '../../services/users';
 import { AddedToLibrary, AddToLibrary } from '../Icons';
 import { message } from 'antd';
+import { useAppDispatch } from '../../store/store';
+import { albumActions } from '../../store/slices/album';
+import { artistActions } from '../../store/slices/artist';
+import { playlistActions } from '../../store/slices/playlist';
 
 const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
@@ -12,11 +16,15 @@ const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> 
   onToggle,
 }) => {
   const { t } = useTranslation(['playlist']);
+  const dispatch = useAppDispatch();
 
   const handleAddToLibrary = () => {
     userService.saveTracks([id]).then(() => {
       message.success(t('Song added to Liked Songs'));
       onToggle();
+      dispatch(albumActions.updateTrackLikeState({ id: id!, saved: true }));
+      dispatch(artistActions.setTopSongLikeState({ id: id!, saved: true }));
+      dispatch(playlistActions.setTrackLikeState({ id: id!, saved: true }));
     });
   };
 
@@ -35,11 +43,15 @@ const DeleteSongFromLibrary: FC<{ id: string; onToggle: () => void; size?: numbe
   onToggle,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const handleDeleteFromLibrary = () => {
     userService.deleteTracks([id]).then(() => {
       message.success(t('Song removed from Liked Songs'));
       onToggle();
+      dispatch(albumActions.updateTrackLikeState({ id: id!, saved: false }));
+      dispatch(artistActions.setTopSongLikeState({ id: id!, saved: false }));
+      dispatch(playlistActions.setTrackLikeState({ id: id!, saved: false }));
     });
   };
 

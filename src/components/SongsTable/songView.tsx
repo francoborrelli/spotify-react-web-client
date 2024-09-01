@@ -9,7 +9,7 @@ import { msToTime } from '../../utils';
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Services
 import { Link } from 'react-router-dom';
@@ -21,6 +21,7 @@ import { AddSongToLibraryButton } from '../Actions/AddSongToLibrary';
 import type { Track } from '../../interfaces/track';
 import type { Playlist } from '../../interfaces/playlists';
 import type { Album as AlbumType } from '../../interfaces/albums';
+import { spotifyActions } from '../../store/slices/spotify';
 
 interface DefaultProps {
   song: Track;
@@ -199,6 +200,9 @@ const AddToLiked = ({
 }: ComponentProps & {
   onLikeRefresh: (id: string) => void;
 }) => {
+  const dispatch = useAppDispatch();
+  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track.id);
+
   return (
     <p
       className='text-right tablet-hidden'
@@ -210,6 +214,7 @@ const AddToLiked = ({
         isSaved={!!saved}
         onToggle={() => {
           if (onLikeRefresh) onLikeRefresh(song.id);
+          if (currentSong === song.id) dispatch(spotifyActions.setLiked({ liked: !saved }));
         }}
       />
     </p>

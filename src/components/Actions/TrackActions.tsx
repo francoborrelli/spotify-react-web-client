@@ -35,6 +35,9 @@ import {
 } from '../../store/slices/yourLibrary';
 import { userService } from '../../services/users';
 import { likedSongsActions } from '../../store/slices/likedSongs';
+import { spotifyActions } from '../../store/slices/spotify';
+import { albumActions } from '../../store/slices/album';
+import { artistActions } from '../../store/slices/artist';
 
 interface TrackActionsWrapperProps {
   canEdit?: boolean;
@@ -56,6 +59,9 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
   const dispatch = useAppDispatch();
   const myPlaylists = useAppSelector(getUserPlaylists);
   const user = useAppSelector((state) => state.auth.user);
+  const currentSong = useAppSelector(
+    (state) => state.spotify.state?.track_window?.current_track?.id
+  );
 
   const options = useMemo(() => {
     return myPlaylists
@@ -77,7 +83,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
       });
   }, [dispatch, myPlaylists, playlist, track.uri, t]);
 
-  const items = useMemo(() => {
+  const getItems = () => {
     const items: MenuProps['items'] = [
       {
         label: t('Add to playlist'),
@@ -118,6 +124,14 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           if (saved) {
             userService.deleteTracks([track.id!]).then(() => {
               dispatch(likedSongsActions.removeSong({ id: track.id! }));
+              dispatch(albumActions.updateTrackLikeState({ id: track.id!, saved: false }));
+              dispatch(artistActions.setTopSongLikeState({ id: track.id!, saved: false }));
+              dispatch(playlistActions.setTrackLikeState({ id: track.id!, saved: false }));
+
+              if (currentSong === track.id) {
+                dispatch(spotifyActions.setLiked({ liked: false }));
+              }
+
               if (onSavedToggle) onSavedToggle();
               message.open({
                 type: 'success',
@@ -127,6 +141,17 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           } else {
             userService.saveTracks([track.id!]).then(() => {
               if (onSavedToggle) onSavedToggle();
+
+              dispatch(albumActions.updateTrackLikeState({ id: track.id!, saved: true }));
+              dispatch(artistActions.setTopSongLikeState({ id: track.id!, saved: true }));
+              dispatch(playlistActions.setTrackLikeState({ id: track.id!, saved: true }));
+
+              dispatch(likedSongsActions.fetchLikeSongs());
+
+              if (currentSong === track.id) {
+                dispatch(spotifyActions.setLiked({ liked: true }));
+              }
+
               message.open({
                 type: 'success',
                 content: t('Saved to Liked Songs'),
@@ -200,23 +225,9 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
     }
 
     return items;
-  }, [
-    t,
-    saved,
-    track.id,
-    options,
-    canEdit,
-    playlist,
-    album,
-    user?.id,
-    track.name,
-    track.uri,
-    track.artists,
-    track.album,
-    dispatch,
-    navigate,
-    onSavedToggle,
-  ]);
+  };
+
+  const items = getItems();
 
   return (
     <>
