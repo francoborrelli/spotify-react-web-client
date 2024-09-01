@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 // Components
 import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
@@ -21,6 +21,10 @@ export const Song = (props: SongProps) => {
   const dispatch = useAppDispatch();
   const songs = useAppSelector((state) => state.search.songs);
 
+  const toggleLike = useCallback(() => {
+    dispatch(searchActions.setSavedStateForTrack({ id: song.id, saved: !song.saved }));
+  }, [dispatch, song.saved, song.id]);
+
   const uris = useMemo(() => {
     const index = songs.findIndex((r) => r.uri === song.uri);
     return songs.slice(index).map((r) => r.uri);
@@ -34,17 +38,11 @@ export const Song = (props: SongProps) => {
       size='small'
       context={{ uris }}
       saved={song.saved}
+      onToggleLike={toggleLike}
       fields={[
         SongViewComponents.ClickeableCover,
         SongViewComponents.Title,
-        (props) => (
-          <SongViewComponents.AddToLiked
-            {...props}
-            onLikeRefresh={() => {
-              dispatch(searchActions.setSavedStateForTrack({ id: song.id, saved: !song.saved }));
-            }}
-          />
-        ),
+        (props) => <SongViewComponents.AddToLiked {...props} onLikeRefresh={toggleLike} />,
         SongViewComponents.Time,
         SongViewComponents.Actions,
       ]}

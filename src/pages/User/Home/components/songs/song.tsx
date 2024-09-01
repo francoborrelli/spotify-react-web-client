@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import { TrackWithSave } from '../../../../../interfaces/track';
 import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
@@ -19,6 +19,10 @@ export const Song = (props: SongProps) => {
     return songs.slice(index).map((r) => r.uri);
   }, [songs, index]);
 
+  const toggleLike = useCallback(() => {
+    dispatch(profileActions.setLinkedStateForTrack({ id: song.id, saved: !song.saved }));
+  }, [dispatch, song.saved, song.id]);
+
   return (
     <SongView
       activable
@@ -27,17 +31,11 @@ export const Song = (props: SongProps) => {
       index={index}
       context={{ uris }}
       saved={song.saved}
+      onToggleLike={toggleLike}
       fields={[
         SongViewComponents.TitleWithCover,
         SongViewComponents.Album,
-        (props) => (
-          <SongViewComponents.AddToLiked
-            {...props}
-            onLikeRefresh={() => {
-              dispatch(profileActions.setLinkedStateForTrack({ id: song.id, saved: !song.saved }));
-            }}
-          />
-        ),
+        (props) => <SongViewComponents.AddToLiked {...props} onLikeRefresh={toggleLike} />,
         SongViewComponents.Time,
         SongViewComponents.Actions,
       ]}

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
 
 // Redux
@@ -21,6 +21,10 @@ export const Song = (props: SongProps) => {
 
   const uris = useMemo(() => tracks?.slice(index).map((track) => track.uri), [tracks, index]);
 
+  const onToggleLike = useCallback(() => {
+    dispatch(profileActions.setLinkedStateForTrack({ id: song.id, saved: !song.saved }));
+  }, [dispatch, song.saved, song.id]);
+
   return (
     <SongView
       activable
@@ -29,19 +33,13 @@ export const Song = (props: SongProps) => {
       index={index}
       saved={song.saved}
       context={{ uris }}
+      onToggleLike={onToggleLike}
       fields={[
         SongViewComponents.TitleWithCover,
         SongViewComponents.Artists,
         SongViewComponents.Album,
         SongViewComponents.AddedAt,
-        (props) => (
-          <SongViewComponents.AddToLiked
-            {...props}
-            onLikeRefresh={() => {
-              dispatch(profileActions.setLinkedStateForTrack({ id: song.id, saved: !song.saved }));
-            }}
-          />
-        ),
+        (props) => <SongViewComponents.AddToLiked {...props} onLikeRefresh={onToggleLike} />,
         SongViewComponents.Time,
         SongViewComponents.Actions,
       ]}

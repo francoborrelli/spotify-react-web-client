@@ -19,7 +19,7 @@ export const Song = (props: SongProps) => {
   const canEdit = useAppSelector((state) => state.playlist.canEdit);
   const playlist = useAppSelector((state) => state.playlist.playlist);
 
-  const toggleOpen = useCallback(() => {
+  const toggleLike = useCallback(() => {
     dispatch(playlistActions.setTrackLikeState({ id: song.track.id, saved: !song.saved }));
   }, [dispatch, song.saved, song.track.id]);
 
@@ -33,6 +33,7 @@ export const Song = (props: SongProps) => {
       saved={song.saved}
       playlist={playlist}
       addedAt={song.added_at}
+      onToggleLike={toggleLike}
       context={{
         context_uri: playlist?.uri,
         offset: { position: index },
@@ -42,7 +43,7 @@ export const Song = (props: SongProps) => {
         SongViewComponents.Artists,
         SongViewComponents.Album,
         SongViewComponents.AddedAt,
-        (props) => <SongViewComponents.AddToLiked {...props} onLikeRefresh={toggleOpen} />,
+        (props) => <SongViewComponents.AddToLiked {...props} onLikeRefresh={toggleLike} />,
         SongViewComponents.Time,
         SongViewComponents.Actions,
       ]}

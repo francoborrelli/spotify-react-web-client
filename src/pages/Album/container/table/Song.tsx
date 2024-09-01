@@ -32,6 +32,7 @@ export const Song = (props: SongProps) => {
       index={index}
       album={album}
       saved={song.saved}
+      onToggleLike={toggleOpen}
       context={{
         context_uri: album?.uri,
         offset: { position: index },
