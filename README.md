@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://github.com/francoborrelli/spotify-react-web-client/assets/17908233/ad91d92d-200f-4a3e-8171-2b299cc25618" style="height: 250px"/>
+  <img src="https://github.com/user-attachments/assets/726763a6-094a-42cf-878c-1e7d47a2e597" style="height: 250px"/>
 </p>
+
 
 
 
@@ -94,6 +95,10 @@ and visit http://localhost:3000.
 ```bash
 docker-compose up -d
 ```
+
+## 📜 2018 Version
+
+https://spotify-react-web-client-2018.onrender.com
 
 
 
