@@ -32,6 +32,7 @@ interface DefaultProps {
   size?: 'small' | 'normal';
   album?: AlbumType | null;
   playlist?: Playlist | null;
+  onToggleLike?: () => void;
 
   view: 'LIST' | 'COMPACT';
   context: {
@@ -301,6 +302,8 @@ export const SongView = (props: SongViewProps) => {
       canEdit={canEdit}
       playlist={playlist}
       trigger={['contextMenu']}
+      saved={props.onToggleLike ? props.saved : undefined}
+      onSavedToggle={props.onToggleLike ? props.onToggleLike : undefined}
     >
       <button
         className={`flex flex-col w-full hover:bg-spotify-gray-lightest items-center ${

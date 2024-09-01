@@ -24,8 +24,8 @@ const YourLibrary = () => {
   const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   const heightValue = useMemo(() => {
-    let value = 275;
-    if (collapsed) value = 210;
+    let value = 278;
+    if (collapsed) value = 218;
     if (activeOnOtherDevice) value += 50;
     return value;
   }, [collapsed, activeOnOtherDevice]);

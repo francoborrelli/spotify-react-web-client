@@ -23,6 +23,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
 
   const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
+  const hasState = useAppSelector((state) => !!state.spotify.state);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
   const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
@@ -96,9 +97,11 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
                 {props.children}
               </Panel>
 
-              {rightLayoutOpen ? <PanelResizeHandle className='resize-handler' /> : null}
+              {rightLayoutOpen && hasState ? (
+                <PanelResizeHandle className='resize-handler' />
+              ) : null}
 
-              {rightLayoutOpen ? (
+              {rightLayoutOpen && hasState ? (
                 <Panel
                   order={3}
                   minSize={23}
