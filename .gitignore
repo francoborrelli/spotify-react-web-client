@@ -23,5 +23,4 @@ yarn-error.log*
 
 .editorconfig
 .prettierrc.json
-src/**/*.css
 src/**/*.css.map
