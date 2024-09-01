@@ -11,12 +11,11 @@ export const playingBar = {
   'Your Library': 'Tu biblioteca',
   'Now playing': 'Reproduciendo',
   Next: 'A continuación',
-  Skills: 'Habilidades',
-  Experience: 'Experiencia',
   Description: 'Descripción',
   Search: 'Buscar',
   Images: 'Imágenes',
   Devices: 'Dispositivos',
+  'Current device': 'Dispositivo actual',
   'Related projects': 'Proyectos relacionados',
   'Exit full screen': 'Salir de pantalla completa',
 };

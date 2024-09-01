@@ -27,7 +27,7 @@ export const ArtistTopTracks = memo(() => {
 
   return (
     <div style={{ margin: 10 }}>
-      <h1 className='playlist-header'>Popular</h1>
+      <h1 className='playlist-header'>{t('Popular')}</h1>
       <Row>
         <Col span={24}>
           <div>

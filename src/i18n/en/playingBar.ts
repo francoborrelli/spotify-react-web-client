@@ -8,10 +8,9 @@ export const playingBar = {
   'Full Screen': 'Full Screen',
   'Now playing': 'Now playing',
   Next: 'Next',
-  Skills: 'Skills',
   Experience: 'Experience',
   Description: 'Description',
   Images: 'Images',
-  'Related projects': 'Related projects',
+  'Current device': 'Current device',
   'Exit full screen': 'Salir de pantalla completa',
 };
