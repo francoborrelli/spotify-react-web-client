@@ -3,6 +3,7 @@ import { Pause, Play } from '../../../../Icons';
 import { useAppSelector } from '../../../../../store/store';
 import { playerService } from '../../../../../services/player';
 import { Episode } from '../../../../../interfaces/episode';
+import useIsMobile from '../../../../../utils/isMobile';
 
 interface QueueSongDetailsProps {
   song: Spotify.Track | Episode;
@@ -10,6 +11,7 @@ interface QueueSongDetailsProps {
 }
 
 const QueueSongDetails: FC<QueueSongDetailsProps> = memo(({ song, isPlaying }) => {
+  const isMobile = useIsMobile();
   const queue = useAppSelector((state) => state.queue.queue);
   const isPaused = useAppSelector((state) => state.spotify.state?.paused);
 
@@ -53,12 +55,19 @@ const QueueSongDetails: FC<QueueSongDetailsProps> = memo(({ song, isPlaying }) =
   }, [song]);
 
   return (
-    <div className='queue-song'>
+    <div
+      className='queue-song'
+      onClick={isMobile ? onClick : undefined}
+      onDoubleClick={!isMobile ? onClick : undefined}
+    >
       <div className=' flex flex-row items-center'>
         <div className='queue-song-image-container'>
-          <div className='queue-song-overlay' onClick={onClick}>
-            {!isPaused && isPlaying ? <Pause /> : <Play />}
-          </div>
+          {!isMobile ? (
+            <div className='queue-song-overlay' onClick={onClick}>
+              {!isPaused && isPlaying ? <Pause /> : <Play />}
+            </div>
+          ) : null}
+
           <img alt='Album Cover' className='album-cover' src={image} />
         </div>
         <div id='song-and-artist-name'>

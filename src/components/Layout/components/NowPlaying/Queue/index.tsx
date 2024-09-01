@@ -23,14 +23,16 @@ const Queueing = () => {
   const [t] = useTranslation(['playingBar']);
   const queue = useAppSelector((state) => state.queue.queue);
 
+  if (!queue || !queue.length) return null;
+
   return (
     <div style={{ marginTop: 30 }}>
       <p className='playing-section-title'>{t('Next')}</p>
 
       <div style={{ margin: 5 }}>
-        {queue.map((q) => (
+        {queue.map((q, index) => (
           // @ts-ignore
-          <QueueSongDetailsProps key={q.id} song={q} />
+          <QueueSongDetailsProps key={index} song={q} />
         ))}
       </div>
     </div>

@@ -1,3 +1,5 @@
+@use './variables.scss' as *;
+
 .now-playing-card {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -27,6 +29,18 @@
     margin: -5px;
     margin-bottom: 15px;
     margin-top: 5px;
+  }
+}
+
+.queue-song {
+  @media (max-width: $desktop-breakpoint) {
+    background-color: transparent !important;
+    img {
+      border-radius: 0px !important;
+    }
+    &:active {
+      transform: scale(0.99);
+    }
   }
 }
 

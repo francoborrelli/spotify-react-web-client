@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import { getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 import { uiActions } from '../../../../store/slices/ui';
 import tinycolor from 'tinycolor2';
+import { AddSongToLibraryButton } from '../../../Actions/AddSongToLibrary';
+import { spotifyActions } from '../../../../store/slices/spotify';
 
 const PlayButton = () => {
   const state = useAppSelector((state) => state.spotify.state);
@@ -32,7 +34,9 @@ const QueueButton = () => {
 };
 
 const NowPlayingBarMobile = () => {
+  const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.spotify.state);
+  const liked = useAppSelector((state) => state.spotify.liked);
   const currentSong = state?.track_window.current_track;
   const [currentColor, setColor] = useState('blue');
 
@@ -69,10 +73,19 @@ const NowPlayingBarMobile = () => {
                 alignItems: 'center',
                 minWidth: 50,
                 marginRight: 5,
+                gap: 15,
                 justifyContent: 'space-between',
               }}
             >
               <QueueButton />
+              <AddSongToLibraryButton
+                size={17}
+                isSaved={liked}
+                id={currentSong?.id!}
+                onToggle={() => {
+                  dispatch(spotifyActions.setLiked({ liked: !liked }));
+                }}
+              />
               <PlayButton />
             </div>
           </Col>
