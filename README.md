@@ -20,6 +20,31 @@
   ⚡ This project was bootstrapped with <a href="https://github.com/facebookincubator/create-react-app">Create React App<a/>.
 </p>
 
+## 🖥️ Screenshots
+
+
+<div align="center">
+    <table >
+     <tr>
+       <td>
+         <img src="images/Home.png?raw=true 'Playlist'"/>
+         <img src="images/CurrentDevices.png?raw=true 'Playlist'"/>
+       </td>
+        <td>
+         <img src="images/playlist.png?raw=true 'Playlist'"/>
+          <img src="images/browse.png?raw=true 'Playlist'"/>
+       </td>
+                 <td>
+         <img src="images/Profile.png?raw=true 'Playlist'"/>
+          <img src="images/artist.png?raw=true 'Playlist'"/>
+       </td>
+     </tr>
+    </table>
+    </div>
+
+More in images folder.
+
+
 ## 🎹 Features
 
 🎵 Play full audio tracks.
@@ -37,29 +62,6 @@
 🎵 Change the device in which you are currently playing.
 
 🎵 Search tracks, albums, artists and playlists.
-
-## 🖥️ Screenshots
-
-More in images folder.
-
-<div align="center">
-    <table >
-     <tr>
-       <td>
-         <img src="images/browse.png?raw=true 'Playlist'"/>
-         <img src="images/devices.png?raw=true 'Playlist'"/>
-       </td>
-             <td>
-         <img src="images/playlist.png?raw=true 'Playlist'"/>
-          <img src="images/newPlaylist.png?raw=true 'Playlist'"/>
-       </td>
-                 <td>
-         <img src="images/artist.png?raw=true 'Playlist'"/>
-          <img src="images/artists.png?raw=true 'Playlist'"/>
-       </td>
-     </tr>
-    </table>
-    </div>
 
 ## 👨‍💻 How to Run locally
 
