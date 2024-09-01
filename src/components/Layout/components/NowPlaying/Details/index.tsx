@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Artist } from './artist';
 import { NextInQueue } from './next';
 import { NowPlayingCard } from './data';
@@ -12,9 +13,9 @@ import { spotifyActions } from '../../../../../store/slices/spotify';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 // Interfaces
-import type { Album } from '../../../../../interfaces/albums';
-import type { Playlist } from '../../../../../interfaces/playlists';
-import type { Artist as ArtistType } from '../../../../../interfaces/artist';
+// import type { Album } from '../../../../../interfaces/albums';
+// import type { Playlist } from '../../../../../interfaces/playlists';
+// import type { Artist as ArtistType } from '../../../../../interfaces/artist';
 
 import { memo, ReactNode, useEffect, useMemo, type FC } from 'react';
 
@@ -60,38 +61,27 @@ const Container: FC<{ song: Spotify.Track }> = memo(({ song }) => {
   );
 });
 
-const getContextDetails = (
-  context: string,
-  song: Spotify.Track,
-  album?: Album | null,
-  artist?: ArtistType | null,
-  playlist?: Playlist | null
-) => {
-  if (context.includes('playlist')) {
-    return { title: playlist?.name, link: `/playlist/${playlist?.id}` };
-  } else if (context.includes('album')) {
-    return { title: album?.name, link: `/album/${album?.id}` };
-  } else if (context.includes('artist')) {
-    return { title: artist?.name, link: `/artist/${artist?.id}` };
-  } else {
-    return { title: song.name, link: `/album/${song.album.uri.split(':')[2]}` };
-  }
-};
-
 const DetailsContainer: FC<{ children: ReactNode | ReactNode[] }> = memo((props) => {
   const dispatch = useAppDispatch();
 
   const isLiked = useAppSelector((state) => state.spotify.liked);
-  const album = useAppSelector((state) => state.playingNow.album);
-  const artist = useAppSelector((state) => state.playingNow.artist);
-  const playlist = useAppSelector((state) => state.playingNow.playlist);
-  const context = useAppSelector((state) => state.spotify.state?.context.uri);
+  const context = useAppSelector((state) => state.spotify.state?.context);
   const song = useAppSelector((state) => state.spotify.state?.track_window.current_track!);
 
-  const contextDetails = useMemo(
-    () => getContextDetails(context!, song, album, artist, playlist),
-    [context, song, album, artist, playlist]
-  );
+  const contextDetails = useMemo(() => {
+    const [_, type, id] = context?.uri!.split(':') || [];
+    // @ts-ignore
+    const name = context?.metadata?.context_description || song.name;
+    if (type === 'playlist') {
+      return { title: name, link: `/playlist/${id}` };
+    } else if (type === 'album') {
+      return { title: name, link: `/album/${id}` };
+    } else if (type === 'artist') {
+      return { title: name, link: `/artist/${id}` };
+    } else {
+      return { title: name, link: `/album/${song.album.uri.split(':')[2]}` };
+    }
+  }, [context, song]);
 
   return (
     <NowPlayingLayout
@@ -128,16 +118,18 @@ export const Details = memo(() => {
     if (artistId) dispatch(fetchArtist(artistId));
   }, [artistId, dispatch]);
 
-  useEffect(() => {
-    if (context) {
-      const uri = context.split(':');
-      if (uri[1] === 'playlist') {
-        dispatch(playingNowActions.fetchPlaylist(uri[2]));
-      } else if (uri[1] === 'album') {
-        dispatch(playingNowActions.fetchAlbum(uri[2]));
-      }
-    }
-  }, [context, dispatch]);
+  // Logré el mismo efecto tomando los datos de la metadata en el objeto de contexto
+
+  // useEffect(() => {
+  //   if (context) {
+  //     const uri = context.split(':');
+  //     if (uri[1] === 'playlist') {
+  //       dispatch(playingNowActions.fetchPlaylist(uri[2]));
+  //     } else if (uri[1] === 'album') {
+  //       dispatch(playingNowActions.fetchAlbum(uri[2]));
+  //     }
+  //   }
+  // }, [context, dispatch]);
 
   if (!song) return null;
 

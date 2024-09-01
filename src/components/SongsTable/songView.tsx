@@ -106,7 +106,7 @@ const Title = (props: ComponentProps) => {
     <>
       <div className='flex flex-col' style={{ flex: 8 }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div className='flex flex-row items-center'>
               <p className={`title text-left ${isCurrent ? 'active' : ''}`}>
                 <span>{song.name}</span>{' '}
@@ -146,7 +146,7 @@ const TitleWithCover = (props: ComponentProps) => {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Cover {...props} />
 
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div className='flex flex-row items-center'>
               <p className={`title text-left ${isCurrent ? 'active' : ''}`}>
                 <span>{song.name}</span>{' '}

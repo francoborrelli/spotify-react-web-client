@@ -26,8 +26,11 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   useEffect(() => {
     if (playlist && playlist.images?.length) {
       getImageAnalysis2(playlist?.images[0].url).then((color) => {
-        const item = tinycolor(color);
-        setColor(item.isLight() ? item.darken(10).toHexString() : item.toHexString());
+        let item = tinycolor(color);
+        while (item.isLight()) {
+          item = item.darken(10);
+        }
+        setColor(item.toHexString());
       });
     }
   }, [playlist]);
