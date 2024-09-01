@@ -29,6 +29,7 @@ export interface CardShortProps {
   title: string;
   subtitle: string;
   rounded?: boolean;
+  disabled?: boolean;
   isCurrent?: boolean;
   onClick?: () => void;
   onDoubleClick?: () => void;
@@ -94,11 +95,11 @@ export const CollapsedCard = (props: CardShortProps) => {
 };
 
 const CardList = (props: CardShortProps) => {
-  const { image, title, subtitle, isCurrent, onClick } = props;
+  const { image, title, subtitle, isCurrent, onClick, disabled } = props;
 
   const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
 
-  const button = (
+  const button = disabled ? null : (
     <button
       className='image-button'
       onClick={async (e) => {
@@ -265,6 +266,7 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
           onClick={onClick}
           uri={playlist.uri}
           title={playlist.name}
+          disabled={!playlist.tracks?.total}
           isCurrent={state?.context?.uri === playlist.uri}
           subtitle={`Playlist • ${playlist.owner?.display_name}`}
           image={playlist?.images?.length ? playlist?.images[0]?.url : PLAYLIST_DEFAULT_IMAGE}
