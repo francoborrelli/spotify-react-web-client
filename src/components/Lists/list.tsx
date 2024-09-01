@@ -96,7 +96,7 @@ export function GridItemList(props: {
         {extra ? (
           extra
         ) : moreUrl ? (
-          <Link className='mobile-hidden' to={moreUrl}>
+          <Link to={moreUrl}>
             <button className='showMore'>
               <span>{t('Show more')}</span>
             </button>
