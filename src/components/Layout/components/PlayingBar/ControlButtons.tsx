@@ -18,8 +18,13 @@ const ShuffleButton = () => {
 };
 
 const SkipBackButton = () => {
+  const state = useAppSelector((state) => state.spotify.state);
+  const hasContext = !!state?.context.uri;
   return (
-    <button onClick={() => playerService.previousTrack().then()}>
+    <button
+      className={!hasContext ? 'disabled' : ''}
+      onClick={() => hasContext && playerService.previousTrack().then()}
+    >
       <SkipBack />
     </button>
   );
@@ -28,12 +33,18 @@ const SkipBackButton = () => {
 const PlayButton = () => {
   const state = useAppSelector((state) => state.spotify.state);
   const isPlaying = !state?.paused;
+  const hasContext = !!state?.context.uri;
+
   return (
     <button
-      className='player-pause-button'
-      onClick={() =>
-        isPlaying ? playerService.pausePlayback().then() : playerService.startPlayback().then()
-      }
+      className={`player-pause-button ${!hasContext ? 'disabled' : ''}`}
+      onClick={() => {
+        if (hasContext) {
+          return isPlaying
+            ? playerService.pausePlayback().then()
+            : playerService.startPlayback().then();
+        }
+      }}
     >
       {!isPlaying ? <Play /> : <Pause />}
     </button>
@@ -41,8 +52,13 @@ const PlayButton = () => {
 };
 
 const SkipNextButton = () => {
+  const state = useAppSelector((state) => state.spotify.state);
+  const hasContext = !!state?.context.uri;
   return (
-    <button onClick={() => playerService.nextTrack().then()}>
+    <button
+      className={!hasContext ? 'disabled' : ''}
+      onClick={() => hasContext && playerService.nextTrack().then()}
+    >
       <SkipNext />
     </button>
   );

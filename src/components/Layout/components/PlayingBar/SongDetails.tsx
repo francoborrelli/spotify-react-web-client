@@ -48,10 +48,10 @@ const SongDetails: FC<{ isMobile?: boolean }> = memo((props) => {
   const { track_window } = state || {};
   const { current_track } = track_window || {};
 
-  if (!current_track) return <div style={{ minWidth: 198 }}></div>;
+  if (!current_track) return <div style={{ minWidth: 295 }}></div>;
 
   return (
-    <div className='flex flex-row items-center'>
+    <div className='flex flex-row items-center' style={{ minWidth: 295 }}>
       <div style={{ marginRight: 15 }}>
         <TrackActionsWrapper
           saved={isLiked}
