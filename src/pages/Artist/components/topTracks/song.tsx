@@ -16,6 +16,7 @@ export const Song = (props: SongProps) => {
 
   const dispatch = useAppDispatch();
   const artist = useAppSelector((state) => state.artist.artist);
+  const songs = useAppSelector((state) => state.artist.topTracks);
 
   const toggleLike = useCallback(() => {
     dispatch(artistActions.setTopSongLikeState({ id: song.id, saved: !song.saved }));
@@ -29,10 +30,15 @@ export const Song = (props: SongProps) => {
       view={'LIST'}
       saved={song.saved}
       onToggleLike={toggleLike}
-      context={{
-        context_uri: artist?.uri,
-        offset: { position: index },
-      }}
+      context={
+        index === 0
+          ? {
+              context_uri: artist!.uri,
+            }
+          : {
+              uris: songs.slice(index).map((song) => song.uri),
+            }
+      }
       fields={[
         SongViewComponents.TitleWithCover,
         (props) => <SongViewComponents.AddToLiked {...props} onLikeRefresh={toggleLike} />,

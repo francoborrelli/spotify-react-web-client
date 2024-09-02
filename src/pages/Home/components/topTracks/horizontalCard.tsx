@@ -16,6 +16,7 @@ import type { Track } from '../../../../interfaces/track';
 import { playerService } from '../../../../services/player';
 import tinycolor from 'tinycolor2';
 import useIsMobile from '../../../../utils/isMobile';
+import { EQUILISER_IMAGE } from '../../../../constants/spotify';
 
 interface HorizontalCardProps {
   item: Track;
@@ -81,11 +82,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
 
           <div className='button-container'>
             {isCurrent && isPlaying ? (
-              <img
-                height={20}
-                alt={item.name}
-                src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
-              />
+              <img height={20} alt={item.name} src={EQUILISER_IMAGE} />
             ) : null}
             <PlayCircle size={15} isCurrent={isCurrent} context={{ uris: [item.uri] }} />
           </div>

@@ -23,6 +23,7 @@ import type { Playlist } from '../../interfaces/playlists';
 import type { Album as AlbumType } from '../../interfaces/albums';
 import { spotifyActions } from '../../store/slices/spotify';
 import useIsMobile from '../../utils/isMobile';
+import { EQUILISER_IMAGE } from '../../constants/spotify';
 
 interface DefaultProps {
   song: Track;
@@ -263,11 +264,7 @@ const Index = ({
     <div style={{ flex: 1 }} className='mobile-hidden'>
       <p className='song-details-index'>
         {isCurrent && isPlaying ? (
-          <img
-            alt={'equaliser'}
-            style={{ height: 10, margin: '0 auto' }}
-            src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
-          />
+          <img alt={'equaliser'} style={{ height: 10, margin: '0 auto' }} src={EQUILISER_IMAGE} />
         ) : (
           <span style={{ margin: '0 auto' }}>{index + 1}</span>
         )}

@@ -6,6 +6,7 @@ import { DeviceIcons } from '../../../../../utils/spotify/getDeviceIcon';
 // Redux
 import { useAppSelector } from '../../../../../store/store';
 import { getCurrentDevice } from '../../../../../store/slices/spotify';
+import { EQUILISER_IMAGE } from '../../../../../constants/spotify';
 
 export const CurrentDevice: FC = memo(() => {
   const [t] = useTranslation(['playingBar']);
@@ -22,15 +23,7 @@ export const CurrentDevice: FC = memo(() => {
         <div className='area-header-content'>
           <div className='area-header-content-first'>
             <div style={{ width: 24 }}>
-              {!isPlaying ? (
-                Icon
-              ) : (
-                <img
-                  width={20}
-                  alt={'device playing'}
-                  src={`${process.env.PUBLIC_URL}/images/equaliser-animated.gif`}
-                />
-              )}
+              {!isPlaying ? Icon : <img width={20} alt={'device playing'} src={EQUILISER_IMAGE} />}
             </div>
             <p>
               <span>{t('Current device')}</span>
