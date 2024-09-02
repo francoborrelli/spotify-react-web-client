@@ -25,6 +25,8 @@ export const playlist = {
   Artist: 'Artista',
   Disk: 'Disco',
   saves: 'seguidores',
+  Save: 'Guardar',
+  'Choose photo': 'Elegir foto',
   'Remove from Your Library': 'Eliminar de Tu biblioteca',
   'Removed from Your Library': 'Eliminado de Tu biblioteca',
   'Add to Your Library': 'Guardar en Tu biblioteca',

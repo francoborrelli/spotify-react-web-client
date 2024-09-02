@@ -131,7 +131,7 @@ export const EditPlaylistModal = memo(() => {
                     className='edit-playlist-submit-button'
                     onClick={props.submit || props.onSubmit}
                   >
-                    <span>Save</span>
+                    <span>{t('Save')}</span>
                   </button>
                 </div>
               </div>
@@ -156,7 +156,7 @@ export const EditPlaylistModal = memo(() => {
                         >
                           <path d='M17.318 1.975a3.329 3.329 0 1 1 4.707 4.707L8.451 20.256c-.49.49-1.082.867-1.735 1.103L2.34 22.94a1 1 0 0 1-1.28-1.28l1.581-4.376a4.726 4.726 0 0 1 1.103-1.735L17.318 1.975zm3.293 1.414a1.329 1.329 0 0 0-1.88 0L5.159 16.963c-.283.283-.5.624-.636 1l-.857 2.372 2.371-.857a2.726 2.726 0 0 0 1.001-.636L20.611 5.268a1.329 1.329 0 0 0 0-1.879z'></path>
                         </svg>
-                        <span data-encore-id='text'>Choose photo</span>
+                        <span data-encore-id='text'>{t('Choose photo')}</span>
                       </div>
                     </button>
                     <input type='file' onChange={handleChange} accept='image/.jpg, image/.jpeg' />
@@ -164,7 +164,9 @@ export const EditPlaylistModal = memo(() => {
                 </div>
                 <img
                   src={
-                    fileUrl || (playlist?.images && playlist?.images.length)
+                    fileUrl
+                      ? fileUrl
+                      : playlist?.images && playlist?.images.length
                       ? playlist?.images[0].url
                       : PLAYLIST_DEFAULT_IMAGE
                   }
