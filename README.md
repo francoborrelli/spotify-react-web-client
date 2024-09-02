@@ -48,7 +48,7 @@
 
 ## 📸 Screenshots
 
-More in images folder.
+More in images [folder](https://github.com/francoborrelli/spotify-react-web-client/tree/main/images).
 
 <div align="center">
     <table >
@@ -58,12 +58,12 @@ More in images folder.
          <img src="images/CurrentDevices.png?raw=true 'Playlist'"/>
        </td>
         <td>
-         <img src="images/playlist.png?raw=true 'Playlist'"/>
+         <img src="images/NewPlaylist.png?raw=true 'Playlist'"/>
           <img src="images/browse.png?raw=true 'Playlist'"/>
        </td>
                  <td>
          <img src="images/Profile.png?raw=true 'Playlist'"/>
-          <img src="images/artist.png?raw=true 'Playlist'"/>
+          <img src="images/playlist.png?raw=true 'Playlist'"/>
        </td>
      </tr>
     </table>
