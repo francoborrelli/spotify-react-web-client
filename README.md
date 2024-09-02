@@ -4,15 +4,22 @@
   </p>
 </a>
 
+<p align="center">
+  
+<img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white" alt="Spotify Badge">
+<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React Badge">
+<img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript Badge">
+<img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white" alt="Redux Badge">
 
+</p>
 
 
 # 🎧 Spotify React Web Client
 
-![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Typescript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)  ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-
 > [!IMPORTANT]  
 > Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
+
+![gif](https://github.com/user-attachments/assets/2077cdef-f3fa-49c9-a905-9cc9ab6629fb)
 
 
 ## 🚀 Features
@@ -49,6 +56,8 @@
 ## 📸 Screenshots
 
 More in images [folder](https://github.com/francoborrelli/spotify-react-web-client/tree/main/images).
+
+
 
 <div align="center">
     <table >
