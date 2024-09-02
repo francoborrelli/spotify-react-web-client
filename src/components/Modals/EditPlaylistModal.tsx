@@ -103,7 +103,6 @@ export const EditPlaylistModal = memo(() => {
               }
               await Promise.all(promises);
               message.success('Playlist updated successfully');
-              dispatch(editPlaylistModalActions.setPlaylist({ playlist: null }));
               setLoading(false);
 
               if (currentPlaylist) {
@@ -114,6 +113,8 @@ export const EditPlaylistModal = memo(() => {
               } else {
                 dispatch(yourLibraryActions.fetchMyPlaylists());
               }
+
+              dispatch(editPlaylistModalActions.setPlaylist({ playlist: null }));
 
               return true;
             } catch (error) {
