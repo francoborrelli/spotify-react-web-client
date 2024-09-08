@@ -14,6 +14,7 @@ export const home = {
   TRACKS: 'Canciones',
   Preview: 'Vista previa',
   'Log In': 'Iniciar sesión',
+  [`Let's access your library`]: `Accede a tu biblioteca`,
   'Log In to access all the features of the app':
     'Inicia sesión para acceder a todas las funciones de la aplicación',
   'Your top mixes': 'Tus mixes más escuchados',

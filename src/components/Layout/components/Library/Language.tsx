@@ -17,27 +17,11 @@ export const LanguageButton = memo(() => {
   const { t } = useTranslation(['navbar']);
   const dispatch = useAppDispatch();
 
-  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
   const selectedLanguage = useAppSelector((state) => state.language.language);
 
   const currentLanguage = AVAILABLE_LANGUAGES.find(
     (language) => language.value === selectedLanguage
   );
-
-  if (collapsed) {
-    return (
-      <Tooltip placement='right' title={t('Language')}>
-        <button
-          className={'language-button collapsed'}
-          onClick={() => {
-            dispatch(languageActions.openLanguageModal());
-          }}
-        >
-          <WorldIcon />
-        </button>
-      </Tooltip>
-    );
-  }
 
   return (
     <>
@@ -48,7 +32,7 @@ export const LanguageButton = memo(() => {
         }}
       >
         <Space align='center'>
-          <WorldIcon /> {collapsed ? '' : currentLanguage?.label}
+          <WorldIcon /> {currentLanguage?.label}
         </Space>
       </button>
     </>

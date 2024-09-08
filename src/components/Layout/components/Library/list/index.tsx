@@ -13,6 +13,9 @@ import { useMemo } from 'react';
 import { isActiveOnOtherDevice } from '../../../../../store/slices/spotify';
 import useIsMobile from '../../../../../utils/isMobile';
 import { getLibraryCollapsed, uiActions } from '../../../../../store/slices/ui';
+import { LanguageButton } from '../Language';
+import { DetailsCard } from '../../NowPlaying/Details/card';
+import { LibraryLoginInfo } from './loginInfo';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',
@@ -20,12 +23,8 @@ const COLLAPSED_STYLE = {
 } as const;
 
 const YourLibrary = () => {
-  const isMobile = useIsMobile();
-  const dispatch = useAppDispatch();
-  const items = useAppSelector(getLibraryItems);
   const collapsed = useAppSelector(getLibraryCollapsed);
   const user = useAppSelector((state) => state.auth.user);
-  const view = useAppSelector((state) => state.yourLibrary.view);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
 
   const heightValue = useMemo(() => {
@@ -51,32 +50,56 @@ const YourLibrary = () => {
               height: `calc(100vh - ${heightValue}px`,
             }}
           >
-            {!collapsed && user ? <SearchArea /> : null}
-
-            <div
-              className={`${collapsed ? 'collapsed' : ''} ${
-                !collapsed && view === 'GRID' ? 'grid-view' : ''
-              }`}
-            >
-              {items.map((item) => {
-                if (collapsed) return <ListItemComponent key={item.id} item={item} />;
-
-                return (
-                  <div
-                    key={item.id}
-                    onClick={isMobile ? () => dispatch(uiActions.collapseLibrary()) : undefined}
-                  >
-                    {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
-                    {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
-                    {view === 'GRID' ? <GridItemComponent key={item.id} item={item} /> : ''}
-                  </div>
-                );
-              })}
-            </div>
+            {!user ? <AnonymousContent /> : <LoggedContent />}
           </div>
+
+          {!user ? (
+            <div style={{ marginLeft: 10 }}>
+              <LanguageButton />
+            </div>
+          ) : null}
         </Col>
       </div>
     </div>
+  );
+};
+
+const AnonymousContent = () => {
+  return <LibraryLoginInfo />;
+};
+
+const LoggedContent = () => {
+  const isMobile = useIsMobile();
+  const dispatch = useAppDispatch();
+  const items = useAppSelector(getLibraryItems);
+  const collapsed = useAppSelector(getLibraryCollapsed);
+  const view = useAppSelector((state) => state.yourLibrary.view);
+
+  return (
+    <>
+      {!collapsed ? <SearchArea /> : null}
+
+      <div
+        className={`${collapsed ? 'collapsed' : ''} ${
+          !collapsed && view === 'GRID' ? 'grid-view' : ''
+        }`}
+      >
+        {items.map((item) => {
+          if (collapsed) return <ListItemComponent key={item.id} item={item} />;
+
+          return (
+            <div
+              key={item.id}
+              onClick={isMobile ? () => dispatch(uiActions.collapseLibrary()) : undefined}
+            >
+              {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
+              {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
+              {view === 'GRID' ? <GridItemComponent key={item.id} item={item} /> : ''}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
