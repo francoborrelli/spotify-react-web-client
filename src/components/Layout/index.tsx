@@ -15,17 +15,19 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 // Interfaces
 
 // Redux
-import { isActiveOnOtherDevice, spotifyActions } from '../../store/slices/spotify';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { isRightLayoutOpen, uiActions } from '../../store/slices/ui';
+import { isActiveOnOtherDevice, spotifyActions } from '../../store/slices/spotify';
+import { getLibraryCollapsed, isRightLayoutOpen, uiActions } from '../../store/slices/ui';
+import { LoginFooter } from './components/LoginFooter';
 
 export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector((state) => state.auth.user);
   const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
+  const libraryCollapsed = useAppSelector(getLibraryCollapsed);
   const hasState = useAppSelector((state) => !!state.spotify.state);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
-  const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -45,8 +47,8 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(spotifyActions.fetchDevices());
-  }, [dispatch]);
+    if (user) dispatch(spotifyActions.fetchDevices());
+  }, [user, dispatch]);
 
   return (
     <>
@@ -62,7 +64,9 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
           wrap
           justify='end'
           gutter={[8, 8]}
-          style={{ height: `calc(100vh - ${activeOnOtherDevice ? '141' : '107'}px)` }}
+          style={{
+            height: `calc(100vh - ${activeOnOtherDevice ? '141' : '107'}px)`,
+          }}
         >
           <Col span={24}>
             <Navbar />
@@ -119,10 +123,7 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
         </Row>
       </div>
 
-      {/* Player bar */}
-      <footer>
-        <PlayingBar />
-      </footer>
+      {<footer>{user ? <PlayingBar /> : <LoginFooter />}</footer>}
     </>
   );
 };

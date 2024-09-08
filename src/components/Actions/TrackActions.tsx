@@ -38,11 +38,13 @@ import { likedSongsActions } from '../../store/slices/likedSongs';
 import { spotifyActions } from '../../store/slices/spotify';
 import { albumActions } from '../../store/slices/album';
 import { artistActions } from '../../store/slices/artist';
+import { Artist } from '../../interfaces/artist';
 
 interface TrackActionsWrapperProps {
   canEdit?: boolean;
   saved?: boolean;
   album?: Album | null;
+  artist?: Artist | null;
   onSavedToggle?: () => void;
   playlist?: Playlist | null;
   track: Track | Spotify.Track;
@@ -51,7 +53,7 @@ interface TrackActionsWrapperProps {
 }
 
 export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) => {
-  const { children, track, playlist, canEdit, album, saved, onSavedToggle } = props;
+  const { children, artist, track, playlist, canEdit, album, saved, onSavedToggle } = props;
 
   const { t } = useTranslation(['playlist']);
 
@@ -198,8 +200,11 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           });
         },
       },
-      { type: 'divider' },
-      {
+      { type: 'divider' }
+    );
+
+    if (!artist) {
+      items.push({
         label: t('Go to artist'),
         key: '5',
         icon: <ArtistIcon />,
@@ -209,8 +214,8 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
             `/artist/${track.artists[0]?.id || track.artists[0].uri.split(':').reverse()[0]}`
           );
         },
-      }
-    );
+      });
+    }
 
     if (!album) {
       items.push({

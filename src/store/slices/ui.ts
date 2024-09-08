@@ -69,6 +69,13 @@ export const isRightLayoutOpen = createSelector(
   }
 );
 
+export const getLibraryCollapsed = createSelector(
+  [(state: RootState) => state.ui.libraryCollapsed, (state: RootState) => state.auth.user],
+  (libraryCollapsed, user) => {
+    return !user ? false : libraryCollapsed;
+  }
+);
+
 export const uiActions = {
   ...uiSlice.actions,
 };

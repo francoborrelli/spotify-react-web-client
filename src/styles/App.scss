@@ -731,3 +731,101 @@ a {
     }
   }
 }
+
+.login-footer {
+  padding-top: 17px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 620px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  flex-direction: row;
+
+  .login-container {
+    border-radius: 2px;
+    padding: 12px 24px 10px 15px;
+    background-image: -webkit-gradient(linear, left top, right top, from(#af2896), to(#509bf5));
+    background-image: linear-gradient(90deg, #af2896, #509bf5);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    gap: 24px;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+
+    .title {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #fff;
+    }
+
+    .description {
+      color: #fff;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+  }
+}
+
+.white-button {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  touch-action: manipulation;
+  transition-duration: 33ms;
+  user-select: none;
+  vertical-align: middle;
+  transform: translate3d(0px, 0px, 0px);
+  padding: 0px;
+  min-inline-size: 0px;
+  align-self: center;
+  color: #b3b3b3;
+
+  &:hover,
+  &:hover span {
+    transform: scale(1.04);
+  }
+
+  &:active span {
+    background-color: #c7c7c7;
+    box-shadow: none;
+    transform: scale(1);
+  }
+
+  span {
+    color: black;
+    font-weight: 700;
+    font-size: 1rem;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: var(--encore-button-corner-radius, 9999px);
+  }
+}

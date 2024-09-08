@@ -5,8 +5,8 @@ import { FC, RefObject, useEffect } from 'react';
 import HomePageContainer from './container';
 
 // Interfaces
-import { useAppDispatch } from '../../store/store';
 import { homeActions } from '../../store/slices/home';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 interface HomeProps {
   container: RefObject<HTMLDivElement>;
@@ -16,14 +16,17 @@ const Home: FC<HomeProps> = (props) => {
   const { container } = props;
 
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(homeActions.fetchTopTracks());
-    dispatch(homeActions.fetchMadeForYou());
+    if (user) {
+      dispatch(homeActions.fetchTopTracks());
+      dispatch(homeActions.fetchMadeForYou());
+      dispatch(homeActions.fetchRecentlyPlayed());
+    }
     dispatch(homeActions.fetchNewReleases());
-    dispatch(homeActions.fetchRecentlyPlayed());
     dispatch(homeActions.fecthFeaturedPlaylists());
-  }, [dispatch]);
+  }, [user, dispatch]);
 
   return <HomePageContainer container={container} />;
 };

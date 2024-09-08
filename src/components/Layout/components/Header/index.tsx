@@ -4,7 +4,7 @@ import { RefObject, useEffect, useState, type FC } from 'react';
 // Utils
 import tinycolor from 'tinycolor2';
 import { useAppSelector } from '../../../../store/store';
-import { isRightLayoutOpen } from '../../../../store/slices/ui';
+import { getLibraryCollapsed, isRightLayoutOpen } from '../../../../store/slices/ui';
 
 interface PageHeaderProps {
   children: any;
@@ -29,7 +29,7 @@ export const PageHeader: FC<PageHeaderProps> = ({
   const [activeHeader, setActiveHeader] = useState(false);
 
   const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
-  const libraryCollapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+  const libraryCollapsed = useAppSelector(getLibraryCollapsed);
 
   useEffect(() => {
     const ref = container.current;

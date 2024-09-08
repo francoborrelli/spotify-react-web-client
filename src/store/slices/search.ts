@@ -55,12 +55,16 @@ const fetchPlaylists = createAsyncThunk<Playlist[], string>(
 
 const fetchSongs = createAsyncThunk<[TrackWithSave[], number], string>(
   'search/fetchSongs',
-  async (query) => {
+  async (query, params) => {
     const response = await querySearch({ q: query, type: 'track', limit: 50 });
     const tracks = response.data.tracks.items;
     const total = response.data.tracks.total;
 
-    const extraRequests = [userService.checkSavedTracks(tracks.map((t) => t.id))];
+    const extraRequests = [
+      userService.checkSavedTracks(tracks.map((t) => t.id)).catch(() => ({
+        data: [],
+      })),
+    ];
 
     await Promise.all(extraRequests);
 
@@ -89,7 +93,11 @@ const fetchMoreSongs = createAsyncThunk<TrackWithSave[], string>(
     });
     const tracks = response.data.tracks.items;
 
-    const extraRequests = [userService.checkSavedTracks(tracks.map((t) => t.id))];
+    const extraRequests = [
+      userService.checkSavedTracks(tracks.map((t) => t.id)).catch(() => ({
+        data: [],
+      })),
+    ];
 
     await Promise.all(extraRequests);
 
@@ -135,7 +143,11 @@ export const fetchSearch = createAsyncThunk<
   const albums = responses[2].data.albums.items;
   const playlists = responses[4].data.playlists.items;
 
-  const extraRequests = [userService.checkSavedTracks(tracks.map((t) => t.id))];
+  const extraRequests = [
+    userService.checkSavedTracks(tracks.map((t) => t.id)).catch(() => ({
+      data: [],
+    })),
+  ];
 
   await Promise.all(extraRequests);
 

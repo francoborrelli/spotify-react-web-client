@@ -47,7 +47,7 @@ export const fetchPlaylist = createAsyncThunk<
   const promises = [
     playlistService.getPlaylist(id),
     playlistService.getPlaylistItems(id),
-    userService.checkFollowedPlaylist(id),
+    user ? userService.checkFollowedPlaylist(id) : Promise.resolve({ data: [false] }),
   ];
 
   const responses = await Promise.all(promises);
@@ -63,7 +63,7 @@ export const fetchPlaylist = createAsyncThunk<
 
   const extraPromises = [
     userService.getUser(playlist.owner!.id),
-    ids.length
+    ids.length && user
       ? userService.checkSavedTracks(items.map((item) => item.track.id)).catch(() => ({ data: [] }))
       : Promise.resolve({ data: [] }),
     isMine

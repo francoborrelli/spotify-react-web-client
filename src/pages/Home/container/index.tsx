@@ -10,6 +10,7 @@ import { FeaturePlaylists } from '../components/featurePlaylists';
 import { FC, memo, RefObject, useRef, useState } from 'react';
 import { RecentlyPlayed } from '../components/recentlyPlayed';
 import { TopMixes } from '../components/topMixes';
+import { useAppSelector } from '../../../store/store';
 
 interface HomePageContainerProps {
   container: RefObject<HTMLDivElement>;
@@ -19,6 +20,7 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
   const { container } = props;
   const [color, setColor] = useState('rgb(66, 32, 35)');
 
+  const user = useAppSelector((state) => state.auth.user);
   const sectionContainerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -27,7 +29,8 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
       <div
         className='Home-seccion'
         style={{
-          paddingTop: 50,
+          paddingTop: user ? 50 : 0,
+          marginTop: user ? 0 : -40,
           transition: 'background: 5s',
           background: `linear-gradient(180deg, ${color} 2%, rgb(18, 18, 18) 18%)`,
         }}
@@ -50,11 +53,11 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
           </Col>
 
           <Col span={24}>
-            <NewReleases />
+            <FeaturePlaylists />
           </Col>
 
           <Col span={24}>
-            <FeaturePlaylists />
+            <NewReleases />
           </Col>
         </Row>
       </div>

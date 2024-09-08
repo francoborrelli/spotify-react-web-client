@@ -16,4 +16,5 @@ export const navbar = {
   COMPACT: 'Compacto',
   GRID: 'Grilla',
   LIST: 'Lista',
+  'Log In': 'Iniciar sesión',
 };

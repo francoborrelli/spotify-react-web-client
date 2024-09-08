@@ -1,15 +1,21 @@
 import { Space } from 'antd';
 import { Link } from 'react-router-dom';
+import { WhiteButton } from '../../../Button';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { useAppSelector } from '../../../../store/store';
+import { loginToSpotify } from '../../../../store/slices/auth';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
+
+// Constants
 import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
 const Header = ({ opacity }: { opacity: number; title?: string }) => {
   const { t } = useTranslation(['navbar']);
+
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
 
   return (
@@ -33,19 +39,23 @@ const Header = ({ opacity }: { opacity: number; title?: string }) => {
             <News />
           </div> */}
 
-          <div className='avatar-container'>
-            <Link to={`/users/${user!.id}`}>
-              <img
-                className='avatar'
-                id='user-avatar'
-                alt='User Avatar'
-                style={{ marginTop: -1 }}
-                src={
-                  user?.images && user.images.length ? user.images[0].url : ARTISTS_DEFAULT_IMAGE
-                }
-              />
-            </Link>
-          </div>
+          {user ? (
+            <div className='avatar-container'>
+              <Link to={`/users/${user!.id}`}>
+                <img
+                  className='avatar'
+                  id='user-avatar'
+                  alt='User Avatar'
+                  style={{ marginTop: -1 }}
+                  src={
+                    user?.images && user.images.length ? user.images[0].url : ARTISTS_DEFAULT_IMAGE
+                  }
+                />
+              </Link>
+            </div>
+          ) : (
+            <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify(false))} />
+          )}
         </Space>
       </div>
     </div>

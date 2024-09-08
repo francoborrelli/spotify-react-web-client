@@ -12,7 +12,7 @@ import { GridItemComponent } from '../../../../Lists/list';
 import { useMemo } from 'react';
 import { isActiveOnOtherDevice } from '../../../../../store/slices/spotify';
 import useIsMobile from '../../../../../utils/isMobile';
-import { uiActions } from '../../../../../store/slices/ui';
+import { getLibraryCollapsed, uiActions } from '../../../../../store/slices/ui';
 
 const COLLAPSED_STYLE = {
   overflowY: 'scroll',
@@ -23,9 +23,10 @@ const YourLibrary = () => {
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
   const items = useAppSelector(getLibraryItems);
+  const collapsed = useAppSelector(getLibraryCollapsed);
+  const user = useAppSelector((state) => state.auth.user);
   const view = useAppSelector((state) => state.yourLibrary.view);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
-  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
 
   const heightValue = useMemo(() => {
     let value = 278;
@@ -38,7 +39,7 @@ const YourLibrary = () => {
     <div className={`Navigation-section library ${!collapsed ? 'open' : ''}`}>
       <LibraryTitle />
 
-      {!collapsed ? <LibraryFilters /> : null}
+      {!collapsed && user ? <LibraryFilters /> : null}
 
       <div className='library-list-container'>
         <Col style={collapsed ? {} : COLLAPSED_STYLE}>
@@ -50,7 +51,7 @@ const YourLibrary = () => {
               height: `calc(100vh - ${heightValue}px`,
             }}
           >
-            {!collapsed ? <SearchArea /> : null}
+            {!collapsed && user ? <SearchArea /> : null}
 
             <div
               className={`${collapsed ? 'collapsed' : ''} ${

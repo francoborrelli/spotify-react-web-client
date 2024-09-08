@@ -22,6 +22,7 @@ import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
 import type { Playlist } from '../../../../../interfaces/playlists';
 import { memo } from 'react';
+import { getLibraryCollapsed } from '../../../../../store/slices/ui';
 
 const CardCompact = (props: CardShortProps) => {
   const { title, subtitle, isCurrent, onClick, onDoubleClick } = props;
@@ -77,7 +78,7 @@ const CardCompact = (props: CardShortProps) => {
 };
 
 const Card = memo((props: CardShortProps) => {
-  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+  const collapsed = useAppSelector(getLibraryCollapsed);
 
   const onDoubleClick = () => {
     playerService.startPlayback({ context_uri: props.uri });

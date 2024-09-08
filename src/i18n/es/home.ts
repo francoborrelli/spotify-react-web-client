@@ -12,6 +12,10 @@ export const home = {
   PLAYLISTS: 'Playlists',
   ARTISTS: 'Artistas',
   TRACKS: 'Canciones',
+  Preview: 'Vista previa',
+  'Log In': 'Iniciar sesión',
+  'Log In to access all the features of the app':
+    'Inicia sesión para acceder a todas las funciones de la aplicación',
   'Your top mixes': 'Tus mixes más escuchados',
   'Recently played': 'Escuchado recientemente',
   'Featured playlists': '¡En tendencia!',

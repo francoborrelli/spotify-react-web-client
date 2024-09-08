@@ -58,23 +58,17 @@ window.addEventListener('resize', () => {
 const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.auth.token);
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
     const token = getFromLocalStorageWithExpiry('access_token');
+    dispatch(authActions.setToken({ token }));
     if (!token) {
-      dispatch(loginToSpotify());
-    } else {
-      dispatch(authActions.setToken({ token }));
+      dispatch(loginToSpotify(true));
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchUser());
-    }
-  }, [token, dispatch]);
-
-  if (!token) return <Spinner loading />;
+  if (!user) return children;
 
   const webPlaybackSdkProps: WebPlaybackProps = {
     playerAutoConnect: true,
@@ -88,7 +82,7 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
       dispatch(authActions.fetchUser());
     },
     onPlayerError: (e) => {
-      dispatch(loginToSpotify());
+      dispatch(loginToSpotify(false));
     },
     onPlayerDeviceSelected: () => {
       dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
@@ -132,13 +126,15 @@ const RootComponent = () => {
   );
 
   useEffect(() => {
+    if (!user) return;
     document.addEventListener('keydown', handleSpaceBar);
     return () => {
       document.removeEventListener('keydown', handleSpaceBar);
     };
-  }, [handleSpaceBar]);
+  }, [user, handleSpaceBar]);
 
   useEffect(() => {
+    if (!user) return;
     const handleContextMenu = (e: any) => {
       e.preventDefault();
     };
@@ -146,26 +142,31 @@ const RootComponent = () => {
     return () => {
       document.removeEventListener('keydown', handleContextMenu);
     };
-  }, []);
+  }, [user]);
 
   const routes = [
-    { path: '', element: <Home container={container} /> },
+    { path: '', element: <Home container={container} />, public: true },
     { path: '/collection/tracks', element: <LikedSongsPage container={container} /> },
-    { path: '/playlist/:playlistId', element: <PlaylistView container={container} /> },
+    {
+      public: true,
+      path: '/playlist/:playlistId',
+      element: <PlaylistView container={container} />,
+    },
     { path: '/album/:albumId', element: <AlbumView container={container} /> },
     {
       path: '/artist/:artistId/discography',
       element: <ArtistDiscographyPage container={container} />,
     },
-    { path: '/artist/:artistId', element: <ArtistPage container={container} /> },
+    { public: true, path: '/artist/:artistId', element: <ArtistPage container={container} /> },
     { path: '/users/:userId/artists', element: <ProfileArtists container={container} /> },
     { path: '/users/:userId/playlists', element: <ProfilePlaylists container={container} /> },
     { path: '/users/:userId/tracks', element: <ProfileTracks container={container} /> },
     { path: '/users/:userId', element: <Profile container={container} /> },
     { path: '/genre/:genreId', element: <GenrePage /> },
-    { path: '/search', element: <BrowsePage /> },
+    { public: true, path: '/search', element: <BrowsePage /> },
     { path: '/recent-searches', element: <RecentlySearched /> },
     {
+      public: true,
       path: '/search/:search',
       element: <SearchContainer container={container} />,
       children: [
@@ -195,13 +196,19 @@ const RootComponent = () => {
   ];
 
   return (
-    <Spinner loading={!user}>
-      <Router>
-        <AppLayout>
-          <div className='Main-section' ref={container}>
-            <div style={{ minHeight: 'calc(100vh - 230px)', width: '100%' }}>
-              <Routes>
-                {routes.map((route) => (
+    <Router>
+      <AppLayout>
+        <div className='Main-section' ref={container}>
+          <div
+            style={{
+              minHeight: user ? 'calc(100vh - 230px)' : 'calc(100vh - 100px)',
+              width: '100%',
+            }}
+          >
+            <Routes>
+              {routes
+                .filter((r) => (user ? true : r.public))
+                .map((route) => (
                   <Route
                     key={route.path}
                     path={route.path}
@@ -218,12 +225,11 @@ const RootComponent = () => {
                       : undefined}
                   </Route>
                 ))}
-              </Routes>
-            </div>
+            </Routes>
           </div>
-        </AppLayout>
-      </Router>
-    </Spinner>
+        </div>
+      </AppLayout>
+    </Router>
   );
 };
 

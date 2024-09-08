@@ -45,6 +45,7 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
   }, [dispatch, playlistId]);
 
   if (!playlist) return null;
+
   return (
     <div className='Playlist-section' ref={containerRef}>
       <PlaylistHeader color={color} container={props.container} sectionContainer={containerRef} />

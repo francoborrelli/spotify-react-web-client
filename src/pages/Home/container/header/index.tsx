@@ -38,7 +38,13 @@ const ChipsSection = memo(() => {
 });
 
 export const HomeHeader: FC<HomeHeaderProps> = (props) => {
+  const user = useAppSelector((state) => state.auth.user);
+
   const { container, sectionContainer, color } = props;
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <PageHeader

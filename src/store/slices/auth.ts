@@ -17,24 +17,32 @@ const initialState: { token?: string; playerLoaded: boolean; user?: User } = {
   token: getFromLocalStorageWithExpiry('access_token') || undefined,
 };
 
-export const loginToSpotify = createAsyncThunk('auth/loginToSpotify', async () => {
-  let token: string | undefined = getFromLocalStorageWithExpiry('access_token') as string;
+export const loginToSpotify = createAsyncThunk<{ token?: string }, boolean>(
+  'auth/loginToSpotify',
+  async (anonymous, api) => {
+    let token: string | undefined = getFromLocalStorageWithExpiry('access_token') as string;
 
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      return { token };
+    }
+
+    token = await login.getToken();
+
+    if (!token) {
+      login.logInWithSpotify(anonymous);
+    } else {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    }
+
+    let refresh: string | null = localStorage.getItem('refresh_token');
+    if (refresh) {
+      api.dispatch(fetchUser());
+    }
+
     return { token };
   }
-
-  token = await login.getToken();
-
-  if (!token) {
-    login.logInWithSpotify();
-  } else {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-  }
-
-  return { token };
-});
+);
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
   const response = await authService.fetchUser();

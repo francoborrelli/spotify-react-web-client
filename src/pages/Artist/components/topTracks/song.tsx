@@ -28,6 +28,7 @@ export const Song = (props: SongProps) => {
       song={song}
       index={index}
       view={'LIST'}
+      artist={artist}
       saved={song.saved}
       onToggleLike={toggleLike}
       context={

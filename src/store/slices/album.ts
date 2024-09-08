@@ -10,6 +10,7 @@ import type { Album, AlbumFullObject } from '../../interfaces/albums';
 import type { Pagination } from '../../interfaces/api';
 import type { Artist } from '../../interfaces/artist';
 import type { Track, TrackWithSave } from '../../interfaces/track';
+import { RootState } from '../store';
 
 const initialState: {
   artist: Artist | null;
@@ -39,11 +40,14 @@ const initialState: {
 export const fetchAlbum = createAsyncThunk<
   [AlbumFullObject, TrackWithSave[], boolean, Artist, Album[]],
   string
->('album/fetchAlbum', async (id) => {
+>('album/fetchAlbum', async (id, params) => {
+  const state = params.getState() as RootState;
+  const user = state.auth.user;
+
   const promises = [
     albumsService.fetchAlbum(id),
     albumsService.fetchAlbumTracks(id, { limit: 50 }),
-    userService.checkFollowingArtists([id]),
+    user ? userService.checkFollowingArtists([id]) : Promise.resolve({ data: [false] }),
   ];
 
   const responses = await Promise.all(promises);

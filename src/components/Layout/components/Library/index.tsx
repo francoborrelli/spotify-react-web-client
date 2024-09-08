@@ -1,7 +1,7 @@
 import YourLibrary from './list';
 
 // Redux
-import { useAppDispatch } from '../../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 // Interfaces
@@ -11,12 +11,15 @@ interface LibraryProps {}
 
 export const Library: FC<LibraryProps> = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(yourLibraryActions.fetchMyAlbums());
-    dispatch(yourLibraryActions.fetchMyArtists());
-    dispatch(yourLibraryActions.fetchMyPlaylists());
-  }, [dispatch]);
+    if (user) {
+      dispatch(yourLibraryActions.fetchMyAlbums());
+      dispatch(yourLibraryActions.fetchMyArtists());
+      dispatch(yourLibraryActions.fetchMyPlaylists());
+    }
+  }, [user, dispatch]);
 
   return (
     <div style={{ height: '100%' }}>

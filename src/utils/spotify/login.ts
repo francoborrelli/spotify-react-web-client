@@ -49,7 +49,7 @@ const generateRandomString = (length: number) => {
   return values.reduce((acc, x) => acc + possible[x % possible.length], '');
 };
 
-const logInWithSpotify = async () => {
+const logInWithSpotify = async (anonymous?: boolean) => {
   let codeVerifier = localStorage.getItem('code_verifier');
 
   if (!codeVerifier) {
@@ -60,16 +60,23 @@ const logInWithSpotify = async () => {
   const hashed = await sha256(codeVerifier);
   const codeChallenge = base64encode(hashed);
 
-  const params = {
-    client_id,
-    redirect_uri,
-    scope: SCOPES.join(' '),
-    response_type: 'code',
-    code_challenge_method: 'S256',
-    code_challenge: codeChallenge,
-  };
-
-  authUrl.search = new URLSearchParams(params).toString();
+  if (anonymous) {
+    authUrl.search = new URLSearchParams({
+      client_id,
+      scope: '',
+      redirect_uri,
+      response_type: 'token',
+    }).toString();
+  } else {
+    authUrl.search = new URLSearchParams({
+      client_id,
+      redirect_uri,
+      response_type: 'code',
+      scope: SCOPES.join(' '),
+      code_challenge_method: 'S256',
+      code_challenge: codeChallenge,
+    }).toString();
+  }
   window.location.href = authUrl.toString();
 };
 
@@ -106,7 +113,14 @@ const getToken = async () => {
   if (token) return token;
 
   const urlParams = new URLSearchParams(window.location.search);
+
   let code = urlParams.get('code') as string;
+  let access_token = window.location.hash.split('&')[0].split('=')[1];
+
+  if (access_token) {
+    setLocalStorageWithExpiry('public_access_token', access_token, 3600);
+    return access_token;
+  }
 
   if (!code) return null;
 

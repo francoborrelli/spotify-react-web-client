@@ -13,7 +13,7 @@ import { Tooltip } from '../../../Tooltip';
 import { useTranslation } from 'react-i18next';
 
 // Redux
-import { uiActions } from '../../../../store/slices/ui';
+import { getLibraryCollapsed, uiActions } from '../../../../store/slices/ui';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 const isMobile = window.innerWidth < 900;
@@ -37,7 +37,7 @@ const CloseButton = () => {
 export const LibraryTitle = memo(() => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['navbar']);
-  const collapsed = useAppSelector((state) => state.ui.libraryCollapsed);
+  const collapsed = useAppSelector(getLibraryCollapsed);
 
   if (collapsed) {
     return (

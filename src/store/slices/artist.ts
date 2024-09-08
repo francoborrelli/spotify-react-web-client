@@ -9,6 +9,7 @@ import type { Album } from '../../interfaces/albums';
 import type { Pagination } from '../../interfaces/api';
 import type { Artist } from '../../interfaces/artist';
 import type { Track, TrackWithSave } from '../../interfaces/track';
+import { RootState } from '../store';
 
 const initialState: {
   albums: Album[];
@@ -38,10 +39,13 @@ const initialState: {
 
 export const fetchArtist = createAsyncThunk<[Artist, boolean, TrackWithSave[], Album[][]], string>(
   'artist/fetchArtist',
-  async (id) => {
+  async (id, params) => {
+    const state = params.getState() as RootState;
+    const user = state.auth.user;
+
     const promises = [
       artistService.fetchArtist(id),
-      userService.checkFollowingArtists([id]),
+      user ? userService.checkFollowingArtists([id]) : Promise.resolve({ data: [false] }),
       artistService.fetchArtistTopTracks(id),
       artistService.fetchArtistAlbums(id, { limit: 10, include_groups: 'album' }),
       artistService.fetchArtistAlbums(id, { limit: 10, include_groups: 'single' }),
@@ -62,7 +66,7 @@ export const fetchArtist = createAsyncThunk<[Artist, boolean, TrackWithSave[], A
     const compilations = (responses[6].data as Pagination<Album>).items as Album[];
 
     const extraResponses = await Promise.all([
-      userService.checkSavedTracks(tracks.map((track) => track.id)),
+      userService.checkSavedTracks(tracks.map((track) => track.id)).catch(() => ({ data: [] })),
     ]);
 
     const saved = extraResponses[0].data as boolean[];

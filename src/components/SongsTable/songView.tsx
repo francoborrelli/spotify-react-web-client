@@ -24,6 +24,7 @@ import type { Album as AlbumType } from '../../interfaces/albums';
 import { spotifyActions } from '../../store/slices/spotify';
 import useIsMobile from '../../utils/isMobile';
 import { EQUILISER_IMAGE } from '../../constants/spotify';
+import { Artist } from '../../interfaces/artist';
 
 interface DefaultProps {
   song: Track;
@@ -35,6 +36,7 @@ interface DefaultProps {
   size?: 'small' | 'normal';
   album?: AlbumType | null;
   playlist?: Playlist | null;
+  artist?: Artist | null;
   onToggleLike?: () => void;
 
   view: 'LIST' | 'COMPACT';
@@ -278,7 +280,7 @@ const Index = ({
 
 export const SongView = (props: SongViewProps) => {
   const { size = 'normal' } = props;
-  const { view, song, index, context, playlist, canEdit, fields, album } = props;
+  const { view, song, index, context, artist, playlist, canEdit, fields, album } = props;
 
   const isMobile = useIsMobile();
   const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
@@ -305,6 +307,7 @@ export const SongView = (props: SongViewProps) => {
       track={song}
       album={album}
       key={song.id}
+      artist={artist}
       canEdit={canEdit}
       playlist={playlist}
       trigger={['contextMenu']}
