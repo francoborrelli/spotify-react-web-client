@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import { getFromLocalStorageWithExpiry, setLocalStorageWithExpiry } from '../localstorage';
 import axios from 'axios';
-import { store } from '../../store/store';
 
 /* eslint-disable import/no-anonymous-default-export */
 const client_id = process.env.REACT_APP_CLIENT_ID as string;
