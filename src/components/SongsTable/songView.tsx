@@ -283,8 +283,11 @@ export const SongView = (props: SongViewProps) => {
   const { view, song, index, context, artist, playlist, canEdit, fields, album } = props;
 
   const isMobile = useIsMobile();
-  const isPlaying = useAppSelector((state) => state.spotify.state?.paused === false);
-  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+  const isPlaying = useAppSelector((state) => !!state.spotify.state?.paused);
+  const currentSong = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
 
   const isCurrent = useMemo(() => currentSong?.uri === song.uri, [currentSong, song]);
 

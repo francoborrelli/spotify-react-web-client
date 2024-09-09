@@ -1,5 +1,5 @@
 // Utils
-import { FC, RefObject, useEffect } from 'react';
+import { FC, memo, RefObject, useEffect } from 'react';
 
 // Components
 import HomePageContainer from './container';
@@ -12,11 +12,11 @@ interface HomeProps {
   container: RefObject<HTMLDivElement>;
 }
 
-const Home: FC<HomeProps> = (props) => {
+const Home: FC<HomeProps> = memo((props) => {
   const { container } = props;
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => !!state.auth.user);
 
   useEffect(() => {
     if (user) {
@@ -29,6 +29,6 @@ const Home: FC<HomeProps> = (props) => {
   }, [user, dispatch]);
 
   return <HomePageContainer container={container} />;
-};
+});
 
 export default Home;

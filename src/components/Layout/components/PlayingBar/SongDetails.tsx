@@ -37,16 +37,17 @@ const ArrowUp = (
 
 const SongDetails: FC<{ isMobile?: boolean }> = memo((props) => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.spotify.state);
+
+  const current_track = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (prev, next) => prev?.id === next?.id
+  );
   const isLiked = useAppSelector((state) => state.spotify.liked);
   const detailsOpen = useAppSelector((state) => !state.ui.detailsCollapsed);
 
   const handleToggle = () => {
     dispatch(spotifyActions.setLiked({ liked: !isLiked }));
   };
-
-  const { track_window } = state || {};
-  const { current_track } = track_window || {};
 
   if (!current_track) return <div className='mobile-hidden' style={{ minWidth: 295 }}></div>;
 

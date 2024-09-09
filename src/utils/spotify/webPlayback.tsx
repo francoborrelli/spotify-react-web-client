@@ -72,7 +72,7 @@ const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
       const state = await webPlaybackInstance.current!.getCurrentState();
       await handleState(state);
     }, playerRefreshRateMs || 1000);
-  }, [handleState, playerRefreshRateMs]);
+  }, [playerRefreshRateMs]);
 
   const clearStatePolling = useCallback(() => {
     if (statePollingInterval.current) clearInterval(statePollingInterval.current);

@@ -9,12 +9,11 @@ import { LibraryFilters, SearchArea } from '../Filters';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
 import { GridItemComponent } from '../../../../Lists/list';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { isActiveOnOtherDevice } from '../../../../../store/slices/spotify';
 import useIsMobile from '../../../../../utils/isMobile';
 import { getLibraryCollapsed, uiActions } from '../../../../../store/slices/ui';
 import { LanguageButton } from '../Language';
-import { DetailsCard } from '../../NowPlaying/Details/card';
 import { LibraryLoginInfo } from './loginInfo';
 
 const COLLAPSED_STYLE = {
@@ -28,7 +27,7 @@ const YourLibrary = () => {
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
 
   const heightValue = useMemo(() => {
-    let value = 278;
+    let value = 310;
     if (collapsed) value = 218;
     if (activeOnOtherDevice) value += 50;
     return value;
@@ -68,7 +67,7 @@ const AnonymousContent = () => {
   return <LibraryLoginInfo />;
 };
 
-const LoggedContent = () => {
+const LoggedContent = memo(() => {
   const isMobile = useIsMobile();
   const dispatch = useAppDispatch();
   const items = useAppSelector(getLibraryItems);
@@ -101,6 +100,6 @@ const LoggedContent = () => {
       </div>
     </>
   );
-};
+});
 
 export default YourLibrary;

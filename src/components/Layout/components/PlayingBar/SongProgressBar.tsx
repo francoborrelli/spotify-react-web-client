@@ -8,31 +8,25 @@ import { msToTime } from '../../../../utils';
 // Redux
 import { useAppSelector } from '../../../../store/store';
 import { playerService } from '../../../../services/player';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
-const SongProgressBar = () => {
-  const state = useAppSelector((state) => state.spotify.state);
+const SongProgressBar = memo(() => {
+  const loaded = useAppSelector((state) => !!state.spotify.state);
+  const position = useAppSelector((state) => state.spotify.state?.position);
+  const duration = useAppSelector((state) => state.spotify.state?.duration);
 
   const [value, setValue] = useState<number>(0);
   const [selecting, setSelecting] = useState<boolean>(false);
 
   useEffect(() => {
-    if (state && !selecting) {
-      setValue(
-        state?.duration
-          ? state.position >= state?.duration
-            ? 0
-            : state.position / state.duration
-          : 0
-      );
+    if (position && duration && !selecting) {
+      setValue(duration ? (position >= duration ? 0 : position / duration) : 0);
     }
-  }, [state, selecting]);
+  }, [position, duration, selecting]);
 
   return (
     <div className='flex items-center justify-between w-full'>
-      <div className='text-white mr-2 text-xs'>
-        {state && state.position ? msToTime(state.position) : '0:00'}
-      </div>
+      <div className='text-white mr-2 text-xs'>{position ? msToTime(position) : '0:00'}</div>
       <div style={{ width: '100%' }}>
         <Slider
           isEnabled
@@ -45,18 +39,16 @@ const SongProgressBar = () => {
           }}
           onChangeEnd={(value) => {
             setSelecting(false);
-            if (!state) return;
+            if (!loaded) return;
             setValue(value);
-            const newPosition = Math.round(state.duration * value);
+            const newPosition = Math.round((duration || 0) * value);
             playerService.seekToPosition(newPosition).then();
           }}
         />
       </div>
-      <div className='text-white ml-2 text-xs'>
-        {state && state.duration ? msToTime(state.duration) : '0:00'}
-      </div>
+      <div className='text-white ml-2 text-xs'>{duration ? msToTime(duration) : '0:00'}</div>
     </div>
   );
-};
+});
 
 export default SongProgressBar;

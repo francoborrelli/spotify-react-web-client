@@ -193,7 +193,7 @@ const Card = memo((props: CardShortProps) => {
 
 export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
   const navigate = useNavigate();
-  const state = useAppSelector((state) => state.spotify.state);
+  const contextUri = useAppSelector((state) => state.spotify.state?.context.uri);
 
   const onClick = () => {
     navigate(`/artist/${artist.id}`);
@@ -208,7 +208,7 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
           subtitle='Artist'
           onClick={onClick}
           title={artist.name}
-          isCurrent={state?.context?.uri === artist.uri}
+          isCurrent={contextUri === artist.uri}
           image={artist?.images[0]?.url || ARTISTS_DEFAULT_IMAGE}
         />
       </div>
@@ -216,9 +216,9 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
   );
 };
 
-export const AlbumCardShort = ({ album }: { album: Album }) => {
+export const AlbumCardShort = memo(({ album }: { album: Album }) => {
   const navigate = useNavigate();
-  const state = useAppSelector((state) => state.spotify.state);
+  const contextUri = useAppSelector((state) => state.spotify.state?.context.uri);
 
   const onClick = () => {
     navigate(`/album/${album.id}`);
@@ -233,17 +233,17 @@ export const AlbumCardShort = ({ album }: { album: Album }) => {
           title={album.name}
           image={album.images[0].url}
           subtitle={album.artists[0].name}
-          isCurrent={state?.context?.uri === album.uri}
+          isCurrent={contextUri === album.uri}
         />
       </div>
     </AlbumActionsWrapper>
   );
-};
+});
 
-const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
+const PlaylistCardShort = memo(({ playlist }: { playlist: Playlist }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const state = useAppSelector((state) => state.spotify.state);
+  const contextUri = useAppSelector((state) => state.spotify.state?.context.uri);
 
   const onClick = () => {
     if (playlist.id === 'liked-songs') {
@@ -267,14 +267,14 @@ const PlaylistCardShort = ({ playlist }: { playlist: Playlist }) => {
           uri={playlist.uri}
           title={playlist.name}
           disabled={!playlist.tracks?.total}
-          isCurrent={state?.context?.uri === playlist.uri}
+          isCurrent={contextUri === playlist.uri}
           subtitle={`Playlist • ${playlist.owner?.display_name}`}
           image={playlist?.images?.length ? playlist?.images[0]?.url : PLAYLIST_DEFAULT_IMAGE}
         />
       </div>
     </PlayistActionsWrapper>
   );
-};
+});
 
 export const ListItemComponent = ({ item }: { item: Artist | Playlist | Album }) => {
   if (item.type === 'artist') return <ArtistCardShort key={item.id} artist={item} />;

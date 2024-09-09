@@ -60,7 +60,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const myPlaylists = useAppSelector(getUserPlaylists);
-  const user = useAppSelector((state) => state.auth.user);
+  const userId = useAppSelector((state) => state.auth.user?.id);
   const currentSong = useAppSelector(
     (state) => state.spotify.state?.track_window?.current_track?.id
   );
@@ -96,7 +96,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
             label: t('New playlist'),
             key: 'new',
             onClick: () => {
-              playlistService.createPlaylist(user?.id!, { name: track.name }).then((response) => {
+              playlistService.createPlaylist(userId!, { name: track.name }).then((response) => {
                 const playlist = response.data;
                 playlistService
                   .addPlaylistItems(playlist.id, [track.uri], playlist.snapshot_id!)

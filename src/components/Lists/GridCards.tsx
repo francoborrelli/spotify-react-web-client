@@ -37,9 +37,9 @@ const Card = ({
   onClick: () => void;
   context: { context_uri?: string; uris?: string[] };
 }) => {
-  const state = useAppSelector((state) => state.spotify.state);
-
-  const isCurrent = state?.context?.uri === uri;
+  const paused = useAppSelector((state) => state.spotify.state?.paused);
+  const contextUri = useAppSelector((state) => state.spotify.state?.context.uri);
+  const isCurrent = contextUri === uri;
 
   return (
     <div
@@ -59,7 +59,7 @@ const Card = ({
         />
         <div
           className={`circle-play-div transition translate-y-1/4 ${
-            isCurrent && !state?.paused ? 'active' : ''
+            isCurrent && !paused ? 'active' : ''
           }`}
         >
           <PlayCircle isCurrent={isCurrent} context={context} />

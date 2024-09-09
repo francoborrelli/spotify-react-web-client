@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 // Interfaces
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { Track } from '../../../../../interfaces/track';
 import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
@@ -25,65 +25,68 @@ import type { Playlist } from '../../../../../interfaces/playlists';
 import { searchHistoryActions } from '../../../../../store/slices/searchHistory';
 import { PLAYLIST_DEFAULT_IMAGE } from '../../../../../constants/spotify';
 
-const Card = ({
-  link,
-  image,
-  title,
-  description,
-  context,
-  rounded,
-  onClick,
-  uri,
-}: {
-  link: string;
-  image: string;
-  title: string;
-  uri?: string;
-  rounded?: boolean;
-  onClick?: () => void;
-  context: {
-    context_uri?: string;
-    uris?: string[];
-  };
-  description: string | ReactNode;
-}) => {
-  const navigate = useNavigate();
+const Card = memo(
+  ({
+    link,
+    image,
+    title,
+    description,
+    context,
+    rounded,
+    onClick,
+    uri,
+  }: {
+    link: string;
+    image: string;
+    title: string;
+    uri?: string;
+    rounded?: boolean;
+    onClick?: () => void;
+    context: {
+      context_uri?: string;
+      uris?: string[];
+    };
+    description: string | ReactNode;
+  }) => {
+    const navigate = useNavigate();
 
-  const state = useAppSelector((state) => state.spotify.state);
-  const isCurrent = state?.context?.uri === uri;
+    const paused = useAppSelector((state) => state.spotify.state?.paused);
+    const contextUri = useAppSelector((state) => state.spotify.state?.context?.uri);
+    const isCurrent = contextUri === uri;
 
-  return (
-    <div
-      style={{ cursor: 'pointer' }}
-      onDoubleClick={() => {
-        playerService.startPlayback(context);
-      }}
-      onClick={() => {
-        if (onClick) onClick();
-        navigate(link);
-      }}
-      className='playlist-card relative rounded-lg overflow-hidden  hover:bg-spotify-gray-lightest transition'
-    >
+    return (
       <div
-        style={{ position: 'relative' }}
-        className='md:aspect-w-1 md:aspect-h-1/2 lg:aspect-w-1 lg:aspect-h-3/4 xl:aspect-w-1 xl:aspect-h-4/5 p-4'
+        style={{ cursor: 'pointer' }}
+        onDoubleClick={() => {
+          playerService.startPlayback(context);
+        }}
+        onClick={() => {
+          if (onClick) onClick();
+          navigate(link);
+        }}
+        className='playlist-card relative rounded-lg overflow-hidden  hover:bg-spotify-gray-lightest transition'
       >
-        <img alt={title} src={image} className={`${rounded ? 'rounded' : ''}`} />
+        <div
+          style={{ position: 'relative' }}
+          className='md:aspect-w-1 md:aspect-h-1/2 lg:aspect-w-1 lg:aspect-h-3/4 xl:aspect-w-1 xl:aspect-h-4/5 p-4'
+        >
+          <img alt={title} src={image} className={`${rounded ? 'rounded' : ''}`} />
+        </div>
+        <div className='playlist-card-info'>
+          <h3 className='text-md font-semibold text-white'>{title}</h3>
+          <p>{description}</p>
+        </div>
+        <div
+          className={`circle-play-div transition translate-y-1/4 ${
+            isCurrent && !paused ? 'active' : ''
+          }`}
+        >
+          <PlayCircle isCurrent={isCurrent} context={context} />
+        </div>
       </div>
-      <div className='playlist-card-info'>
-        <h3 className='text-md font-semibold text-white'>{title}</h3>
-        <p>{description}</p>
-      </div>
-      <div
-        className={`circle-play-div transition translate-y-1/4 ${
-          isCurrent && !state?.paused ? 'active' : ''
-        }`}
-      >
-        <PlayCircle isCurrent={isCurrent} context={context} />
-      </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 const TrackCard = ({ item }: { item: Track }) => {
   const { t } = useTranslation(['search']);

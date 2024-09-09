@@ -21,13 +21,14 @@ axios.interceptors.response.use(
     if (error.response.status === 401) {
       return getRefreshToken()
         .then((token) => {
+          if (!token) return Promise.reject(error);
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
           error.config.headers['Authorization'] = 'Bearer ' + token;
           return axios(error.config);
         })
         .catch(() => {
           localStorage.removeItem('refresh_token');
-          window.location.href = '/';
+          localStorage.removeItem('access_token');
         });
     }
     return Promise.reject(error);

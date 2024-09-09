@@ -23,7 +23,7 @@ import { LoginFooter } from './components/LoginFooter';
 export const AppLayout: FC<{ children: ReactElement }> = (props) => {
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => !!state.auth.user);
   const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const libraryCollapsed = useAppSelector(getLibraryCollapsed);
   const hasState = useAppSelector((state) => !!state.spotify.state);

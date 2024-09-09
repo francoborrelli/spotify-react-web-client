@@ -12,15 +12,10 @@ import { AddSongToLibraryButton } from '../../../../Actions/AddSongToLibrary';
 import { spotifyActions } from '../../../../../store/slices/spotify';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
-// Interfaces
-// import type { Album } from '../../../../../interfaces/albums';
-// import type { Playlist } from '../../../../../interfaces/playlists';
-// import type { Artist as ArtistType } from '../../../../../interfaces/artist';
-
 import { memo, ReactNode, useEffect, useMemo, type FC } from 'react';
 
 // Redux
-import { fetchArtist, playingNowActions } from '../../../../../store/slices/playingNow';
+import { fetchArtist } from '../../../../../store/slices/playingNow';
 
 const Container: FC<{ song: Spotify.Track }> = memo(({ song }) => {
   const dispatch = useAppDispatch();
@@ -65,8 +60,14 @@ const DetailsContainer: FC<{ children: ReactNode | ReactNode[] }> = memo((props)
   const dispatch = useAppDispatch();
 
   const isLiked = useAppSelector((state) => state.spotify.liked);
-  const context = useAppSelector((state) => state.spotify.state?.context);
-  const song = useAppSelector((state) => state.spotify.state?.track_window.current_track!);
+  const context = useAppSelector(
+    (state) => state.spotify.state?.context,
+    (a, b) => a?.uri === b?.uri
+  );
+  const song = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track!,
+    (a, b) => a?.id === b?.id
+  );
 
   const contextDetails = useMemo(() => {
     const [_, type, id] = context?.uri!.split(':') || [];
@@ -109,27 +110,17 @@ const DetailsContainer: FC<{ children: ReactNode | ReactNode[] }> = memo((props)
 
 export const Details = memo(() => {
   const dispatch = useAppDispatch();
-  const context = useAppSelector((state) => state.spotify.state?.context.uri);
-  const song = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+
+  const song = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
 
   const artistId = useMemo(() => song?.artists[0].uri.split(':')[2], [song]);
 
   useEffect(() => {
     if (artistId) dispatch(fetchArtist(artistId));
   }, [artistId, dispatch]);
-
-  // Logré el mismo efecto tomando los datos de la metadata en el objeto de contexto
-
-  // useEffect(() => {
-  //   if (context) {
-  //     const uri = context.split(':');
-  //     if (uri[1] === 'playlist') {
-  //       dispatch(playingNowActions.fetchPlaylist(uri[2]));
-  //     } else if (uri[1] === 'album') {
-  //       dispatch(playingNowActions.fetchAlbum(uri[2]));
-  //     }
-  //   }
-  // }, [context, dispatch]);
 
   if (!song) return null;
 

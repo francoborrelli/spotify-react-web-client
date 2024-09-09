@@ -6,20 +6,21 @@ import { useAppSelector } from '../../../../store/store';
 
 // Services
 import { playerService } from '../../../../services/player';
+import { memo } from 'react';
 
-const ShuffleButton = () => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const shuffle = state?.shuffle;
+const ShuffleButton = memo(() => {
+  const shuffle = useAppSelector((state) => state.spotify.state?.shuffle);
   return (
     <button onClick={() => playerService.toggleShuffle(!shuffle).then()}>
       <ShuffleIcon active={!!shuffle} />
     </button>
   );
-};
+});
 
-const SkipBackButton = () => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const disabled = !state || state?.disallows.skipping_prev;
+const SkipBackButton = memo(() => {
+  const disabled = useAppSelector(
+    (state) => !state.spotify.state || state?.spotify.state.disallows.skipping_prev
+  );
   return (
     <button
       className={disabled ? 'disabled' : ''}
@@ -28,12 +29,15 @@ const SkipBackButton = () => {
       <SkipBack />
     </button>
   );
-};
+});
 
-const PlayButton = () => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const isPlaying = !state?.paused;
-  const disabled = !state || (state?.disallows.pausing && state?.disallows.resuming);
+const PlayButton = memo(() => {
+  const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
+  const disabled = useAppSelector(
+    (state) =>
+      !state.spotify.state ||
+      (state.spotify.state?.disallows.pausing && state.spotify.state?.disallows.resuming)
+  );
 
   return (
     <button
@@ -49,11 +53,12 @@ const PlayButton = () => {
       {!isPlaying ? <Play /> : <Pause />}
     </button>
   );
-};
+});
 
-const SkipNextButton = () => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const disabled = !state || state?.disallows.skipping_next;
+const SkipNextButton = memo(() => {
+  const disabled = useAppSelector(
+    (state) => !state.spotify.state || state.spotify.state?.disallows.skipping_next
+  );
   return (
     <button
       className={disabled ? 'disabled' : ''}
@@ -62,24 +67,24 @@ const SkipNextButton = () => {
       <SkipNext />
     </button>
   );
-};
+});
 
-const ReplayButton = () => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const looping = state?.repeat_mode === 1 || state?.repeat_mode === 2;
+const ReplayButton = memo(() => {
+  const repeat_mode = useAppSelector((state) => state.spotify.state?.repeat_mode);
+  const looping = repeat_mode === 1 || repeat_mode === 2;
   return (
     <button
-      className={state?.repeat_mode === 2 ? 'active-icon-button' : ''}
+      className={repeat_mode === 2 ? 'active-icon-button' : ''}
       onClick={() =>
         playerService.setRepeatMode(
-          state?.repeat_mode === 2 ? 'off' : state?.repeat_mode === 1 ? 'track' : 'context'
+          repeat_mode === 2 ? 'off' : repeat_mode === 1 ? 'track' : 'context'
         )
       }
     >
-      {state?.repeat_mode === 2 ? <ReplayOne active /> : <Replay active={looping} />}
+      {repeat_mode === 2 ? <ReplayOne active /> : <Replay active={looping} />}
     </button>
   );
-};
+});
 
 const CONTROLS = [ShuffleButton, SkipBackButton, PlayButton, SkipNextButton, ReplayButton];
 

@@ -1,18 +1,29 @@
 import { FC, memo, useCallback } from 'react';
-import { Play } from '../../../../Icons';
-import { useAppDispatch, useAppSelector } from '../../../../../store/store';
-import { Track } from '../../../../../interfaces/track';
+
 import { DetailsCard } from './card';
-import { uiActions } from '../../../../../store/slices/ui';
+import { Play } from '../../../../Icons';
+
+// Utils
 import { useTranslation } from 'react-i18next';
+
+// Redux
+import { uiActions } from '../../../../../store/slices/ui';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
+
+// Services
 import { playerService } from '../../../../../services/player';
+
+// Interfaces
+import type { Track } from '../../../../../interfaces/track';
 
 export const NextInQueue: FC = memo(() => {
   const [t] = useTranslation(['playingBar']);
   const dispatch = useAppDispatch();
-  const queue = useAppSelector((state) => state.queue.queue);
 
-  const item = queue[0] as any as Track;
+  const item = useAppSelector(
+    (state) => state.queue.queue[0],
+    (prev, next) => prev?.id === next?.id
+  ) as any as Track;
 
   const onClick = useCallback(() => {
     playerService.nextTrack();

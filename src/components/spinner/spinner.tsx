@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import './spinner.scss';
 
 const Spin: FC<{ section?: string }> = (props) => (
@@ -20,7 +20,9 @@ const Spin: FC<{ section?: string }> = (props) => (
   </div>
 );
 
-export const Spinner: FC<{ loading: boolean; section?: string; children?: any }> = (props) => {
+export const Spinner: FC<{ loading: boolean; section?: string; children?: any }> = memo((props) => {
   const { loading, section, children } = props;
   return loading ? <Spin section={section} /> : children;
-};
+});
+
+Spinner.displayName = 'Spinner';

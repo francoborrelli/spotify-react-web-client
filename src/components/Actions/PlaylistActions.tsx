@@ -34,9 +34,9 @@ export const PlayistActionsWrapper: FC<PlayistActionsWrapperProps> = memo((props
   const { t } = useTranslation(['playlist']);
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
+  const userId = useAppSelector((state) => state.auth.user?.id);
   const myPlaylists = useAppSelector((state) => state.yourLibrary.myPlaylists);
-  const canEdit = useMemo(() => user?.id === playlist.owner?.id, [user?.id, playlist.owner?.id]);
+  const canEdit = useMemo(() => userId === playlist.owner?.id, [userId, playlist.owner?.id]);
 
   const inLibrary = useMemo(() => {
     return myPlaylists.some((p) => p.id === playlist.id);

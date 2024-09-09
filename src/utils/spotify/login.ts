@@ -1,5 +1,6 @@
-import axios from 'axios';
+import Axios from 'axios';
 import { getFromLocalStorageWithExpiry, setLocalStorageWithExpiry } from '../localstorage';
+import axios from 'axios';
 
 /* eslint-disable import/no-anonymous-default-export */
 const client_id = process.env.REACT_APP_CLIENT_ID as string;
@@ -91,7 +92,7 @@ const requestToken = async (code: string) => {
     grant_type: 'authorization_code',
   };
 
-  const { data: response } = await axios.post<{
+  const { data: response } = await Axios.post<{
     access_token: string;
     token_type: string;
     expires_in: number;
@@ -102,8 +103,11 @@ const requestToken = async (code: string) => {
     },
   });
 
-  setLocalStorageWithExpiry('access_token', response.access_token, response.expires_in * 60 * 60);
-  localStorage.setItem('refresh_token', response.refresh_token);
+  if (response.access_token) {
+    setLocalStorageWithExpiry('access_token', response.access_token, response.expires_in * 60 * 60);
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.access_token;
+    localStorage.setItem('refresh_token', response.refresh_token);
+  }
 
   return response.access_token;
 };
@@ -115,21 +119,29 @@ const getToken = async () => {
   const urlParams = new URLSearchParams(window.location.search);
 
   let code = urlParams.get('code') as string;
-  let access_token = window.location.hash.split('&')[0].split('=')[1];
+  if (code) return await requestToken(code);
 
+  const publicToken = getFromLocalStorageWithExpiry('public_access_token');
+  if (publicToken) return publicToken;
+
+  const access_token = window.location.hash.split('&')[0].split('=')[1];
   if (access_token) {
     setLocalStorageWithExpiry('public_access_token', access_token, 3600);
+    window.location.hash = '';
     return access_token;
   }
 
-  if (!code) return null;
-
-  return await requestToken(code);
+  return null;
 };
 
 export const getRefreshToken = async () => {
   // refresh token that has been previously stored
   const refreshToken = localStorage.getItem('refresh_token') as string;
+
+  if (!refreshToken) {
+    logInWithSpotify(true);
+    return null;
+  }
 
   const url = 'https://accounts.spotify.com/api/token';
 
@@ -146,7 +158,14 @@ export const getRefreshToken = async () => {
   };
   const body = await fetch(url, payload);
   const response = await body.json();
+
+  if (!response.access_token) {
+    logInWithSpotify(true);
+    return null;
+  }
+
   setLocalStorageWithExpiry('access_token', response.access_token, response.expires_in * 60 * 60);
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.access_token;
   if (response.refreshToken) {
     localStorage.setItem('refresh_token', response.refreshToken);
   }

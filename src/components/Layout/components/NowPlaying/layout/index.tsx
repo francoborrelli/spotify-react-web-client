@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import { memo, type FC, type ReactNode } from 'react';
 
 import { Col, Flex, Row } from 'antd';
 import { CloseIcon } from '../../../../Icons';
@@ -33,7 +33,7 @@ const CloseButton = () => {
   );
 };
 
-export const NowPlayingLayout: FC<NowPlayingLayoutProps> = (props) => {
+export const NowPlayingLayout: FC<NowPlayingLayoutProps> = memo((props) => {
   const title = props.title ? (
     <div className='playing-section-title-container'>
       <span className='playing-section-title'>{props.title}</span>
@@ -65,4 +65,6 @@ export const NowPlayingLayout: FC<NowPlayingLayoutProps> = (props) => {
       </div>
     </div>
   );
-};
+});
+
+NowPlayingLayout.displayName = 'NowPlayingLayout';

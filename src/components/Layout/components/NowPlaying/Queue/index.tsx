@@ -6,7 +6,10 @@ import QueueSongDetailsProps from './SongDetails';
 
 const NowPlaying = () => {
   const [t] = useTranslation(['playingBar']);
-  const song = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+  const song = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
   if (!song) return null;
 
   return (

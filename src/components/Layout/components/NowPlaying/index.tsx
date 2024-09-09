@@ -10,7 +10,11 @@ import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 export const PlayingNow = memo(() => {
   const dispatch = useAppDispatch();
-  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+
+  const currentSong = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
 
   const queue = useAppSelector((state) => !state.ui.queueCollapsed);
   const details = useAppSelector((state) => !state.ui.detailsCollapsed);

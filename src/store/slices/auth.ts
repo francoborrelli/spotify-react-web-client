@@ -11,20 +11,25 @@ import { authService } from '../../services/auth';
 import type { User } from '../../interfaces/user';
 import { getFromLocalStorageWithExpiry } from '../../utils/localstorage';
 
-const initialState: { token?: string; playerLoaded: boolean; user?: User } = {
+const initialState: { token?: string; playerLoaded: boolean; user?: User; requesting: boolean } = {
   user: undefined,
+  requesting: true,
   playerLoaded: false,
   token: getFromLocalStorageWithExpiry('access_token') || undefined,
 };
 
-export const loginToSpotify = createAsyncThunk<{ token?: string }, boolean>(
+export const loginToSpotify = createAsyncThunk<{ token?: string; loaded: boolean }, boolean>(
   'auth/loginToSpotify',
   async (anonymous, api) => {
-    let token: string | undefined = getFromLocalStorageWithExpiry('access_token') as string;
+    const userToken: string | undefined = getFromLocalStorageWithExpiry('access_token') as string;
+    const anonymousToken: string | undefined = getFromLocalStorageWithExpiry('public_access_token');
+
+    let token = userToken || anonymousToken;
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      return { token };
+      if (userToken) api.dispatch(fetchUser());
+      return { token, loaded: false };
     }
 
     token = await login.getToken();
@@ -35,12 +40,7 @@ export const loginToSpotify = createAsyncThunk<{ token?: string }, boolean>(
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     }
 
-    let refresh: string | null = localStorage.getItem('refresh_token');
-    if (refresh) {
-      api.dispatch(fetchUser());
-    }
-
-    return { token };
+    return { token, loaded: true };
   }
 );
 
@@ -53,6 +53,9 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setRequesting(state, action: PayloadAction<{ requesting: boolean }>) {
+      state.requesting = action.payload.requesting;
+    },
     setToken(state, action: PayloadAction<{ token?: string }>) {
       state.token = action.payload.token;
     },
@@ -63,9 +66,11 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginToSpotify.fulfilled, (state, action) => {
       state.token = action.payload.token;
+      state.requesting = !action.payload.loaded;
     });
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.requesting = false;
     });
   },
 });

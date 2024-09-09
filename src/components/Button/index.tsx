@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 interface ButtonProps {
   title: string;
@@ -6,10 +6,12 @@ interface ButtonProps {
   styles?: any;
 }
 
-export const WhiteButton: FC<ButtonProps> = (props) => {
+export const WhiteButton: FC<ButtonProps> = memo((props) => {
   return (
     <button onClick={props.onClick} className='white-button' style={props.styles || {}}>
       <span>{props.title}</span>
     </button>
   );
-};
+});
+
+WhiteButton.displayName = 'WhiteButton';

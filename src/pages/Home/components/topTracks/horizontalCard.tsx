@@ -24,9 +24,9 @@ interface HorizontalCardProps {
 }
 
 export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor }) => {
-  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track);
+  const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track.id);
   const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
-  const isCurrent = currentSong?.id === item.id;
+  const isCurrent = currentSong === item.id;
 
   const isMobile = useIsMobile();
 
