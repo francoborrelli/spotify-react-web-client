@@ -27,18 +27,24 @@ const uiSlice = createSlice({
   reducers: {
     openLoginButton(state) {
       state.loginButtonOpen = true;
+      state.loginModalOpen = false;
+      state.loginTooltipOpen = false;
     },
     closeLoginButton(state) {
       state.loginButtonOpen = false;
     },
     openLoginModal(state) {
       state.loginModalOpen = true;
+      state.loginButtonOpen = false;
+      state.loginTooltipOpen = false;
     },
     closeLoginModal(state) {
       state.loginModalOpen = false;
     },
     openLoginTooltip(state) {
       state.loginTooltipOpen = true;
+      state.loginModalOpen = false;
+      state.loginButtonOpen = false;
     },
     closeLoginTooltip(state) {
       state.loginTooltipOpen = false;
