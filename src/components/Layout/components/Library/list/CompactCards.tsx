@@ -22,7 +22,7 @@ import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
 import type { Playlist } from '../../../../../interfaces/playlists';
 import { memo, useCallback } from 'react';
-import { getLibraryCollapsed } from '../../../../../store/slices/ui';
+import { getLibraryCollapsed, uiActions } from '../../../../../store/slices/ui';
 
 const CardCompact = (props: CardShortProps) => {
   const { title, subtitle, isCurrent, onClick, onDoubleClick } = props;
@@ -118,12 +118,17 @@ const ArtistCardShort = memo(({ artist }: { artist: Artist }) => {
 
 const AlbumCardShort = memo(({ album }: { album: Album }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.auth.user?.id);
   const filter = useAppSelector((state) => state.yourLibrary.filter);
   const contextUri = useAppSelector((state) => state.spotify.state?.context.uri);
 
   const onClick = useCallback(() => {
+    if (!userId) {
+      return dispatch(uiActions.openLoginModal(album.images[0].url));
+    }
     navigate(`/album/${album.id}`);
-  }, [navigate, album.id]);
+  }, [userId, navigate, album.id, album.images, dispatch]);
 
   return (
     <AlbumActionsWrapper album={album} trigger={['contextMenu']}>

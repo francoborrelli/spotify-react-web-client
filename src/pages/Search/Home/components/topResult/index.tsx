@@ -90,8 +90,9 @@ const Card = memo(
   }
 );
 
-const TrackCard = ({ item }: { item: Track }) => {
+const TrackCard = memo(({ item }: { item: Track }) => {
   const { t } = useTranslation(['search']);
+  const user = useAppSelector((state) => !!state.auth.user);
 
   return (
     <TrackActionsWrapper trigger={['contextMenu']} track={item}>
@@ -100,8 +101,8 @@ const TrackCard = ({ item }: { item: Track }) => {
           uri={item.uri}
           title={item.name}
           context={{ uris: [item.uri] }}
-          link={`/album/${item.album.id}`}
           image={item.album.images[0].url}
+          link={user ? `/album/${item.album.id}` : '/'}
           description={
             <p
               key={item.id}
@@ -126,7 +127,7 @@ const TrackCard = ({ item }: { item: Track }) => {
       </div>
     </TrackActionsWrapper>
   );
-};
+});
 
 const PlaylistCard = ({ item }: { item: Playlist }) => {
   const dispatch = useAppDispatch();
@@ -172,6 +173,7 @@ const ArtistCard = ({ item }: { item: Artist }) => {
 const AlbumCard = ({ item }: { item: Album }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['search']);
+  const user = useAppSelector((state) => !!state.auth.user);
 
   return (
     <AlbumActionsWrapper album={item} trigger={['contextMenu']}>
@@ -179,7 +181,7 @@ const AlbumCard = ({ item }: { item: Album }) => {
         <Card
           uri={item.uri}
           title={item.name}
-          link={`/album/${item.id}`}
+          link={user ? `/album/${item.id}` : '/'}
           image={item.images[0]?.url}
           context={{ context_uri: item.uri }}
           onClick={() => dispatch(searchHistoryActions.setItem(item))}

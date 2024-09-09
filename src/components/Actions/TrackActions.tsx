@@ -242,6 +242,9 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         key: '6',
         icon: <AlbumIcon />,
         onClick: () => {
+          if (!userId) {
+            return dispatch(uiActions.openLoginModal(track.album.images[0].url));
+          }
           // @ts-ignore
           navigate(`/album/${track.album?.id || track.album.uri.split(':').reverse()[0]}`);
         },

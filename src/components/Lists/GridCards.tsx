@@ -15,10 +15,12 @@ import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Constants
 import { PLAYLIST_DEFAULT_IMAGE } from '../../constants/spotify';
+import { uiActions } from '../../store/slices/ui';
+import { useCallback } from 'react';
 
 const Card = ({
   uri,
@@ -115,6 +117,15 @@ export const AlbumCard = ({
   getDescription?: (playlist: Album) => string;
 }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+
+  const onNavigate = useCallback(() => {
+    if (!user) {
+      return dispatch(uiActions.openLoginModal(item.images[0].url));
+    }
+    navigate(`/album/${item.id}`);
+  }, [user, navigate, item.id, item.images, dispatch]);
 
   const title = item.name;
 
@@ -131,10 +142,10 @@ export const AlbumCard = ({
         <Card
           title={title}
           uri={item.uri}
+          onClick={onNavigate}
           description={description}
           image={item.images[0]?.url}
           context={{ context_uri: item.uri }}
-          onClick={() => navigate(`/album/${item.id}`)}
         />
       </div>
     </AlbumActionsWrapper>

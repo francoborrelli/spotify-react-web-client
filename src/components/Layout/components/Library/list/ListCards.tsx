@@ -21,7 +21,8 @@ import { ARTISTS_DEFAULT_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../../../../co
 import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
 import type { Playlist } from '../../../../../interfaces/playlists';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { uiActions } from '../../../../../store/slices/ui';
 
 export interface CardShortProps {
   uri: string;
@@ -218,11 +219,16 @@ export const ArtistCardShort = ({ artist }: { artist: Artist }) => {
 
 export const AlbumCardShort = memo(({ album }: { album: Album }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.auth.user?.id);
   const contextUri = useAppSelector((state) => state.spotify.state?.context.uri);
 
-  const onClick = () => {
+  const onClick = useCallback(() => {
+    if (!userId) {
+      return dispatch(uiActions.openLoginModal(album.images[0].url));
+    }
     navigate(`/album/${album.id}`);
-  };
+  }, [userId, navigate, album.id, album.images, dispatch]);
 
   return (
     <AlbumActionsWrapper album={album} trigger={['contextMenu']}>

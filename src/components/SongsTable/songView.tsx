@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Services
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { playerService } from '../../services/player';
 import { ArtistActionsWrapper } from '../Actions/ArtistActions';
 import { AddSongToLibraryButton } from '../Actions/AddSongToLibrary';
@@ -181,9 +181,26 @@ const Artists = ({ song, isList }: ComponentProps) => {
 };
 
 const Album = ({ song }: ComponentProps) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
+
+  const onNavigate = useCallback(
+    (e: any) => {
+      if (e) e.stopPropagation();
+      if (!user) {
+        return dispatch(uiActions.openLoginModal(song.album.images[0].url));
+      }
+      navigate(`/album/${song.album.id}`);
+    },
+    [user, navigate, song.album.id, song.album.images, dispatch]
+  );
+
   return (
     <p className='text-left tablet-hidden' style={{ flex: 5 }}>
-      <Link to={`/album/${song.album.id}`}>{song.album.name}</Link>
+      <Link to={`/album/${song.album.id}`} onClick={onNavigate}>
+        {song.album.name}
+      </Link>
     </p>
   );
 };
