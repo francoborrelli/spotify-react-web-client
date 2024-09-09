@@ -1,5 +1,6 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import type { RootState } from '../store';
 
 export interface UiState {
   queueCollapsed: boolean;
@@ -7,18 +8,18 @@ export interface UiState {
   detailsCollapsed: boolean;
   libraryCollapsed: boolean;
   loginTooltipOpen: boolean;
-  loginModalOpen: boolean;
   loginButtonOpen: boolean;
+  loginModalItem: string | null;
 }
 
 const initialState: UiState = {
   queueCollapsed: true,
-  loginModalOpen: false,
   devicesCollapsed: true,
   detailsCollapsed: true,
   libraryCollapsed: true,
   loginTooltipOpen: false,
   loginButtonOpen: false,
+  loginModalItem: null,
 };
 
 const uiSlice = createSlice({
@@ -27,23 +28,23 @@ const uiSlice = createSlice({
   reducers: {
     openLoginButton(state) {
       state.loginButtonOpen = true;
-      state.loginModalOpen = false;
+      state.loginModalItem = null;
       state.loginTooltipOpen = false;
     },
     closeLoginButton(state) {
       state.loginButtonOpen = false;
     },
-    openLoginModal(state) {
-      state.loginModalOpen = true;
+    openLoginModal(state, action: PayloadAction<string>) {
+      state.loginModalItem = action.payload;
       state.loginButtonOpen = false;
       state.loginTooltipOpen = false;
     },
     closeLoginModal(state) {
-      state.loginModalOpen = false;
+      state.loginModalItem = null;
     },
     openLoginTooltip(state) {
       state.loginTooltipOpen = true;
-      state.loginModalOpen = false;
+      state.loginModalItem = null;
       state.loginButtonOpen = false;
     },
     closeLoginTooltip(state) {

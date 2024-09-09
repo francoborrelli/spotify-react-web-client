@@ -12,9 +12,10 @@ import { getPlaylistDescription } from '../../../../../utils/getDescription';
 // Services
 import { playerService } from '../../../../../services/player';
 
-// Interfaces
+// Redux
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
+import { searchHistoryActions } from '../../../../../store/slices/searchHistory';
 
 // Interfaces
 import { memo, type ReactNode } from 'react';
@@ -22,7 +23,8 @@ import type { Track } from '../../../../../interfaces/track';
 import type { Album } from '../../../../../interfaces/albums';
 import type { Artist } from '../../../../../interfaces/artist';
 import type { Playlist } from '../../../../../interfaces/playlists';
-import { searchHistoryActions } from '../../../../../store/slices/searchHistory';
+
+// Constants
 import { PLAYLIST_DEFAULT_IMAGE } from '../../../../../constants/spotify';
 
 const Card = memo(
@@ -81,7 +83,7 @@ const Card = memo(
             isCurrent && !paused ? 'active' : ''
           }`}
         >
-          <PlayCircle isCurrent={isCurrent} context={context} />
+          <PlayCircle image={image} isCurrent={isCurrent} context={context} />
         </div>
       </div>
     );

@@ -332,7 +332,7 @@
   --row-count: 1;
 
   @media (max-width: 1800px) {
-    --min-column-width: 170px;
+    --min-column-width: 190px;
   }
 
   @media (max-width: 1200px) {
@@ -406,5 +406,102 @@
   img.rounded {
     border-radius: 50% !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.ant-modal.login-modal {
+  .ant-modal-content {
+    background-color: var(--background-color) !important;
+    border-radius: 8px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: auto;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(rgba(0, 0, 0, 0.4)),
+      to(#282828)
+    );
+    background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.4), #282828);
+    bottom: 0;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-animation: UpsellContainerAnimation 0.4s ease-in-out 1;
+    animation: UpsellContainerAnimation 0.4s ease-in-out 1;
+    -webkit-animation-delay: 0.15s;
+    animation-delay: 0.15s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 400px;
+  }
+
+  .img-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: 25px;
+    margin-right: 25px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    img {
+      max-width: 300px;
+      border-radius: 8px;
+      display: block;
+      margin: auto;
+      -o-object-fit: cover;
+      object-fit: cover;
+      -o-object-position: center center;
+      object-position: center center;
+    }
+  }
+
+  .content-container {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 45%;
+    flex: 0 0 45%;
+    margin: 0;
+    padding: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #fff;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 32px;
+    margin: 0 auto;
+    max-width: 304px;
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
   }
 }

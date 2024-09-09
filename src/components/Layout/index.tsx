@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { isActiveOnOtherDevice, spotifyActions } from '../../store/slices/spotify';
 import { getLibraryCollapsed, isRightLayoutOpen, uiActions } from '../../store/slices/ui';
 import { LoginFooter } from './components/LoginFooter';
+import { LoginModal } from '../Modals/LoginModal';
 
 export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
   const dispatch = useAppDispatch();
@@ -57,6 +58,7 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
       <LibraryDrawer />
       <PlayingNowDrawer />
       <EditPlaylistModal />
+      <LoginModal />
 
       {/* Main Component */}
       <div className='main-container'>

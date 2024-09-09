@@ -8,10 +8,10 @@ import { AddedToLibrary, AddToLibrary } from '../../../../components/Icons';
 import { albumsService } from '../../../../services/albums';
 
 // Redux
+import { uiActions } from '../../../../store/slices/ui';
 import { albumActions } from '../../../../store/slices/album';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
-import { uiActions } from '../../../../store/slices/ui';
 
 const FollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
@@ -20,8 +20,11 @@ const FollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = ({
 }) => {
   const { t } = useTranslation(['playlist']);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
+
   const handleAddToLibrary = () => {
-    albumsService.saveAlbums([id]).then(() => {
+    if (!user) return dispatch(uiActions.openLoginTooltip());
+    return albumsService.saveAlbums([id]).then(() => {
       dispatch(albumActions.setFollowing({ following: true }));
       onToggle();
     });
@@ -43,13 +46,15 @@ const UnfollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = (
 }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
 
   const handleDeleteFromLibrary = useCallback(() => {
-    albumsService.deleteAlbums([id]).then(() => {
+    if (!user) return dispatch(uiActions.openLoginTooltip());
+    return albumsService.deleteAlbums([id]).then(() => {
       dispatch(albumActions.setFollowing({ following: false }));
       onToggle();
     });
-  }, [dispatch, id, onToggle]);
+  }, [dispatch, id, onToggle, user]);
 
   return (
     <Tooltip title={t('Remove from Your Library')}>
@@ -62,13 +67,11 @@ const UnfollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = (
 
 export const AddAlbumToLibraryButton = memo(({ id }: { id: string }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => !!state.auth.user);
   const isSaved = useAppSelector((state) => state.album.following);
 
   const onToggle = useCallback(() => {
-    if (!user) return dispatch(uiActions.openLoginTooltip());
     dispatch(yourLibraryActions.fetchMyAlbums());
-  }, [user, dispatch]);
+  }, [dispatch]);
 
   return isSaved ? (
     <UnfollowAlbum size={32} id={id} onToggle={onToggle} />

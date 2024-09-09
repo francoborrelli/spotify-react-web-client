@@ -19,6 +19,7 @@ export const PlayCircleButton: FC<{ size?: number }> = memo(({ size = 30 }) => {
       size={size}
       big={size >= 30}
       isCurrent={isCurrent}
+      image={playlist?.images[0]?.url}
       context={{ context_uri: playlist?.uri! }}
     />
   );

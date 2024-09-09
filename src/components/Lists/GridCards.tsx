@@ -62,7 +62,7 @@ const Card = ({
             isCurrent && !paused ? 'active' : ''
           }`}
         >
-          <PlayCircle isCurrent={isCurrent} context={context} />
+          <PlayCircle image={image} isCurrent={isCurrent} context={context} />
         </div>
       </div>
       <div className='playlist-card-info'>

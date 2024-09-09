@@ -1,10 +1,12 @@
 import { FC, useCallback } from 'react';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { playerService } from '../../services/player';
+import { uiActions } from '../../store/slices/ui';
 
 interface PlayCircleProps {
   size?: number;
   big?: boolean;
+  image?: string;
   isCurrent?: boolean;
   context?: {
     context_uri?: string;
@@ -12,14 +14,21 @@ interface PlayCircleProps {
   };
 }
 
-export const PlayCircle: FC<PlayCircleProps> = ({ size = 20, big, isCurrent, context }) => {
+export const PlayCircle: FC<PlayCircleProps> = ({ size = 20, big, isCurrent, context, image }) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
   const paused = useAppSelector((state) => state.spotify.state?.paused);
+
   const isPlaying = isCurrent && !paused;
 
   const onClick = useCallback(
     (e: any) => {
       if (e && e.stopPropagation) {
         e.stopPropagation();
+      }
+
+      if (!user && image) {
+        return dispatch(uiActions.openLoginModal(image));
       }
 
       if (isCurrent && !paused) {
@@ -30,7 +39,7 @@ export const PlayCircle: FC<PlayCircleProps> = ({ size = 20, big, isCurrent, con
         : playerService.startPlayback(context);
       request.then();
     },
-    [isCurrent, paused, context]
+    [user, image, isCurrent, paused, context, dispatch]
   );
 
   return (

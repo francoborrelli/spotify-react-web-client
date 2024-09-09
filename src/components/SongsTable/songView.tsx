@@ -25,6 +25,7 @@ import { spotifyActions } from '../../store/slices/spotify';
 import useIsMobile from '../../utils/isMobile';
 import { EQUILISER_IMAGE } from '../../constants/spotify';
 import { Artist } from '../../interfaces/artist';
+import { uiActions } from '../../store/slices/ui';
 
 interface DefaultProps {
   song: Track;
@@ -283,6 +284,8 @@ export const SongView = (props: SongViewProps) => {
   const { view, song, index, context, artist, playlist, canEdit, fields, album } = props;
 
   const isMobile = useIsMobile();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
   const isPlaying = useAppSelector((state) => !!state.spotify.state?.paused);
   const currentSong = useAppSelector(
     (state) => state.spotify.state?.track_window.current_track,
@@ -296,6 +299,9 @@ export const SongView = (props: SongViewProps) => {
   const isList = selectedView === 'LIST';
 
   const onClick = useCallback(() => {
+    if (!user) {
+      return dispatch(uiActions.openLoginModal(song.album.images[0].url));
+    }
     if (isCurrent && isPlaying) {
       return playerService.pausePlayback();
     }
@@ -303,7 +309,7 @@ export const SongView = (props: SongViewProps) => {
       return playerService.startPlayback();
     }
     return playerService.startPlayback(context);
-  }, [context, isCurrent, isPlaying]);
+  }, [user, isCurrent, isPlaying, context, dispatch, song.album.images]);
 
   return (
     <TrackActionsWrapper

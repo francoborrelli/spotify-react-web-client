@@ -11,7 +11,11 @@ interface ArtistPageProps {
 }
 
 export const ArtistHoverableMenu: FC<ArtistPageProps> = memo((props) => {
-  const artist = useAppSelector((state) => state.artist.artist);
+  const artist = useAppSelector(
+    (state) => state.artist.artist,
+    (prev, next) => prev?.id === next?.id
+  );
+
   return (
     <PageHeader {...props} activeHeider={270} activeContentHeight={320}>
       <Space>

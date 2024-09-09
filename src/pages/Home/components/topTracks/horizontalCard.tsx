@@ -6,6 +6,8 @@ import { TrackActionsWrapper } from '../../../../components/Actions/TrackActions
 import { useAppSelector } from '../../../../store/store';
 
 // Utils
+import tinycolor from 'tinycolor2';
+import useIsMobile from '../../../../utils/isMobile';
 import { getImageAnalysis2 } from '../../../../utils/imageAnyliser';
 
 // Interfaces
@@ -14,8 +16,8 @@ import type { Track } from '../../../../interfaces/track';
 
 // Services
 import { playerService } from '../../../../services/player';
-import tinycolor from 'tinycolor2';
-import useIsMobile from '../../../../utils/isMobile';
+
+// Constants
 import { EQUILISER_IMAGE } from '../../../../constants/spotify';
 
 interface HorizontalCardProps {

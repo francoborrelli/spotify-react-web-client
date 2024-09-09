@@ -15,6 +15,8 @@ export const home = {
   Preview: 'Vista previa',
   'Log In': 'Iniciar sesión',
   'Not now': 'Ahora no',
+  'Start listening with a free Spotify account':
+    'Empieza a escuchar con una cuenta gratuita de Spotify',
   'You’re logged out': 'No iniciaste sesión',
   'Log in to add this to your Liked Songs.': 'Inicia sesión para agregarlo a Tus me gusta.',
   'Create a playlist': 'Crea una playlist',
