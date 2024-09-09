@@ -26,26 +26,29 @@ const initialState: {
 };
 
 export const setState = createAsyncThunk<
-  Spotify.PlaybackState | null,
+  [Spotify.PlaybackState | null, boolean],
   { state: Spotify.PlaybackState | null }
->('spotify/setState', async ({ state: spotifyState }, { getState, dispatch }) => {
-  if (!spotifyState) return null;
-  // const state = getState() as RootState;
-  // const currentSong = state.spotify.state?.track_window.current_track;
-  // if (currentSong && currentSong.id !== spotifyState.track_window.current_track.id) {
-  //   dispatch(likedSong(currentSong));
-  // }
-  return spotifyState;
-});
+>('spotify/setState', async ({ state: spotifyState }, { getState }) => {
+  if (!spotifyState) return [null, false];
 
-export const likedSong = createAsyncThunk<boolean, Spotify.Track | null>(
-  'spotify/likedSong',
-  async (song, { getState }) => {
-    if (!song) return false;
-    const response = await userService.checkSavedTracks([song.id!]);
-    return response.data[0];
-  }
-);
+  const state = getState() as RootState;
+  const currentSong = state.spotify.state?.track_window.current_track;
+
+  if (currentSong && currentSong.id === spotifyState.track_window.current_track.id)
+    return [spotifyState, state.spotify.liked];
+
+  const playing = !spotifyState.paused;
+  const song = spotifyState.track_window.current_track;
+
+  document.title =
+    song && playing ? `${song.name} • ${song.artists[0].name}` : 'Spotify Web Player';
+
+  const response = await userService.checkSavedTracks([
+    spotifyState.track_window.current_track.id!,
+  ]);
+
+  return [spotifyState, response.data[0]];
+});
 
 export const fetchDevices = createAsyncThunk<Device[]>('spotify/fetchDevices', async () => {
   const response = await playerService.getAvailableDevices();
@@ -75,19 +78,8 @@ const spotifySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(setState.fulfilled, (state, action) => {
-      const song = state.state?.track_window.current_track;
-      const currentSong = action.payload?.track_window.current_track;
-      const playing = action.payload?.paused === false;
-
-      if (currentSong && currentSong.id !== song?.id) {
-        document.title =
-          song && playing ? `${song.name} • ${song.artists[0].name}` : 'Spotify Web Player';
-      }
-
-      state.state = action.payload;
-    });
-    builder.addCase(likedSong.fulfilled, (state, action) => {
-      state.liked = action.payload;
+      state.liked = action.payload[1];
+      state.state = action.payload[0];
     });
     builder.addCase(fetchDevices.fulfilled, (state, action) => {
       state.devices = action.payload;

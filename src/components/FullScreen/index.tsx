@@ -29,23 +29,18 @@ const ExpandOutButton: FC<FullScreenPlayerProps> = (props) => {
 
 const AddToLibrary = () => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.spotify.state);
+  const song = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
   const isLiked = useAppSelector((state) => state.spotify.liked);
 
   const handleToggle = () => {
     dispatch(spotifyActions.setLiked({ liked: !isLiked }));
   };
 
-  const { track_window } = state || {};
-  const { current_track } = track_window || {};
-
   return (
-    <AddSongToLibraryButton
-      size={20}
-      isSaved={isLiked}
-      id={current_track?.id!}
-      onToggle={handleToggle}
-    />
+    <AddSongToLibraryButton size={20} isSaved={isLiked} id={song?.id!} onToggle={handleToggle} />
   );
 };
 

@@ -13,8 +13,7 @@ import { AddSongToLibraryButton } from '../../../Actions/AddSongToLibrary';
 import { spotifyActions } from '../../../../store/slices/spotify';
 
 const PlayButton = () => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const paused = state?.paused;
+  const paused = useAppSelector((state) => state.spotify.state?.paused);
   return (
     <button
       onClick={() => (!paused ? playerService.pausePlayback() : playerService.startPlayback())}
@@ -35,9 +34,13 @@ const QueueButton = () => {
 
 const NowPlayingBarMobile = () => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.spotify.state);
+  const position = useAppSelector((state) => state.spotify.state?.position || 0);
+  const duration = useAppSelector((state) => state.spotify.state?.duration || 1);
+  const currentSong = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
   const liked = useAppSelector((state) => state.spotify.liked);
-  const currentSong = state?.track_window.current_track;
   const [currentColor, setColor] = useState('blue');
 
   useEffect(() => {
@@ -53,8 +56,6 @@ const NowPlayingBarMobile = () => {
   }, [currentSong]);
 
   if (!currentSong) return <div></div>;
-  const currentTime = state?.position || 0;
-  const duration = state?.duration || 1;
 
   return (
     <div>
@@ -94,7 +95,7 @@ const NowPlayingBarMobile = () => {
           <div
             className='current-time'
             style={{
-              width: `${(currentTime / duration) * 100}%`,
+              width: `${(position / duration) * 100}%`,
             }}
           ></div>
         </div>

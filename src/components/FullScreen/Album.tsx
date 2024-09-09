@@ -4,10 +4,12 @@ import { ArtistActionsWrapper } from '../Actions/ArtistActions';
 import { Link } from 'react-router-dom';
 
 const AlbumSongDetails = memo(() => {
-  const state = useAppSelector((state) => state.spotify.state);
-  const currentSong = state?.track_window.current_track;
+  const currentSong = useAppSelector(
+    (state) => state.spotify.state?.track_window.current_track,
+    (a, b) => a?.id === b?.id
+  );
 
-  if (!state) return <></>;
+  if (!currentSong) return <></>;
 
   return (
     <div className='flex flex-row items-center'>
