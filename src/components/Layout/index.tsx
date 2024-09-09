@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC, type ReactElement } from 'react';
+import { memo, useEffect, useState, type FC, type ReactElement } from 'react';
 
 // Components
 import { Col, Row } from 'antd';
@@ -20,7 +20,7 @@ import { isActiveOnOtherDevice, spotifyActions } from '../../store/slices/spotif
 import { getLibraryCollapsed, isRightLayoutOpen, uiActions } from '../../store/slices/ui';
 import { LoginFooter } from './components/LoginFooter';
 
-export const AppLayout: FC<{ children: ReactElement }> = (props) => {
+export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => !!state.auth.user);
@@ -126,6 +126,6 @@ export const AppLayout: FC<{ children: ReactElement }> = (props) => {
       {<footer>{user ? <PlayingBar /> : <LoginFooter />}</footer>}
     </>
   );
-};
+});
 
 AppLayout.displayName = 'AppLayout';

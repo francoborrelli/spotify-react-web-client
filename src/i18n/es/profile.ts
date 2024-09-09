@@ -6,4 +6,5 @@ export const profile = {
   'Public playlists': 'Playlists públicas',
   Profile: 'Perfil',
   Followers: 'Seguidores',
+  'See all': 'Mostrar más',
 };
