@@ -58,8 +58,8 @@ window.addEventListener('resize', () => {
 const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector((state) => !!state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
-  const user = useAppSelector((state) => state.auth.user);
   const requesting = useAppSelector((state) => state.auth.requesting);
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
 
 const RoutesComponent = memo(() => {
   const container = useRef<HTMLDivElement>(null);
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => !!state.auth.user);
 
   const routes = useMemo(
     () =>

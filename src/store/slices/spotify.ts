@@ -26,29 +26,30 @@ const initialState: {
 };
 
 export const setState = createAsyncThunk<
-  [Spotify.PlaybackState | null, boolean],
+  Spotify.PlaybackState | null,
   { state: Spotify.PlaybackState | null }
->('spotify/setState', async ({ state: spotifyState }, { getState }) => {
-  if (!spotifyState) return [null, false];
-
+>('spotify/setState', async ({ state: spotifyState }, { getState, dispatch }) => {
+  if (!spotifyState) return null;
   const state = getState() as RootState;
-  const currentSong = state.spotify.state?.track_window.current_track;
+  const currentSong = spotifyState?.track_window.current_track;
 
-  if (currentSong && currentSong.id === spotifyState.track_window.current_track.id)
-    return [spotifyState, state.spotify.liked];
-
-  const playing = !spotifyState.paused;
-  const song = spotifyState.track_window.current_track;
-
-  document.title =
-    song && playing ? `${song.name} • ${song.artists[0].name}` : 'Spotify Web Player';
-
-  const response = await userService.checkSavedTracks([
-    spotifyState.track_window.current_track.id!,
-  ]);
-
-  return [spotifyState, response.data[0]];
+  if (currentSong?.id !== state.spotify.state?.track_window.current_track.id) {
+    const playing = !spotifyState.paused;
+    const song = spotifyState.track_window.current_track;
+    document.title =
+      song && playing ? `${song.name} • ${song.artists[0].name}` : 'Spotify Web Player';
+    if (currentSong) dispatch(fetchLikedSong(currentSong.id!));
+  }
+  return spotifyState;
 });
+
+export const fetchLikedSong = createAsyncThunk<boolean, string>(
+  'spotify/fetchLikedSong',
+  async (id) => {
+    const liked = await userService.checkSavedTracks([id!]);
+    return liked.data[0];
+  }
+);
 
 export const fetchDevices = createAsyncThunk<Device[]>('spotify/fetchDevices', async () => {
   const response = await playerService.getAvailableDevices();
@@ -78,8 +79,10 @@ const spotifySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(setState.fulfilled, (state, action) => {
-      state.liked = action.payload[1];
-      state.state = action.payload[0];
+      state.state = action.payload;
+    });
+    builder.addCase(fetchLikedSong.fulfilled, (state, action) => {
+      state.liked = action.payload;
     });
     builder.addCase(fetchDevices.fulfilled, (state, action) => {
       state.devices = action.payload;

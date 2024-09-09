@@ -11,6 +11,7 @@ import { albumsService } from '../../../../services/albums';
 import { albumActions } from '../../../../store/slices/album';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
+import { uiActions } from '../../../../store/slices/ui';
 
 const FollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
@@ -61,11 +62,13 @@ const UnfollowAlbum: FC<{ id: string; onToggle: () => void; size?: number }> = (
 
 export const AddAlbumToLibraryButton = memo(({ id }: { id: string }) => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
   const isSaved = useAppSelector((state) => state.album.following);
 
-  const onToggle = () => {
+  const onToggle = useCallback(() => {
+    if (!user) return dispatch(uiActions.openLoginTooltip());
     dispatch(yourLibraryActions.fetchMyAlbums());
-  };
+  }, [user, dispatch]);
 
   return isSaved ? (
     <UnfollowAlbum size={32} id={id} onToggle={onToggle} />

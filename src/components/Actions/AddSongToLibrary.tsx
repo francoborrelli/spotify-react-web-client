@@ -1,14 +1,15 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 import { Tooltip } from '../Tooltip';
 import { useTranslation } from 'react-i18next';
 import { userService } from '../../services/users';
 import { AddedToLibrary, AddToLibrary } from '../Icons';
 import { message } from 'antd';
-import { useAppDispatch } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { albumActions } from '../../store/slices/album';
 import { artistActions } from '../../store/slices/artist';
 import { playlistActions } from '../../store/slices/playlist';
+import { uiActions } from '../../store/slices/ui';
 
 const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> = ({
   id,
@@ -75,9 +76,20 @@ export const AddSongToLibraryButton = ({
   isSaved: boolean;
   onToggle: () => void;
 }) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
+
+  const handleToggle = useCallback(() => {
+    if (!user) {
+      dispatch(uiActions.openLoginButton());
+      return;
+    }
+    onToggle();
+  }, [dispatch, onToggle, user]);
+
   return isSaved ? (
-    <DeleteSongFromLibrary size={size} id={id} onToggle={onToggle} />
+    <DeleteSongFromLibrary size={size} id={id} onToggle={handleToggle} />
   ) : (
-    <AddSongToLibrary size={size} id={id} onToggle={onToggle} />
+    <AddSongToLibrary size={size} id={id} onToggle={handleToggle} />
   );
 };

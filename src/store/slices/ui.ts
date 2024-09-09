@@ -6,19 +6,43 @@ export interface UiState {
   devicesCollapsed: boolean;
   detailsCollapsed: boolean;
   libraryCollapsed: boolean;
+  loginTooltipOpen: boolean;
+  loginModalOpen: boolean;
+  loginButtonOpen: boolean;
 }
 
 const initialState: UiState = {
   queueCollapsed: true,
+  loginModalOpen: false,
   devicesCollapsed: true,
   detailsCollapsed: true,
   libraryCollapsed: true,
+  loginTooltipOpen: false,
+  loginButtonOpen: false,
 };
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
+    openLoginButton(state) {
+      state.loginButtonOpen = true;
+    },
+    closeLoginButton(state) {
+      state.loginButtonOpen = false;
+    },
+    openLoginModal(state) {
+      state.loginModalOpen = true;
+    },
+    closeLoginModal(state) {
+      state.loginModalOpen = false;
+    },
+    openLoginTooltip(state) {
+      state.loginTooltipOpen = true;
+    },
+    closeLoginTooltip(state) {
+      state.loginTooltipOpen = false;
+    },
     collapseDetails(state) {
       state.detailsCollapsed = true;
     },

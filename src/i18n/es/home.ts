@@ -14,6 +14,11 @@ export const home = {
   TRACKS: 'Canciones',
   Preview: 'Vista previa',
   'Log In': 'Iniciar sesión',
+  'Not now': 'Ahora no',
+  'You’re logged out': 'No iniciaste sesión',
+  'Log in to add this to your Liked Songs.': 'Inicia sesión para agregarlo a Tus me gusta.',
+  'Create a playlist': 'Crea una playlist',
+  'Log in to create and share playlists.': 'Inicia sesión para crear y compartir playlists.',
   [`Let's access your library`]: `Accede a tu biblioteca`,
   'Log In to access all the features of the app':
     'Inicia sesión para acceder a todas las funciones de la aplicación',

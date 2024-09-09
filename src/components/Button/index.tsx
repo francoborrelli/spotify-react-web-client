@@ -3,12 +3,12 @@ import { FC, memo } from 'react';
 interface ButtonProps {
   title: string;
   onClick: () => void;
-  styles?: any;
+  size?: 'default' | 'small';
 }
 
 export const WhiteButton: FC<ButtonProps> = memo((props) => {
   return (
-    <button onClick={props.onClick} className='white-button' style={props.styles || {}}>
+    <button onClick={props.onClick} className={`white-button ${props.size}`}>
       <span>{props.title}</span>
     </button>
   );

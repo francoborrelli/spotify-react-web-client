@@ -1,4 +1,4 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useCallback, useMemo } from 'react';
 
 import {
   AlbumIcon,
@@ -39,6 +39,7 @@ import { spotifyActions } from '../../store/slices/spotify';
 import { albumActions } from '../../store/slices/album';
 import { artistActions } from '../../store/slices/artist';
 import { Artist } from '../../interfaces/artist';
+import { uiActions } from '../../store/slices/ui';
 
 interface TrackActionsWrapperProps {
   canEdit?: boolean;
@@ -65,6 +66,17 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
     (state) => state.spotify.state?.track_window?.current_track?.id
   );
 
+  const handleUserValidation = useCallback(
+    (button?: boolean) => {
+      if (!userId) {
+        dispatch(button ? uiActions.openLoginButton() : uiActions.openLoginTooltip());
+        return false;
+      }
+      return true;
+    },
+    [dispatch, userId]
+  );
+
   const options = useMemo(() => {
     return myPlaylists
       .filter((p) => p.id !== playlist?.id)
@@ -73,6 +85,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           key: p.id,
           label: p.name,
           onClick: () => {
+            if (!handleUserValidation()) return;
             playlistService.addPlaylistItems(p!.id, [track.uri], p?.snapshot_id!).then(() => {
               dispatch(playlistActions.refreshTracks(playlist!.id));
               message.open({
@@ -83,7 +96,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           },
         };
       });
-  }, [dispatch, myPlaylists, playlist, track.uri, t]);
+  }, [myPlaylists, playlist, handleUserValidation, track.uri, dispatch, t]);
 
   const getItems = () => {
     const items: MenuProps['items'] = [
@@ -96,15 +109,18 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
             label: t('New playlist'),
             key: 'new',
             onClick: () => {
-              playlistService.createPlaylist(userId!, { name: track.name }).then((response) => {
-                const playlist = response.data;
-                playlistService
-                  .addPlaylistItems(playlist.id, [track.uri], playlist.snapshot_id!)
-                  .then(() => {
-                    dispatch(fetchMyPlaylists());
-                    message.success(t('Added to playlist'));
-                  });
-              });
+              if (!handleUserValidation()) return;
+              return playlistService
+                .createPlaylist(userId!, { name: track.name })
+                .then((response) => {
+                  const playlist = response.data;
+                  playlistService
+                    .addPlaylistItems(playlist.id, [track.uri], playlist.snapshot_id!)
+                    .then(() => {
+                      dispatch(fetchMyPlaylists());
+                      message.success(t('Added to playlist'));
+                    });
+                });
             },
           },
           { type: 'divider' },
@@ -123,6 +139,7 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
           <AddToLibrary style={{ height: 18, width: 18, marginInlineEnd: 0 }} />
         ),
         onClick: () => {
+          if (!handleUserValidation(true)) return;
           if (saved) {
             userService.deleteTracks([track.id!]).then(() => {
               dispatch(likedSongsActions.removeSong({ id: track.id! }));
@@ -170,7 +187,8 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         key: '2',
         icon: <DeleteIcon />,
         onClick: () => {
-          playlistService
+          if (!handleUserValidation()) return;
+          return playlistService
             .removePlaylistItems(playlist!.id, [track.uri], playlist?.snapshot_id!)
             .then(() => {
               dispatch(playlistActions.refreshPlaylist(playlist!.id));
@@ -191,7 +209,8 @@ export const TrackActionsWrapper: FC<TrackActionsWrapperProps> = memo((props) =>
         key: '3',
         icon: <AddToQueueIcon />,
         onClick: () => {
-          playerService.addToQueue(track.uri).then(() => {
+          if (!handleUserValidation(true)) return;
+          return playerService.addToQueue(track.uri).then(() => {
             dispatch(fetchQueue());
             message.open({
               type: 'success',

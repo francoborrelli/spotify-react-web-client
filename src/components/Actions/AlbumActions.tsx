@@ -1,4 +1,4 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useCallback, useMemo } from 'react';
 
 import { Dropdown, MenuProps, message } from 'antd';
 import { AddToQueueIcon, AddedToLibrary, AddToLibrary, AddToPlaylist } from '../Icons';
@@ -17,7 +17,8 @@ import type { Album } from '../../interfaces/albums';
 // Redux
 import { fetchQueue } from '../../store/slices/queue';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { yourLibraryActions } from '../../store/slices/yourLibrary';
+import { fetchMyPlaylists, yourLibraryActions } from '../../store/slices/yourLibrary';
+import { uiActions } from '../../store/slices/ui';
 
 interface AlbumActionsWrapperProps {
   album: Album;
@@ -32,6 +33,7 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
   const { t } = useTranslation(['playlist']);
 
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user?.id);
   const myAlbums = useAppSelector((state) => state.yourLibrary.myAlbums);
   const myPlaylists = useAppSelector((state) => state.yourLibrary.myPlaylists);
 
@@ -39,12 +41,24 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
     return myAlbums.some((p) => p.id === album.id);
   }, [myAlbums, album.id]);
 
+  const handleUserValidation = useCallback(
+    (button?: boolean) => {
+      if (!user) {
+        dispatch(button ? uiActions.openLoginButton() : uiActions.openLoginTooltip());
+        return false;
+      }
+      return true;
+    },
+    [dispatch, user]
+  );
+
   const options = useMemo(() => {
-    return myPlaylists.map((p) => {
+    const items: any[] = myPlaylists.map((p) => {
       return {
         key: p.id,
         label: p.name,
         onClick: async () => {
+          if (!handleUserValidation()) return;
           const {
             data: { items: tracks },
           } = await albumsService.fetchAlbumTracks(album.id);
@@ -58,7 +72,32 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
         },
       };
     });
-  }, [myPlaylists, album, t]);
+
+    if (myPlaylists.length) {
+      items.unshift({ type: 'divider' });
+    }
+
+    items.unshift({
+      label: t('New playlist'),
+      key: 'new',
+      onClick: async () => {
+        if (!handleUserValidation()) return;
+        const {
+          data: { items: tracks },
+        } = await albumsService.fetchAlbumTracks(album.id);
+        const uris = tracks.map((t) => t.uri);
+        return playlistService.createPlaylist(user!, { name: album.name }).then((response) => {
+          const playlist = response.data;
+          playlistService.addPlaylistItems(playlist.id, uris, playlist.snapshot_id!).then(() => {
+            dispatch(fetchMyPlaylists());
+            message.success(t('Added to playlist'));
+          });
+        });
+      },
+    });
+
+    return items;
+  }, [myPlaylists, t, handleUserValidation, album.id, album.name, user, dispatch]);
 
   const items = useMemo(() => {
     const items: MenuProps['items'] = [];
@@ -69,6 +108,7 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
         key: 9,
         icon: <AddedToLibrary style={{ height: 16, width: 16, marginInlineEnd: 0 }} />,
         onClick: () => {
+          if (!handleUserValidation(true)) return;
           albumsService.deleteAlbums([album.id]).then(() => {
             dispatch(yourLibraryActions.fetchMyAlbums());
             message.open({
@@ -84,6 +124,7 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
         key: 8,
         icon: <AddToLibrary style={{ height: 16, width: 16, marginInlineEnd: 0 }} />,
         onClick: () => {
+          if (!handleUserValidation(true)) return;
           albumsService.saveAlbums([album.id]).then(() => {
             dispatch(yourLibraryActions.fetchMyAlbums());
             message.open({
@@ -102,6 +143,7 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
         disabled: true,
         icon: <AddToQueueIcon />,
         onClick: () => {
+          if (!handleUserValidation()) return;
           playerService.addToQueue(album.uri).then(() => {
             dispatch(fetchQueue());
             message.open({
@@ -121,7 +163,7 @@ export const AlbumActionsWrapper: FC<AlbumActionsWrapperProps> = memo((props) =>
     );
 
     return items;
-  }, [album.id, album.uri, dispatch, inLibrary, options, t]);
+  }, [album.id, album.uri, dispatch, handleUserValidation, inLibrary, options, t]);
 
   return (
     <Dropdown menu={{ items }} trigger={props.trigger}>

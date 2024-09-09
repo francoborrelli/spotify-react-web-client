@@ -331,8 +331,12 @@
   --min-column-width: 200px;
   --row-count: 1;
 
-  @media (max-width: 1100px) {
-    --min-column-width: 180px;
+  @media (max-width: 1800px) {
+    --min-column-width: 170px;
+  }
+
+  @media (max-width: 1200px) {
+    --min-column-width: 170px;
   }
 
   @media (max-width: $desktop-small-breakpoint) {

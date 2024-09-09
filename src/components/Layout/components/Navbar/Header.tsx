@@ -1,22 +1,55 @@
-import { Space } from 'antd';
+import { useCallback } from 'react';
+
+import { Popconfirm, Space } from 'antd';
 import { Link } from 'react-router-dom';
+import { CloseIcon } from '../../../Icons';
 import { WhiteButton } from '../../../Button';
 
 // Utils
 import { useTranslation } from 'react-i18next';
 
 // Redux
+import { uiActions } from '../../../../store/slices/ui';
 import { loginToSpotify } from '../../../../store/slices/auth';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Constants
 import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
+const LoginButton = () => {
+  const { t } = useTranslation(['home']);
+  const dispatch = useAppDispatch();
+  const tooltipOpen = useAppSelector((state) => state.ui.loginButtonOpen);
+
+  const onClose = useCallback(() => {
+    dispatch(uiActions.closeLoginButton());
+  }, [dispatch]);
+
+  return (
+    <Popconfirm
+      icon={null}
+      open={tooltipOpen}
+      onCancel={onClose}
+      placement='bottomLeft'
+      rootClassName='login-tooltip'
+      cancelText={<CloseIcon />}
+      title={t('You’re logged out')}
+      cancelButtonProps={{ type: 'text' }}
+      okButtonProps={{ className: 'white-button small' }}
+      description={t('Log in to add this to your Liked Songs.')}
+    >
+      <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify(false))} />
+    </Popconfirm>
+  );
+};
+
 const Header = ({ opacity }: { opacity: number; title?: string }) => {
   const { t } = useTranslation(['navbar']);
 
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector(
+    (state) => state.auth.user,
+    (prev, next) => prev?.id === next?.id
+  );
 
   return (
     <div
@@ -54,7 +87,7 @@ const Header = ({ opacity }: { opacity: number; title?: string }) => {
               </Link>
             </div>
           ) : (
-            <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify(false))} />
+            <LoginButton />
           )}
         </Space>
       </div>

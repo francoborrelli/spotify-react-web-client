@@ -828,4 +828,102 @@ a {
     padding: 10px 20px;
     border-radius: var(--encore-button-corner-radius, 9999px);
   }
+
+  &.small {
+    span {
+      padding: 5px 20px;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.ant-popover {
+  max-width: 336px;
+  transition-duration: 300ms;
+  background-color: #0074e0;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  outline: 0;
+  position: relative;
+  text-align: start;
+  -webkit-transition-property: visibility, opacity, -webkit-transform;
+  transition-property: visibility, opacity, -webkit-transform;
+  transition-property: transform, visibility, opacity;
+  transition-property: transform, visibility, opacity, -webkit-transform;
+
+  &.login-tooltip {
+    .ant-popover-inner {
+      padding: 10px;
+      padding-left: 16px;
+      padding-bottom: 5px;
+    }
+
+    .ant-popconfirm-inner-content {
+      display: flex;
+      flex-direction: row;
+    }
+
+    button {
+      svg {
+        fill: #fff !important;
+        height: 0.875rem !important;
+      }
+    }
+
+    .white-button {
+      display: none !important;
+    }
+    .ant-popconfirm-buttons {
+      margin-top: 0px;
+    }
+  }
+
+  .ant-popover-inner,
+  .ant-popover-arrow::before {
+    background-color: #0074e0;
+  }
+
+  .ant-popover-inner {
+    padding: 16px;
+    position: relative;
+    transition-duration: 300ms;
+  }
+
+  .ant-popconfirm-title {
+    font-weight: 700;
+    color: #fff !important;
+    font-size: 1rem;
+  }
+
+  .ant-popconfirm-description {
+    color: #fff !important;
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+
+  .ant-popconfirm-buttons {
+    margin-top: 25px;
+  }
+
+  .ant-btn-text {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #b3b3b3;
+    &:hover {
+      transform: scale(1.04);
+      color: #fff !important;
+      background: none !important;
+    }
+  }
+
+  .white-button {
+    height: auto !important;
+    &:hover {
+      background: none !important;
+    }
+  }
 }
