@@ -32,15 +32,16 @@ export const loginToSpotify = createAsyncThunk<{ token?: string; loaded: boolean
       return { token, loaded: false };
     }
 
-    token = await login.getToken();
+    let [requestedToken, requestUser] = await login.getToken();
+    if (requestUser) api.dispatch(fetchUser());
 
-    if (!token) {
+    if (!requestedToken) {
       login.logInWithSpotify(anonymous);
     } else {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + requestedToken;
     }
 
-    return { token, loaded: true };
+    return { token: requestedToken, loaded: true };
   }
 );
 

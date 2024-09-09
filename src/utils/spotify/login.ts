@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { getFromLocalStorageWithExpiry, setLocalStorageWithExpiry } from '../localstorage';
 import axios from 'axios';
+import { store } from '../../store/store';
 
 /* eslint-disable import/no-anonymous-default-export */
 const client_id = process.env.REACT_APP_CLIENT_ID as string;
@@ -114,24 +115,24 @@ const requestToken = async (code: string) => {
 
 const getToken = async () => {
   const token = getFromLocalStorageWithExpiry('access_token');
-  if (token) return token;
+  if (token) return [token, true];
 
   const urlParams = new URLSearchParams(window.location.search);
 
   let code = urlParams.get('code') as string;
-  if (code) return await requestToken(code);
+  if (code) return [await requestToken(code), true];
 
   const publicToken = getFromLocalStorageWithExpiry('public_access_token');
-  if (publicToken) return publicToken;
+  if (publicToken) return [publicToken, false];
 
   const access_token = window.location.hash.split('&')[0].split('=')[1];
   if (access_token) {
     setLocalStorageWithExpiry('public_access_token', access_token, 3600);
     window.location.hash = '';
-    return access_token;
+    return [access_token, false];
   }
 
-  return null;
+  return [null, false];
 };
 
 export const getRefreshToken = async () => {
