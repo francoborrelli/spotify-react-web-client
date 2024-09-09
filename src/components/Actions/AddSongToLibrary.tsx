@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 
 import { Tooltip } from '../Tooltip';
 import { useTranslation } from 'react-i18next';
@@ -18,8 +18,13 @@ const AddSongToLibrary: FC<{ id: string; onToggle: () => void; size?: number }> 
 }) => {
   const { t } = useTranslation(['playlist']);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
 
   const handleAddToLibrary = () => {
+    if (!user) {
+      dispatch(uiActions.openLoginButton());
+      return;
+    }
     userService.saveTracks([id]).then(() => {
       message.success(t('Song added to Liked Songs'));
       onToggle();
@@ -45,8 +50,13 @@ const DeleteSongFromLibrary: FC<{ id: string; onToggle: () => void; size?: numbe
 }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => !!state.auth.user);
 
   const handleDeleteFromLibrary = () => {
+    if (!user) {
+      dispatch(uiActions.openLoginButton());
+      return;
+    }
     userService.deleteTracks([id]).then(() => {
       message.success(t('Song removed from Liked Songs'));
       onToggle();
@@ -76,20 +86,9 @@ export const AddSongToLibraryButton = ({
   isSaved: boolean;
   onToggle: () => void;
 }) => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => !!state.auth.user);
-
-  const handleToggle = useCallback(() => {
-    if (!user) {
-      dispatch(uiActions.openLoginButton());
-      return;
-    }
-    onToggle();
-  }, [dispatch, onToggle, user]);
-
   return isSaved ? (
-    <DeleteSongFromLibrary size={size} id={id} onToggle={handleToggle} />
+    <DeleteSongFromLibrary size={size} id={id} onToggle={onToggle} />
   ) : (
-    <AddSongToLibrary size={size} id={id} onToggle={handleToggle} />
+    <AddSongToLibrary size={size} id={id} onToggle={onToggle} />
   );
 };

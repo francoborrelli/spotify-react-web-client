@@ -31,7 +31,7 @@ export const playlist = {
   'Removed from Your Library': 'Eliminado de Tu biblioteca',
   'Add to Your Library': 'Guardar en Tu biblioteca',
   'Saved to Your Library': 'Guardado en Tu biblioteca',
-  'Add to Liked Songs': 'Agregar a Canciones Me Gusta',
+  'Add to Liked Songs': 'Agregar a Tus me gusta',
   'Remove from Liked Songs': 'Eliminar de Canciones Me Gusta',
   'Private Playlist': 'Playlist Privada',
   Follow: 'Seguir',

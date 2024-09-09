@@ -69,6 +69,7 @@ export const ArtistActionsWrapper: FC<ArtistActionsWrapperProps> = memo((props) 
         label: t('Follow'),
         icon: <FollowIcon />,
         onClick: async () => {
+          if (!handleUserValidation()) return;
           userService.followArtists([id]).then(() => {
             message.success(t('Artist followed'));
             dispatch(yourLibraryActions.fetchMyArtists());

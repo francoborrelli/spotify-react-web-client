@@ -9,6 +9,7 @@ import { yourLibraryActions } from '../../../../store/slices/yourLibrary';
 
 // Services
 import { userService } from '../../../../services/users';
+import { uiActions } from '../../../../store/slices/ui';
 
 // Redux
 
@@ -18,13 +19,20 @@ const FollowArtist: FC<{ id: string; onToggle: () => void; size?: number }> = ({
 }) => {
   const { t } = useTranslation(['artist']);
   const dispatch = useAppDispatch();
+  const user = useAppSelector(
+    (state) => !!state.auth.user,
+    (prev, next) => prev === next
+  );
 
   const handleFollow = useCallback(() => {
+    if (!user) {
+      return dispatch(uiActions.openLoginTooltip());
+    }
     userService.unfollowArtists([id]).then(() => {
       dispatch(artistActions.setFollowing({ following: true }));
       onToggle();
     });
-  }, [dispatch, id, onToggle]);
+  }, [dispatch, id, onToggle, user]);
 
   return (
     <button className='transparent-button' onClick={handleFollow}>
@@ -39,13 +47,20 @@ const UnfollowArtist: FC<{ id: string; onToggle: () => void; size?: number }> = 
 }) => {
   const { t } = useTranslation(['artist']);
   const dispatch = useAppDispatch();
+  const user = useAppSelector(
+    (state) => !!state.auth.user,
+    (prev, next) => prev === next
+  );
 
   const handleUnfollow = useCallback(() => {
+    if (!user) {
+      return dispatch(uiActions.openLoginTooltip());
+    }
     userService.unfollowArtists([id]).then(() => {
       dispatch(artistActions.setFollowing({ following: false }));
       onToggle();
     });
-  }, [dispatch, id, onToggle]);
+  }, [dispatch, id, onToggle, user]);
 
   return (
     <button className='transparent-button' onClick={handleUnfollow}>
