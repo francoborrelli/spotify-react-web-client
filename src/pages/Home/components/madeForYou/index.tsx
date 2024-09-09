@@ -34,7 +34,7 @@ export const MadeForYou: FC<NewReleasesProps> = () => {
         items={items}
         moreUrl={`/genre/${MADE_FOR_YOU_URI}`}
         getDescription={getPlaylistDescription}
-        title={`${t('Made for')} ${user?.display_name}`}
+        title={`${t('Made for')} ${user?.display_name || t('you')}`}
       />
     </div>
   );

@@ -9,5 +9,6 @@ export const home = {
   ALBUMS: 'Albums',
   TRACKS: 'Songs',
   PLAYLISTS: 'Playlists',
+  you: 'you',
   'Made for you': 'Made for you',
 };

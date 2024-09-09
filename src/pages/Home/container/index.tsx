@@ -11,6 +11,10 @@ import { FC, memo, RefObject, useRef, useState } from 'react';
 import { RecentlyPlayed } from '../components/recentlyPlayed';
 import { TopMixes } from '../components/topMixes';
 import { useAppSelector } from '../../../store/store';
+import { Rankings } from '../components/rankings';
+import { Trending } from '../components/trending';
+import { FavouriteArtists } from '../components/favouriteArtists';
+import { YourPlaylists } from '../components/yourPlaylists';
 
 interface HomePageContainerProps {
   container: RefObject<HTMLDivElement>;
@@ -20,8 +24,9 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
   const { container } = props;
   const [color, setColor] = useState('rgb(66, 32, 35)');
 
-  const user = useAppSelector((state) => state.auth.user);
   const sectionContainerRef = useRef<HTMLDivElement>(null);
+  const user = useAppSelector((state) => !!state.auth.user);
+  const section = useAppSelector((state) => state.home.section);
 
   return (
     <div ref={sectionContainerRef}>
@@ -30,35 +35,66 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
         className='Home-seccion'
         style={{
           paddingTop: user ? 50 : 0,
-          marginTop: user ? 0 : -40,
           transition: 'background: 5s',
           background: `linear-gradient(180deg, ${color} 2%, rgb(18, 18, 18) 18%)`,
         }}
       >
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <TopTracks setColor={setColor} />
-          </Col>
+        <Row gutter={user ? [16, 16] : undefined}>
+          {user ? (
+            <Col span={24}>
+              <TopTracks setColor={setColor} />
+            </Col>
+          ) : null}
 
-          <Col span={24}>
-            <MadeForYou />
-          </Col>
+          {user ? (
+            <Col span={24}>
+              <MadeForYou />
+            </Col>
+          ) : null}
 
-          <Col span={24}>
-            <TopMixes />
-          </Col>
+          {user ? (
+            <Col span={24}>
+              <TopMixes />
+            </Col>
+          ) : null}
 
-          <Col span={24}>
-            <RecentlyPlayed />
-          </Col>
+          {user && section === 'ALL' ? (
+            <Col span={24}>
+              <RecentlyPlayed />
+            </Col>
+          ) : null}
 
           <Col span={24}>
             <FeaturePlaylists />
           </Col>
 
+          {user ? (
+            <Col span={24}>
+              <YourPlaylists />
+            </Col>
+          ) : null}
+
           <Col span={24}>
             <NewReleases />
           </Col>
+
+          {!user || section === 'MUSIC' ? (
+            <Col span={24}>
+              <Rankings />
+            </Col>
+          ) : null}
+
+          {!user || section === 'MUSIC' ? (
+            <Col span={24}>
+              <Trending />
+            </Col>
+          ) : null}
+
+          {user && section === 'ALL' ? (
+            <Col span={24}>
+              <FavouriteArtists />
+            </Col>
+          ) : null}
         </Row>
       </div>
     </div>

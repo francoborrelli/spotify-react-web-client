@@ -19,16 +19,20 @@ import { categoriesService } from '../../services/categories';
 import { groupBy, uniq, uniqBy } from 'lodash';
 
 // Constants
-import { MADE_FOR_YOU_URI } from '../../constants/spotify';
+import { MADE_FOR_YOU_URI, RANKING_URI, TRENDING_URI } from '../../constants/spotify';
 
 const initialState: {
   topTracks: Track[];
   newReleases: Album[];
   madeForYou: Playlist[];
   featurePlaylists: Playlist[];
+  rankings: Playlist[];
+  trending: Playlist[];
   recentlyPlayed: (Track | Artist | Album)[];
   section: 'ALL' | 'MUSIC' | 'PODCAST';
 } = {
+  trending: [],
+  rankings: [],
   topTracks: [],
   section: 'ALL',
   madeForYou: [],
@@ -39,6 +43,16 @@ const initialState: {
 
 export const fetchMadeForYou = createAsyncThunk('home/fetchMadeForYou', async () => {
   const response = await categoriesService.fetchCategoryPlaylists(MADE_FOR_YOU_URI, { limit: 50 });
+  return response.data.playlists.items;
+});
+
+export const fetchRanking = createAsyncThunk('home/fetchRanking', async () => {
+  const response = await categoriesService.fetchCategoryPlaylists(RANKING_URI, { limit: 10 });
+  return response.data.playlists.items;
+});
+
+export const fetchTrending = createAsyncThunk('home/fetchTrending', async () => {
+  const response = await categoriesService.fetchCategoryPlaylists(TRENDING_URI, { limit: 10 });
   return response.data.playlists.items;
 });
 
@@ -141,11 +155,19 @@ const homeSlice = createSlice({
     builder.addCase(fetchRecentlyPlayed.fulfilled, (state, action) => {
       state.recentlyPlayed = action.payload;
     });
+    builder.addCase(fetchRanking.fulfilled, (state, action) => {
+      state.rankings = action.payload;
+    });
+    builder.addCase(fetchTrending.fulfilled, (state, action) => {
+      state.trending = action.payload;
+    });
   },
 });
 
 export const homeActions = {
   ...homeSlice.actions,
+  fetchRanking,
+  fetchTrending,
   fetchTopTracks,
   fetchMadeForYou,
   fetchNewReleases,

@@ -5,6 +5,7 @@ import { categoriesService } from '../../services/categories';
 
 // Interfaces
 import type { Category } from '../../interfaces/categories';
+import { RootState } from '../store';
 
 const initialState: {
   loading: boolean;
@@ -14,9 +15,11 @@ const initialState: {
   categories: [],
 };
 
-export const fetchCategories = createAsyncThunk('browse/fetchCategories', async () => {
+export const fetchCategories = createAsyncThunk('browse/fetchCategories', async (_, api) => {
+  const user = (api.getState() as RootState).auth.user;
   const response = await categoriesService.fetchCategories({ limit: 50 });
-  return response.data.categories.items;
+  const items = response.data.categories.items;
+  return user ? items : items.filter((item) => item.id);
 });
 
 const browseSlice = createSlice({

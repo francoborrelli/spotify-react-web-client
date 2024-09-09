@@ -1,5 +1,9 @@
 export const MADE_FOR_YOU_URI = '0JQ5DAt0tbjZptfcdMSKl3';
 
+export const RANKING_URI = '0JQ5DAudkNjCgYMM0TZXDw';
+
+export const TRENDING_URI = '0JQ5DAqbMKFQIL0AXnG5AK';
+
 export const INITIAL_VOLUME = 0.2;
 
 export const PLAYLIST_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/playlist.png`;

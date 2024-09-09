@@ -23,15 +23,16 @@ const COLLAPSED_STYLE = {
 
 const YourLibrary = () => {
   const collapsed = useAppSelector(getLibraryCollapsed);
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => !!state.auth.user);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
 
   const heightValue = useMemo(() => {
     let value = 310;
+    if (!user) value = 270;
     if (collapsed) value = 218;
     if (activeOnOtherDevice) value += 50;
     return value;
-  }, [collapsed, activeOnOtherDevice]);
+  }, [user, collapsed, activeOnOtherDevice]);
 
   return (
     <div className={`Navigation-section library ${!collapsed ? 'open' : ''}`}>

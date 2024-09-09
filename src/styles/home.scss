@@ -327,13 +327,37 @@
   }
 }
 
+.p-4 {
+  padding: 0.7rem !important;
+}
+
+.guest {
+  .playlist-card-info {
+    padding-left: 10px;
+    padding-bottom: 10px;
+  }
+  .playlist-header {
+    font-size: 1.5rem !important;
+    margin-bottom: 0px !important;
+  }
+
+  .playlist-grid {
+    --min-column-width: 170px;
+    --row-count: 1;
+
+    @media (max-width: $desktop-small-breakpoint) {
+      --min-column-width: 160px;
+    }
+
+    @media (max-width: $desktop-breakpoint) {
+      --min-column-width: 160px;
+    }
+  }
+}
+
 .playlist-grid {
   --min-column-width: 200px;
   --row-count: 1;
-
-  @media (max-width: 1800px) {
-    --min-column-width: 190px;
-  }
 
   @media (max-width: 1200px) {
     --min-column-width: 170px;

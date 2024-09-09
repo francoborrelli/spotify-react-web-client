@@ -11,6 +11,7 @@ import type { Track } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
+import { useAppSelector } from '../../store/store';
 
 type Item = Album | Playlist | Artist | Track;
 
@@ -74,10 +75,11 @@ export function GridItemList(props: {
   getDescription?: (item: Item) => string;
 }) {
   const [t] = useTranslation(['artist']);
+  const user = useAppSelector((state) => !!state.auth.user);
   const { onItemDelete, onItemClick, getDescription } = props;
   const { items, chips, title, moreUrl, extra, subtitle } = props;
   return (
-    <div>
+    <div className={`${!user ? 'guest' : ''}`}>
       <Flex justify='space-between' align='center'>
         <div>
           {title ? (
@@ -106,7 +108,7 @@ export function GridItemList(props: {
 
       {chips}
       <div
-        className='playlist-grid'
+        className={`playlist-grid`}
         style={
           props.multipleRows
             ? {

@@ -122,7 +122,7 @@ const RoutesComponent = memo(() => {
         { path: '/users/:userId/playlists', element: <ProfilePlaylists container={container} /> },
         { path: '/users/:userId/tracks', element: <ProfileTracks container={container} /> },
         { path: '/users/:userId', element: <Profile container={container} /> },
-        { path: '/genre/:genreId', element: <GenrePage /> },
+        { public: true, path: '/genre/:genreId', element: <GenrePage /> },
         { public: true, path: '/search', element: <BrowsePage /> },
         { path: '/recent-searches', element: <RecentlySearched /> },
         {

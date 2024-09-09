@@ -4,6 +4,7 @@ export const home = {
   ALL: 'Todo',
   PODCASTS: 'Podcasts',
   'Made for you': 'Hecho para ti',
+  you: 'para ti',
   'Liked Songs': 'Canciones gustadas',
   Artists: 'Artistas',
   MUSIC: 'Música',
@@ -15,6 +16,9 @@ export const home = {
   Preview: 'Vista previa',
   'Log In': 'Iniciar sesión',
   'Not now': 'Ahora no',
+  Trending: 'Tendencias',
+  'Your playlists': 'Tus playlists',
+  'Featured Charts': 'Listas destacadas',
   'Start listening with a free Spotify account':
     'Empieza a escuchar con una cuenta gratuita de Spotify',
   'You’re logged out': 'No iniciaste sesión',
