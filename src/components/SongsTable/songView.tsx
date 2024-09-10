@@ -326,7 +326,7 @@ export const SongView = (props: SongViewProps) => {
       return playerService.startPlayback();
     }
     return playerService.startPlayback(context);
-  }, [user, isCurrent, isPlaying, context, dispatch, song.album.images]);
+  }, [user, isCurrent, isPlaying, context, dispatch, song.album?.images]);
 
   return (
     <TrackActionsWrapper
