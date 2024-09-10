@@ -9,25 +9,27 @@ const redirect_uri = process.env.REACT_APP_REDIRECT_ID as string;
 const authUrl = new URL('https://accounts.spotify.com/authorize');
 
 const SCOPES = [
+  'ugc-image-upload',
   'streaming',
-  'user-read-private',
-  'user-read-email',
-  'user-read-recently-played',
-  'user-read-currently-playing',
+
   'user-read-playback-state',
   'user-modify-playback-state',
-  'user-library-modify',
-  'user-follow-modify',
+  'user-read-currently-playing',
+
   'playlist-read-private',
   'playlist-modify-public',
   'playlist-modify-private',
   'playlist-read-collaborative',
-  'user-library-read',
-  'user-read-playback-position',
-  'user-top-read',
+
   'user-follow-modify',
   'user-follow-read',
-  'ugc-image-upload',
+
+  'user-read-playback-position',
+  'user-top-read',
+  'user-read-recently-played',
+
+  'user-library-read',
+  'user-library-modify',
 ] as const;
 
 const sha256 = async (plain: string) => {
