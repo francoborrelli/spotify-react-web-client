@@ -9,7 +9,7 @@ import { getFromLocalStorageWithExpiry } from './utils/localstorage';
 // Components
 import { ConfigProvider } from 'antd';
 import { AppLayout } from './components/Layout';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -99,8 +99,15 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
 });
 
 const RoutesComponent = memo(() => {
+  const location = useLocation();
   const container = useRef<HTMLDivElement>(null);
   const user = useAppSelector((state) => !!state.auth.user);
+
+  useEffect(() => {
+    if (container.current) {
+      container.current.scrollTop = 0;
+    }
+  }, [location, container]);
 
   const routes = useMemo(
     () =>
