@@ -188,6 +188,7 @@ const Album = ({ song }: ComponentProps) => {
   const onNavigate = useCallback(
     (e: any) => {
       if (e) e.stopPropagation();
+      if (e) e.preventDefault();
       if (!user) {
         return dispatch(uiActions.openLoginModal(song.album.images[0].url));
       }
