@@ -498,6 +498,11 @@
       object-fit: cover;
       -o-object-position: center center;
       object-position: center center;
+
+      @media (max-width: $desktop-breakpoint) {
+        max-width: 200px;
+        margin-top: 20px;
+      }
     }
   }
 
@@ -527,5 +532,13 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+
+    @media (max-width: $desktop-breakpoint) {
+      h2 {
+        font-size: 1rem;
+        margin-top: 20px;
+        margin-bottom: -10px;
+      }
+    }
   }
 }

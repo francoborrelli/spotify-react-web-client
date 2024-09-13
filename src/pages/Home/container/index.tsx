@@ -15,6 +15,7 @@ import { Rankings } from '../components/rankings';
 import { Trending } from '../components/trending';
 import { FavouriteArtists } from '../components/favouriteArtists';
 import { YourPlaylists } from '../components/yourPlaylists';
+import useIsMobile from '../../../utils/isMobile';
 
 interface HomePageContainerProps {
   container: RefObject<HTMLDivElement>;
@@ -24,6 +25,7 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
   const { container } = props;
   const [color, setColor] = useState('rgb(66, 32, 35)');
 
+  const isMobile = useIsMobile();
   const sectionContainerRef = useRef<HTMLDivElement>(null);
   const user = useAppSelector((state) => !!state.auth.user);
   const section = useAppSelector((state) => state.home.section);
@@ -34,7 +36,7 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
       <div
         className='Home-seccion'
         style={{
-          paddingTop: user ? 50 : 0,
+          paddingTop: isMobile ? 50 : 0,
           transition: 'background: 5s',
           background: `linear-gradient(180deg, ${color} 2%, rgb(18, 18, 18) 18%)`,
         }}

@@ -16,10 +16,12 @@ import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
 import tinycolor from 'tinycolor2';
 import { useTranslation } from 'react-i18next';
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
+import useIsMobile from '../../utils/isMobile';
 
 export const LoginModal = memo(() => {
   const dispatch = useAppDispatch();
   const [t] = useTranslation(['home']);
+  const isMobile = useIsMobile();
 
   const [open, setOpen] = useState<boolean>(false);
   const [color, setColor] = useState<string>(DEFAULT_PAGE_COLOR);
@@ -64,7 +66,13 @@ export const LoginModal = memo(() => {
           ['--background-color']: color,
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: isMobile ? 'column' : 'row',
+          }}
+        >
           <div className='img-container'>
             <img alt='' loading='lazy' src={imgUrl} />
           </div>

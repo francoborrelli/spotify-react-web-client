@@ -165,7 +165,13 @@ const RoutesComponent = memo(() => {
   );
 
   return (
-    <div className='Main-section' ref={container}>
+    <div
+      className='Main-section'
+      ref={container}
+      style={{
+        height: user ? undefined : `calc(100vh - 50px)`,
+      }}
+    >
       <div
         style={{
           minHeight: user ? 'calc(100vh - 230px)' : 'calc(100vh - 100px)',

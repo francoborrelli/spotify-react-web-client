@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store/store';
 
 // Constants
 import { ARTISTS_DEFAULT_IMAGE } from '../../../../constants/spotify';
+import useIsMobile from '../../../../utils/isMobile';
 
 const LoginButton = () => {
   const { t } = useTranslation(['home']);
@@ -44,6 +45,7 @@ const LoginButton = () => {
 };
 
 const Header = ({ opacity }: { opacity: number; title?: string }) => {
+  const isMobile = useIsMobile();
   const { t } = useTranslation(['navbar']);
 
   const user = useAppSelector(
@@ -58,14 +60,16 @@ const Header = ({ opacity }: { opacity: number; title?: string }) => {
     >
       <div className='flex flex-row items-center'>
         <Space>
-          <a
-            target='_blank'
-            rel='noreferrer'
-            className='contact-me'
-            href='https://github.com/francoborrelli/spotify-react-web-client'
-          >
-            <span>{t('Source code')}</span>
-          </a>
+          {!isMobile ? (
+            <a
+              target='_blank'
+              rel='noreferrer'
+              className='contact-me'
+              href='https://github.com/francoborrelli/spotify-react-web-client'
+            >
+              <span>{t('Source code')}</span>
+            </a>
+          ) : null}
 
           {/*
           <div className='news'>

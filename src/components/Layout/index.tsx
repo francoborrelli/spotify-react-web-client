@@ -20,26 +20,28 @@ import { isActiveOnOtherDevice, spotifyActions } from '../../store/slices/spotif
 import { getLibraryCollapsed, isRightLayoutOpen, uiActions } from '../../store/slices/ui';
 import { LoginFooter } from './components/LoginFooter';
 import { LoginModal } from '../Modals/LoginModal';
+import useIsMobile from '../../utils/isMobile';
 
 export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
   const dispatch = useAppDispatch();
-
   const user = useAppSelector((state) => !!state.auth.user);
   const rightLayoutOpen = useAppSelector(isRightLayoutOpen);
   const libraryCollapsed = useAppSelector(getLibraryCollapsed);
   const hasState = useAppSelector((state) => !!state.spotify.state);
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     window.onresize = () => {
       const vh = window.innerWidth;
       if (vh < 950) {
         dispatch(uiActions.collapseLibrary());
-        setIsMobile(true);
+        setIsTablet(true);
       } else {
-        setIsMobile(false);
+        setIsTablet(false);
       }
     };
     return () => {
@@ -67,7 +69,10 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
           justify='end'
           gutter={[8, 8]}
           style={{
-            height: `calc(100vh - ${activeOnOtherDevice ? '141' : '107'}px)`,
+            overflow: 'hidden',
+            height: `calc(100vh - ${
+              activeOnOtherDevice ? '141' : !user && isMobile ? '0' : '105'
+            }px)`,
           }}
         >
           <Col span={24}>
@@ -85,9 +90,9 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
                 id='left'
                 order={1}
                 className='mobile-hidden'
-                minSize={isMobile ? 10 : libraryCollapsed ? 7 : 22}
-                maxSize={isMobile ? 10 : libraryCollapsed ? 8 : 28}
-                defaultSize={isMobile ? 10 : libraryCollapsed ? 7 : 22}
+                minSize={isTablet ? 10 : libraryCollapsed ? 7 : 22}
+                maxSize={isTablet ? 10 : libraryCollapsed ? 8 : 28}
+                defaultSize={isTablet ? 10 : libraryCollapsed ? 7 : 22}
                 style={{
                   borderRadius: 5,
                   minWidth: libraryCollapsed ? 85 : 280,
@@ -97,14 +102,13 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
                 <Library />
               </Panel>
 
-              <PanelResizeHandle className='resize-handler' />
-
+              {!isMobile ? <PanelResizeHandle className='resize-handler' /> : null}
               <Panel id='center' order={2} style={{ borderRadius: 5 }}>
                 {/* Home | Playlists */}
                 {props.children}
               </Panel>
 
-              {rightLayoutOpen && hasState ? (
+              {!isTablet && rightLayoutOpen && hasState ? (
                 <PanelResizeHandle className='resize-handler' />
               ) : null}
 
