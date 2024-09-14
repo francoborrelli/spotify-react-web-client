@@ -1,6 +1,6 @@
 
-ARG REACT_APP_CLIENT_ID
-ARG REACT_APP_REDIRECT_ID=http://localhost:3000/
+ARG REACT_APP_SPOTIFY_CLIENT_ID
+ARG REACT_APP_SPOTIFY_REDIRECT_URL=http://localhost:3000/
 
 # build environment
 FROM node:18.12 as builder

@@ -5,7 +5,7 @@
 </a>
 
 <p align="center">
-  
+
 <img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white" alt="Spotify Badge">
 <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React Badge">
 <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript Badge">
@@ -13,14 +13,12 @@
 
 </p>
 
-
 # 🎧 Spotify React Web Client
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Spotify Playback requires users to authenticate with a valid Spotify Premium subscription.
 
 ![gif](https://github.com/user-attachments/assets/2077cdef-f3fa-49c9-a905-9cc9ab6629fb)
-
 
 ## 🚀 Features
 
@@ -52,12 +50,9 @@
 
 🎵 <a href="https://developer.spotify.com/documentation/web-playback-sdk/">Spotify Playback SDK</a>: For real-time music playback control within the web client.
 
-
 ## 📸 Screenshots
 
 More in images [folder](https://github.com/francoborrelli/spotify-react-web-client/tree/main/images).
-
-
 
 <div align="center">
     <table >
@@ -103,8 +98,8 @@ To run this project locally, follow these steps:
 4. Set up your Spotify Developer account and create a [new app](https://developer.spotify.com/dashboard/applications) to obtain your **Client ID** and **Redirect URI**. Add these to an `.env` file in the root of your project:
 
    ```
-   REACT_APP_SPOTIFY_CLIENT_ID=your-client-id
-   REACT_APP_REDIRECT_URI=http://localhost:3000/callback
+   REACT_APP_SPOTIFY_CLIENT_ID=<your id>
+   REACT_APP_SPOTIFY_REDIRECT_URL=<your redirect uri>
    ```
 
 5. Start the development server:
@@ -131,8 +126,3 @@ Contributions are welcome! If you have any suggestions or improvements, feel fre
 ## 📝 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-
-
-
-
