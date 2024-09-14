@@ -63,10 +63,11 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
   const requesting = useAppSelector((state) => state.auth.requesting);
 
   useEffect(() => {
-    const token = getFromLocalStorageWithExpiry('access_token');
-    dispatch(authActions.setToken({ token }));
-    if (token) {
-      if (token) dispatch(authActions.fetchUser());
+    const tokenInLocalStorage = getFromLocalStorageWithExpiry('access_token');
+    dispatch(authActions.setToken({ token: tokenInLocalStorage }));
+
+    if (tokenInLocalStorage) {
+      dispatch(authActions.fetchUser());
     } else {
       dispatch(loginToSpotify(true));
     }
