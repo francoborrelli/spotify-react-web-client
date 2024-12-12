@@ -5,7 +5,7 @@ import { Col, Row } from 'antd';
 import { PlaylistsProfileSection } from '../components/playlists';
 
 interface ProfilePlaylistsPageContainerProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ProfilePlaylistsPageContainer: FC<ProfilePlaylistsPageContainerProps> = (props) => {

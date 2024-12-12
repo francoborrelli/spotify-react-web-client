@@ -5,7 +5,7 @@ import { Col, Row } from 'antd';
 import { ArtistsSearchSection } from '../components/artists';
 
 interface SearchArtistsPageContainerProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SearchArtistsPageContainer: FC<SearchArtistsPageContainerProps> = (props) => {

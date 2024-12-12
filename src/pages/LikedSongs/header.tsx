@@ -22,8 +22,8 @@ import { isRightLayoutOpen } from '../../store/slices/ui';
 
 interface LikedSongsHeaderProps {
   color: string;
-  container: RefObject<HTMLDivElement>;
-  sectionContainer: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
+  sectionContainer: RefObject<HTMLDivElement | null>;
 }
 
 export const LikedSongsHeader: FC<LikedSongsHeaderProps> = ({

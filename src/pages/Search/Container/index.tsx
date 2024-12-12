@@ -7,7 +7,7 @@ import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
 // Constants
 
 interface SearchPageProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SearchContainer: FC<SearchPageProps> = (props) => {

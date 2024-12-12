@@ -20,7 +20,7 @@ const VerifiedIcon = () => (
 
 export const ArtistHeader: FC<{
   color: string;
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }> = memo((props) => {
   const [t] = useTranslation(['artist']);
   const { container, color } = props;

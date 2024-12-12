@@ -5,7 +5,7 @@ import { profileActions } from '../../../store/slices/profile';
 import ProfileContainer from './container';
 
 interface ProfilePageProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 export const Profile: FC<ProfilePageProps> = (props) => {

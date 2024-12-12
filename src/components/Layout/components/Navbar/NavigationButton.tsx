@@ -4,7 +4,7 @@ import { Tooltip } from '../../../Tooltip';
 interface NavigationButtonProps {
   onClick: () => void;
   text: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
 }
 const NavigationButton: FC<NavigationButtonProps> = ({ onClick, text, icon }) => {
   return (

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../store/store';
 
 interface SongsProfileSectionProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SongsProfileSection: FC<SongsProfileSectionProps> = memo((props) => {

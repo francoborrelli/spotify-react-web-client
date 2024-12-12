@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { profileActions } from '../../../store/slices/profile';
 
 interface ProfilePlaylistsPageProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ProfilePlaylistPage: FC<ProfilePlaylistsPageProps> = memo((props) => {

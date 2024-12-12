@@ -14,7 +14,7 @@ import { useAppSelector } from '../../../store/store';
 import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
 import tinycolor from 'tinycolor2';
 
-const AlbumPageContainer: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
+const AlbumPageContainer: FC<{ container: RefObject<HTMLDivElement | null> }> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const album = useAppSelector((state) => state.album.album);

@@ -18,7 +18,7 @@ import { YourPlaylists } from '../components/yourPlaylists';
 import useIsMobile from '../../../utils/isMobile';
 
 interface HomePageContainerProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {

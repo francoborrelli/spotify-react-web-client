@@ -9,7 +9,7 @@ import { ArtistsSearchSection } from '../components/artists';
 import { PlaylistsSearchSection } from '../components/playlists';
 
 interface SearchPageProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SearchPageContainer: FC<SearchPageProps> = (props) => {

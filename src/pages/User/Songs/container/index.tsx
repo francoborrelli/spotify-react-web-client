@@ -5,7 +5,7 @@ import { Col, Row } from 'antd';
 import { SongsProfileSection } from '../components/songs';
 
 interface ProfileSongsPageContainerProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ProfileSongsPageContainer: FC<ProfileSongsPageContainerProps> = (props) => {

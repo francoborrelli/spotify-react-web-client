@@ -6,7 +6,7 @@ import { SongsSearchSection } from '../components/songs';
 
 interface SearchSongsPageContainerProps {
   query: string;
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SearchSongsPageContainer: FC<SearchSongsPageContainerProps> = (props) => {

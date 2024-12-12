@@ -6,7 +6,7 @@ import ArtistDiscographyContainer from './container';
 import { artistDiscographyActions } from '../../store/slices/discography';
 
 interface ArtistDicographyPageProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 export const ArtistDiscography: FC<ArtistDicographyPageProps> = memo((props) => {

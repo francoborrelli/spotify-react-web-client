@@ -10,7 +10,7 @@ import { useAppSelector } from '../../../../../store/store';
 import { FC, memo } from 'react';
 
 interface ProfileTracksTableProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ProfileTracksTable: FC<ProfileTracksTableProps> = memo((props) => {

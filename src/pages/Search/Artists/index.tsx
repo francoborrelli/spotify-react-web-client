@@ -11,7 +11,7 @@ import { searchActions } from '../../../store/slices/search';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 interface SearchPageProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SearchArtistsPage: FC<SearchPageProps> = memo((props) => {

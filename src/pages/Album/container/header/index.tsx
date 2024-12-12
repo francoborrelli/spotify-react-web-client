@@ -24,8 +24,8 @@ import { RefObject, useEffect, useState, type FC } from 'react';
 
 interface AlbumHeaderProps {
   color: string;
-  container: RefObject<HTMLDivElement>;
-  sectionContainer?: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
+  sectionContainer?: RefObject<HTMLDivElement | null>;
 }
 
 export const AlbumHeader: FC<AlbumHeaderProps> = ({ container, sectionContainer, color }) => {

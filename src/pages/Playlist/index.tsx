@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { DEFAULT_PAGE_COLOR } from '../../constants/spotify';
 import tinycolor from 'tinycolor2';
 
-const PlaylistView: FC<{ container: RefObject<HTMLDivElement> }> = (props) => {
+const PlaylistView: FC<{ container: RefObject<HTMLDivElement | null> }> = (props) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement>(null);
   const { playlistId } = useParams<{ playlistId: string }>();

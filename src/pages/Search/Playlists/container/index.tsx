@@ -5,7 +5,7 @@ import { Col, Row } from 'antd';
 import { PlaylistsSearchSection } from '../components/playlists';
 
 interface SearchPlaylistPageContainerProps {
-  container: React.RefObject<HTMLDivElement>;
+  container: React.RefObject<HTMLDivElement | null>;
 }
 
 export const SearchPlaylistPageContainer: FC<SearchPlaylistPageContainerProps> = (props) => {

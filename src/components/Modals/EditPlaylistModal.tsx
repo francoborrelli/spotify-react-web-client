@@ -31,7 +31,7 @@ const toBase64 = (file: File): Promise<string> =>
 
 export const EditPlaylistModal = memo(() => {
   const dispatch = useAppDispatch();
-  const formRef = useRef<FormInstance>();
+  const formRef = useRef<FormInstance>(null);
   const { t } = useTranslation(['playlist']);
   const currentPlaylist = useAppSelector((state) => state.playlist.playlist);
   const playlist = useAppSelector((state) => state.editPlaylistModal.playlist);

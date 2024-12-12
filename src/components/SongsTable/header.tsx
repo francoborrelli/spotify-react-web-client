@@ -9,7 +9,7 @@ interface ItemProps {
 
 interface TableHeaderProps {
   view: 'COMPACT' | 'LIST';
-  fields: ((props: ItemProps) => JSX.Element | null)[];
+  fields: ((props: ItemProps) => React.ReactElement | null)[];
 }
 
 const Index = (props: ItemProps) => {

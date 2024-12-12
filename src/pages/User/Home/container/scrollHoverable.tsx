@@ -5,8 +5,8 @@ import { PageHeader } from '../../../../components/Layout/components/Header';
 
 interface ArtistPageProps {
   color: string;
-  container: RefObject<HTMLDivElement>;
-  sectionContainer: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
+  sectionContainer: RefObject<HTMLDivElement | null>;
 }
 
 export const UserHoverableMenu: FC<ArtistPageProps> = memo((props) => {

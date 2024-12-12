@@ -58,7 +58,7 @@ interface ComponentProps extends DefaultProps {
 }
 
 interface SongViewProps extends DefaultProps {
-  fields: ((props: ComponentProps) => JSX.Element | null)[];
+  fields: ((props: ComponentProps) => React.ReactElement | null)[];
 }
 
 const getArtists = (artists: Track['artists']) => {

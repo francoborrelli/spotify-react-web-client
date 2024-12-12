@@ -7,7 +7,7 @@ import ArtistDicographyHoverableMenu from './scrollHoverable';
 import { DEFAULT_PAGE_COLOR } from '../../../constants/spotify';
 
 interface ArtistDicographyPageProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 export const ArtistDiscographyContainer: FC<ArtistDicographyPageProps> = memo((props) => {

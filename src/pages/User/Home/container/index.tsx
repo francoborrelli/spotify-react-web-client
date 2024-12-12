@@ -10,7 +10,7 @@ import { MyPlaylistsSection } from '../components/playlists';
 import { Songs } from '../components/songs';
 
 interface ProfilePageProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 export const ProfileContainer: FC<ProfilePageProps> = (props) => {

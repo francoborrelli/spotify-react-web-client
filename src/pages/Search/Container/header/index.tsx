@@ -12,8 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 interface HomeHeaderProps {
   color: string;
-  container: RefObject<HTMLDivElement>;
-  sectionContainer: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
+  sectionContainer: RefObject<HTMLDivElement | null>;
 }
 
 const SECTIONS = ['ALL', 'ARTISTS', 'TRACKS', 'ALBUMS', 'PLAYLISTS'];

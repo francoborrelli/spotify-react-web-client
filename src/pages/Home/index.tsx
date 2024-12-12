@@ -9,7 +9,7 @@ import { homeActions } from '../../store/slices/home';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 interface HomeProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 const Home: FC<HomeProps> = memo((props) => {

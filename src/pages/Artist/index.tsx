@@ -14,7 +14,7 @@ import { ArtistHeader } from './container/header';
 import ArtistHoverableMenu from './container/scrollHoverable';
 
 interface ArtistPageProps {
-  container: RefObject<HTMLDivElement>;
+  container: RefObject<HTMLDivElement | null>;
 }
 
 export const ArtistPage: FC<ArtistPageProps> = memo((props) => {
