@@ -117,18 +117,20 @@ export function GridItemList(props: {
             : undefined
         }
       >
-        {items.map((item) => {
-          return (
-            <div key={item.uri} style={{ position: 'relative' }}>
-              {onItemDelete ? <DeleteButton onClick={() => onItemDelete(item)} /> : null}
-              <GridItemComponent
-                item={item}
-                getDescription={getDescription}
-                onClick={onItemClick ? () => onItemClick(item) : undefined}
-              />
-            </div>
-          );
-        })}
+        {(items || [])
+          .filter((i) => i)
+          .map((item) => {
+            return (
+              <div key={item.uri} style={{ position: 'relative' }}>
+                {onItemDelete ? <DeleteButton onClick={() => onItemDelete(item)} /> : null}
+                <GridItemComponent
+                  item={item}
+                  getDescription={getDescription}
+                  onClick={onItemClick ? () => onItemClick(item) : undefined}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );
