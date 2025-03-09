@@ -48,6 +48,26 @@
 }
 
 .search-input {
+  color: #b3b3b3;
+  min-width: 100%;
+  padding: 11px 16px;
+  background: #1f1f1f !important;
+  border-radius: 30px;
+  cursor: unset;
+  text-overflow: ellipsis;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  appearance: none;
+  background-image: none;
+  border: 0px;
+  transition: box-shadow 100ms ease-in-out, color 100ms ease-in-out;
+  inline-size: 100%;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  margin-block: 0px;
+
   &:hover {
     box-shadow: 0 0 0 1px #858383;
   }
@@ -73,8 +93,6 @@
     min-width: 500px !important;
   }
 
-  color: #b3b3b3;
-
   .ant-input-prefix {
     margin-inline-start: -5px !important;
     margin-inline-end: 10px !important;
@@ -89,25 +107,6 @@
     border-left: 1px solid #b3b3b3;
     padding-left: 10px;
   }
-
-  min-width: 100%;
-  padding: 11px 16px;
-  background: #1f1f1f !important;
-  border-radius: 30px;
-  cursor: unset;
-  text-overflow: ellipsis;
-  -webkit-transition: all 0.1s ease-in;
-  transition: all 0.1s ease-in;
-  -webkit-transition-delay: 0.1s;
-  transition-delay: 0.1s;
-  appearance: none;
-  background-image: none;
-  border: 0px;
-  transition: box-shadow 100ms ease-in-out, color 100ms ease-in-out;
-  inline-size: 100%;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  margin-block: 0px;
 }
 
 .navigation-button {

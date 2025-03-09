@@ -20,16 +20,15 @@
   .profile-header {
     min-height: 340px;
     max-height: 400px;
-
-    @media (max-width: $desktop-breakpoint) {
-      min-height: 230px;
-    }
-
     color: #fff;
     display: -webkit-box;
     display: flex;
     position: relative;
     width: 100%;
+
+    @media (max-width: $desktop-breakpoint) {
+      min-height: 230px;
+    }
 
     .profile-header-cover {
       display: block;
