@@ -16,6 +16,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 .idea
 
 npm-debug.log*
@@ -25,3 +26,4 @@ yarn-error.log*
 .editorconfig
 .prettierrc.json
 src/**/*.css.map
+.firebase
