@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(firebase deploy:*)",
+      "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch .env.production' --prune-empty --tag-name-filter cat -- --all)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
