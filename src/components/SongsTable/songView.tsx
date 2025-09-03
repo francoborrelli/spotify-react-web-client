@@ -252,11 +252,13 @@ const Actions = ({ song }: ComponentProps) => {
       style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
     >
       <TrackActionsWrapper track={song} trigger={['click']}>
-        <Tooltip title={`${t('More options for')} ${song.name}`}>
-          <div>
-            <MenuIcon />
-          </div>
-        </Tooltip>
+        <div>
+          <Tooltip title={`${t('More options for')} ${song.name}`}>
+            <div>
+              <MenuIcon />
+            </div>
+          </Tooltip>
+        </div>
       </TrackActionsWrapper>
     </p>
   );

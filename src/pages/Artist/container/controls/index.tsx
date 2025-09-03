@@ -28,11 +28,13 @@ export const ArtistControls: FC = () => {
             </div>
 
             <ArtistActionsWrapper artist={artist!} trigger={['click']}>
-              <Tooltip title={`${tor('More options for')} ${artist?.name}`}>
-                <div className='scale'>
-                  <MenuDots />
-                </div>
-              </Tooltip>
+              <div>
+                <Tooltip title={`${tor('More options for')} ${artist?.name}`}>
+                  <div className='scale'>
+                    <MenuDots />
+                  </div>
+                </Tooltip>
+              </div>
             </ArtistActionsWrapper>
           </Space>
         </Col>

@@ -54,11 +54,13 @@ export const PlaylistControls: FC = () => {
                 dispatch(refreshPlaylist(playlist!.id));
               }}
             >
-              <Tooltip title={`${tor('More options for')} ${playlist?.name}`}>
-                <div className='scale'>
-                  <MenuDots />
-                </div>
-              </Tooltip>
+              <div>
+                <Tooltip title={`${tor('More options for')} ${playlist?.name}`}>
+                  <div className='scale'>
+                    <MenuDots />
+                  </div>
+                </Tooltip>
+              </div>
             </PlayistActionsWrapper>
           </Space>
         </Col>

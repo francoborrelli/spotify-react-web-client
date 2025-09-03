@@ -53,11 +53,13 @@ const MenuSection = memo(() => {
 
   return (
     <AlbumActionsWrapper album={album!} trigger={['click']}>
-      <Tooltip title={`${tor('More options for')} ${album?.name}`}>
-        <div className='scale'>
-          <MenuDots />
-        </div>
-      </Tooltip>
+      <div>
+        <Tooltip title={`${tor('More options for')} ${album?.name}`}>
+          <div className='scale'>
+            <MenuDots />
+          </div>
+        </Tooltip>
+      </div>
     </AlbumActionsWrapper>
   );
 });
