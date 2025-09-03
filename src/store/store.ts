@@ -82,7 +82,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredPaths: ['spotify.player'],
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, 'spotify/setPlayer'],
       },
     }),
 });
