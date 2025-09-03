@@ -1,4 +1,5 @@
 import axios from '../axios';
+import { databaseService } from './database';
 
 // Interfaces
 import type { Track } from '../interfaces/track';
@@ -24,7 +25,23 @@ const getPlaylistItems = async (
   playlistId: string,
   params: GetPlaylistItemsParams = { limit: 50 }
 ) => {
-  return axios.get<Pagination<PlaylistItem>>(`/playlists/${playlistId}/tracks`, { params });
+  console.log('coucou getPlaylistItems', playlistId);
+  const response = await axios.get<Pagination<PlaylistItem>>(`/playlists/${playlistId}/tracks`, { params });
+
+  // TODO temp Firebase integration: save first track if it doesn't exist
+  if (response.data.items.length > 0) {
+    const firstTrack = response.data.items[0].track;
+    try {
+      const exists = await databaseService.checkTrackExists(firstTrack.id);
+      if (!exists) {
+        await databaseService.saveTrack(firstTrack);
+      }
+    } catch (error) {
+      console.error('Firebase error for track:', firstTrack.id, error);
+    }
+  }
+
+  return response;
 };
 
 /**
