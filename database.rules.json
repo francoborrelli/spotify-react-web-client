@@ -1,0 +1,12 @@
+{
+  /* 
+   * 🚨 WARNING: OPEN ACCESS FOR TESTING ONLY 
+   * TODO: Change to auth-based rules before production:
+   * ".read": "auth != null",
+   * ".write": "auth != null"
+   */
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}

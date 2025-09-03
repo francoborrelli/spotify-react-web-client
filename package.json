@@ -9,6 +9,7 @@
     "colorthief": "^2.6.0",
     "dayjs": "^1.11.13",
     "devicons-react": "^1.4.0",
+    "firebase": "^12.2.1",
     "html-react-parser": "^5.2.2",
     "i18next": "^23.15.1",
     "javascript-time-ago": "^2.5.11",
