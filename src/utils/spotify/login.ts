@@ -126,11 +126,31 @@ const getToken = async () => {
   const publicToken = getFromLocalStorageWithExpiry('public_access_token');
   if (publicToken) return [publicToken, false];
 
-  const access_token = window.location.hash.split('&')[0].split('=')[1];
-  if (access_token) {
-    setLocalStorageWithExpiry('public_access_token', access_token, 3600);
-    window.location.hash = '';
-    return [access_token, false];
+  // Parse hash params more robustly
+  const hash = window.location.hash;
+  console.log('Hash content:', hash); // Debug log
+
+  if (hash) {
+    try {
+      // Remove the # and parse as URLSearchParams TODO I tried to stabilyze spotify redirection this create a loop on dev mode
+      // const hashParams = new URLSearchParams(hash.substring(1));
+      // const access_token = hashParams.get('access_token');
+      // const error = hashParams.get('error');
+
+      // if (error) {
+      //   console.error('Spotify auth error:', error, hashParams.get('error_description'));
+      //   return [null, false];
+      // }
+
+      const access_token = window.location.hash.split('&')[0].split('=')[1];
+      if (access_token) {
+        setLocalStorageWithExpiry('public_access_token', access_token, 3600);
+        window.location.hash = '';
+        return [access_token, false];
+      }
+    } catch (err) {
+      console.error('Error parsing hash params:', err, hash);
+    }
   }
 
   return [null, false];
