@@ -5,7 +5,7 @@
   "dependencies": {
     "@ant-design/pro-form": "^2.32.0",
     "antd": "^5.27.2",
-    "axios": "^1.11.0",
+    "axios": "^1.12.0",
     "colorthief": "^2.6.0",
     "dayjs": "^1.11.18",
     "devicons-react": "^1.5.0",
