@@ -118,12 +118,12 @@ export const LikedSongsHeader: FC<LikedSongsHeaderProps> = ({
 
               <Col span={24}>
                 <Space className='owner'>
-                  {user?.images[0]?.url ? (
+                  {user?.images?.[0]?.url ? (
                     <Link to='/profile'>
                       <img
                         id='user-avatar'
                         alt='User Avatar'
-                        src={user?.images[0]?.url}
+                        src={user?.images?.[0]?.url}
                         className='playlist-avatar'
                       />
                     </Link>

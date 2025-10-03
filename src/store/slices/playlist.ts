@@ -62,7 +62,7 @@ export const fetchPlaylist = createAsyncThunk<
   const canEdit = isMine || playlist.collaborative;
 
   const extraPromises = [
-    userService.getUser(playlist.owner!.id),
+    playlist.owner?.id ? userService.getUser(playlist.owner.id) : Promise.resolve({ data: null }),
     ids.length && user
       ? userService.checkSavedTracks(items.map((item) => item.track.id)).catch(() => ({ data: [] }))
       : Promise.resolve({ data: [] }),

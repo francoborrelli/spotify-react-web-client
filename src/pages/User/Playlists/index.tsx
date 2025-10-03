@@ -19,6 +19,7 @@ export const ProfilePlaylistPage: FC<ProfilePlaylistsPageProps> = memo((props) =
   const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
+    if (!params.userId) return;
     if (user!.id !== params.userId) return navigate(`/users/${params.userId}`);
     dispatch(profileActions.fetchPlaylists(params.userId));
   }, [user, params.userId, dispatch, navigate]);

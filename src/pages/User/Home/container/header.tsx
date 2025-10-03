@@ -50,7 +50,7 @@ export const UserHeader: FC<{ color: string }> = memo((props) => {
 
           <div className='profile-header-details-container'>
             <span data-encore-id='text'>
-              {user?.followers.total} {t('Followers')}
+              {user?.followers?.total || 0} {t('Followers')}
             </span>
           </div>
         </div>

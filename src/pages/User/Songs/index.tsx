@@ -19,6 +19,7 @@ export const ProfileSongsPage: FC<ProfileSongsPageProps> = memo((props) => {
   const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
+    if (!params.userId) return;
     if (user!.id !== params.userId) return navigate(`/users/${params.userId}`);
     dispatch(profileActions.fetchMyTracks());
   }, [user, params.userId, dispatch, navigate]);
