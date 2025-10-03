@@ -42,7 +42,7 @@ export const SearchHeader: FC<HomeHeaderProps> = (props) => {
               text={t(item)}
               active={section === item}
               onClick={() =>
-                navigate(`/search/${params.search}/${item === 'ALL' ? '' : item.toLowerCase()}`)
+                navigate(`/search/${params.search}/${item === 'ALL' ? '' : item?.toLowerCase()}`)
               }
             />
           ))}

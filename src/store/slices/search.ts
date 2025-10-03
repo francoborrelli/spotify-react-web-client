@@ -132,8 +132,8 @@ export const fetchSearch = createAsyncThunk<
   ];
 
   const topItem =
-    topItems.find((item) => item.name.toLowerCase() === query.toLowerCase()) ||
-    topItems.find((item) => item.name.toLowerCase().includes(query.toLowerCase())) ||
+    topItems.find((item) => item.name?.toLowerCase() === query?.toLowerCase()) ||
+    topItems.find((item) => item.name?.toLowerCase().includes(query?.toLowerCase())) ||
     topItems[0];
 
   const tracks = responses[1].data.tracks.items;

@@ -21,8 +21,8 @@ export const MadeForYou: FC<NewReleasesProps> = () => {
   const madeForYou = useAppSelector((state) => state.home.madeForYou);
 
   const items = useMemo(() => {
-    const items = madeForYou.filter((p) => !p.name.toLowerCase().includes('mix'));
-    const otherItems = madeForYou.filter((p) => p.name.toLowerCase().includes('mix')).reverse();
+    const items = madeForYou.filter((p) => !p.name?.toLowerCase().includes('mix'));
+    const otherItems = madeForYou.filter((p) => p.name?.toLowerCase().includes('mix')).reverse();
     return [...items, ...otherItems].slice(0, 12);
   }, [madeForYou]);
 
