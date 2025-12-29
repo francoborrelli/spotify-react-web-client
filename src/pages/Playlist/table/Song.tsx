@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { PlaylistItemWithSaved } from '../../../interfaces/playlists';
-import SongView, { SongViewComponents } from '../../../components/SongsTable/songView';
+import SongView, { SongViewComponents } from '../../../components/songsTable/songView';
 
 // Redux
 import { playlistActions } from '../../../store/slices/playlist';

@@ -20,7 +20,10 @@ export const ProfileArtistsPage: FC<ProfileArtistsPageProps> = memo((props) => {
 
   useEffect(() => {
     if (!params.userId) return;
-    if (user!.id !== params.userId) return navigate(`/users/${params.userId}`);
+    if (user!.id !== params.userId) {
+      navigate(`/users/${params.userId}`);
+      return;
+    }
     dispatch(profileActions.fetchMyArtists());
   }, [user, params.userId, dispatch, navigate]);
 

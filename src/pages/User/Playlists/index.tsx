@@ -20,8 +20,11 @@ export const ProfilePlaylistPage: FC<ProfilePlaylistsPageProps> = memo((props) =
 
   useEffect(() => {
     if (!params.userId) return;
-    if (user!.id !== params.userId) return navigate(`/users/${params.userId}`);
-    dispatch(profileActions.fetchPlaylists(params.userId));
+    if (user!.id !== params.userId) {
+      navigate(`/users/${params.userId}`);
+      return;
+    }
+    dispatch(profileActions.fetchPlaylists(params.userId!));
   }, [user, params.userId, dispatch, navigate]);
 
   return <ProfilePlaylistsPageContainer {...props} />;
