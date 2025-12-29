@@ -1,4 +1,4 @@
-@import 'utilities/variables';
+@use 'utilities/variables' as *;
 
 .album-container {
   max-width: initial !important;

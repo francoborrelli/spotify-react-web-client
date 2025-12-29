@@ -21,14 +21,24 @@ class App extends Component {
     playerLoaded: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    // Check if we have an authorization code in the URL (callback from Spotify)
+    const hasCode = await Login.handleCallback();
     const token = Login.getToken();
-    if (!token) {
-      Login.logInWithSpotify();
-    } else {
+
+    if (hasCode && token) {
+      // Successfully exchanged code for tokens
       this.setState({ token: token });
       this.props.setToken(token);
       this.props.fetchUser();
+    } else if (token) {
+      // Already have a token
+      this.setState({ token: token });
+      this.props.setToken(token);
+      this.props.fetchUser();
+    } else if (!hasCode) {
+      // No code and no token - redirect to login
+      Login.logInWithSpotify();
     }
   }
 

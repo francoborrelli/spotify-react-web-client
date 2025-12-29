@@ -1,4 +1,4 @@
-@import 'utilities/variables';
+@use 'utilities/variables' as *;
 
 .section-title {
   font-size: 34px;

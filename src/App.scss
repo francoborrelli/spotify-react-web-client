@@ -1,4 +1,4 @@
-@import 'utilities/variables';
+@use 'utilities/variables' as *;
 
 body {
   background: rgb(24, 24, 24);

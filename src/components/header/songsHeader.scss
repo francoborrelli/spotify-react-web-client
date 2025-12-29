@@ -1,4 +1,4 @@
-@import 'utilities/variables';
+@use 'utilities/variables' as *;
 
 .header-title {
   font-size: 48px;
