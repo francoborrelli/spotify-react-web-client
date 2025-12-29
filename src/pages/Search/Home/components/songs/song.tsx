@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 // Components
-import SongView, { SongViewComponents } from '../../../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
 
 // Redux
 import { searchActions } from '../../../../../store/slices/search';

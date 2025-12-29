@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import SongView, { SongViewComponents } from '../../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../../components/SongsTable/songView';
 
 // Redux
 import { albumActions } from '../../../../store/slices/album';

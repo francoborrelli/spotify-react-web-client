@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import SongView, { SongViewComponents } from '../../../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
 
 // Redux
 import { profileActions } from '../../../../../store/slices/profile';

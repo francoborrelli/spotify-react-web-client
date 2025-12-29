@@ -1,4 +1,4 @@
-import TableHeader, { TableHeaderComponents } from '../../../components/songsTable/header';
+import TableHeader, { TableHeaderComponents } from '../../../components/SongsTable/header';
 
 // Redux
 import { useAppSelector } from '../../../store/store';

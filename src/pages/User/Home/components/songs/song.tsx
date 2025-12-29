@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import { TrackWithSave } from '../../../../../interfaces/track';
-import SongView, { SongViewComponents } from '../../../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../../../components/SongsTable/songView';
 import { profileActions } from '../../../../../store/slices/profile';
 
 interface SongProps {

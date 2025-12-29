@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { AddRecommendation } from './add';
-import SongView, { SongViewComponents } from '../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../components/SongsTable/songView';
 
 // Redux
 import { useAppSelector } from '../../../store/store';

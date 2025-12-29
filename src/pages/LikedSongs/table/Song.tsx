@@ -1,4 +1,4 @@
-import SongView, { SongViewComponents } from '../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../components/SongsTable/songView';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../store/store';

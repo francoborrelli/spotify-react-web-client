@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { TrackWithSave } from '../../../../interfaces/track';
-import SongView, { SongViewComponents } from '../../../../components/songsTable/songView';
+import SongView, { SongViewComponents } from '../../../../components/SongsTable/songView';
 
 // Redux
 import { artistActions } from '../../../../store/slices/artist';
