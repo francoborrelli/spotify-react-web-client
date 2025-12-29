@@ -83,7 +83,7 @@ export const LoginModal = memo(() => {
               <WhiteButton
                 title={t('Log In')}
                 onClick={() => {
-                  dispatch(loginToSpotify(false));
+                  dispatch(loginToSpotify());
                 }}
               ></WhiteButton>
             </div>

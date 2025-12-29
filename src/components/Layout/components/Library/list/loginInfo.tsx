@@ -20,7 +20,7 @@ export const LibraryLoginInfo = memo(() => {
   }, [dispatch]);
 
   const onConfirm = useCallback(() => {
-    return dispatch(loginToSpotify(false));
+    return dispatch(loginToSpotify());
   }, [dispatch]);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const LibraryLoginInfo = memo(() => {
             <WhiteButton
               size='small'
               title={t('Log In')}
-              onClick={() => dispatch(loginToSpotify(false))}
+              onClick={() => dispatch(loginToSpotify())}
             />
           </div>
         </DetailsCard>

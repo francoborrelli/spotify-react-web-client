@@ -69,7 +69,7 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
     if (tokenInLocalStorage) {
       dispatch(authActions.fetchUser());
     } else {
-      dispatch(loginToSpotify(true));
+      dispatch(loginToSpotify());
     }
   }, [dispatch]);
 
@@ -85,7 +85,7 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
         dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
       },
       onPlayerError: (e) => {
-        dispatch(loginToSpotify(false));
+        dispatch(loginToSpotify());
       },
       onPlayerDeviceSelected: () => {
         dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));

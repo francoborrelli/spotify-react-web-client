@@ -108,7 +108,7 @@ To run this project locally, follow these steps:
    yarn start
    ```
 
-6. Open your browser and navigate to `http://localhost:3000`.
+6. Open your browser and navigate to `http://127.0.0.1:3000`.
 
 ## 🌐 2018 Version
 

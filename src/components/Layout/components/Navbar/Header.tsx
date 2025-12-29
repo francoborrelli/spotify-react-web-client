@@ -39,7 +39,7 @@ const LoginButton = () => {
       okButtonProps={{ className: 'white-button small' }}
       description={t('Log in to add this to your Liked Songs.')}
     >
-      <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify(false))} />
+      <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify())} />
     </Popconfirm>
   );
 };

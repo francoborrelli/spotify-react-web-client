@@ -52,7 +52,7 @@ const generateRandomString = (length: number) => {
   return values.reduce((acc, x) => acc + possible[x % possible.length], '');
 };
 
-const logInWithSpotify = async (anonymous?: boolean) => {
+const logInWithSpotify = async () => {
   let codeVerifier = localStorage.getItem('code_verifier');
 
   if (!codeVerifier) {
@@ -63,23 +63,15 @@ const logInWithSpotify = async (anonymous?: boolean) => {
   const hashed = await sha256(codeVerifier);
   const codeChallenge = base64encode(hashed);
 
-  if (anonymous) {
-    authUrl.search = new URLSearchParams({
-      client_id,
-      scope: '',
-      redirect_uri,
-      response_type: 'token',
-    }).toString();
-  } else {
-    authUrl.search = new URLSearchParams({
-      client_id,
-      redirect_uri,
-      response_type: 'code',
-      scope: SCOPES.join(' '),
-      code_challenge_method: 'S256',
-      code_challenge: codeChallenge,
-    }).toString();
-  }
+  authUrl.search = new URLSearchParams({
+    client_id,
+    redirect_uri,
+    response_type: 'code',
+    scope: SCOPES.join(' '),
+    code_challenge_method: 'S256',
+    code_challenge: codeChallenge,
+  }).toString();
+
   window.location.href = authUrl.toString();
 };
 
@@ -123,16 +115,6 @@ const getToken = async () => {
   let code = urlParams.get('code') as string;
   if (code) return [await requestToken(code), true];
 
-  const publicToken = getFromLocalStorageWithExpiry('public_access_token');
-  if (publicToken) return [publicToken, false];
-
-  const access_token = window.location.hash.split('&')[0].split('=')[1];
-  if (access_token) {
-    setLocalStorageWithExpiry('public_access_token', access_token, 3600);
-    window.location.hash = '';
-    return [access_token, false];
-  }
-
   return [null, false];
 };
 
@@ -141,7 +123,7 @@ export const getRefreshToken = async () => {
   const refreshToken = localStorage.getItem('refresh_token') as string;
 
   if (!refreshToken) {
-    logInWithSpotify(true);
+    logInWithSpotify();
     return null;
   }
 
@@ -162,7 +144,7 @@ export const getRefreshToken = async () => {
   const response = await body.json();
 
   if (!response.access_token) {
-    logInWithSpotify(true);
+    logInWithSpotify();
     return null;
   }
 

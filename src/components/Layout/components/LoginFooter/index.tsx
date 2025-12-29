@@ -20,7 +20,7 @@ export const LoginFooter = memo(() => {
           <p className='description'>{t('Log In to access all the features of the app')}.</p>
         </div>
 
-        <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify(false))} />
+        <WhiteButton title={t('Log In')} onClick={() => dispatch(loginToSpotify())} />
       </div>
     </div>
   );

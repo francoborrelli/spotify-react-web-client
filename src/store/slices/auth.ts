@@ -18,25 +18,22 @@ const initialState: { token?: string; playerLoaded: boolean; user?: User; reques
   token: getFromLocalStorageWithExpiry('access_token') || undefined,
 };
 
-export const loginToSpotify = createAsyncThunk<{ token?: string; loaded: boolean }, boolean>(
+export const loginToSpotify = createAsyncThunk<{ token?: string; loaded: boolean }>(
   'auth/loginToSpotify',
-  async (anonymous, api) => {
+  async (_, thunkAPI) => {
     const userToken: string | undefined = getFromLocalStorageWithExpiry('access_token') as string;
-    const anonymousToken: string | undefined = getFromLocalStorageWithExpiry('public_access_token');
 
-    let token = userToken || anonymousToken;
-
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      if (userToken) api.dispatch(fetchUser());
-      return { token, loaded: false };
+    if (userToken) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + userToken;
+      thunkAPI.dispatch(fetchUser());
+      return { token: userToken, loaded: false };
     }
 
     let [requestedToken, requestUser] = await login.getToken();
-    if (requestUser) api.dispatch(fetchUser());
+    if (requestUser) thunkAPI.dispatch(fetchUser());
 
     if (!requestedToken) {
-      login.logInWithSpotify(anonymous);
+      login.logInWithSpotify();
     } else {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + requestedToken;
     }
