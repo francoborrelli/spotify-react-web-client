@@ -1,8 +1,10 @@
-<a href="https://spotify-react-web-client.onrender.com/" target="_blank">
+<div align="center">
+<a align="center" href="https://spotify-react-web-client.onrender.com/" target="_blank" >
   <p align="center">
     <img src="https://github.com/user-attachments/assets/726763a6-094a-42cf-878c-1e7d47a2e597" style="height: 250px"/>
   </p>
 </a>
+</div>
 
 <p align="center">
 
