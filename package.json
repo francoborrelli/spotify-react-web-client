@@ -31,6 +31,10 @@
     "tinycolor2": "^1.6.0",
     "use-debounce": "^10.1.1"
   },
+  "resolutions": {
+    "webpack-dev-server": "5.2.1",
+    "underscore": "1.13.8"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp build/index.html build/404.html",
