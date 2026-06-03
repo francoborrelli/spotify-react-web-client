@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../store/store';
 
 import type { FC } from 'react';
 
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 import { getPlaylistDescription } from '../../../../utils/getDescription';
 
 interface NewReleasesProps {}
@@ -16,7 +16,7 @@ export const FeaturePlaylists: FC<NewReleasesProps> = () => {
 
   return (
     <div className='home'>
-      <GridItemList
+      <HomeItemList
         items={featurePlaylists}
         title={`${t('Featured playlists')}`}
         getDescription={getPlaylistDescription}

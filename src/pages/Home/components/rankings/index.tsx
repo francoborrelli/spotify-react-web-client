@@ -1,5 +1,5 @@
 // Components
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,7 @@ export const Rankings: FC<NewReleasesProps> = () => {
 
   return (
     <div className='home'>
-      <GridItemList
+      <HomeItemList
         items={rankings}
         title={`${t('Featured Charts')}`}
         moreUrl={`/genre/${RANKING_URI}`}

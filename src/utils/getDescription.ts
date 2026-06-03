@@ -16,6 +16,9 @@ export const getItemDescription = (item: Playlist | Album | Artist | Track) => {
   if (item.type === 'album') {
     return getAlbumDescription(item);
   }
+  if (item.type === 'artist') {
+    return item.genres?.slice(0, 2).join(', ') ?? '';
+  }
   return '';
 };
 

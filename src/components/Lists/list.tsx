@@ -1,6 +1,7 @@
 import { Flex } from 'antd';
 import { Link } from 'react-router-dom';
 import { AlbumCard, ArtistCard, PlaylistCard, TrackCard } from './GridCards';
+import { ScrollableGridCarousel } from './ScrollableGridCarousel';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -63,13 +64,16 @@ export const DeleteButton: FC<{
 };
 
 export function GridItemList(props: {
-  title?: string;
+  title?: ReactNode;
+  headerClassName?: string;
   items: Item[];
   moreUrl?: string;
   extra?: ReactNode;
   chips?: ReactNode;
   subtitle?: string;
   multipleRows?: boolean;
+  horizontalScroll?: boolean;
+  headerActionsAlign?: 'center' | 'bottom';
   onItemClick?: (item: Item) => void;
   onItemDelete?: (item: Item) => void;
   getDescription?: (item: Item) => string;
@@ -77,18 +81,59 @@ export function GridItemList(props: {
   const [t] = useTranslation(['artist']);
   const user = useAppSelector((state) => !!state.auth.user);
   const { onItemDelete, onItemClick, getDescription } = props;
-  const { items, chips, title, moreUrl, extra, subtitle } = props;
+  const { items, chips, title, headerClassName, moreUrl, extra, subtitle, horizontalScroll, headerActionsAlign } =
+    props;
+  const headerClass = ['playlist-header', headerClassName].filter(Boolean).join(' ');
+
+  const gridItems = (items || [])
+    .filter((i) => i)
+    .map((item) => (
+      <div
+        key={item.uri}
+        className={horizontalScroll ? 'horizontal-grid-carousel__item' : undefined}
+        style={{ position: 'relative' }}
+      >
+        {onItemDelete ? <DeleteButton onClick={() => onItemDelete(item)} /> : null}
+        <GridItemComponent
+          item={item}
+          getDescription={getDescription}
+          onClick={onItemClick ? () => onItemClick(item) : undefined}
+        />
+      </div>
+    ));
+
+  const gridContent = horizontalScroll ? (
+    <ScrollableGridCarousel>{gridItems}</ScrollableGridCarousel>
+  ) : (
+    <div
+      className='playlist-grid'
+      style={
+        props.multipleRows
+          ? {
+              gridTemplateRows: 'unset',
+            }
+          : undefined
+      }
+    >
+      {gridItems}
+    </div>
+  );
+
   return (
     <div className={`${!user ? 'guest' : ''}`}>
-      <Flex justify='space-between' align='center'>
+      <Flex
+        className='grid-item-list-header'
+        justify='space-between'
+        align={headerActionsAlign === 'bottom' ? 'flex-end' : 'center'}
+      >
         <div>
           {title ? (
             moreUrl ? (
               <Link to={moreUrl} style={{ textDecoration: 'none' }}>
-                <h1 className='playlist-header'>{title}</h1>
+                <h1 className={headerClass}>{title}</h1>
               </Link>
             ) : (
-              <h1 className='playlist-header'>{title}</h1>
+              <h1 className={headerClass}>{title}</h1>
             )
           ) : null}
 
@@ -107,31 +152,7 @@ export function GridItemList(props: {
       </Flex>
 
       {chips}
-      <div
-        className={`playlist-grid`}
-        style={
-          props.multipleRows
-            ? {
-                gridTemplateRows: 'unset',
-              }
-            : undefined
-        }
-      >
-        {(items || [])
-          .filter((i) => i)
-          .map((item) => {
-            return (
-              <div key={item.uri} style={{ position: 'relative' }}>
-                {onItemDelete ? <DeleteButton onClick={() => onItemDelete(item)} /> : null}
-                <GridItemComponent
-                  item={item}
-                  getDescription={getDescription}
-                  onClick={onItemClick ? () => onItemClick(item) : undefined}
-                />
-              </div>
-            );
-          })}
-      </div>
+      {gridContent}
     </div>
   );
 }

@@ -36,10 +36,10 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
         style={{
           paddingTop: isMobile ? 50 : 0,
           transition: section === 'PODCAST' ? undefined : 'background 5s',
-          background: `linear-gradient(180deg, ${pageColor} 2%, rgb(18, 18, 18) 18%)`,
+          background: `linear-gradient(180deg, ${pageColor} 2%, rgb(18, 18, 18) 11%)`,
         }}
       >
-        <Row gutter={user ? [16, 16] : undefined}>
+        <Row gutter={user ? [16, 8] : undefined}>
           {section === 'PODCAST' ? (
             <HomePodcastSection />
           ) : (

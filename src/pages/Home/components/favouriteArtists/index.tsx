@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../store/store';
 
 import { memo, useMemo, type FC } from 'react';
 
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 
 interface NewReleasesProps {}
 
@@ -19,7 +19,7 @@ export const FavouriteArtists: FC<NewReleasesProps> = memo(() => {
 
   return (
     <div className='home'>
-      <GridItemList items={items} title={`${t('Your favourite artists')}`} />
+      <HomeItemList items={items} title={`${t('Your favourite artists')}`} />
     </div>
   );
 });

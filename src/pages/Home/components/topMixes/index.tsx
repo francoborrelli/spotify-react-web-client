@@ -1,5 +1,5 @@
 // Components
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ export const TopMixes: FC<NewReleasesProps> = () => {
 
   return (
     <div className='home'>
-      <GridItemList
+      <HomeItemList
         items={items}
         title={t('Your top mixes')}
         moreUrl={`/genre/${MADE_FOR_YOU_URI}`}

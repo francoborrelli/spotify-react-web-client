@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../store/store';
 
 import { memo, type FC } from 'react';
 
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 import { getItemDescription } from '../../../../utils/getDescription';
 
 interface RecentlyPlayedProps {}
@@ -16,7 +16,7 @@ export const RecentlyPlayed: FC<RecentlyPlayedProps> = memo(() => {
 
   return (
     <div className='home'>
-      <GridItemList
+      <HomeItemList
         title={`${t('Recently played')}`}
         items={recentlyPlayed.slice(0, 10)}
         getDescription={getItemDescription}

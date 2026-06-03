@@ -7,6 +7,7 @@ export const home = {
   'Podcast following title': 'Todavía no sigues ningún podcast',
   'Podcast following description': 'Seguí tus podcasts favoritos para mantenerte al día.',
   'Explore podcasts': 'Explorar podcasts',
+  'More like': 'Más de',
   'Episodes you might like': 'Episodios que te pueden gustar',
   'Episodes to try': 'Episodios para probar',
   'Made for you': 'Hecho para ti',

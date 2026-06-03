@@ -107,7 +107,8 @@ h3 {
 }
 
 .Home-seccion {
-  padding: 20px;
+  --home-section-padding: 20px;
+  padding: var(--home-section-padding);
   height: 100%;
   min-height: 400px;
   border-radius: $container-border-radius;

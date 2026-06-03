@@ -1,5 +1,5 @@
 // Components
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -33,12 +33,21 @@ export const MadeForYou: FC<NewReleasesProps> = () => {
   if (!items || !items.length) return null;
 
   return (
-    <div className='home'>
-      <GridItemList
+    <div className='home made-for-you-home'>
+      <HomeItemList
+        headerActionsAlign='bottom'
         items={items}
         moreUrl={`/genre/${MADE_FOR_YOU_URI}`}
         getDescription={getPlaylistDescription}
-        title={`${t('Made for')} ${user?.display_name || t('you')}`}
+        headerClassName='made-for-you-title'
+        title={
+          <>
+            <span className='made-for-you-title__label'>{t('Made for')}</span>
+            <span className='made-for-you-title__name'>
+              {user?.display_name || t('you')}
+            </span>
+          </>
+        }
       />
     </div>
   );

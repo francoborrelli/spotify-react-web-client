@@ -16,9 +16,10 @@ import type { Playlist } from '../../interfaces/playlists';
 import type { Episode } from '../../interfaces/episode';
 import { categoriesService } from '../../services/categories';
 import { searchEpisodes } from '../../services/search';
+import { fetchMoreLikeArtistItems } from '../../pages/Home/utils/fetchMoreLikeArtistItems';
 
 // Utils
-import { groupBy, uniq, uniqBy } from 'lodash';
+import { groupBy, shuffle, uniq, uniqBy } from 'lodash';
 
 // Constants
 import {
@@ -28,6 +29,13 @@ import {
   RANKING_URI,
   TRENDING_URI,
 } from '../../constants/spotify';
+
+export interface MoreLikeArtistSection {
+  artist: Artist;
+  items: Awaited<ReturnType<typeof fetchMoreLikeArtistItems>>;
+}
+
+const MORE_LIKE_ARTISTS_LIMIT = 4;
 
 const initialState: {
   topTracks: Track[];
@@ -41,6 +49,7 @@ const initialState: {
   podcastFilter: 'PODCASTS' | 'FOLLOWING';
   episodesMightLike: Episode[];
   episodesToTry: Episode[];
+  moreLikeArtists: MoreLikeArtistSection[];
 } = {
   trending: [],
   rankings: [],
@@ -53,6 +62,7 @@ const initialState: {
   featurePlaylists: [],
   episodesMightLike: [],
   episodesToTry: [],
+  moreLikeArtists: [],
 };
 
 export const fetchMadeForYou = createAsyncThunk('home/fetchMadeForYou', async () => {
@@ -174,6 +184,37 @@ export const fetchPodcastEpisodes = createAsyncThunk('home/fetchPodcastEpisodes'
   return pickUniqueEpisodes([mightLikePool, toTryPool, combinedFallback], 1);
 });
 
+export const fetchMoreLikeArtists = createAsyncThunk(
+  'home/fetchMoreLikeArtists',
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+    let artists = state.yourLibrary.myArtists;
+
+    if (!artists.length) {
+      try {
+        const response = await userService.fetchFollowedArtists({ limit: 50 });
+        artists = response.data.artists.items;
+      } catch {
+        return [];
+      }
+    }
+
+    const pickedArtists = shuffle(artists).slice(0, MORE_LIKE_ARTISTS_LIMIT);
+    if (!pickedArtists.length) {
+      return [];
+    }
+
+    const sections = await Promise.all(
+      pickedArtists.map(async (artist) => {
+        const items = await fetchMoreLikeArtistItems(artist);
+        return { artist, items };
+      }),
+    );
+
+    return sections.filter((section) => section.items.length > 0);
+  },
+);
+
 export const fecthFeaturedPlaylists = createAsyncThunk(
   'home/fecthFeaturedPlaylists',
   async (_, { getState }) => {
@@ -226,6 +267,9 @@ const homeSlice = createSlice({
       state.episodesMightLike = action.payload.mightLike;
       state.episodesToTry = action.payload.toTry;
     });
+    builder.addCase(fetchMoreLikeArtists.fulfilled, (state, action) => {
+      state.moreLikeArtists = action.payload;
+    });
   },
 });
 
@@ -239,6 +283,7 @@ export const homeActions = {
   fetchRecentlyPlayed,
   fecthFeaturedPlaylists,
   fetchPodcastEpisodes,
+  fetchMoreLikeArtists,
 };
 
 export default homeSlice.reducer;

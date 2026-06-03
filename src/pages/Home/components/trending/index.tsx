@@ -1,5 +1,5 @@
 // Components
-import { GridItemList } from '../../../../components/Lists/list';
+import { HomeItemList } from '../HomeItemList';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ export const Trending: FC<NewReleasesProps> = memo(() => {
 
   return (
     <div className='home'>
-      <GridItemList
+      <HomeItemList
         items={trending}
         title={`${t('Trending')}`}
         moreUrl={`/genre/${TRENDING_URI}`}

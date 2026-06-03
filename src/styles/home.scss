@@ -306,6 +306,39 @@
   }
 }
 
+.made-for-you-title {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  gap: 2px;
+  line-height: 1.1;
+
+  &__label {
+    color: #b3b3b3;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+  }
+
+  &__name {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 2.25rem;
+
+    @media (max-width: $desktop-breakpoint) {
+      font-size: 1.5rem;
+      line-height: 1.75rem;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 1.25rem;
+      line-height: 1.5rem;
+    }
+  }
+}
+
 .playlist-subheader {
   color: #b3b3b3;
   font-size: 0.875rem;
@@ -386,6 +419,210 @@
 
   @media (max-width: $desktop-breakpoint) {
     --min-column-width: 140px;
+  }
+
+  &--horizontal {
+    display: flex;
+    gap: 8px;
+    grid-auto-rows: unset;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    margin-inline: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.horizontal-grid-carousel {
+  position: relative;
+
+  &__item {
+    flex: 0 0 var(--min-column-width, 200px);
+    min-width: var(--min-column-width, 200px);
+    width: var(--min-column-width, 200px);
+  }
+
+  &__track {
+    --min-column-width: 200px;
+
+    @media (max-width: 1200px) {
+      --min-column-width: 185px;
+    }
+
+    @media (max-width: $desktop-small-breakpoint) {
+      --min-column-width: 172px;
+    }
+
+    @media (max-width: $desktop-breakpoint) {
+      --min-column-width: 152px;
+    }
+  }
+
+  &__fade {
+    bottom: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 72px;
+    z-index: 2;
+
+    &--left {
+      background: linear-gradient(90deg, #121212 16%, rgba(18, 18, 18, 0) 100%);
+      left: 0;
+    }
+
+    &--right {
+      background: linear-gradient(270deg, #121212 16%, rgba(18, 18, 18, 0) 100%);
+      right: 0;
+    }
+  }
+
+  &__nav {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 9999px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+    width: 32px;
+    z-index: 3;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.85);
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    &--left {
+      left: 8px;
+    }
+
+    &--right {
+      right: 8px;
+    }
+
+    svg {
+      fill: currentcolor;
+    }
+  }
+}
+
+.made-for-you-home {
+  .grid-item-list-header {
+    align-items: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .showMore {
+    padding-block: 0 4px;
+    padding-inline: 16px;
+    padding-bottom: 10px;
+  }
+}
+
+.more-like-artist {
+  .more-like-artist__header {
+    align-items: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .more-like-artist__show-more {
+    padding-block: 0 4px;
+    padding-bottom: 10px;
+    padding-inline: 16px;
+  }
+}
+
+.more-like-artist-header {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin-left: 15px;
+
+  &__avatar {
+    border-radius: 9999px;
+    flex-shrink: 0;
+    height: 48px;
+    object-fit: cover;
+    width: 48px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.1;
+  }
+
+  &__label {
+    color: #b3b3b3;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+  }
+
+  &__name {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.75rem;
+
+    @media (max-width: $desktop-breakpoint) {
+      font-size: 1.25rem;
+      line-height: 1.5rem;
+    }
+  }
+}
+
+.home {
+  .grid-item-list-header {
+    margin-bottom: 16px;
+  }
+
+  .playlist-header {
+    margin-bottom: 0.5rem;
+    margin-top: 10px;
+
+    @media (max-width: $desktop-breakpoint) {
+      margin-bottom: 8px;
+      margin-top: 0;
+    }
+
+    @media (max-width: 600px) {
+      margin-bottom: 0;
+      margin-top: -5px;
+    }
+  }
+
+  .horizontal-grid-carousel {
+    margin-inline: calc(-1 * var(--home-section-padding, 20px));
+    width: calc(100% + (2 * var(--home-section-padding, 20px)));
+
+    .horizontal-grid-carousel__track {
+      padding-inline-end: var(--home-section-padding, 20px);
+      padding-inline-start: calc(var(--home-section-padding, 20px) + 15px);
+    }
+  }
+
+  .guest .horizontal-grid-carousel__track {
+    padding-inline-start: var(--home-section-padding, 20px);
   }
 }
 
