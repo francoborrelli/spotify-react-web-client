@@ -1,10 +1,9 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import Chip from '../../../../components/Chip';
 import { homeActions } from '../../../../store/slices/home';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
-
-const FILTERS = ['PODCASTS', 'FOLLOWING'] as const;
 
 export const PodcastSegmentedNav = memo(() => {
   const dispatch = useAppDispatch();
@@ -13,26 +12,22 @@ export const PodcastSegmentedNav = memo(() => {
 
   return (
     <div className='podcast-segmented' role='tablist' aria-label={t('PODCASTS')}>
-      {FILTERS.map((filter) => {
-        const isActive =
-          filter === 'PODCASTS' ? true : podcastFilter === 'FOLLOWING';
-        const modifier = filter === 'PODCASTS' ? 'podcasts' : 'following';
-
-        return (
-          <button
-            key={filter}
-            type='button'
-            role='tab'
-            aria-selected={filter === 'PODCASTS' ? true : podcastFilter === 'FOLLOWING'}
-            className={`podcast-segmented__btn podcast-segmented__btn--${modifier}${
-              isActive ? ' podcast-segmented__btn--active' : ''
-            }`}
-            onClick={() => dispatch(homeActions.setPodcastFilter(filter))}
-          >
-            {t(filter)}
-          </button>
-        );
-      })}
+      <Chip
+        text={t('PODCASTS')}
+        active
+        onClick={() => dispatch(homeActions.setPodcastFilter('PODCASTS'))}
+      />
+      <button
+        type='button'
+        role='tab'
+        aria-selected={podcastFilter === 'FOLLOWING'}
+        className={`podcast-segmented__btn podcast-segmented__btn--following${
+          podcastFilter === 'FOLLOWING' ? ' podcast-segmented__btn--active' : ''
+        }`}
+        onClick={() => dispatch(homeActions.setPodcastFilter('FOLLOWING'))}
+      >
+        {t('FOLLOWING')}
+      </button>
     </div>
   );
 });

@@ -5,20 +5,19 @@
   margin-left: 10px;
   margin-top: 5px;
 
+  .ant-space {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  .ant-space-item {
+    align-items: center;
+    display: inline-flex;
+  }
+
   &--podcast {
     align-items: center;
-    margin-top: 8px;
-
-    .ant-space {
-      align-items: center;
-      display: inline-flex;
-      flex-wrap: wrap;
-    }
-
-    .ant-space-item {
-      align-items: center;
-      display: inline-flex;
-    }
   }
 }
 
@@ -27,11 +26,16 @@
   box-sizing: border-box;
   display: inline-flex;
   gap: 0;
-  height: var(--encore-control-size-smaller, 32px);
   margin-block-end: 0;
   overflow: visible;
   padding: 0;
   vertical-align: middle;
+
+  .chip {
+    margin-block-end: 0;
+    position: relative;
+    z-index: 2;
+  }
 
   &__btn {
     align-items: center;
@@ -42,46 +46,27 @@
     flex-shrink: 0;
     font: inherit;
     font-weight: 400;
-    height: var(--encore-control-size-smaller, 32px);
     line-height: 1;
     margin-block-end: 0;
+    min-block-size: var(--encore-control-size-smaller, 32px);
     padding-block: var(--encore-spacing-tighter-4, 4px);
     padding-inline: var(--encore-spacing-tighter, 12px);
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
 
-    &--podcasts {
-      align-self: center;
-      background-color: hsla(0, 0%, 100%, 0.1);
-      border-radius: 9999px;
-      color: var(--text-base, #fff);
-      position: relative;
-      z-index: 2;
-
-      &:hover:not(.podcast-segmented__btn--active) {
-        background-color: hsla(0, 0%, 100%, 0.3);
-      }
-
-      &.podcast-segmented__btn--active {
-        background-color: #fff;
-        color: #2a2929;
-      }
-    }
-
     &--following {
       align-self: center;
       background-color: #42403e;
-
       border-radius: 0 9999px 9999px 0;
-      color: white;
+      color: #fff;
       margin-inline-start: -15px;
       padding-inline: var(--encore-spacing-tighter, 12px) var(--encore-spacing-tighter, 12px)
         calc(var(--encore-spacing-tighter, 12px) + 6px);
-      position: relative;
-      z-index: 1;
       padding-left: 25px;
       padding-right: 15px;
+      position: relative;
+      z-index: 1;
 
       &:hover:not(.podcast-segmented__btn--active) {
         background-color: rgba(255, 255, 255, 0.569);

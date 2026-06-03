@@ -29,7 +29,7 @@ const ChipsSection = memo(() => {
 
   if (section === 'PODCAST') {
     return (
-      <Space className='home-header-filters home-header-filters--podcast' wrap size={[4, 4]}>
+      <Space className='home-header-filters' wrap size={[4, 4]}>
         {MAIN_SECTIONS.map((item) => (
           <Chip
             key={item.key}
