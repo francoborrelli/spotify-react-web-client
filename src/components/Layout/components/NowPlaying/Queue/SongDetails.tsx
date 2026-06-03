@@ -33,7 +33,7 @@ const QueueSongDetails: FC<QueueSongDetailsProps> = memo(({ song, isPlaying }) =
     }
 
     if (song.type === 'episode') {
-      return (song as any as Episode).images[0].url;
+      return (song as any as Episode).images[0]?.url || '';
     }
 
     return '';
