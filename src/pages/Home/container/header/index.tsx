@@ -2,6 +2,7 @@ import { Space } from 'antd';
 import { FC, memo, RefObject } from 'react';
 import Chip from '../../../../components/Chip';
 import { PageHeader } from '../../../../components/Layout/components/Header';
+import { PodcastSegmentedNav } from './PodcastSegmentedNav';
 
 // Utils
 import { useTranslation } from 'react-i18next';
@@ -16,10 +17,9 @@ interface HomeHeaderProps {
   sectionContainer: RefObject<HTMLDivElement | null>;
 }
 
-const SECTIONS: { key: 'ALL' | 'MUSIC' | 'PODCAST'; label: 'ALL' | 'MUSIC' | 'PODCASTS' }[] = [
+const MAIN_SECTIONS: { key: 'ALL' | 'MUSIC'; label: 'ALL' | 'MUSIC' }[] = [
   { key: 'ALL', label: 'ALL' },
   { key: 'MUSIC', label: 'MUSIC' },
-  { key: 'PODCAST', label: 'PODCASTS' },
 ];
 
 const ChipsSection = memo(() => {
@@ -27,9 +27,25 @@ const ChipsSection = memo(() => {
   const [t] = useTranslation(['home']);
   const section = useAppSelector((state) => state.home.section);
 
+  if (section === 'PODCAST') {
+    return (
+      <Space className='home-header-filters home-header-filters--podcast' wrap size={[4, 4]}>
+        {MAIN_SECTIONS.map((item) => (
+          <Chip
+            key={item.key}
+            text={t(item.label)}
+            active={false}
+            onClick={() => dispatch(homeActions.setSection(item.key))}
+          />
+        ))}
+        <PodcastSegmentedNav />
+      </Space>
+    );
+  }
+
   return (
-    <Space style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
-      {SECTIONS.map((item) => (
+    <Space className='home-header-filters' wrap size={[4, 4]}>
+      {[...MAIN_SECTIONS, { key: 'PODCAST' as const, label: 'PODCASTS' as const }].map((item) => (
         <Chip
           key={item.key}
           text={t(item.label)}

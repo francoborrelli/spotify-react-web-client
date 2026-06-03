@@ -38,6 +38,7 @@ const initialState: {
   trending: Playlist[];
   recentlyPlayed: (Track | Artist | Album)[];
   section: 'ALL' | 'MUSIC' | 'PODCAST';
+  podcastFilter: 'PODCASTS' | 'FOLLOWING';
   episodesMightLike: Episode[];
   episodesToTry: Episode[];
 } = {
@@ -45,6 +46,7 @@ const initialState: {
   rankings: [],
   topTracks: [],
   section: 'ALL',
+  podcastFilter: 'PODCASTS',
   madeForYou: [],
   newReleases: [],
   recentlyPlayed: [],
@@ -190,6 +192,12 @@ const homeSlice = createSlice({
   reducers: {
     setSection(state, action: PayloadAction<'ALL' | 'MUSIC' | 'PODCAST'>) {
       state.section = action.payload;
+      if (action.payload !== 'PODCAST') {
+        state.podcastFilter = 'PODCASTS';
+      }
+    },
+    setPodcastFilter(state, action: PayloadAction<'PODCASTS' | 'FOLLOWING'>) {
+      state.podcastFilter = action.payload;
     },
   },
   extraReducers: (builder) => {
