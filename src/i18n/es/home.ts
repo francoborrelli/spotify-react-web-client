@@ -3,6 +3,8 @@ export const home = {
   'New releases': 'Nuevos lanzamientos',
   ALL: 'Todo',
   PODCASTS: 'Podcasts',
+  'Episodes you might like': 'Episodios que te pueden gustar',
+  'Episodes to try': 'Episodios para probar',
   'Made for you': 'Hecho para ti',
   you: 'para ti',
   'Liked Songs': 'Canciones gustadas',

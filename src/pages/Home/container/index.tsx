@@ -15,6 +15,7 @@ import { Rankings } from '../components/rankings';
 import { Trending } from '../components/trending';
 import { FavouriteArtists } from '../components/favouriteArtists';
 import { YourPlaylists } from '../components/yourPlaylists';
+import { Podcasts } from '../components/podcasts';
 import useIsMobile from '../../../utils/isMobile';
 
 interface HomePageContainerProps {
@@ -34,7 +35,7 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
     <div ref={sectionContainerRef}>
       <HomeHeader color={color} container={container} sectionContainer={sectionContainerRef} />
       <div
-        className='Home-seccion'
+        className={`Home-seccion${section === 'PODCAST' ? ' Home-seccion--podcasts' : ''}`}
         style={{
           paddingTop: isMobile ? 50 : 0,
           transition: 'background: 5s',
@@ -42,19 +43,25 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
         }}
       >
         <Row gutter={user ? [16, 16] : undefined}>
-          {user ? (
+          {user && section === 'PODCAST' ? (
+            <Col span={24}>
+              <Podcasts />
+            </Col>
+          ) : null}
+
+          {user && section !== 'PODCAST' ? (
             <Col span={24}>
               <TopTracks setColor={setColor} />
             </Col>
           ) : null}
 
-          {user ? (
+          {user && section !== 'PODCAST' ? (
             <Col span={24}>
               <MadeForYou />
             </Col>
           ) : null}
 
-          {user ? (
+          {user && section !== 'PODCAST' ? (
             <Col span={24}>
               <TopMixes />
             </Col>
@@ -66,19 +73,23 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
             </Col>
           ) : null}
 
-          <Col span={24}>
-            <FeaturePlaylists />
-          </Col>
+          {section !== 'PODCAST' ? (
+            <Col span={24}>
+              <FeaturePlaylists />
+            </Col>
+          ) : null}
 
-          {user ? (
+          {user && section !== 'PODCAST' ? (
             <Col span={24}>
               <YourPlaylists />
             </Col>
           ) : null}
 
-          <Col span={24}>
-            <NewReleases />
-          </Col>
+          {section !== 'PODCAST' ? (
+            <Col span={24}>
+              <NewReleases />
+            </Col>
+          ) : null}
 
           {!user || section === 'MUSIC' ? (
             <Col span={24}>

@@ -4,6 +4,8 @@ export const home = {
   MUSIC: 'Music',
   ALL: 'All',
   PODCASTS: 'Podcasts',
+  'Episodes you might like': 'Episodes you might like',
+  'Episodes to try': 'Episodes to try',
   ARTISTS: 'Artists',
   SONGS: 'Songs',
   ALBUMS: 'Albums',

@@ -1,0 +1,314 @@
+@use './variables.scss' as *;
+
+.podcasts-home {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  width: 100%;
+
+  &__grid {
+    column-gap: 48px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 540px));
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1128px;
+    row-gap: 48px;
+    width: 100%;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+}
+
+.podcasts-section-title {
+  align-self: flex-start;
+  color: $text-secondary-color;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  margin: 0 0 12px;
+  max-width: 540px;
+  text-transform: none;
+  width: 100%;
+}
+
+.podcasts-section-cards {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 1160px) {
+  .podcasts-home {
+    &__grid {
+      grid-template-columns: minmax(0, 540px);
+      justify-items: center;
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: $desktop-breakpoint) {
+  .podcasts-home {
+    margin-top: 50px;
+  }
+}
+
+.episode-card {
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  max-width: 540px;
+  min-height: 520px;
+  max-height: 592px;
+  padding: 20px;
+  width: 100%;
+
+  &::before {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 0.25s ease;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header {
+    display: flex;
+    flex-shrink: 0;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__cover {
+    border-radius: 4px;
+    flex-shrink: 0;
+    height: 112px;
+    object-fit: cover;
+    width: 112px;
+  }
+
+  &__titles {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    color: #fff;
+    display: -webkit-box;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    overflow: hidden;
+  }
+
+  &__show {
+    align-items: center;
+    color: $text-secondary-color;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    gap: 6px;
+  }
+
+  &__video-badge {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    display: inline-flex;
+    padding: 2px 4px;
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
+  &__show-label {
+    font-weight: 600;
+  }
+
+  &__show-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__footer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: auto;
+    min-height: 0;
+    position: relative;
+  }
+
+  &__body {
+    transition: transform 0.24s cubic-bezier(0.45, 0, 0.55, 1);
+    will-change: transform;
+  }
+
+  &:hover &__body {
+    transform: translateY(-64px);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__meta {
+    color: $text-secondary-color;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  &__description {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    color: $text-secondary-color;
+    display: -webkit-box;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    overflow: hidden;
+    transition: -webkit-line-clamp 0.3s ease;
+  }
+
+  &:hover &__description {
+    -webkit-line-clamp: 4;
+  }
+
+  &__actions {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    flex-shrink: 0;
+    gap: 8px;
+    justify-content: flex-end;
+    left: 0;
+    opacity: 0;
+    overflow: visible;
+    padding: 0 4px 8px 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    transform: translateY(24px);
+    visibility: hidden;
+    transition:
+      opacity 0.2s ease-in,
+      transform 0.22s cubic-bezier(0.45, 0, 0.55, 1),
+      visibility 0s linear 0.22s;
+  }
+
+  &:hover &__footer {
+    overflow: visible;
+  }
+
+  &:hover &__actions {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0s;
+  }
+
+  &__icon-btn {
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+    transition: transform 0.15s ease;
+    width: 40px;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    .hoverable-icon {
+      height: 24px !important;
+      width: 24px;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__play-btn {
+    align-items: center;
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: none;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+    height: 48px;
+    justify-content: center;
+    margin-left: 4px;
+    padding: 0;
+    transition: transform 0.2s ease;
+    width: 48px;
+
+    &:hover {
+      transform: scale(1.06);
+    }
+
+    svg {
+      display: block;
+      height: 22px !important;
+      width: 22px;
+    }
+  }
+}
+
+@media (max-width: $desktop-breakpoint) {
+  .episode-card {
+    min-height: 440px;
+    max-height: none;
+    max-width: 100%;
+
+    &__cover {
+      height: 88px;
+      width: 88px;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &:hover &__body {
+      transform: translateY(-56px);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  }
+}

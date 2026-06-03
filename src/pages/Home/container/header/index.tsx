@@ -16,7 +16,11 @@ interface HomeHeaderProps {
   sectionContainer: RefObject<HTMLDivElement | null>;
 }
 
-const SECTIONS = ['ALL', 'MUSIC', 'PODCASTS'];
+const SECTIONS: { key: 'ALL' | 'MUSIC' | 'PODCAST'; label: 'ALL' | 'MUSIC' | 'PODCASTS' }[] = [
+  { key: 'ALL', label: 'ALL' },
+  { key: 'MUSIC', label: 'MUSIC' },
+  { key: 'PODCAST', label: 'PODCASTS' },
+];
 
 const ChipsSection = memo(() => {
   const dispatch = useAppDispatch();
@@ -27,10 +31,10 @@ const ChipsSection = memo(() => {
     <Space style={{ marginLeft: 10, marginTop: 5, marginBottom: 5 }}>
       {SECTIONS.map((item) => (
         <Chip
-          key={item}
-          text={t(item)}
-          active={section === item}
-          onClick={() => dispatch(homeActions.setSection(item as any))}
+          key={item.key}
+          text={t(item.label)}
+          active={section === item.key}
+          onClick={() => dispatch(homeActions.setSection(item.key))}
         />
       ))}
     </Space>

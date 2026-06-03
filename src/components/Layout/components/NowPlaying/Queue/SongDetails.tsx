@@ -48,7 +48,7 @@ const QueueSongDetails: FC<QueueSongDetailsProps> = memo(({ song, isPlaying }) =
     }
 
     if (song.type === 'episode') {
-      return (song as any as Episode).show.publisher;
+      return (song as any as Episode).show?.publisher ?? (song as any as Episode).show?.name ?? '';
     }
 
     return '';

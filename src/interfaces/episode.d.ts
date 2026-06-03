@@ -66,7 +66,7 @@ export interface Episode {
   };
 
   /** @description The object type: “episode”. */
-  type: '“episode”';
+  type: 'episode';
 
   /** @description The Spotify URI for the episode. */
   uri: string;
@@ -76,8 +76,8 @@ export interface Episode {
     reason: string;
   };
 
-  /** @description The show on which the episode belongs. */
-  show: {
+  /** @description The show on which the episode belongs. May be partial when returned from Search API. */
+  show?: {
     /** @description A list of the countries in which the show can be played, identified by their ISO 3166-1 alpha-2 code. */
     available_markets: string[];
 

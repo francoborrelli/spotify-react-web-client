@@ -13,13 +13,21 @@ import type { Track } from '../../interfaces/track';
 import type { Album } from '../../interfaces/albums';
 import type { Artist } from '../../interfaces/artist';
 import type { Playlist } from '../../interfaces/playlists';
+import type { Episode } from '../../interfaces/episode';
 import { categoriesService } from '../../services/categories';
+import { searchEpisodes } from '../../services/search';
 
 // Utils
 import { groupBy, uniq, uniqBy } from 'lodash';
 
 // Constants
-import { MADE_FOR_YOU_URI, RANKING_URI, TRENDING_URI } from '../../constants/spotify';
+import {
+  MADE_FOR_YOU_URI,
+  PODCAST_SEARCH_MIGHT_LIKE_QUERY,
+  PODCAST_SEARCH_TO_TRY_QUERY,
+  RANKING_URI,
+  TRENDING_URI,
+} from '../../constants/spotify';
 
 const initialState: {
   topTracks: Track[];
@@ -30,6 +38,8 @@ const initialState: {
   trending: Playlist[];
   recentlyPlayed: (Track | Artist | Album)[];
   section: 'ALL' | 'MUSIC' | 'PODCAST';
+  episodesMightLike: Episode[];
+  episodesToTry: Episode[];
 } = {
   trending: [],
   rankings: [],
@@ -39,6 +49,8 @@ const initialState: {
   newReleases: [],
   recentlyPlayed: [],
   featurePlaylists: [],
+  episodesMightLike: [],
+  episodesToTry: [],
 };
 
 export const fetchMadeForYou = createAsyncThunk('home/fetchMadeForYou', async () => {
@@ -74,7 +86,7 @@ export const fetchRecentlyPlayed = createAsyncThunk('home/fetchRecentlyPlayed', 
 
     const groupedItems = groupBy(
       items.filter((item) => ['artist', 'playlist', 'album'].includes(item.context?.type)),
-      (item) => item.context.type
+      (item) => item.context.type,
     );
 
     const artistsTracks = groupedItems['artist'] || [];
@@ -119,6 +131,47 @@ export const fetchRecentlyPlayed = createAsyncThunk('home/fetchRecentlyPlayed', 
   }
 });
 
+const normalizeSearchEpisodes = (items: Episode[] = []) =>
+  items.filter((episode): episode is Episode => !!episode?.id && !!episode?.name && !!episode?.uri);
+
+const pickUniqueEpisodes = (pools: Episode[][], countPerPool: number) => {
+  const seen = new Set<string>();
+  const pick = (pool: Episode[], count: number) => {
+    const picked: Episode[] = [];
+    for (const episode of pool) {
+      if (picked.length >= count) break;
+      if (seen.has(episode.id)) continue;
+      seen.add(episode.id);
+      picked.push(episode);
+    }
+    return picked;
+  };
+
+  const [mightLikePool, toTryPool, ...fallbackPools] = pools;
+  const mightLike = pick(mightLikePool, countPerPool);
+  let toTry = pick(toTryPool, countPerPool);
+
+  if (toTry.length < countPerPool) {
+    const fallback = fallbackPools.flat();
+    toTry = [...toTry, ...pick(fallback, countPerPool - toTry.length)];
+  }
+
+  return { mightLike, toTry };
+};
+
+export const fetchPodcastEpisodes = createAsyncThunk('home/fetchPodcastEpisodes', async () => {
+  const [mightLikeRes, toTryRes] = await Promise.all([
+    searchEpisodes({ q: PODCAST_SEARCH_MIGHT_LIKE_QUERY, limit: 20 }),
+    searchEpisodes({ q: PODCAST_SEARCH_TO_TRY_QUERY, limit: 20, offset: 5 }),
+  ]);
+
+  const mightLikePool = normalizeSearchEpisodes(mightLikeRes.data.episodes?.items);
+  const toTryPool = normalizeSearchEpisodes(toTryRes.data.episodes?.items);
+  const combinedFallback = uniqBy([...toTryPool, ...mightLikePool], 'id');
+
+  return pickUniqueEpisodes([mightLikePool, toTryPool, combinedFallback], 1);
+});
+
 export const fecthFeaturedPlaylists = createAsyncThunk(
   'home/fecthFeaturedPlaylists',
   async (_, { getState }) => {
@@ -128,7 +181,7 @@ export const fecthFeaturedPlaylists = createAsyncThunk(
       locale: state.language.language === 'es' ? 'es_AR' : undefined,
     });
     return response.data.playlists.items;
-  }
+  },
 );
 
 const homeSlice = createSlice({
@@ -161,6 +214,10 @@ const homeSlice = createSlice({
     builder.addCase(fetchTrending.fulfilled, (state, action) => {
       state.trending = action.payload;
     });
+    builder.addCase(fetchPodcastEpisodes.fulfilled, (state, action) => {
+      state.episodesMightLike = action.payload.mightLike;
+      state.episodesToTry = action.payload.toTry;
+    });
   },
 });
 
@@ -173,6 +230,7 @@ export const homeActions = {
   fetchNewReleases,
   fetchRecentlyPlayed,
   fecthFeaturedPlaylists,
+  fetchPodcastEpisodes,
 };
 
 export default homeSlice.reducer;

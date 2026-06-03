@@ -4,6 +4,10 @@ export const RANKING_URI = '0JQ5DAudkNjCgYMM0TZXDw';
 
 export const TRENDING_URI = '0JQ5DAqbMKFQIL0AXnG5AK';
 
+export const PODCAST_SEARCH_MIGHT_LIKE_QUERY = 'podcast';
+
+export const PODCAST_SEARCH_TO_TRY_QUERY = 'podcast';
+
 export const INITIAL_VOLUME = 0.2;
 
 export const PLAYLIST_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/playlist.png`;
