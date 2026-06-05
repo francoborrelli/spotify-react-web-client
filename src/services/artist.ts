@@ -13,8 +13,11 @@ const fetchArtist = (id: string) => axios.get<Artist>(`/artists/${id}`);
 /**
  * @description Get Spotify catalog information for several artists based on their Spotify IDs.
  */
-const fetchArtists = (ids: string[]) =>
-  axios.get<{ artists: Artist[] }>(`/artists`, { params: { ids: ids.join(',') } });
+const fetchArtists = async (ids: string[]) => {
+  // Feb 2026 removed the batch `/artists?ids=` endpoint; fetch each artist individually.
+  const responses = await Promise.all(ids.map((id) => axios.get<Artist>(`/artists/${id}`)));
+  return { ...responses[0], data: { artists: responses.map((r) => r.data) } };
+};
 
 /**
  * @description Get Spotify catalog information about an artist's albums.
@@ -36,14 +39,22 @@ const fetchArtistAlbums = (
 /**
  * @description Get Spotify catalog information about an artist's top tracks by country.
  */
-const fetchArtistTopTracks = (id: string) =>
-  axios.get<{ tracks: Track }>(`/artists/${id}/top-tracks`);
+const fetchArtistTopTracks = async (_id: string) => {
+  // `/artists/{id}/top-tracks` was removed (Nov 2024 / Feb 2026) with no replacement. The
+  // previous approximation cost 2 extra requests per artist load, which contributed to
+  // Spotify rate-limiting the account. Return empty so the "Popular" section hides and the
+  // artist page stays cheap (the album/single sections still render).
+  return { data: { tracks: [] as Track[] } };
+};
 
 /**
  * @description Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.
  */
-const fetchSimilarArtists = (id: string) =>
-  axios.get<{ artists: Artist[] }>(`/artists/${id}/related-artists`);
+const fetchSimilarArtists = async (_id: string) => {
+  // `/artists/{id}/related-artists` was removed with no first-party replacement. Return
+  // empty so the Artist page's "Fans also like" section hides cleanly.
+  return { data: { artists: [] as Artist[] } };
+};
 
 export const artistService = {
   fetchArtist,

@@ -84,7 +84,7 @@ export const ArtistHeader: FC<{
               <h1>{artist?.name}</h1>
             </span>
             <span className='listeners'>
-              {artist?.followers.total} {t('followers')}
+              {artist?.followers?.total ?? 0} {t('followers')}
             </span>
           </div>
         </div>

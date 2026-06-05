@@ -47,10 +47,14 @@ export const fetchArtist = createAsyncThunk<[Artist, boolean, TrackWithSave[], A
       artistService.fetchArtist(id),
       user ? userService.checkFollowingArtists([id]) : Promise.resolve({ data: [false] }),
       artistService.fetchArtistTopTracks(id),
-      artistService.fetchArtistAlbums(id, { limit: 10, include_groups: 'album' }),
-      artistService.fetchArtistAlbums(id, { limit: 10, include_groups: 'single' }),
-      artistService.fetchArtistAlbums(id, { limit: 10, include_groups: 'appears_on' }),
-      artistService.fetchArtistAlbums(id, { limit: 10, include_groups: 'compilation' }),
+      // One combined album request instead of four (one per include_group), to stay under
+      // Spotify's tightened rate limit. We partition client-side by `album_type`. Note
+      // `appears_on` can no longer be distinguished (the `album_group` field was removed in
+      // Feb 2026), so that section stays empty and hides.
+      artistService.fetchArtistAlbums(id, {
+        limit: 50,
+        include_groups: 'album,single,appears_on,compilation' as any,
+      }),
     ];
 
     const responses = await Promise.all(promises);
@@ -59,14 +63,17 @@ export const fetchArtist = createAsyncThunk<[Artist, boolean, TrackWithSave[], A
     const [following] = responses[1].data as boolean[];
 
     const tracks = (responses[2].data as any).tracks as Track[];
-    const albums = (responses[3].data as Pagination<Album>).items as Album[];
-    const singles = (responses[4].data as Pagination<Album>).items as Album[];
 
-    const appearsOn = (responses[5].data as Pagination<Album>).items as Album[];
-    const compilations = (responses[6].data as Pagination<Album>).items as Album[];
+    const allAlbums = (responses[3].data as Pagination<Album>).items as Album[];
+    const albums = allAlbums.filter((a) => a.album_type === 'album');
+    const singles = allAlbums.filter((a) => a.album_type === 'single');
+    const compilations = allAlbums.filter((a) => a.album_type === 'compilation');
+    const appearsOn: Album[] = [];
 
     const extraResponses = await Promise.all([
-      userService.checkSavedTracks(tracks.map((track) => track.id)).catch(() => ({ data: [] })),
+      tracks.length
+        ? userService.checkSavedTracks(tracks.map((track) => track.id)).catch(() => ({ data: [] }))
+        : Promise.resolve({ data: [] }),
     ]);
 
     const saved = extraResponses[0].data as boolean[];

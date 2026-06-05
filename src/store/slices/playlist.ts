@@ -62,7 +62,9 @@ export const fetchPlaylist = createAsyncThunk<
   const canEdit = isMine || playlist.collaborative;
 
   const extraPromises = [
-    playlist.owner?.id ? userService.getUser(playlist.owner.id) : Promise.resolve({ data: null }),
+    // `/users/{id}` was removed Feb 2026, so we can't fetch the owner's full profile.
+    // The playlist already embeds its `owner` (id, display_name, uri) — use that for display.
+    Promise.resolve({ data: playlist.owner ?? null }),
     ids.length && user
       ? userService.checkSavedTracks(items.map((item) => item.track.id)).catch(() => ({ data: [] }))
       : Promise.resolve({ data: [] }),

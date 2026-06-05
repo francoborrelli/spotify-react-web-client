@@ -112,7 +112,9 @@ const fetchUser = createAsyncThunk<[User, Playlist[], boolean], string>(
     }
 
     const promises = [
-      userService.getUser(id),
+      // `/users/{id}` was removed Feb 2026. For the current user we already have the `/me`
+      // profile in auth; for other users it returns null and the page degrades gracefully.
+      user && user.id === id ? Promise.resolve({ data: user }) : userService.getUser(id),
       playlistService.getPlaylists(id, { limit: 10 }),
       user && user.id === id
         ? userService.checkFollowingUsers([id]).catch(() => {
