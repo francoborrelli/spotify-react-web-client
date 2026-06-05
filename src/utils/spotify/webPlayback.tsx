@@ -53,6 +53,10 @@ const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
 
   const waitForDeviceToBeSelected = () => {
     return new Promise((resolve) => {
+      // Clear any prior poller first. Without this, every `null` state event (which happens
+      // during device transfers) stacked another no-delay interval, flooding the store with
+      // `setState` dispatches → "Maximum update depth exceeded".
+      if (deviceSelectedInterval.current) clearInterval(deviceSelectedInterval.current);
       deviceSelectedInterval.current = setInterval(() => {
         if (webPlaybackInstance.current) {
           webPlaybackInstance.current.getCurrentState().then((state) => {
@@ -63,11 +67,14 @@ const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
             }
           });
         }
-      });
+      }, 1000);
     });
   };
 
   const startStatePolling = useCallback(() => {
+    // Guard against stacking multiple pollers, which would multiply the per-tick `setState`
+    // dispatches and can trigger "Maximum update depth exceeded".
+    if (statePollingInterval.current) clearInterval(statePollingInterval.current);
     statePollingInterval.current = setInterval(async () => {
       const state = await webPlaybackInstance.current!.getCurrentState();
       await handleState(state);
@@ -80,6 +87,9 @@ const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
 
   const setupWebPlaybackEvents = useCallback(async () => {
     let { Player } = window.Spotify;
+    // Register the device name so playback can re-resolve the live device id by name when the
+    // SDK reconnects with a new id (otherwise play 404s with "Device not found").
+    playerService.setPlaybackDeviceName(playerName);
     webPlaybackInstance.current = new Player({
       name: playerName,
       enableMediaSession: true,
@@ -118,12 +128,44 @@ const WebPlayback: FC<WebPlaybackProps> = memo((props) => {
     webPlaybackInstance.current.on('ready', async (data) => {
       dispatch(spotifyActions.setDeviceId({ deviceId: data.device_id }));
       dispatch(spotifyActions.setActiveDevice({ activeDevice: data.device_id }));
-      await playerService.transferPlayback(data.device_id);
+      // Persist the live device id immediately (independently of the transfer below) so
+      // playback commands always carry it, even across hot-reloads.
+      playerService.setPlaybackDevice(data.device_id);
+      // The device takes a moment to register server-side after `ready`, so an immediate
+      // transfer often 404s ("Device not found"). Retry a few times with backoff. The id is
+      // already stored by transferPlayback, so play works even if transfer never succeeds.
+      for (let attempt = 0; attempt < 4; attempt++) {
+        try {
+          await playerService.transferPlayback(data.device_id);
+          break;
+        } catch (e) {
+          if (attempt === 3) {
+            console.warn('transferPlayback failed after retries:', e);
+          } else {
+            await new Promise((resolve) => setTimeout(resolve, 800));
+          }
+        }
+      }
     });
 
     if (playerAutoConnect) {
       webPlaybackInstance.current.connect();
       dispatch(spotifyActions.setPlayer({ player: webPlaybackInstance.current }));
+
+      // Browsers block audio until a user gesture. The Web Playback SDK exposes
+      // `activateElement()` for exactly this — call it once on the first interaction so the
+      // device can actually produce sound (otherwise playback silently fails).
+      const activateOnce = () => {
+        try {
+          (webPlaybackInstance.current as any)?.activateElement?.();
+        } catch {
+          /* no-op */
+        }
+        document.removeEventListener('click', activateOnce);
+        document.removeEventListener('keydown', activateOnce);
+      };
+      document.addEventListener('click', activateOnce);
+      document.addEventListener('keydown', activateOnce);
     }
   }, [
     playerName,
