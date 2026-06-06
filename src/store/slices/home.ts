@@ -35,7 +35,10 @@ export interface MoreLikeArtistSection {
   items: Awaited<ReturnType<typeof fetchMoreLikeArtistItems>>;
 }
 
-const MORE_LIKE_ARTISTS_LIMIT = 4;
+// Each "More like {artist}" row costs ~2 requests (a playlist search + the artist's albums).
+// Kept low to stay well under Spotify's rate limit on a cold Home load; RTK Query dedups/caches
+// them so repeat loads are free.
+const MORE_LIKE_ARTISTS_LIMIT = 2;
 
 const initialState: {
   topTracks: Track[];
@@ -104,8 +107,11 @@ export const fetchRecentlyPlayed = createAsyncThunk('home/fetchRecentlyPlayed', 
     const artistsTracks = groupedItems['artist'] || [];
     const albumsTracks = groupedItems['album'] || [];
 
-    const artistsIds = uniq(artistsTracks.map((item) => item.context.uri.split(':')[2]));
-    const albumsIds = uniq(albumsTracks.map((item) => item.context.uri.split(':')[2]));
+    // Cap how many ids we resolve: batch endpoints were removed (Feb 2026), so each id is now an
+    // individual GET. Resolving every unique id from 50 recently-played items could fire dozens of
+    // requests and trip the rate limit; the row only shows a handful, so 8 each is plenty.
+    const artistsIds = uniq(artistsTracks.map((item) => item.context.uri.split(':')[2])).slice(0, 8);
+    const albumsIds = uniq(albumsTracks.map((item) => item.context.uri.split(':')[2])).slice(0, 8);
 
     const promises = [
       artistsIds.length
