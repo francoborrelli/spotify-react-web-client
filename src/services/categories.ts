@@ -1,5 +1,3 @@
-import axios from '../axios';
-
 import type { Playlist } from '../interfaces/playlists';
 import type { Category } from '../interfaces/categories';
 import type { Pagination, PaginationQueryParams } from '../interfaces/api';
@@ -9,7 +7,14 @@ import type { Pagination, PaginationQueryParams } from '../interfaces/api';
 // the category-backed Home rows (Made For You / Rankings / Trending) hide cleanly instead of
 // throwing 404s. Callers' response shapes are preserved.
 const emptyPage = <T>() =>
-  ({ items: [], total: 0, limit: 0, offset: 0, next: null, previous: null } as unknown as Pagination<T>);
+  ({
+    items: [],
+    total: 0,
+    limit: 0,
+    offset: 0,
+    next: null,
+    previous: null,
+  }) as unknown as Pagination<T>;
 
 /**
  * @description (Removed by Spotify.) Previously: list of browse categories.

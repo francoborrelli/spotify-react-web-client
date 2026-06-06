@@ -376,7 +376,6 @@
 
   .playlist-grid {
     --min-column-width: 170px;
-    --row-count: 1;
 
     @media (max-width: $desktop-small-breakpoint) {
       --min-column-width: 160px;
@@ -390,24 +389,15 @@
 
 .playlist-grid {
   --min-column-width: 200px;
-  --row-count: 1;
 
-  margin-inline: -12px;
-  grid-gap: var(--grid-gap);
-  content-visibility: auto;
-  grid-template-rows: repeat(var(1), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--row-count), minmax(0, 1fr));
   border: 0;
+  display: grid;
+  gap: var(--grid-gap, 24px);
+  grid-auto-rows: min-content;
+  grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width), 1fr));
   margin: 0;
   padding: 0;
   vertical-align: baseline;
-  display: grid;
-  grid-auto-rows: -webkit-min-content;
-  grid-auto-rows: min-content;
-  grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width), 1fr));
-
-  grid-template-rows: 1fr 0 0 0 0 0;
-  overflow: hidden;
 
   @media (max-width: 1200px) {
     --min-column-width: 170px;
@@ -422,7 +412,10 @@
   }
 
   &--horizontal {
+    align-items: flex-start;
+    content-visibility: visible;
     display: flex;
+    flex-wrap: nowrap;
     gap: 8px;
     grid-auto-rows: unset;
     grid-template-columns: unset;
@@ -450,6 +443,8 @@
   }
 
   &__track {
+    margin-left: -10px;
+
     --min-column-width: 200px;
 
     @media (max-width: 1200px) {

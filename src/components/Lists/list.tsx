@@ -105,16 +105,7 @@ export function GridItemList(props: {
   const gridContent = horizontalScroll ? (
     <ScrollableGridCarousel>{gridItems}</ScrollableGridCarousel>
   ) : (
-    <div
-      className='playlist-grid'
-      style={
-        props.multipleRows
-          ? {
-              gridTemplateRows: 'unset',
-            }
-          : undefined
-      }
-    >
+    <div className='playlist-grid'>
       {gridItems}
     </div>
   );

@@ -13,6 +13,10 @@ export const AppearsOn = memo(() => {
   const [t] = useTranslation(['artist']);
   const tracks = useAppSelector((state) => state.artist.appearsOn);
 
+  if (!tracks.length) {
+    return null;
+  }
+
   return (
     <div>
       <div>

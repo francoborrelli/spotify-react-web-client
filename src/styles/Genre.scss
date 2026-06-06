@@ -94,7 +94,10 @@
 }
 
 .genre-list {
+  overflow: hidden;
+
   .playlist-grid {
-    grid-template-rows: unset;
+    overflow: hidden;
   }
 }
+
