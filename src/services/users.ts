@@ -12,6 +12,21 @@ interface FetchTopItemsParams extends PaginationQueryParams {
   timeRange: 'long_term' | 'medium_term' | 'short_term';
 }
 
+// --- Feb 2026 library consolidation -----------------------------------------
+// Per-type save/remove/follow + their `/contains` checks were replaced by a single
+// `/me/library` surface keyed by Spotify URIs. These helpers let the existing
+// id-based service functions keep their signatures while talking to the new API.
+type LibraryType = 'track' | 'album' | 'artist' | 'playlist' | 'user' | 'episode';
+
+const toUris = (ids: string[], type: LibraryType) => ids.map((id) => `spotify:${type}:${id}`);
+
+const saveToLibrary = (uris: string[]) => axios.put('/me/library', { uris });
+
+const removeFromLibrary = (uris: string[]) => axios.delete('/me/library', { data: { uris } });
+
+const libraryContains = (uris: string[]) =>
+  axios.get<boolean[]>('/me/library/contains', { params: { uris: uris.join(',') } });
+
 /**
  * @description Get the current user's top  tracks based on calculated affinity.
  */
@@ -48,14 +63,14 @@ const fetchQueue = async () => {
  * @description Check if one or more tracks is already saved in the current Spotify user's 'Your Music' library.
  */
 const checkSavedTracks = async (ids: string[]) => {
-  return await axios.get<boolean[]>('/me/tracks/contains', { params: { ids: ids.join(',') } });
+  return await libraryContains(toUris(ids, 'track'));
 };
 
 /**
  * @description Save one or more tracks to the current user's 'Your Music' library.
  */
 const saveTracks = async (ids: string[]) => {
-  return await axios.put('/me/tracks', { ids });
+  return await saveToLibrary(toUris(ids, 'track'));
 };
 
 /**
@@ -63,14 +78,14 @@ const saveTracks = async (ids: string[]) => {
  * @param ids An array of the Spotify IDs of the tracks. A maximum of 50 IDs can be sent in one request.
  */
 const deleteTracks = async (ids: string[]) => {
-  return await axios.delete('/me/tracks', { data: { ids } });
+  return await removeFromLibrary(toUris(ids, 'track'));
 };
 
 /**
  * @description Check to see if the current user is following a specified playlist.
  */
 const checkFollowedPlaylist = async (playlistId: string) => {
-  return await axios.get<boolean[]>(`/playlists/${playlistId}/followers/contains`).catch(() => {
+  return await libraryContains(toUris([playlistId], 'playlist')).catch(() => {
     return { data: false };
   });
 };
@@ -79,67 +94,68 @@ const checkFollowedPlaylist = async (playlistId: string) => {
  * @description Check to see if the current user is following one or more artists or other Spotify users.
  */
 const checkFollowingArtists = async (ids: string[]) => {
-  return await axios.get<boolean[]>('/me/following/contains', {
-    params: { type: 'artist', ids: ids.join(',') },
-  });
+  return await libraryContains(toUris(ids, 'artist'));
 };
 
 /**
  * @description Check to see if the current user is following one or more other Spotify users.
  */
 const checkFollowingUsers = async (ids: string[]) => {
-  return await axios.get<boolean[]>('/me/following/contains', {
-    params: { type: 'user', ids: ids.join(',') },
-  });
+  return await libraryContains(toUris(ids, 'user'));
 };
 
 /**
  * @description Get public profile information about a Spotify user.
  */
 const getUser = async (id: string) => {
-  return await axios.get<User>(`/users/${id}`);
+  // `/users/{id}` was removed Feb 2026 (only `/me` survives). Fail soft so callers such as
+  // the playlist owner lookup don't reject their `Promise.all` — they fall back to the
+  // playlist's embedded `owner` object instead.
+  return await axios
+    .get<User>(`/users/${id}`)
+    .catch(() => ({ data: null as unknown as User }));
 };
 
 /**
  * @description Remove the current user as a follower of a playlist.
  */
 const unfollowPlaylist = async (playlistId: string) => {
-  return await axios.delete(`/playlists/${playlistId}/followers`);
+  return await removeFromLibrary(toUris([playlistId], 'playlist'));
 };
 
 /**
  * @description Add the current user as a follower of a playlist.
  */
 const followPlaylist = async (playlistId: string) => {
-  return await axios.put(`/playlists/${playlistId}/followers`);
+  return await saveToLibrary(toUris([playlistId], 'playlist'));
 };
 
 /**
  * @description Add the current user as a follower of one or more artists or other Spotify users.
  */
 const followArtists = async (ids: string[]) => {
-  return await axios.put('/me/following', { type: 'artist', ids });
+  return await saveToLibrary(toUris(ids, 'artist'));
 };
 
 /**
  * @description Remove the current user as a follower of one or more artists or other Spotify users.
  */
 const unfollowArtists = async (ids: string[]) => {
-  return await axios.delete('/me/following', { params: { type: 'artist', ids: ids.join(',') } });
+  return await removeFromLibrary(toUris(ids, 'artist'));
 };
 
 /**
  * @description Add the current user as a follower of one or more users or other Spotify users.
  */
 const followUsers = async (ids: string[]) => {
-  return await axios.put('/me/following', { type: 'user', ids });
+  return await saveToLibrary(toUris(ids, 'user'));
 };
 
 /**
  * @description Remove the current user as a follower of one or more other Spotify users.
  */
 const unfollowUsers = async (ids: string[]) => {
-  return await axios.delete('/me/following', { params: { type: 'user', ids: ids.join(',') } });
+  return await removeFromLibrary(toUris(ids, 'user'));
 };
 
 /**

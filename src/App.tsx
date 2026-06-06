@@ -5,6 +5,7 @@ import './styles/App.scss';
 import i18next from 'i18next';
 import { FC, Suspense, lazy, memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { getFromLocalStorageWithExpiry } from './utils/localstorage';
+import { getRefreshToken } from './utils/spotify/login';
 
 // Components
 import { ConfigProvider } from 'antd';
@@ -79,13 +80,25 @@ const SpotifyContainer: FC<{ children: any }> = memo(({ children }) => {
       playerInitialVolume: 1.0,
       playerRefreshRateMs: 1000,
       playerName: 'Spotify React Player',
-      onPlayerRequestAccessToken: () => Promise.resolve(token!),
+      onPlayerRequestAccessToken: async () => {
+        // Always give the SDK a *fresh* token. Returning the in-memory redux token can hand it
+        // an expired one, which 401s on the SDK's internal `melody/v1/check_scope` call. Prefer
+        // the still-valid stored token; refresh it if it has expired.
+        const stored = getFromLocalStorageWithExpiry('access_token') as string | null;
+        if (stored) return stored;
+        const refreshed = (await getRefreshToken()) as string | null;
+        return refreshed || token || '';
+      },
       onPlayerLoading: () => {},
       onPlayerWaitingForDevice: () => {
         dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));
       },
       onPlayerError: (e) => {
-        dispatch(loginToSpotify());
+        // Don't re-login on every player error. Non-Premium accounts emit `account_error`
+        // ("premium required") and failed transfers emit errors on each attempt — calling
+        // loginToSpotify() here caused an endless re-login loop. Just surface it; token
+        // refresh is handled by the axios 401 interceptor + onPlayerRequestAccessToken.
+        console.warn('Spotify player error:', e);
       },
       onPlayerDeviceSelected: () => {
         dispatch(authActions.setPlayerLoaded({ playerLoaded: true }));

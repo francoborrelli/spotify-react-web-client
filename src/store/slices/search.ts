@@ -36,19 +36,19 @@ const initialState: {
 };
 
 const fetchArtists = createAsyncThunk<Artist[], string>('search/fetchArtists', async (query) => {
-  const response = await querySearch({ q: query, type: 'artist', limit: 50 });
+  const response = await querySearch({ q: query, type: 'artist', limit: 10 });
   return response.data.artists.items;
 });
 
 const fetchAlbums = createAsyncThunk<Album[], string>('search/fetchAlbums', async (query) => {
-  const response = await querySearch({ q: query, type: 'album', limit: 50 });
+  const response = await querySearch({ q: query, type: 'album', limit: 10 });
   return response.data.albums.items;
 });
 
 const fetchPlaylists = createAsyncThunk<Playlist[], string>(
   'search/fetchPlaylists',
   async (query) => {
-    const response = await querySearch({ q: query, type: 'playlist', limit: 50 });
+    const response = await querySearch({ q: query, type: 'playlist', limit: 10 });
     return response.data.playlists.items;
   }
 );
@@ -56,7 +56,7 @@ const fetchPlaylists = createAsyncThunk<Playlist[], string>(
 const fetchSongs = createAsyncThunk<[TrackWithSave[], number], string>(
   'search/fetchSongs',
   async (query, params) => {
-    const response = await querySearch({ q: query, type: 'track', limit: 50 });
+    const response = await querySearch({ q: query, type: 'track', limit: 10 });
     const tracks = response.data.tracks.items;
     const total = response.data.tracks.total;
 
@@ -87,7 +87,7 @@ const fetchMoreSongs = createAsyncThunk<TrackWithSave[], string>(
 
     const response = await querySearch({
       q: query,
-      limit: 50,
+      limit: 10,
       type: 'track',
       offset: songs.length,
     });

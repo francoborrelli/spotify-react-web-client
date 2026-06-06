@@ -10,7 +10,12 @@ import type { Pagination, PaginationQueryParams } from '../interfaces/api';
  * @param playlistId The Spotify ID for the playlist.
  */
 const getPlaylist = async (playlistId: string) => {
-  return axios.get<Playlist>(`/playlists/${playlistId}`);
+  const response = await axios.get<Playlist>(`/playlists/${playlistId}`);
+  // Feb 2026 may expose the playlist's track collection as `items` instead of `tracks`.
+  // Normalize to `tracks` so the header/table (which read `playlist.tracks.total`) are unchanged.
+  const data = response.data as unknown as Record<string, any>;
+  if (data && !data.tracks && data.items) data.tracks = data.items;
+  return response;
 };
 
 interface GetPlaylistItemsParams extends PaginationQueryParams {
@@ -24,7 +29,17 @@ const getPlaylistItems = async (
   playlistId: string,
   params: GetPlaylistItemsParams = { limit: 50 }
 ) => {
-  return axios.get<Pagination<PlaylistItem>>(`/playlists/${playlistId}/tracks`, { params });
+  const response = await axios.get<Pagination<PlaylistItem>>(`/playlists/${playlistId}/items`, {
+    params,
+  });
+  // Feb 2026 renamed `/tracks` → `/items` and each entry's `track` field → `item`.
+  // Remap back to the legacy `{ ...entry, track }` shape so the Redux slice and the
+  // track table (which read `item.track`) stay untouched.
+  const items = response.data?.items as unknown as Array<Record<string, any>> | undefined;
+  items?.forEach((entry) => {
+    if (entry && entry.item && !entry.track) entry.track = entry.item;
+  });
+  return response;
 };
 
 /**
@@ -41,15 +56,26 @@ interface GetFeaturedPlaylistsParams extends PaginationQueryParams {
 /**
  * @description Get a list of Spotify featured playlists (shown, for example, on a Spotify player's 'Browse' tab).
  */
-const getFeaturedPlaylists = async (params: GetFeaturedPlaylistsParams = {}) => {
-  return axios.get<{ playlists: Pagination<Playlist> }>('/browse/featured-playlists', { params });
+const getFeaturedPlaylists = async (_params: GetFeaturedPlaylistsParams = {}) => {
+  // `/browse/featured-playlists` was removed (Nov 2024 / Feb 2026) with no replacement.
+  // Return empty so the Home "Featured playlists" row hides cleanly (the component renders
+  // null on an empty list); the user's own playlists still appear via their dedicated row.
+  const empty = {
+    items: [],
+    total: 0,
+    limit: 0,
+    offset: 0,
+    next: null,
+    previous: null,
+  } as unknown as Pagination<Playlist>;
+  return { data: { playlists: empty } };
 };
 
 /**
  * @description Add one or more items to a user's playlist.
  */
 const addPlaylistItems = async (playlistId: string, uris: string[], snapshot_id: string) => {
-  return axios.post(`/playlists/${playlistId}/tracks`, {
+  return axios.post(`/playlists/${playlistId}/items`, {
     uris,
     snapshot_id,
   });
@@ -59,9 +85,9 @@ const addPlaylistItems = async (playlistId: string, uris: string[], snapshot_id:
  * @description Remove one or more items from a user's playlist.
  */
 const removePlaylistItems = async (playlistId: string, uris: string[], snapshot_id: string) => {
-  return axios.delete(`/playlists/${playlistId}/tracks`, {
+  return axios.delete(`/playlists/${playlistId}/items`, {
     data: {
-      tracks: uris.map((uri) => ({ uri })),
+      items: uris.map((uri) => ({ uri })),
       snapshot_id,
     },
   });
@@ -79,7 +105,7 @@ const reorderPlaylistItems = async (
   snapshotId: string
 ) => {
   return axios.put(
-    `/playlists/${playlistId}/tracks`,
+    `/playlists/${playlistId}/items`,
     {
       range_start: rangeStart,
       insert_before: insertBefore,
@@ -127,7 +153,8 @@ const createPlaylist = async (
     description?: string;
   }
 ) => {
-  return axios.post<Playlist>(`/users/${userId}/playlists`, data);
+  // Feb 2026 removed `POST /users/{id}/playlists`; only the current user's `/me/playlists` works.
+  return axios.post<Playlist>(`/me/playlists`, data);
 };
 
 /**
@@ -139,20 +166,28 @@ const getRecommendations = async (params: {
   limit?: number;
   seed_tracks?: string;
 }) => {
-  return axios.get<{ tracks: Track[] }>('/recommendations', { params });
+  // `/recommendations` was removed (Nov 2024 / Feb 2026) with no public replacement.
+  // Repurpose with the user's short-term top tracks so the "recommended" row stays
+  // populated. Seeds are ignored; the response is reshaped to the legacy `{ tracks }`.
+  const response = await axios.get<Pagination<Track>>('/me/top/tracks', {
+    params: { limit: params.limit ?? 25, time_range: 'short_term' },
+  });
+  return { ...response, data: { tracks: response.data.items } };
 };
 
 /**
  * @description Get a list of the playlists owned or followed by a Spotify user.
  */
 const getPlaylists = async (
-  userId: string,
+  _userId: string,
   params: {
     limit?: number;
     offset?: number;
   }
 ) => {
-  return axios.get<Pagination<Playlist>>(`/users/${userId}/playlists`, { params });
+  // Feb 2026 removed `/users/{id}/playlists` (other users). Only the current user's
+  // playlists are available now, so this returns `/me/playlists` regardless of `_userId`.
+  return axios.get<Pagination<Playlist>>(`/me/playlists`, { params });
 };
 
 export const playlistService = {
