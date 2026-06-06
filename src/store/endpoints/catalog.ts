@@ -3,12 +3,16 @@ import { api, runQuery } from '../api';
 import { artistService } from '../../services/artist';
 import { userService } from '../../services/users';
 import { albumsService } from '../../services/albums';
+import { playlistService } from '../../services/playlists';
 
 import type { RootState } from '../store';
 import type { Album, AlbumFullObject } from '../../interfaces/albums';
 import type { Track } from '../../interfaces/track';
+import type { User } from '../../interfaces/user';
+import type { Playlist, PlaylistItem } from '../../interfaces/playlists';
 import type { ArtistPageData } from '../slices/artist';
 import type { AlbumPageData } from '../slices/album';
+import type { PlaylistPageData } from '../slices/playlist';
 
 // Catalog (mostly immutable) page queries. Each endpoint's queryFn composes the existing service
 // calls — identical to what the old page thunks did — so RTK Query adds caching/dedup/SWR on top
@@ -100,7 +104,65 @@ const catalogApi = api.injectEndpoints({
       },
       providesTags: (_res, _err, id) => [{ type: 'Album', id }],
     }),
+
+    getPlaylistPage: build.query<PlaylistPageData, string>({
+      async queryFn(id, { getState }) {
+        return runQuery(async () => {
+          const user = (getState() as RootState).auth.user;
+
+          const [plRes, itemsRes, followingRes] = await Promise.all([
+            playlistService.getPlaylist(id),
+            playlistService.getPlaylistItems(id),
+            user
+              ? userService.checkFollowedPlaylist(id)
+              : Promise.resolve({ data: [false] as boolean[] }),
+          ]);
+
+          const playlist = plRes.data as Playlist;
+          const items = (itemsRes.data.items as PlaylistItem[]) ?? [];
+          const ids = items.map((i) => i.track.id);
+          const artistsIds = items.map((i) => i.track.artists[0].id);
+          const isMine = user?.id === playlist.owner?.id;
+
+          const [savedRes, recRes] = await Promise.all([
+            ids.length && user
+              ? userService.checkSavedTracks(ids).catch(() => ({ data: [] as boolean[] }))
+              : Promise.resolve({ data: [] as boolean[] }),
+            isMine
+              ? ids.length
+                ? playlistService
+                    .getRecommendations({
+                      seed_tracks: ids.slice(0, 5).join(',') || undefined,
+                      seed_artists: artistsIds.slice(0, 5).join(',') || undefined,
+                      limit: 25,
+                    })
+                    .then((r) => ({ data: r.data.tracks }))
+                    .catch(() => ({ data: [] as Track[] }))
+                : userService
+                    .fetchTopTracks({ limit: 25, timeRange: 'short_term' })
+                    .then((r) => ({ data: r.data.items as Track[] }))
+              : Promise.resolve({ data: [] as Track[] }),
+          ]);
+
+          const saved = savedRes.data as boolean[];
+
+          return {
+            data: {
+              playlist,
+              tracks: items.map((item, i) => ({ ...item, saved: saved[i] })),
+              following: (followingRes.data as boolean[])[0],
+              canEdit: isMine || playlist.collaborative,
+              user: (playlist.owner ?? null) as User | null,
+              recommendations: recRes.data as Track[],
+            } satisfies PlaylistPageData,
+          };
+        });
+      },
+      // Playlists are mutable (edits/follow), so keep a short cache and revalidate.
+      keepUnusedDataFor: 120,
+      providesTags: (_res, _err, id) => [{ type: 'Playlist', id }],
+    }),
   }),
 });
 
-export const { useGetArtistPageQuery, useGetAlbumPageQuery } = catalogApi;
+export const { useGetArtistPageQuery, useGetAlbumPageQuery, useGetPlaylistPageQuery } = catalogApi;

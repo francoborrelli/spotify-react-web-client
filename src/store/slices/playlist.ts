@@ -11,6 +11,17 @@ import type { Track } from '../../interfaces/track';
 import type { Pagination } from '../../interfaces/api';
 import type { Playlist, PlaylistItem, PlaylistItemWithSaved } from '../../interfaces/playlists';
 
+// Shape produced by the RTK Query `getPlaylistPage` endpoint, mirrored into this slice so the
+// existing Playlist sub-components keep reading state.playlist.* unchanged.
+export interface PlaylistPageData {
+  playlist: Playlist;
+  tracks: PlaylistItemWithSaved[];
+  following: boolean;
+  canEdit: boolean;
+  user: User | null;
+  recommendations: Track[];
+}
+
 const initialState: {
   user: User | null;
   recommedations: Track[];
@@ -199,6 +210,17 @@ const playlistSlice = createSlice({
     },
     removeTrackFromRecommendations(state, action: PayloadAction<{ id: string }>) {
       state.recommedations = state.recommedations.filter((track) => track.id !== action.payload.id);
+    },
+    // Mirror an RTK Query `getPlaylistPage` result into this slice.
+    setPlaylistData(state, action: PayloadAction<PlaylistPageData>) {
+      const p = action.payload;
+      state.playlist = p.playlist;
+      state.tracks = p.tracks;
+      state.following = p.following;
+      state.canEdit = p.canEdit;
+      state.user = p.user;
+      state.recommedations = p.recommendations;
+      state.loading = false;
     },
   },
   extraReducers: (builder) => {
