@@ -112,7 +112,12 @@ const catalogApi = api.injectEndpoints({
 
           const [plRes, itemsRes, followingRes] = await Promise.all([
             playlistService.getPlaylist(id),
-            playlistService.getPlaylistItems(id),
+            // Feb 2026: GET /playlists/{id}/items is owner/collaborator-only — it 403s for
+            // editorial/other-users' playlists. Degrade to an empty track list (metadata from
+            // getPlaylist still renders) instead of failing the whole page.
+            playlistService
+              .getPlaylistItems(id)
+              .catch(() => ({ data: { items: [] as PlaylistItem[] } as any })),
             user
               ? userService.checkFollowedPlaylist(id)
               : Promise.resolve({ data: [false] as boolean[] }),
