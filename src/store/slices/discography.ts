@@ -29,19 +29,21 @@ const initialState: {
 const fetchData = createAsyncThunk<[Artist, Album[][]], string>(
   'discography/fetchData',
   async (id) => {
-    const promises = [
+    // One combined `/artists/{id}/albums` request instead of four (Spotify rate-limits this
+    // endpoint hard, per-endpoint), partitioned client-side by album_type.
+    const [artistRes, albumsRes] = await Promise.all([
       artistService.fetchArtist(id),
-      artistService.fetchArtistAlbums(id, { limit: 50, include_groups: 'album' }),
-      artistService.fetchArtistAlbums(id, { limit: 50, include_groups: 'single' }),
-      artistService.fetchArtistAlbums(id, { limit: 50, include_groups: 'compilation' }),
-    ];
+      artistService.fetchArtistAlbums(id, {
+        limit: 50,
+        include_groups: 'album,single,compilation' as any,
+      }),
+    ]);
 
-    const responses = await Promise.all(promises);
-
-    const artist = responses[0].data as Artist;
-    const albums = (responses[1].data as Pagination<Album>).items as Album[];
-    const singles = (responses[2].data as Pagination<Album>).items as Album[];
-    const compilations = (responses[3].data as Pagination<Album>).items as Album[];
+    const artist = artistRes.data as Artist;
+    const all = ((albumsRes.data as Pagination<Album>).items as Album[]) ?? [];
+    const albums = all.filter((a) => a.album_type === 'album');
+    const singles = all.filter((a) => a.album_type === 'single');
+    const compilations = all.filter((a) => a.album_type === 'compilation');
 
     return [artist, [albums, singles, compilations]];
   }

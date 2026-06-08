@@ -9,6 +9,7 @@ import { FC, RefObject, useEffect, useRef, useState } from 'react';
 
 // Redux
 import { playlistActions } from '../../store/slices/playlist';
+import { useGetPlaylistPageQuery } from '../../store/endpoints/catalog';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 // Constants
@@ -35,14 +36,17 @@ const PlaylistView: FC<{ container: RefObject<HTMLDivElement | null> }> = (props
     }
   }, [playlist]);
 
+  // Cached/deduped via RTK Query (short TTL since playlists are mutable); mirrored into the
+  // playlist slice for existing sub-components. Pagination still uses getNextTracks.
+  const { data: playlistData } = useGetPlaylistPageQuery(playlistId!, { skip: !playlistId });
+
   useEffect(() => {
-    if (playlistId) {
-      dispatch(playlistActions.fetchPlaylist(playlistId));
-    }
-    return () => {
+    if (playlistData) {
+      dispatch(playlistActions.setPlaylistData(playlistData));
+    } else {
       dispatch(playlistActions.setPlaylist({ playlist: null }));
-    };
-  }, [dispatch, playlistId]);
+    }
+  }, [playlistData, dispatch]);
 
   if (!playlist) return null;
 

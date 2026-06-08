@@ -19,7 +19,7 @@ import { searchEpisodes } from '../../services/search';
 import { fetchMoreLikeArtistItems } from '../../pages/Home/utils/fetchMoreLikeArtistItems';
 
 // Utils
-import { groupBy, shuffle, uniq, uniqBy } from 'lodash';
+import { groupBy, uniq, uniqBy } from 'lodash';
 
 // Constants
 import {
@@ -35,7 +35,6 @@ export interface MoreLikeArtistSection {
   items: Awaited<ReturnType<typeof fetchMoreLikeArtistItems>>;
 }
 
-const MORE_LIKE_ARTISTS_LIMIT = 4;
 
 const initialState: {
   topTracks: Track[];
@@ -104,8 +103,11 @@ export const fetchRecentlyPlayed = createAsyncThunk('home/fetchRecentlyPlayed', 
     const artistsTracks = groupedItems['artist'] || [];
     const albumsTracks = groupedItems['album'] || [];
 
-    const artistsIds = uniq(artistsTracks.map((item) => item.context.uri.split(':')[2]));
-    const albumsIds = uniq(albumsTracks.map((item) => item.context.uri.split(':')[2]));
+    // Cap how many ids we resolve: batch endpoints were removed (Feb 2026), so each id is now an
+    // individual GET. Resolving every unique id from 50 recently-played items could fire dozens of
+    // requests and trip the rate limit; the row only shows a handful, so 8 each is plenty.
+    const artistsIds = uniq(artistsTracks.map((item) => item.context.uri.split(':')[2])).slice(0, 8);
+    const albumsIds = uniq(albumsTracks.map((item) => item.context.uri.split(':')[2])).slice(0, 8);
 
     const promises = [
       artistsIds.length
@@ -184,36 +186,15 @@ export const fetchPodcastEpisodes = createAsyncThunk('home/fetchPodcastEpisodes'
   return pickUniqueEpisodes([mightLikePool, toTryPool, combinedFallback], 1);
 });
 
-export const fetchMoreLikeArtists = createAsyncThunk(
-  'home/fetchMoreLikeArtists',
-  async (_, { getState }) => {
-    const state = getState() as RootState;
-    let artists = state.yourLibrary.myArtists;
-
-    if (!artists.length) {
-      try {
-        const response = await userService.fetchFollowedArtists({ limit: 50 });
-        artists = response.data.artists.items;
-      } catch {
-        return [];
-      }
-    }
-
-    const pickedArtists = shuffle(artists).slice(0, MORE_LIKE_ARTISTS_LIMIT);
-    if (!pickedArtists.length) {
-      return [];
-    }
-
-    const sections = await Promise.all(
-      pickedArtists.map(async (artist) => {
-        const items = await fetchMoreLikeArtistItems(artist);
-        return { artist, items };
-      }),
-    );
-
-    return sections.filter((section) => section.items.length > 0);
-  },
-);
+export const fetchMoreLikeArtists = createAsyncThunk('home/fetchMoreLikeArtists', async () => {
+  // Disabled. This fanned out `GET /artists/{id}/albums` per followed artist on EVERY Home load,
+  // which Spotify rate-limits *per endpoint* — that single endpoint was being driven into a 429
+  // cooldown while every other endpoint stayed healthy. The section was already degraded anyway
+  // (related-artists was removed from the API in Nov 2024 / Feb 2026, so it only showed the
+  // artist's own albums + name-matched playlists). Returning [] stops the hammering and lets the
+  // endpoint's rate-limit window recover. Re-enable via fetchMoreLikeArtistItems if quota allows.
+  return [];
+});
 
 export const fecthFeaturedPlaylists = createAsyncThunk(
   'home/fecthFeaturedPlaylists',

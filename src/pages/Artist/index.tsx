@@ -6,7 +6,8 @@ import { useParams } from 'react-router-dom';
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 
 // Redux
-import { artistActions, fetchArtist } from '../../store/slices/artist';
+import { artistActions } from '../../store/slices/artist';
+import { useGetArtistPageQuery } from '../../store/endpoints/catalog';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 import ArtistContent from './container/content';
@@ -26,15 +27,21 @@ export const ArtistPage: FC<ArtistPageProps> = memo((props) => {
   const params = useParams<{ artistId: string }>();
   const artist = useAppSelector((state) => state.artist.artist);
 
+  // Load via RTK Query (cached + deduped + revalidated). The result is mirrored into the artist
+  // slice so the existing sub-components keep reading state.artist.* unchanged. Revisiting an
+  // artist serves from cache with no network call.
+  const { data: artistData } = useGetArtistPageQuery(params.artistId!, {
+    skip: !params.artistId,
+  });
+
   useEffect(() => {
-    if (params.artistId) {
-      dispatch(fetchArtist(params.artistId));
-      dispatch(artistActions.fetchOtherArtists(params.artistId));
-    }
-    return () => {
+    if (artistData) {
+      dispatch(artistActions.setArtistData(artistData));
+    } else {
+      // New/uncached artist still loading — clear the mirror so we don't show the previous one.
       dispatch(artistActions.setArtist({ artist: null }));
-    };
-  }, [dispatch, params.artistId]);
+    }
+  }, [artistData, dispatch]);
 
   useEffect(() => {
     if (artist && artist.images?.length) {

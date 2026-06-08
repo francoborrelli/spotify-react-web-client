@@ -11,6 +11,19 @@ import type { Artist } from '../../interfaces/artist';
 import type { Track, TrackWithSave } from '../../interfaces/track';
 import { RootState } from '../store';
 
+// Shape produced by the RTK Query `getArtistPage` endpoint and mirrored into this slice so the
+// existing Artist sub-components (which read state.artist.*) keep working unchanged.
+export interface ArtistPageData {
+  artist: Artist;
+  following: boolean;
+  topTracks: TrackWithSave[];
+  albums: Album[];
+  singles: Album[];
+  appearsOn: Album[];
+  compilations: Album[];
+  otherArtists: Artist[];
+}
+
 const initialState: {
   albums: Album[];
   singles: Album[];
@@ -119,6 +132,20 @@ const artistSlice = createSlice({
       state.topTracks = state.topTracks.map((track) =>
         track.id === action.payload.id ? { ...track, saved: action.payload.saved } : track
       );
+    },
+    // Mirror an RTK Query `getArtistPage` result into this slice (the page is now loaded via
+    // RTK Query for caching/dedup; the slice stays a view mirror for existing components).
+    setArtistData(state, action: PayloadAction<ArtistPageData>) {
+      const p = action.payload;
+      state.artist = p.artist;
+      state.following = p.following;
+      state.topTracks = p.topTracks;
+      state.albums = p.albums;
+      state.singles = p.singles;
+      state.appearsOn = p.appearsOn;
+      state.compilations = p.compilations;
+      state.otherArtists = p.otherArtists;
+      state.loading = false;
     },
   },
   extraReducers: (builder) => {

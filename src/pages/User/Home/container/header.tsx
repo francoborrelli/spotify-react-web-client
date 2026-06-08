@@ -49,9 +49,12 @@ export const UserHeader: FC<{ color: string }> = memo((props) => {
           </span>
 
           <div className='profile-header-details-container'>
-            <span data-encore-id='text'>
-              {user?.followers?.total || 0} {t('Followers')}
-            </span>
+            {/* `followers` was removed from GET /me in Feb 2026, so only show it when present. */}
+            {user?.followers?.total != null ? (
+              <span data-encore-id='text'>
+                {user.followers.total} {t('Followers')}
+              </span>
+            ) : null}
           </div>
         </div>
       </div>

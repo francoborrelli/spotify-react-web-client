@@ -5,6 +5,7 @@ import { FC, RefObject, useEffect } from 'react';
 // Redux
 import { useAppDispatch } from '../../store/store';
 import { albumActions } from '../../store/slices/album';
+import { useGetAlbumPageQuery } from '../../store/endpoints/catalog';
 
 // Constants
 import AlbumPageContainer from './container';
@@ -14,12 +15,16 @@ const AlbumPage: FC<{ container: RefObject<HTMLDivElement | null> }> = (props) =
 
   const { albumId } = useParams<{ albumId: string }>();
 
+  // Cached/deduped via RTK Query; mirrored into the album slice for existing sub-components.
+  const { data: albumData } = useGetAlbumPageQuery(albumId!, { skip: !albumId });
+
   useEffect(() => {
-    if (albumId) dispatch(albumActions.fetchAlbum(albumId));
-    return () => {
+    if (albumData) {
+      dispatch(albumActions.setAlbumData(albumData));
+    } else {
       dispatch(albumActions.setAlbum({ album: null }));
-    };
-  }, [dispatch, albumId]);
+    }
+  }, [albumData, dispatch]);
 
   return <AlbumPageContainer container={props.container} />;
 };
