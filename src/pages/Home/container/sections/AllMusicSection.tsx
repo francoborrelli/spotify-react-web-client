@@ -36,36 +36,44 @@ const MoreLikeArtistCol = memo(({ index }: { index: number }) => {
 export const HomeAllMusicSection = memo(({ setColor }: HomeAllMusicSectionProps) => {
   const user = useAppSelector((state) => !!state.auth.user);
   const section = useAppSelector((state) => state.home.section);
+  const topTracks = useAppSelector((state) => state.home.topTracks);
+  const madeForYou = useAppSelector((state) => state.home.madeForYou);
+  const recentlyPlayed = useAppSelector((state) => state.home.recentlyPlayed);
+
+  const hasTopTracks = !!topTracks?.length;
+  const hasMadeForYou = !!madeForYou?.length;
+  const hasRecentlyPlayed = !!recentlyPlayed?.length;
+  const hasTopMixes = !!madeForYou?.some((p) => p.name?.toLowerCase().includes('mix'));
 
   return (
     <>
-      {user ? (
+      {user && hasTopTracks ? (
         <Col span={24}>
           <TopTracks setColor={setColor} />
         </Col>
       ) : null}
 
-      {user ? (
+      {user && hasMadeForYou ? (
         <Col span={24}>
           <MadeForYou />
         </Col>
       ) : null}
 
-      <MoreLikeArtistCol index={0} />
+      {user && section === 'ALL' && hasRecentlyPlayed ? (
+        <Col span={24}>
+          <RecentlyPlayed />
+        </Col>
+      ) : null}
 
-      {user ? (
+      {user && hasTopMixes ? (
         <Col span={24}>
           <TopMixes />
         </Col>
       ) : null}
 
-      <MoreLikeArtistCol index={1} />
+      <MoreLikeArtistCol index={0} />
 
-      {user && section === 'ALL' ? (
-        <Col span={24}>
-          <RecentlyPlayed />
-        </Col>
-      ) : null}
+      <MoreLikeArtistCol index={1} />
 
       <Col span={24}>
         <FeaturePlaylists />

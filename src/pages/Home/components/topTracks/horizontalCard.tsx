@@ -18,7 +18,7 @@ import type { Track } from '../../../../interfaces/track';
 import { playerService } from '../../../../services/player';
 
 // Constants
-import { EQUILISER_IMAGE } from '../../../../constants/spotify';
+import { EQUILISER_IMAGE, PLAYLIST_DEFAULT_IMAGE } from '../../../../constants/spotify';
 
 interface HorizontalCardProps {
   item: Track;
@@ -29,6 +29,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
   const currentSong = useAppSelector((state) => state.spotify.state?.track_window.current_track.id);
   const isPlaying = useAppSelector((state) => !state.spotify.state?.paused);
   const isCurrent = currentSong === item.id;
+  const imageUrl = item.album?.images?.[0]?.url || PLAYLIST_DEFAULT_IMAGE;
 
   const isMobile = useIsMobile();
 
@@ -38,8 +39,8 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
   }, [isCurrent, item.uri]);
 
   useEffect(() => {
-    if (item) getImageAnalysis2(item.album.images[0].url).then();
-  }, [item]);
+    if (imageUrl) getImageAnalysis2(imageUrl).then();
+  }, [imageUrl]);
 
   return (
     <TrackActionsWrapper track={item} trigger={['contextMenu']}>
@@ -50,7 +51,7 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
         onMouseEnter={
           !isMobile
             ? () => {
-                getImageAnalysis2(item.album.images[0].url).then((r) => {
+                getImageAnalysis2(imageUrl).then((r) => {
                   let color = tinycolor(r);
                   while (color.isLight()) {
                     color = color.darken(10);
@@ -61,32 +62,28 @@ export const HorizontalCard: FC<HorizontalCardProps> = memo(({ item, setColor })
             : undefined
         }
       >
-        <div style={{ display: 'flex' }}>
-          <div className='img-container'>
-            <div className='img-section'>
-              <img src={item.album.images[0].url} alt={item.name} />
-            </div>
+        <div className='img-container'>
+          <div className='img-section'>
+            <img src={imageUrl} alt={item.name} />
           </div>
         </div>
 
         <div className='text-container'>
           <div className='text-section'>
-            <div>
-              {isMobile ? (
+            {isMobile ? (
+              <p>{item.name}</p>
+            ) : (
+              <Link title={item.name} to={`/album/${item.album.id}`}>
                 <p>{item.name}</p>
-              ) : (
-                <Link title={item.name} to={`/album/${item.album.id}`}>
-                  <p>{item.name}</p>
-                </Link>
-              )}
-            </div>
+              </Link>
+            )}
           </div>
 
           <div className='button-container'>
             {isCurrent && isPlaying ? (
-              <img height={20} alt={item.name} src={EQUILISER_IMAGE} />
+              <img height={14} alt={item.name} src={EQUILISER_IMAGE} />
             ) : null}
-            <PlayCircle size={15} isCurrent={isCurrent} context={{ uris: [item.uri] }} />
+            <PlayCircle size={12} isCurrent={isCurrent} context={{ uris: [item.uri] }} />
           </div>
         </div>
       </div>

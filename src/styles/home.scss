@@ -1,24 +1,36 @@
 @use './variables.scss' as *;
 
+.home-top-tracks {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .horizontal-playlist {
   cursor: pointer;
   --item-height: 48px;
 
   display: flex;
+  align-items: stretch;
   background-color: hsla(0, 0%, 100%, 0.1);
-  border-radius: 4px;
-  container-type: size;
+  border-radius: 6px;
   height: var(--item-height);
+  min-width: 0;
   overflow: hidden;
   position: relative;
   -webkit-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
-
-  @media (min-width: 1000px) {
-    --item-height: 64px;
-  }
+  -webkit-user-select: none;
+  user-select: none;
 
   .img-container {
+    flex: 0 0 var(--item-height);
     height: var(--item-height);
     width: var(--item-height);
 
@@ -27,20 +39,16 @@
       height: 100%;
       position: relative;
       width: 100%;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
       align-items: center;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      background-color: hsla(0, 0%, 100%, 0.2);
-      -webkit-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
       justify-content: center;
+      background-color: hsla(0, 0%, 100%, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 
       img {
         display: block;
         height: 100%;
         left: 0;
+        object-fit: cover;
         position: absolute;
         top: 0;
         width: 100%;
@@ -56,99 +64,57 @@
 
   .text-container {
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
     flex: 1;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-padding-start: 8px;
     color: #fff;
-    padding-inline-start: 8px;
+    gap: 4px;
+    min-width: 0;
+    padding-inline: 8px 4px;
 
     .text-section {
-      gap: 2px;
       display: flex;
-      -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
       flex-grow: 1;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -ms-flex-direction: column;
       flex-direction: column;
+      min-width: 0;
 
       a {
         color: #fff;
         text-decoration: none;
+      }
 
-        p {
-          font-weight: 700;
-          display: -webkit-box;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          white-space: normal;
-          word-break: break-word;
-
-          @media (min-width: 1000px) {
-            font-size: 0.9rem;
-          }
-        }
+      p {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 
     .button-container {
       img {
-        height: 15px;
+        height: 14px;
       }
-      -webkit-box-flex: 0;
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -ms-flex: 0 0 48px;
-      flex: 0 0 48px;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
+      flex: 0 0 36px;
       align-items: center;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
       justify-content: center;
 
       .circle-play {
-        // --encore-control-size-smaller: 25px;
-
-        margin-right: 5px !important;
+        margin-right: 2px !important;
       }
     }
   }
-
-  // display: flex;
-  // align-items: center;
-  // gap: 15px;
-  // border-radius: 5px;
-  // width: 100%;
-  // cursor: pointer;
-  // background-color: #ffffff1a;
-  // -webkit-backdrop-filter: blur(10px);
-  // backdrop-filter: blur(10px);
-  // overflow: hidden;
-  // font-size: 0.8em;
-  // transition: background-color 0.2s ease-in-out;
-  // -webkit-user-select: none;
-  // user-select: none;
-  // justify-content: space-between;
 
   .circle-play {
     display: none;
   }
 
   &:hover {
-    background-color: #ffffff38;
+    background-color: hsla(0, 0%, 100%, 0.2);
 
     .circle-play {
       display: inherit;
@@ -158,22 +124,6 @@
   @media (max-width: $desktop-breakpoint) {
     .circle-play {
       display: none !important;
-    }
-
-    // img {
-    //   max-height: 40px;
-    //   max-width: 40px;
-    // }
-
-    h3 {
-      font-size: 13px;
-    }
-
-    &:hover {
-      img {
-        opacity: 0.8;
-        transition: opacity 0.2s ease-in-out;
-      }
     }
 
     &:active {

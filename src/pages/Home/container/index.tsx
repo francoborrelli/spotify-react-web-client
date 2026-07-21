@@ -34,7 +34,8 @@ const HomePageContainer: FC<HomePageContainerProps> = memo((props) => {
       <div
         className={`Home-seccion${section === 'PODCAST' ? ' Home-seccion--podcasts' : ''}`}
         style={{
-          paddingTop: isMobile ? 50 : 0,
+          // Keep first-section spacing even when TopTracks (or other lead blocks) don't render
+          paddingTop: section === 'PODCAST' ? (isMobile ? 50 : 0) : 70,
           transition: section === 'PODCAST' ? undefined : 'background 5s',
           background: `linear-gradient(180deg, ${pageColor} 2%, rgb(18, 18, 18) 11%)`,
         }}

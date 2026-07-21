@@ -57,7 +57,7 @@ export const LoginModal = memo(() => {
         width={780}
         open={open}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
         onCancel={onClose}
         className='login-modal'
         wrapClassName='overlay-modal'
