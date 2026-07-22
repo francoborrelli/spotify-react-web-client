@@ -5,16 +5,21 @@ import type { Track } from '../interfaces/track';
 import type { Playlist, PlaylistItem } from '../interfaces/playlists';
 import type { Pagination, PaginationQueryParams } from '../interfaces/api';
 
+// Feb 2026 renamed the playlist object's track-count field `tracks` → `items` (both carry
+// `.total`). Backfill `tracks` from `items` so every component that reads `playlist.tracks.total`
+// (grid cards, header, sidebar) keeps working instead of showing "undefined songs".
+const normalizePlaylist = (p: any) => {
+  if (p && !p.tracks && p.items) p.tracks = p.items;
+  return p;
+};
+
 /**
  * @description Get a playlist owned by a Spotify user.
  * @param playlistId The Spotify ID for the playlist.
  */
 const getPlaylist = async (playlistId: string) => {
   const response = await axios.get<Playlist>(`/playlists/${playlistId}`);
-  // Feb 2026 may expose the playlist's track collection as `items` instead of `tracks`.
-  // Normalize to `tracks` so the header/table (which read `playlist.tracks.total`) are unchanged.
-  const data = response.data as unknown as Record<string, any>;
-  if (data && !data.tracks && data.items) data.tracks = data.items;
+  normalizePlaylist(response.data);
   return response;
 };
 
@@ -46,7 +51,9 @@ const getPlaylistItems = async (
  * @description Get a list of the playlists owned or followed by the current Spotify user.
  */
 const getMyPlaylists = async (params: PaginationQueryParams = {}) => {
-  return axios.get<Pagination<Playlist>>('/me/playlists', { params });
+  const response = await axios.get<Pagination<Playlist>>('/me/playlists', { params });
+  response.data?.items?.forEach(normalizePlaylist);
+  return response;
 };
 
 interface GetFeaturedPlaylistsParams extends PaginationQueryParams {
@@ -187,7 +194,9 @@ const getPlaylists = async (
 ) => {
   // Feb 2026 removed `/users/{id}/playlists` (other users). Only the current user's
   // playlists are available now, so this returns `/me/playlists` regardless of `_userId`.
-  return axios.get<Pagination<Playlist>>(`/me/playlists`, { params });
+  const response = await axios.get<Pagination<Playlist>>(`/me/playlists`, { params });
+  response.data?.items?.forEach(normalizePlaylist);
+  return response;
 };
 
 export const playlistService = {

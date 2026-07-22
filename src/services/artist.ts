@@ -34,7 +34,12 @@ const fetchArtistAlbums = (
     /** @description The country for which the release date will be formatted. */
     market?: string;
   } = {}
-) => axios.get<Pagination<Album>>(`/artists/${id}/albums`, { params });
+) =>
+  // Feb 2026 reduced this endpoint's max `limit` from 50 to 10 (returns 400 "Invalid limit"
+  // otherwise). Clamp here so every caller is safe.
+  axios.get<Pagination<Album>>(`/artists/${id}/albums`, {
+    params: { ...params, limit: Math.min(params.limit ?? 10, 10) },
+  });
 
 /**
  * @description Get Spotify catalog information about an artist's top tracks by country.

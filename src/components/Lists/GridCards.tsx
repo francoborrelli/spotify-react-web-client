@@ -165,9 +165,14 @@ export const PlaylistCard = ({
   const [t] = useTranslation(['playlist']);
 
   const title = item.name;
+  // Feb 2026 renamed the playlist track-count field `tracks` → `items`; fall back so we never
+  // render "undefined songs" regardless of which endpoint the playlist came from.
+  const trackTotal = (item as any).tracks?.total ?? (item as any).items?.total;
   const description = getDescription
     ? getDescription(item)
-    : item.tracks?.total + ' ' + t(item.tracks?.total === 1 ? 'song' : 'songs');
+    : trackTotal === undefined
+      ? ''
+      : trackTotal + ' ' + t(trackTotal === 1 ? 'song' : 'songs');
 
   return (
     <PlayistActionsWrapper playlist={item} trigger={['contextMenu']}>
