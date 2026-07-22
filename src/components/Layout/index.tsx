@@ -10,9 +10,7 @@ import { LanguageModal } from '../Modals/LanguageModal';
 import { LibraryDrawer } from '../Drawers/LibraryDrawer';
 import { PlayingNowDrawer } from '../Drawers/PlayingNowDrawer';
 import { EditPlaylistModal } from '../Modals/EditPlaylistModal';
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
-
-// Interfaces
+import { Group, Panel, Separator, useDefaultLayout } from 'react-resizable-panels';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -21,6 +19,8 @@ import { getLibraryCollapsed, isRightLayoutOpen, uiActions } from '../../store/s
 import { LoginFooter } from './components/LoginFooter';
 import { LoginModal } from '../Modals/LoginModal';
 import useIsMobile from '../../utils/isMobile';
+
+const pct = (value: number) => `${value}%`;
 
 export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
   const dispatch = useAppDispatch();
@@ -33,6 +33,13 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
   const [isTablet, setIsTablet] = useState(false);
 
   const isMobile = useIsMobile();
+  const showDetails = rightLayoutOpen && hasState;
+
+  const { defaultLayout, onLayoutChanged } = useDefaultLayout({
+    id: 'persistence',
+    storage: localStorage,
+    panelIds: showDetails ? ['left', 'center', 'details-section'] : ['left', 'center'],
+  });
 
   useEffect(() => {
     window.onresize = () => {
@@ -52,6 +59,14 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
   useEffect(() => {
     if (user) dispatch(spotifyActions.fetchDevices());
   }, [user, dispatch]);
+
+  // In v4, Panel `style` applies to an inner wrapper — min/max width there no longer
+  // constrains the flex item, so unused outer width shows up as a gap. Use size props instead.
+  const leftPanelSize = isTablet
+    ? { minSize: pct(10), maxSize: pct(10), defaultSize: pct(10) }
+    : libraryCollapsed
+      ? { minSize: 85, maxSize: 85, defaultSize: 85 }
+      : { minSize: 280, maxSize: pct(28), defaultSize: pct(22) };
 
   return (
     <>
@@ -85,46 +100,44 @@ export const AppLayout: FC<{ children: ReactElement }> = memo((props) => {
               maxHeight: activeOnOtherDevice ? `calc(100vh - 185px)` : undefined,
             }}
           >
-            <PanelGroup direction='horizontal' autoSaveId='persistence'>
+            <Group
+              orientation='horizontal'
+              defaultLayout={defaultLayout}
+              onLayoutChanged={onLayoutChanged}
+              style={{ height: '100%', width: '100%' }}
+            >
               <Panel
                 id='left'
-                order={1}
                 className='mobile-hidden'
-                minSize={isTablet ? 10 : libraryCollapsed ? 7 : 22}
-                maxSize={isTablet ? 10 : libraryCollapsed ? 8 : 28}
-                defaultSize={isTablet ? 10 : libraryCollapsed ? 7 : 22}
-                style={{
-                  borderRadius: 5,
-                  minWidth: libraryCollapsed ? 85 : 280,
-                  maxWidth: libraryCollapsed ? 85 : undefined,
-                }}
+                groupResizeBehavior={libraryCollapsed ? 'preserve-pixel-size' : 'preserve-relative-size'}
+                {...leftPanelSize}
+                style={{ borderRadius: 5 }}
               >
                 <Library />
               </Panel>
 
-              {!isMobile ? <PanelResizeHandle className='resize-handler' /> : null}
-              <Panel id='center' order={2} style={{ borderRadius: 5 }}>
+              {!isMobile ? <Separator className='resize-handler' /> : null}
+
+              <Panel id='center' style={{ borderRadius: 5 }}>
                 {/* Home | Playlists */}
                 {props.children}
               </Panel>
 
-              {!isTablet && rightLayoutOpen && hasState ? (
-                <PanelResizeHandle className='resize-handler' />
+              {showDetails ? (
+                <>
+                  {!isTablet ? <Separator className='resize-handler' /> : null}
+                  <Panel
+                    id='details-section'
+                    minSize={pct(23)}
+                    maxSize={pct(30)}
+                    defaultSize={pct(25)}
+                    style={{ borderRadius: 5 }}
+                  >
+                    <PlayingNow />
+                  </Panel>
+                </>
               ) : null}
-
-              {rightLayoutOpen && hasState ? (
-                <Panel
-                  order={3}
-                  minSize={23}
-                  maxSize={30}
-                  defaultSize={25}
-                  id='details-section'
-                  style={{ borderRadius: 5 }}
-                >
-                  <PlayingNow />
-                </Panel>
-              ) : null}
-            </PanelGroup>
+            </Group>
           </Col>
         </Row>
       </div>

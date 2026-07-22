@@ -1,4 +1,4 @@
-const getPath = (path: string) => `${process.env.PUBLIC_URL}/${path}`;
+const getPath = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 
 export const getSongPath = (song: string) => getPath(`/songs/${song}`);
 

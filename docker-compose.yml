@@ -1,8 +1,10 @@
 services:
   web:
-    build: .
-    env_file:
-      - .env
+    build:
+      context: .
+      args:
+        VITE_SPOTIFY_CLIENT_ID: ${VITE_SPOTIFY_CLIENT_ID}
+        VITE_SPOTIFY_REDIRECT_URL: ${VITE_SPOTIFY_REDIRECT_URL}
     restart: always
     container_name: 'spotify-web'
     ports:

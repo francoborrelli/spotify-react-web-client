@@ -18,8 +18,8 @@
   user-select: none;
   vertical-align: middle;
   transform: translate3d(0px, 0px, 0px);
-  padding-block-start: calc(var(4px, 4px) - 1px);
-  padding-block-end: calc(var(4px, 4px) - 1px);
+  padding-block-start: calc(4px - 1px);
+  padding-block-end: calc(4px - 1px);
   padding-inline-start: calc(15px);
   padding-inline-end: calc(var(--encore-spacing-base, 16px) - 1px);
   border: 1px solid var(--essential-subdued, #878787);

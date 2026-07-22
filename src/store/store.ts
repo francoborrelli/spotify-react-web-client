@@ -10,7 +10,7 @@ import {
 } from 'redux-persist';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage
+import storage from 'redux-persist/es/storage'; // defaults to localStorage (ESM for Vite)
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 // RTK Query data layer

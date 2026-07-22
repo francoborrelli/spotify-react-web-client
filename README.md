@@ -48,6 +48,8 @@
 
 🎵 React Redux: For global state management and smooth data flow across the app.
 
+🎵 Vite: For the development server and production builds.
+
 🎵 <a href="https://developer.spotify.com/documentation/web-api/">Spotify Web API</a>: To fetch data like playlists, albums, and user information.
 
 🎵 <a href="https://developer.spotify.com/documentation/web-playback-sdk/">Spotify Playback SDK</a>: For real-time music playback control within the web client.
@@ -60,16 +62,16 @@ More in images [folder](https://github.com/francoborrelli/spotify-react-web-clie
     <table >
      <tr>
        <td>
-         <img src="images/Home.png?raw=true 'Playlist'"/>
-         <img src="images/CurrentDevices.png?raw=true 'Playlist'"/>
+         <img src="images/Home.png" alt="Home"/>
+         <img src="images/CurrentDevices.png" alt="Current devices"/>
        </td>
         <td>
-         <img src="images/NewPlaylist.png?raw=true 'Playlist'"/>
-          <img src="images/browse.png?raw=true 'Playlist'"/>
+         <img src="images/NewPlaylist.png" alt="New playlist"/>
+          <img src="images/browse.png" alt="Browse"/>
        </td>
                  <td>
-         <img src="images/Profile.png?raw=true 'Playlist'"/>
-          <img src="images/playlist.png?raw=true 'Playlist'"/>
+         <img src="images/Profile.png" alt="Profile"/>
+          <img src="images/playlist.png" alt="Playlist"/>
        </td>
      </tr>
     </table>
@@ -82,7 +84,7 @@ To run this project locally, follow these steps:
 1. Clone this repository:
 
    ```bash
-   clone https://github.com/francoborrelli/spotify-react-web-client.git
+   git clone https://github.com/francoborrelli/spotify-react-web-client.git
    ```
 
 2. Navigate to the project directory:
@@ -97,12 +99,18 @@ To run this project locally, follow these steps:
    yarn install
    ```
 
-4. Set up your Spotify Developer account and create a [new app](https://developer.spotify.com/dashboard/applications) to obtain your **Client ID** and **Redirect URI**. Add these to an `.env` file in the root of your project:
+4. Set up your Spotify Developer account and create a [new app](https://developer.spotify.com/dashboard/applications) to obtain your **Client ID** and **Redirect URI**. Add the redirect URI `http://127.0.0.1:3000` in the Spotify Dashboard, then copy `.env.dist` to `.env` and fill in your values:
+
+   ```bash
+   cp .env.dist .env
+   ```
 
    ```
-   REACT_APP_SPOTIFY_CLIENT_ID=<your id>
-   REACT_APP_SPOTIFY_REDIRECT_URL=<your redirect uri>
+   VITE_SPOTIFY_CLIENT_ID=<your id>
+   VITE_SPOTIFY_REDIRECT_URL=http://127.0.0.1:3000
    ```
+
+   > Vite only exposes env vars prefixed with `VITE_`. The redirect URL must match the Dashboard entry exactly.
 
 5. Start the development server:
 

@@ -1,0 +1,17 @@
+node_modules
+build
+dist
+.git
+.github
+.env
+.env.*
+!.env.dist
+coverage
+images
+*.log
+.DS_Store
+.vscode
+.idea
+README.md
+LICENSE
+agent-transcripts

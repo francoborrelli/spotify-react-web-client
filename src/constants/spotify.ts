@@ -10,12 +10,12 @@ export const PODCAST_SEARCH_TO_TRY_QUERY = 'podcast';
 
 export const INITIAL_VOLUME = 0.2;
 
-export const PLAYLIST_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/playlist.png`;
+export const PLAYLIST_DEFAULT_IMAGE = `${import.meta.env.BASE_URL}images/playlist.png`;
 
-export const ARTISTS_DEFAULT_IMAGE = `${process.env.PUBLIC_URL}/images/artist.png`;
+export const ARTISTS_DEFAULT_IMAGE = `${import.meta.env.BASE_URL}images/artist.png`;
 
-export const LIKED_SONGS_IMAGE = `${process.env.PUBLIC_URL}/images/liked-songs.png`;
+export const LIKED_SONGS_IMAGE = `${import.meta.env.BASE_URL}images/liked-songs.png`;
 
-export const EQUILISER_IMAGE = `${process.env.PUBLIC_URL}/images/equaliser-animated.gif`;
+export const EQUILISER_IMAGE = `${import.meta.env.BASE_URL}images/equaliser-animated.gif`;
 
 export const DEFAULT_PAGE_COLOR = '#121212';

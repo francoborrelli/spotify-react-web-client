@@ -58,7 +58,7 @@ body {
 html,
 body {
   font-family: SpotifyMixUI, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek,
-    CircularSp-Deva, var(sans-serif) !important;
+    CircularSp-Deva, sans-serif !important;
 }
 
 /* hide scrollbar but allow scrolling */
@@ -585,7 +585,8 @@ img {
   margin-right: 3px;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 1px;
+  width: 1px !important;
+  flex: 0 0 1px !important;
   // transition opacity
   opacity: 0;
   transition: opacity 0.3s;
