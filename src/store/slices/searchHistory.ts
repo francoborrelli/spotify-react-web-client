@@ -19,7 +19,10 @@ const searchHistoryActionsSlice = createSlice({
   initialState,
   reducers: {
     setItem(state, action: PayloadAction<Item>) {
-      state.items.unshift(action.payload);
+      state.items = [
+        action.payload,
+        ...state.items.filter((item) => item.id !== action.payload.id),
+      ];
     },
     clearItems(state) {
       state.items = [];
