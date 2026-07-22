@@ -2,21 +2,98 @@ import { Col, Dropdown, Row, Space } from 'antd';
 
 import { PlayCircleButton } from './playCircle';
 import { Tooltip } from '../../../components/Tooltip';
-import { MenuDots, OrderCompactIcon, OrderListIcon } from '../../../components/Icons';
+import {
+  CloseIcon2,
+  MenuDots,
+  OrderCompactIcon,
+  OrderListIcon,
+  SearchIcon,
+} from '../../../components/Icons';
 import { AddPlaylistToLibraryButton } from './AddPlaylistToLibrary';
 import { PlayistActionsWrapper } from '../../../components/Actions/PlaylistActions';
 
 // Utils
 import { useTranslation } from 'react-i18next';
+import { memo, useEffect, useRef, useState, type FC } from 'react';
 
 // Redux
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { playlistActions, refreshPlaylist } from '../../../store/slices/playlist';
 
-// Interfaces
-import type { FC } from 'react';
-
 const filters = ['LIST', 'COMPACT'] as const;
+
+const PlaylistSearch = memo(() => {
+  const dispatch = useAppDispatch();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [open, setOpen] = useState(false);
+  const [tor] = useTranslation(['order']);
+  const search = useAppSelector((state) => state.playlist.search);
+
+  useEffect(() => {
+    if (open) inputRef.current?.focus();
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: MouseEvent) => {
+      if (containerRef.current?.contains(event.target as Node)) return;
+      if (search.trim()) return;
+      setOpen(false);
+    };
+
+    document.addEventListener('mousedown', onPointerDown);
+    return () => document.removeEventListener('mousedown', onPointerDown);
+  }, [open, search]);
+
+  const handleClose = () => {
+    dispatch(playlistActions.setSearch({ search: '' }));
+    setOpen(false);
+  };
+
+  return (
+    <div ref={containerRef} className={`playlist-search ${open ? 'open' : ''}`}>
+      <div className='playlist-search__field'>
+        <input
+          ref={inputRef}
+          value={search}
+          placeholder={tor('Search in playlist')}
+          onChange={(e) => dispatch(playlistActions.setSearch({ search: e.target.value }))}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              if (search.trim()) {
+                dispatch(playlistActions.setSearch({ search: '' }));
+              } else {
+                setOpen(false);
+              }
+            }
+          }}
+        />
+        <button
+          type='button'
+          className='playlist-search__close'
+          aria-label='Close'
+          onClick={handleClose}
+        >
+          <CloseIcon2 />
+        </button>
+      </div>
+
+      <button
+        type='button'
+        className='playlist-search__toggle'
+        aria-label={tor('Search in playlist')}
+        onClick={() => {
+          if (!open) setOpen(true);
+          else inputRef.current?.focus();
+        }}
+      >
+        <SearchIcon style={{ height: '1rem' }} />
+      </button>
+    </div>
+  );
+});
 
 export const PlaylistControls: FC = () => {
   const dispatch = useAppDispatch();
@@ -65,7 +142,8 @@ export const PlaylistControls: FC = () => {
           </Space>
         </Col>
         <Col>
-          <Space className='mobile-hidden'>
+          <Space className='mobile-hidden' align='center' size={12}>
+            <PlaylistSearch />
             <Tooltip title={tor('VIEW')}>
               <Dropdown placement='bottomRight' menu={{ items, selectedKeys: [view] }}>
                 <button className='order-button'>

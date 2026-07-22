@@ -33,6 +33,7 @@ const initialState: {
   following: boolean;
 
   order: string;
+  search: string;
   view: 'LIST' | 'COMPACT';
 } = {
   user: null,
@@ -45,6 +46,7 @@ const initialState: {
   following: false,
 
   order: 'ALL',
+  search: '',
   view: 'LIST',
 };
 
@@ -183,6 +185,7 @@ const playlistSlice = createSlice({
         state.user = null;
         state.loading = true;
         state.view = 'LIST';
+        state.search = '';
       }
     },
     removeTrack(state, action: PayloadAction<{ id: string }>) {
@@ -195,6 +198,9 @@ const playlistSlice = createSlice({
     },
     setView(state, action: PayloadAction<{ view: 'LIST' | 'COMPACT' }>) {
       state.view = action.payload.view;
+    },
+    setSearch(state, action: PayloadAction<{ search: string }>) {
+      state.search = action.payload.search;
     },
     setOrder(state, action: PayloadAction<{ order: string }>) {
       state.order = action.payload.order;
@@ -221,11 +227,13 @@ const playlistSlice = createSlice({
       state.user = p.user;
       state.recommedations = p.recommendations;
       state.loading = false;
+      state.search = '';
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPlaylist.pending, (state) => {
       state.loading = true;
+      state.search = '';
     });
     builder.addCase(fetchPlaylist.fulfilled, (state, action) => {
       state.playlist = action.payload[0];
