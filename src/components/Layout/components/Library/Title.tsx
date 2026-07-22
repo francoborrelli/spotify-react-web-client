@@ -41,17 +41,20 @@ export const LibraryTitle = memo(() => {
 
   if (collapsed) {
     return (
-      <Tooltip placement='right' title={t('Expand your library')}>
-        <button
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          onClick={() => dispatch(uiActions.toggleLibrary())}
-        >
-          <LibraryCollapsedIcon />
-        </button>
-      </Tooltip>
+      <Flex vertical align='center' gap={12}>
+        <Tooltip placement='right' title={t('Expand your library')}>
+          <button
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+            onClick={() => dispatch(uiActions.toggleLibrary())}
+          >
+            <LibraryCollapsedIcon />
+          </button>
+        </Tooltip>
+        <AddPlaylistButton />
+      </Flex>
     );
   }
 

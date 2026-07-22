@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import Chip from '../../../Chip';
 import { Dropdown, Flex, Space } from 'antd';
@@ -13,15 +13,58 @@ import { yourLibraryActions, YourLibraryState } from '../../../../store/slices/y
 
 const VIEW = ['COMPACT', 'LIST', 'GRID'] as const;
 
-const SearchSelector = memo(() => {
+const SearchSelector = memo(({ open, onOpen, onClose }: { open: boolean; onOpen: () => void; onClose: () => void }) => {
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [t] = useTranslation('navbar');
+  const search = useAppSelector((state) => state.yourLibrary.search);
+
+  useEffect(() => {
+    if (open) inputRef.current?.focus();
+  }, [open]);
+
+  const handleClose = () => {
+    dispatch(yourLibraryActions.setSearch({ search: '' }));
+    onClose();
+  };
+
   return (
-    <button className='addButton'>
-      <SearchIcon style={{ height: '1rem' }} />
-    </button>
+    <div className={`library-search ${open ? 'open' : ''}`}>
+      <button
+        type='button'
+        className='library-search__toggle'
+        aria-label={t('Search in Your Library')}
+        onClick={() => {
+          if (!open) onOpen();
+        }}
+      >
+        <SearchIcon style={{ height: '1rem' }} />
+      </button>
+
+      <div className='library-search__field'>
+        <input
+          ref={inputRef}
+          value={search}
+          placeholder={t('Search in Your Library')}
+          onChange={(e) => dispatch(yourLibraryActions.setSearch({ search: e.target.value }))}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') handleClose();
+          }}
+        />
+        <button
+          type='button'
+          className='library-search__close'
+          aria-label='Close'
+          onClick={handleClose}
+        >
+          <CloseIcon2 />
+        </button>
+      </div>
+    </div>
   );
 });
 
-const ViewSelector = memo(() => {
+const ViewSelector = memo(({ hideLabel = false }: { hideLabel?: boolean }) => {
   const dispatch = useAppDispatch();
   const [t] = useTranslation('navbar');
   const view = useAppSelector((state) => state.yourLibrary.view);
@@ -41,9 +84,9 @@ const ViewSelector = memo(() => {
       menu={{ items, selectedKeys: [view] }}
       trigger={['click']}
     >
-      <button className='order-button'>
+      <button className={`order-button ${hideLabel ? 'order-button--icon-only' : ''}`}>
         <Space align='center'>
-          <span>{t(view)}</span>
+          {!hideLabel ? <span>{t(view)}</span> : null}
           {view === 'GRID' ? <GridIcon style={{ height: '1rem' }} /> : null}
           {view === 'LIST' ? <OrderListIcon style={{ height: '1rem' }} /> : null}
           {view === 'COMPACT' ? <OrderCompactIcon style={{ height: '1rem' }} /> : null}
@@ -54,10 +97,21 @@ const ViewSelector = memo(() => {
 });
 
 export const SearchArea = () => {
+  const [searchOpen, setSearchOpen] = useState(false);
+
   return (
-    <Flex align='center' justify='space-between' style={{ margin: '0px 10px', marginBottom: 10 }}>
-      <SearchSelector />
-      <ViewSelector />
+    <Flex
+      align='center'
+      justify='space-between'
+      className='library-search-area'
+      style={{ margin: '0px 10px', marginBottom: 10 }}
+    >
+      <SearchSelector
+        open={searchOpen}
+        onOpen={() => setSearchOpen(true)}
+        onClose={() => setSearchOpen(false)}
+      />
+      <ViewSelector hideLabel={searchOpen} />
     </Flex>
   );
 };

@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 import { getLibraryItems } from '../../../../../store/slices/yourLibrary';
 import { GridItemComponent } from '../../../../Lists/list';
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { isActiveOnOtherDevice } from '../../../../../store/slices/spotify';
 import useIsMobile from '../../../../../utils/isMobile';
 import { getLibraryCollapsed, uiActions } from '../../../../../store/slices/ui';
@@ -27,9 +28,9 @@ const YourLibrary = () => {
   const activeOnOtherDevice = useAppSelector(isActiveOnOtherDevice);
 
   const heightValue = useMemo(() => {
-    let value = 310;
+    let value = 275;
     if (!user) value = 270;
-    if (collapsed) value = 218;
+    if (collapsed) value = 270;
     if (activeOnOtherDevice) value += 50;
     return value;
   }, [user, collapsed, activeOnOtherDevice]);
@@ -74,31 +75,44 @@ const LoggedContent = memo(() => {
   const items = useAppSelector(getLibraryItems);
   const collapsed = useAppSelector(getLibraryCollapsed);
   const view = useAppSelector((state) => state.yourLibrary.view);
+  const search = useAppSelector((state) => state.yourLibrary.search);
+  const [t] = useTranslation(['navbar']);
+
+  const hasNoSearchResults = Boolean(search.trim()) && items.length === 0;
 
   return (
     <>
       {!collapsed ? <SearchArea /> : null}
 
-      <div
-        className={`${collapsed ? 'collapsed' : ''} ${
-          !collapsed && view === 'GRID' ? 'grid-view' : ''
-        }`}
-      >
-        {items.map((item) => {
-          if (collapsed) return <ListItemComponent key={item.id} item={item} />;
+      {hasNoSearchResults ? (
+        <div className='library-search-empty'>
+          <h3>
+            {t("Couldn't find")} “{search.trim()}”
+          </h3>
+          <p>{t('Try searching again using a different spelling or keyword.')}</p>
+        </div>
+      ) : (
+        <div
+          className={`${collapsed ? 'collapsed' : ''} ${
+            !collapsed && view === 'GRID' ? 'grid-view' : ''
+          }`}
+        >
+          {items.map((item) => {
+            if (collapsed) return <ListItemComponent key={item.id} item={item} />;
 
-          return (
-            <div
-              key={item.id}
-              onClick={isMobile ? () => dispatch(uiActions.collapseLibrary()) : undefined}
-            >
-              {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
-              {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
-              {view === 'GRID' ? <GridItemComponent key={item.id} item={item} /> : ''}
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <div
+                key={item.id}
+                onClick={isMobile ? () => dispatch(uiActions.collapseLibrary()) : undefined}
+              >
+                {view === 'LIST' ? <ListItemComponent key={item.id} item={item} /> : ''}
+                {view === 'COMPACT' ? <CompactItemComponent key={item.id} item={item} /> : ''}
+                {view === 'GRID' ? <GridItemComponent key={item.id} item={item} /> : ''}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 });

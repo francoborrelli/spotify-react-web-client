@@ -85,11 +85,15 @@ export const getLibraryItems = createSelector(
     (state: RootState) => state.yourLibrary.myAlbums,
     (state: RootState) => state.yourLibrary.myArtists,
     (state: RootState) => state.yourLibrary.myPlaylists,
+    (state: RootState) => state.yourLibrary.search,
   ],
-  (user, filter, myAlbums, myArtists, myPlaylists) => {
-    if (filter === 'ALBUMS') return myAlbums;
-    if (filter === 'ARTISTS') return myArtists;
-    if (filter === 'PLAYLISTS') return myPlaylists;
+  (user, filter, myAlbums, myArtists, myPlaylists, search) => {
+    const matchesSearch = (item: { name?: string }) =>
+      !search.trim() || item.name?.toLowerCase().includes(search.trim().toLowerCase());
+
+    if (filter === 'ALBUMS') return myAlbums.filter(matchesSearch);
+    if (filter === 'ARTISTS') return myArtists.filter(matchesSearch);
+    if (filter === 'PLAYLISTS') return myPlaylists.filter(matchesSearch);
 
     if (!user) return [];
     if (!myAlbums.length && !myArtists.length && !myPlaylists.length) return [];
@@ -142,7 +146,8 @@ export const getLibraryItems = createSelector(
       myAlbums.slice(43),
     ]
       .filter((r) => r)
-      .flat();
+      .flat()
+      .filter(matchesSearch);
   }
 );
 

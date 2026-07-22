@@ -775,15 +775,17 @@ export const AddIcon = (props: any) => {
 };
 
 export const NewPlaylistIcon = (props: any) => {
+  const { className, style, fill, ...rest } = props;
   return (
     <svg
+      {...rest}
       data-encore-id='icon'
       role='img'
       aria-hidden='true'
       viewBox='0 0 16 16'
-      fill='#1ed760'
-      className='hoverable-icon expand-icon'
-      style={SongExtraControlStyle}
+      fill={fill ?? '#1ed760'}
+      className={className ?? 'hoverable-icon expand-icon'}
+      style={{ ...SongExtraControlStyle, ...style }}
     >
       <path d='M2 0v2H0v1.5h2v2h1.5v-2h2V2h-2V0H2zm11.5 2.5H8.244A5.482 5.482 0 0 0 7.966 1H15v11.75A2.75 2.75 0 1 1 12.25 10h1.25V2.5zm0 9h-1.25a1.25 1.25 0 1 0 1.25 1.25V11.5zM4 8.107a5.465 5.465 0 0 0 1.5-.593v5.236A2.75 2.75 0 1 1 2.75 10H4V8.107zM4 11.5H2.75A1.25 1.25 0 1 0 4 12.75V11.5z'></path>
     </svg>

@@ -40,18 +40,37 @@ export const AddPlaylistButton = memo(() => {
     <Dropdown
       placement='bottomRight'
       trigger={['click']}
+      rootClassName='create-playlist-dropdown'
       menu={{
         items: [
           {
             key: 'create',
-            icon: <NewPlaylistIcon />,
-            label: t('Create a new Playlist'),
             onClick,
+            label: (
+              <div className='create-playlist-menu-item'>
+                <div className='create-playlist-menu-item__icon'>
+                  <NewPlaylistIcon
+                    className='create-playlist-menu-item__svg'
+                    style={{
+                      height: 20,
+                      maxWidth: 20,
+                      cursor: 'default',
+                    }}
+                  />
+                </div>
+                <div className='create-playlist-menu-item__text'>
+                  <span className='create-playlist-menu-item__title'>{t('Playlist')}</span>
+                  <span className='create-playlist-menu-item__description'>
+                    {t('Create a playlist with songs or episodes')}
+                  </span>
+                </div>
+              </div>
+            ),
           },
         ],
       }}
     >
-      <button className='addButton'>
+      <button className='addButton add-playlist-button' aria-label={t('Create a new Playlist')}>
         <AddIcon />
       </button>
     </Dropdown>
